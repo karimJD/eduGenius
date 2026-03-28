@@ -48,7 +48,7 @@ export default function TeacherMessagesPage() {
   }, []);
 
   return (
-    <div className="h-[calc(100vh-120px)] flex gap-8 max-w-7xl mx-auto">
+    <div className="h-[calc(100vh-120px)] flex gap-8 p-6">
       {/* Sidebar - Contacts */}
       <div className="w-80 flex flex-col gap-6">
         <div className="space-y-1">

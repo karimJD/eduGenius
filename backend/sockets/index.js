@@ -1,6 +1,7 @@
 const { Server } = require('socket.io');
 const { setupVideoHandlers } = require('./videoHandlers');
 const { setupAttendanceHandlers } = require('./attendanceHandlers');
+const { setupChatHandlers } = require('./chatHandlers');
 
 /**
  * Initialize Socket.IO server
@@ -18,12 +19,13 @@ const initializeSocketIO = (httpServer) => {
     pingInterval: 25000,
   });
 
-  // Attach handlers (note: both attach to 'connection' event independently)
   setupVideoHandlers(io);
   setupAttendanceHandlers(io);
+  setupChatHandlers(io);
 
   console.log('Socket.IO initialized');
   return io;
 };
 
 module.exports = { initializeSocketIO };
+

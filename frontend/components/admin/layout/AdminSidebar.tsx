@@ -38,6 +38,9 @@ const navGroups = [
   {
     label: 'Administration',
     items: [
+      { href: '/admin/academic-years', label: 'Années Académiques', icon: Calendar },
+      { href: '/admin/subjects', label: 'Matières', icon: BookOpen },
+      { href: '/admin/classes', label: 'Classes', icon: Building2 },
       { href: '/admin/departments', label: 'Départements', icon: Building2 },
       { href: '/admin/programs', label: 'Programmes', icon: ClipboardList },
       { href: '/admin/settings', label: 'Paramètres', icon: Settings },

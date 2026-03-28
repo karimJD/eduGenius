@@ -22,6 +22,11 @@ const aiQuizRoutes = require('./routes/aiQuizRoutes');
 // New admin routes
 const adminRoutes = require('./routes/admin/index');
 
+// New teacher routes
+const teacherRoutes = require('./routes/teacher/index');
+// Student routes
+const studentRoutes = require('./routes/student/index');
+
 // Middleware
 const { errorHandler } = require('./middleware/errorHandler');
 
@@ -58,6 +63,10 @@ app.use('/api/notifications', notificationRoutes);
 
 // Admin routes
 app.use('/api/admin', adminRoutes);
+
+// Teacher routes
+app.use('/api/teacher', teacherRoutes);
+app.use('/api/student', studentRoutes);
 
 // Error handler
 app.use(errorHandler);

@@ -81,17 +81,54 @@ export const enrollStudent = (classId: string, studentId: string) =>
   axiosInstance.post(`/api/admin/classes/${classId}/students`, { studentId }).then(r => r.data);
 
 // ---------- Schedules ----------
+export const deleteClass = (id: string) =>
+  axiosInstance.delete(`/api/admin/classes/${id}`).then(r => r.data);
+
+// ---------- Schedules ----------
 export const getSchedules = (params?: Record<string, string>) =>
   axiosInstance.get('/api/admin/schedules', { params }).then(r => r.data);
+
+export const getSchedule = (id: string) =>
+  axiosInstance.get(`/api/admin/schedules/${id}`).then(r => r.data);
 
 export const createSchedule = (data: Record<string, unknown>) =>
   axiosInstance.post('/api/admin/schedules', data).then(r => r.data);
 
+export const updateSchedule = (id: string, data: Record<string, unknown>) =>
+  axiosInstance.put(`/api/admin/schedules/${id}`, data).then(r => r.data);
+
 export const publishSchedule = (id: string) =>
   axiosInstance.post(`/api/admin/schedules/${id}/publish`).then(r => r.data);
 
+export const deleteSchedule = (id: string) =>
+  axiosInstance.delete(`/api/admin/schedules/${id}`).then(r => r.data);
+
 export const getScheduleConflicts = (id: string) =>
   axiosInstance.get(`/api/admin/schedules/${id}/conflicts`).then(r => r.data);
+
+// ---------- Academic Years ----------
+export const getAcademicYears = () =>
+  axiosInstance.get('/api/admin/academic-years').then(r => r.data);
+
+export const createAcademicYear = (data: Record<string, unknown>) =>
+  axiosInstance.post('/api/admin/academic-years', data).then(r => r.data);
+
+// ---------- Teaching Units ----------
+export const getTeachingUnits = (params?: Record<string, string>) =>
+  axiosInstance.get('/api/admin/teaching-units', { params }).then(r => r.data);
+  
+export const createTeachingUnit = (data: Record<string, unknown>) =>
+  axiosInstance.post('/api/admin/teaching-units', data).then(r => r.data);
+
+// ---------- Subjects ----------
+export const getSubjects = (params?: Record<string, any>) =>
+  axiosInstance.get('/api/admin/subjects', { params }).then(r => r.data);
+
+export const createSubject = (data: Record<string, unknown>) =>
+  axiosInstance.post('/api/admin/subjects', data).then(r => r.data);
+
+export const deleteSubject = (id: string) =>
+  axiosInstance.delete(`/api/admin/subjects/${id}`).then(r => r.data);
 
 // ---------- Video Sessions ----------
 export const createVideoSession = (data: Record<string, unknown>) =>

@@ -69,7 +69,7 @@ export default function NewCoursePage() {
   };
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto pb-20">
+    <div className="p-6 space-y-8 pb-20">
       <header className="flex items-center gap-4">
         <Button variant="ghost" size="icon" onClick={() => router.back()} className="rounded-xl border border-white/10 hover:bg-white/5">
             <ArrowLeft className="w-5 h-5" />

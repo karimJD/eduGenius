@@ -21,6 +21,11 @@ const NotificationSchema = new mongoose.Schema(
         'announcement',
         'class_joined',
         'general',
+        'assignment',
+        'quiz',
+        'grade',
+        'message',
+        'deadline'
       ],
       required: true,
     },
@@ -30,6 +35,13 @@ const NotificationSchema = new mongoose.Schema(
     readAt: { type: Date, default: null },
     link: { type: String, default: null }, // Frontend route to navigate to
     metadata: { type: mongoose.Schema.Types.Mixed, default: {} }, // Extra data (quizId, classId, etc.)
+    actionUrl: { type: String }, // Link to related resource
+    actionText: { type: String }, // e.g., "View Assignment"
+    priority: { type: String, enum: ['low', 'normal', 'high', 'urgent'], default: 'normal' },
+    relatedType: { type: String }, // quiz, assignment, announcement, etc.
+    relatedId: { type: mongoose.Schema.Types.ObjectId },
+    classId: { type: mongoose.Schema.Types.ObjectId, ref: 'Class' },
+    expiresAt: { type: Date }, // Auto-delete after this date
   },
   {
     timestamps: true,
@@ -37,5 +49,6 @@ const NotificationSchema = new mongoose.Schema(
 );
 
 NotificationSchema.index({ userId: 1, isRead: 1, createdAt: -1 });
+NotificationSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 }); // TTL index
 
 module.exports = mongoose.model('Notification', NotificationSchema);

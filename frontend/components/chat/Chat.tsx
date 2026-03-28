@@ -15,6 +15,7 @@ import { useAuth } from '@/context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { io, Socket } from 'socket.io-client';
 
 interface Message {
   _id: string;
@@ -40,8 +41,42 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [typingUser, setTypingUser] = useState<string | null>(null);
   const { user } = useAuth();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const socketRef = useRef<Socket | null>(null);
+
+  const roomId = type === 'private' 
+    ? (user?._id && receiverId ? [user._id, receiverId].sort().join('-') : null)
+    : classId;
+
+  // Initialize Socket
+  useEffect(() => {
+    const socketUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    socketRef.current = io(socketUrl, {
+      withCredentials: true,
+    });
+
+    socketRef.current.on('new-message', (msg: Message) => {
+      setMessages((prev) => {
+        // Prevent duplicates
+        if (prev.some(m => m._id === msg._id)) return prev;
+        return [...prev, msg];
+      });
+    });
+
+    socketRef.current.on('user-typing', ({ userName }: { userName: string }) => {
+      setTypingUser(userName);
+    });
+
+    socketRef.current.on('user-stop-typing', () => {
+      setTypingUser(null);
+    });
+
+    return () => {
+      socketRef.current?.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -58,8 +93,28 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
     };
     fetchMessages();
 
-    // In a real app, set up Socket.io listener here
-  }, [receiverId, classId, type]);
+    // Join Socket Room
+    if (socketRef.current && roomId) {
+      socketRef.current.emit('join-chat', { roomId });
+    }
+
+    return () => {
+      if (socketRef.current && roomId) {
+        socketRef.current.emit('leave-chat', { roomId });
+      }
+    };
+  }, [receiverId, classId, type, roomId]);
+
+  // Handle typing indicator emission
+  useEffect(() => {
+    if (!socketRef.current || !roomId || !user) return;
+
+    if (newMessage.length > 0) {
+      socketRef.current.emit('typing', { roomId, userName: user.firstName });
+    } else {
+      socketRef.current.emit('stop-typing', { roomId });
+    }
+  }, [newMessage, receiverId, classId, type, user, roomId]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -69,29 +124,24 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() || !user || !roomId) return;
 
     try {
-      const res = await api.post('/messages', {
+      // Emit via socket instantly (the backend socket handler persists it to DB)
+      socketRef.current?.emit('send-message', {
+        roomId,
+        content: newMessage,
+        type: 'text',
         receiverId,
         classId,
-        content: newMessage,
-        type
+        senderId: user._id,
+        senderName: `${user.firstName} ${user.lastName}`,
       });
-      
-      // Manually add the temporary message for instant feedback
-      const tempMsg: Message = {
-          ...res.data,
-          senderId: {
-              _id: user?._id || '',
-              firstName: user?.firstName || '',
-              lastName: user?.lastName || ''
-          }
-      };
-      setMessages([...messages, tempMsg]);
+
       setNewMessage('');
+      socketRef.current?.emit('stop-typing', { roomId });
     } catch (error) {
-      console.error('Failed to send message:', error);
+      console.error('Failed to send message via socket:', error);
     }
   };
 
@@ -155,6 +205,22 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
             );
           })}
         </AnimatePresence>
+        {typingUser && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex justify-start"
+          >
+            <div className="bg-white/10 text-gray-400 px-4 py-3 rounded-2xl rounded-tl-none text-xs italic border border-white/5 flex items-center gap-2">
+              <span>{typingUser} est en train d'écrire</span>
+              <span className="flex gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce delay-75" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce delay-150" />
+              </span>
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* Input Area */}

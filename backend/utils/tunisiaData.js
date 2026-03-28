@@ -30,20 +30,33 @@ const TUNISIAN_GOVERNORATES = [
 ];
 
 const ACADEMIC_RANKS = [
-  'assistant',
+  'Assistant',
+  'Maître Assistant',
+  'Maître de Conférences A',
+  'Maître de Conférences B',
+  'Professeur de l\'Enseignement Supérieur',
+  'Professeur',
+  'assistant', // Keep for backward compatibility
   'maitre_assistant',
   'maitre_conferences',
   'professeur',
 ];
 
 const PROGRAM_TYPES = [
+  'licence',
+  'Licence',
+  'master',
+  'Master',
+  'ingénieur',
+  'engineering',
+  'Engineering',
+  'doctorat',
+  'doctorate',
   'license_fundamental',
   'license_applied',
   'license_professional',
   'master_research',
   'master_professional',
-  'engineering',
-  'doctorate',
 ];
 
 const UNIT_TYPES = [

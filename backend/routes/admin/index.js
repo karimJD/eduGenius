@@ -14,5 +14,9 @@ router.use('/attendance', require('./attendance'));
 router.use('/grades', require('./grades'));
 router.use('/reports', require('./reports'));
 router.use('/settings', require('./settings'));
+router.use('/academic-years', require('./academic-years'));
+router.use('/subjects', require('./subjects'));
+router.use('/teaching-units', require('./teachingUnits'));
 
 module.exports = router;
+

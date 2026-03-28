@@ -11,7 +11,6 @@ const SubjectSchema = new Schema(
     teachingUnitId: {
       type: Schema.Types.ObjectId,
       ref: 'TeachingUnit',
-      required: true,
     },
     semester: { type: Number },
     credits: { type: Number },
