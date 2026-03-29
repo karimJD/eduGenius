@@ -1,4 +1,5 @@
 const Schedule = require('../../models/Schedule');
+const Class = require('../../models/Class');
 
 /**
  * GET /api/teacher/schedule
@@ -23,7 +24,18 @@ const getTeacherSchedule = async (req, res) => {
     })
     .populate('entries.subjectId', 'name code')
     .populate('entries.teacherId', 'firstName lastName email')
-    .populate('entries.classId', 'name code');
+    .populate('entries.classId', 'name code')
+    .lean();
+
+    // Map class details to top level for class schedules
+    for (const sched of schedules) {
+        if (sched.targetType === 'class' && sched.targetId) {
+            sched.classId = await Class.findById(sched.targetId).select('name code');
+            console.log(`Enriched schedule ${sched._id} with class:`, sched.classId ? sched.classId.name : 'null');
+        }
+    }
+
+    console.log('Sending teacher schedules. Sample classId from first schedule:', schedules[0]?.classId);
 
     res.status(200).json({ 
       success: true, 

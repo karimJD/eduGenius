@@ -55,3 +55,18 @@ export const createVideoSession = async (data: any) => {
   const response = await api.post('/sessions', data);
   return response.data;
 };
+
+export const getSessionToken = async (id: string) => {
+  const response = await api.post(`/sessions/${id}/token`);
+  return response.data;
+};
+
+export const startVideoSession = async (id: string) => {
+  const response = await api.put(`/sessions/${id}/start`);
+  return response.data;
+};
+
+export const endVideoSession = async (id: string) => {
+  const response = await api.put(`/sessions/${id}/end`);
+  return response.data;
+};

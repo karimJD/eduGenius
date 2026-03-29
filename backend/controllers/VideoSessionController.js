@@ -40,6 +40,11 @@ exports.createSession = async (req, res) => {
   try {
     const { title, description, classId, scheduledStart } = req.body;
 
+    if (!classId) {
+      console.error('Validation error: classId is missing from request body');
+      return res.status(400).json({ message: 'L’identifiant de la classe (classId) est requis.' });
+    }
+
     // Create Daily.co room
     const roomName = `edu-${Date.now()}`;
     const dailyRoom = await dailyRequest('/rooms', 'POST', {
@@ -53,7 +58,9 @@ exports.createSession = async (req, res) => {
       },
     });
 
-    const session = await VideoSession.create({
+    console.log('Daily.co room created:', dailyRoom.name, dailyRoom.url);
+
+    const sessionData = {
       title,
       description,
       classId,
@@ -62,12 +69,19 @@ exports.createSession = async (req, res) => {
       meetingUrl: dailyRoom.url,
       meetingId: dailyRoom.name,
       status: 'scheduled',
-    });
+    };
+    
+    console.log('Creating VideoSession in DB:', sessionData);
+
+    const session = await VideoSession.create(sessionData);
 
     res.status(201).json(session);
   } catch (error) {
-    console.error('createSession error:', error);
-    res.status(500).json({ message: error.message || 'Server Error' });
+    console.error('CRITICAL createSession error:', error);
+    res.status(500).json({ 
+        message: error.message || 'Server Error',
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined 
+    });
   }
 };
 
