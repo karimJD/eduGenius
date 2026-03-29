@@ -47,7 +47,7 @@ export const createCourse = async (data: any) => {
 
 // Video Sessions
 export const getVideoSessions = async (params?: any) => {
-  const response = await api.get('/sessions', { params });
+  const response = await api.get('/sessions', { params }); // Sessions are currently under /api/sessions in server.js
   return response.data;
 };
 

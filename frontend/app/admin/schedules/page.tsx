@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState, useCallback } from 'react';
-import { getSchedules, publishSchedule } from '@/lib/api/admin';
+import { getSchedules, publishSchedule, deleteSchedule } from '@/lib/api/admin';
 import { DataTable, Column } from '@/components/shared/DataTable';
 import { Button } from '@/components/ui/button';
 import { Calendar, Plus } from 'lucide-react';
@@ -72,6 +72,16 @@ export default function SchedulesPage() {
     } catch { alert('Erreur lors de la publication'); } finally { setPublishing(null); }
   };
 
+  const handleDelete = async (id: string, title: string) => {
+    if (!window.confirm(`Êtes-vous sûr de vouloir supprimer l'emploi du temps "${title}" ?`)) return;
+    try {
+      await deleteSchedule(id);
+      fetchSchedules();
+    } catch {
+      alert('Erreur lors de la suppression');
+    }
+  };
+
   const columnsWithActions: Column<Schedule>[] = [
     ...columns,
     {
@@ -81,19 +91,31 @@ export default function SchedulesPage() {
         <div className="flex gap-2">
           <a
             href={`/admin/schedules/${row._id}`}
-            className="rounded px-2 py-1 text-xs text-primary hover:bg-primary/10"
+            className="rounded px-2 py-1 text-xs text-primary font-medium hover:bg-primary/10 transition-colors"
           >
             Voir
+          </a>
+          <a
+            href={`/admin/schedules/${row._id}/edit`}
+            className="rounded px-2 py-1 text-xs text-blue-600 font-medium hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors"
+          >
+            Modifier
           </a>
           {!row.isPublished && (
             <button
               onClick={() => handlePublish(row._id)}
               disabled={publishing === row._id}
-              className="rounded px-2 py-1 text-xs text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 disabled:opacity-50"
+              className="rounded px-2 py-1 text-xs text-emerald-600 font-medium hover:bg-emerald-50 dark:hover:bg-emerald-950/30 disabled:opacity-50 transition-colors"
             >
               {publishing === row._id ? '...' : 'Publier'}
             </button>
           )}
+          <button
+            onClick={() => handleDelete(row._id, row.title)}
+            className="rounded px-2 py-1 text-xs text-destructive font-medium hover:bg-destructive/10 transition-colors"
+          >
+            Supprimer
+          </button>
         </div>
       ),
     },

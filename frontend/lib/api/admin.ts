@@ -42,6 +42,9 @@ export const deleteTeacher = (id: string) =>
 export const getDepartments = (params?: Record<string, string>) =>
   axiosInstance.get('/api/admin/departments', { params }).then(r => r.data);
 
+export const getDepartment = (id: string) =>
+  axiosInstance.get(`/api/admin/departments/${id}`).then(r => r.data);
+
 export const createDepartment = (data: Record<string, unknown>) =>
   axiosInstance.post('/api/admin/departments', data).then(r => r.data);
 
@@ -79,6 +82,12 @@ export const updateClass = (id: string, data: Record<string, unknown>) =>
 
 export const enrollStudent = (classId: string, studentId: string) =>
   axiosInstance.post(`/api/admin/classes/${classId}/students`, { studentId }).then(r => r.data);
+
+export const assignTeacherToClass = (classId: string, subjectId: string, teacherId: string) =>
+  axiosInstance.post(`/api/admin/classes/${classId}/teachers`, { subjectId, teacherId }).then(r => r.data);
+
+export const removeTeacherFromClass = (classId: string, teacherId: string) =>
+  axiosInstance.delete(`/api/admin/classes/${classId}/teachers/${teacherId}`).then(r => r.data);
 
 // ---------- Schedules ----------
 export const deleteClass = (id: string) =>

@@ -22,6 +22,8 @@ router.get('/', authenticate, adminAuth, async (req, res, next) => {
       .populate('programId', 'name code')
       .populate('academicYearId', 'year')
       .populate('academicAdvisorId', 'firstName lastName')
+      .populate('teachers.subjectId', 'name')
+      .populate('teachers.teacherId', 'firstName lastName email')
       .sort({ name: 1 });
     res.json(classes);
   } catch (err) { next(err); }
@@ -44,18 +46,57 @@ router.get('/:id', authenticate, adminAuth, async (req, res, next) => {
       .populate('programId', 'name code')
       .populate('academicYearId', 'year')
       .populate('students.studentId', 'firstName lastName cin studentId')
-      .populate('academicAdvisorId', 'firstName lastName');
+      .populate('academicAdvisorId', 'firstName lastName')
+      .populate('teachers.subjectId', 'name')
+      .populate('teachers.teacherId', 'firstName lastName email');
     if (!cls) return res.status(404).json({ error: 'Class not found' });
     res.json(cls);
   } catch (err) { next(err); }
 });
 
-// PUT /api/admin/classes/:id
 router.put('/:id', authenticate, adminAuth, async (req, res, next) => {
   try {
     const cls = await Class.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!cls) return res.status(404).json({ error: 'Class not found' });
     res.json(cls);
+  } catch (err) { next(err); }
+});
+
+// POST /api/admin/classes/:id/teachers - Assign teacher to subject
+router.post('/:id/teachers', authenticate, adminAuth, async (req, res, next) => {
+  try {
+    const { subjectId, teacherId } = req.body;
+    const cls = await Class.findById(req.params.id);
+    if (!cls) return res.status(404).json({ error: 'Class not found' });
+    
+    // Check if subject already has a teacher
+    const existingIndex = cls.teachers.findIndex(t => t.subjectId.toString() === subjectId);
+    if (existingIndex > -1) {
+      cls.teachers[existingIndex].teacherId = teacherId;
+    } else {
+      cls.teachers.push({ subjectId, teacherId });
+    }
+    
+    await cls.save();
+    
+    const updatedCls = await Class.findById(req.params.id)
+      .populate('teachers.subjectId', 'name')
+      .populate('teachers.teacherId', 'firstName lastName email');
+      
+    res.json({ message: 'Teacher assigned', class: updatedCls });
+  } catch (err) { next(err); }
+});
+
+// DELETE /api/admin/classes/:id/teachers/:teacherId - Remove teacher
+router.delete('/:id/teachers/:teacherId', authenticate, adminAuth, async (req, res, next) => {
+  try {
+    const cls = await Class.findById(req.params.id);
+    if (!cls) return res.status(404).json({ error: 'Class not found' });
+    
+    cls.teachers = cls.teachers.filter(t => t.teacherId.toString() !== req.params.teacherId);
+    await cls.save();
+    
+    res.json({ message: 'Teacher removed', class: cls });
   } catch (err) { next(err); }
 });
 

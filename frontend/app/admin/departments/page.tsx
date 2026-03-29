@@ -4,6 +4,7 @@ import { Plus, Building2, Edit2, Trash2, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/shared/SearchBar';
 import { ConfirmDialog } from '@/components/shared/ConfirmDialog';
+import Link from 'next/link';
 import {
   getDepartments, createDepartment, updateDepartment, deleteDepartment,
 } from '@/lib/api/admin';
@@ -111,11 +112,12 @@ export default function DepartmentsPage() {
           {filtered.map(dept => (
             <div
               key={dept._id}
-              className={`group rounded-xl border border-border bg-card p-5 transition-shadow hover:shadow-md ${
+              className={`group relative rounded-xl border border-border bg-card p-5 transition-shadow hover:shadow-md ${
                 !dept.isActive ? 'opacity-60' : ''
               }`}
             >
-              <div className="flex items-start justify-between">
+              <Link href={`/admin/departments/${dept._id}`} className="absolute inset-0 z-0" />
+              <div className="relative z-10 flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <Building2 className="h-5 w-5" />
@@ -129,13 +131,13 @@ export default function DepartmentsPage() {
                 </div>
                 <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                   <button
-                    onClick={() => openEdit(dept)}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); openEdit(dept); }}
                     className="rounded p-1.5 text-muted-foreground hover:bg-primary/10 hover:text-primary"
                   >
                     <Edit2 className="h-3.5 w-3.5" />
                   </button>
                   <button
-                    onClick={() => setDeleteId(dept._id)}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDeleteId(dept._id); }}
                     className="rounded p-1.5 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -143,23 +145,25 @@ export default function DepartmentsPage() {
                 </div>
               </div>
 
-              {dept.description && (
-                <p className="mt-3 text-sm text-muted-foreground line-clamp-2">{dept.description}</p>
-              )}
-
-              <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
-                {dept.headOfDepartmentId && (
-                  <span>
-                    Chef : {dept.headOfDepartmentId.firstName} {dept.headOfDepartmentId.lastName}
-                  </span>
+              <div className="relative z-10">
+                {dept.description && (
+                  <p className="mt-3 text-sm text-muted-foreground line-clamp-2">{dept.description}</p>
                 )}
-                <span className={`ml-auto rounded-full px-2 py-0.5 font-medium ${
-                  dept.isActive
-                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400'
-                    : 'bg-red-100 text-red-700'
-                }`}>
-                  {dept.isActive ? 'Actif' : 'Inactif'}
-                </span>
+
+                <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
+                  {dept.headOfDepartmentId && (
+                    <span>
+                      Chef : {dept.headOfDepartmentId.firstName} {dept.headOfDepartmentId.lastName}
+                    </span>
+                  )}
+                  <span className={`ml-auto rounded-full px-2 py-0.5 font-medium ${
+                    dept.isActive
+                      ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400'
+                      : 'bg-red-100 text-red-700'
+                  }`}>
+                    {dept.isActive ? 'Actif' : 'Inactif'}
+                  </span>
+                </div>
               </div>
             </div>
           ))}

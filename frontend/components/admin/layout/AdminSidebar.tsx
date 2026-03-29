@@ -19,31 +19,24 @@ const navGroups = [
     ],
   },
   {
+    label: 'Établissement',
+    items: [
+      { href: '/admin/departments', label: 'Départements', icon: Building2 },
+      { href: '/admin/classes', label: 'Classes', icon: Building2 },
+    ],
+  },
+  {
     label: 'Utilisateurs',
     items: [
+      { href: '/admin/users/teachers', label: 'Professeurs', icon: Users },
       { href: '/admin/users/students', label: 'Étudiants', icon: GraduationCap },
-      { href: '/admin/users/teachers', label: 'Enseignants', icon: Users },
     ],
   },
   {
     label: 'Académique',
     items: [
       { href: '/admin/schedules', label: 'Emplois du temps', icon: Calendar },
-      { href: '/admin/attendance/live', label: 'Surveillance en direct', icon: Activity },
-      { href: '/admin/attendance/reports', label: 'Rapports de présence', icon: BarChart2 },
-      { href: '/admin/grades', label: 'Notes', icon: BookOpen },
-      { href: '/admin/pv', label: 'Procès-verbal', icon: FileText },
-    ],
-  },
-  {
-    label: 'Administration',
-    items: [
-      { href: '/admin/academic-years', label: 'Années Académiques', icon: Calendar },
       { href: '/admin/subjects', label: 'Matières', icon: BookOpen },
-      { href: '/admin/classes', label: 'Classes', icon: Building2 },
-      { href: '/admin/departments', label: 'Départements', icon: Building2 },
-      { href: '/admin/programs', label: 'Programmes', icon: ClipboardList },
-      { href: '/admin/settings', label: 'Paramètres', icon: Settings },
     ],
   },
 ];

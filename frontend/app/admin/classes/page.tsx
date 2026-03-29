@@ -1,18 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Search, Edit2, Trash2, User, Hash, GraduationCap, Building2, BookOpen, Users } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Plus, Search, Edit2, Trash2, User, Hash, GraduationCap, Building2, BookOpen, Users, UserPlus } from 'lucide-react';
 import {
   getClasses,
   getTeachers,
   getDepartments,
-  getPrograms,
-  getAcademicYears,
+  getSubjects,
   createClass,
   updateClass,
   deleteClass,
   enrollStudent,
-  getStudents
+  getStudents,
+  assignTeacherToClass,
+  removeTeacherFromClass
 } from '@/lib/api/admin';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
@@ -73,6 +75,10 @@ interface Class {
   } | string | null;
   isActive: boolean;
   students: any[];
+  teachers?: {
+    subjectId: { _id: string; name: string } | string;
+    teacherId: { _id: string; firstName: string; lastName: string; email: string } | string;
+  }[];
 }
 
 interface ClassFormState {
@@ -80,8 +86,6 @@ interface ClassFormState {
   name: string;
   code: string;
   departmentId: string;
-  programId: string;
-  academicYearId: string;
   level: string;
   groupNumber: number;
   capacity: number;
@@ -89,11 +93,11 @@ interface ClassFormState {
 }
 
 export default function AdminClassesPage() {
+  const router = useRouter();
   const [classes, setClasses] = useState<Class[]>([]);
   const [teachers, setTeachers] = useState<any[]>([]);
   const [departments, setDepartments] = useState<any[]>([]);
-  const [programs, setPrograms] = useState<any[]>([]);
-  const [academicYears, setAcademicYears] = useState<any[]>([]);
+  const [subjects, setSubjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   
@@ -104,13 +108,17 @@ export default function AdminClassesPage() {
     name: '',
     code: '',
     departmentId: '',
-    programId: '',
-    academicYearId: '',
     level: '',
     groupNumber: 1,
     capacity: 30,
     academicAdvisorId: null,
   });
+
+  // Teacher Modal state
+  const [isTeacherModalOpen, setIsTeacherModalOpen] = useState(false);
+  const [selectedClassForTeacher, setSelectedClassForTeacher] = useState<Class | null>(null);
+  const [selectedSubjectId, setSelectedSubjectId] = useState('');
+  const [selectedTeacherId, setSelectedTeacherId] = useState('');
 
   // Enroll Modal state
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
@@ -122,19 +130,17 @@ export default function AdminClassesPage() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [classesRes, teachersRes, deptsRes, programsRes, yearsRes, studentsRes] = await Promise.all([
+      const [classesRes, teachersRes, deptsRes, subjectsRes, studentsRes] = await Promise.all([
         getClasses(),
         getTeachers({ limit: 100 }),
         getDepartments(),
-        getPrograms(),
-        getAcademicYears(),
+        getSubjects({ limit: 100 }),
         getStudents({ limit: 500 }) // Fetching max students for selection, pagination should ideally be used in a real search.
       ]);
       setClasses(classesRes);
       setTeachers(teachersRes?.teachers || []);
       setDepartments(deptsRes);
-      setPrograms(programsRes);
-      setAcademicYears(yearsRes);
+      setSubjects(subjectsRes?.subjects || subjectsRes || []);
       setAllStudents(studentsRes?.students || []);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -180,8 +186,6 @@ export default function AdminClassesPage() {
         name: cls.name,
         code: cls.code,
         departmentId: typeof cls.departmentId === 'object' ? cls.departmentId._id : cls.departmentId,
-        programId: typeof cls.programId === 'object' ? cls.programId._id : cls.programId,
-        academicYearId: typeof cls.academicYearId === 'object' ? cls.academicYearId._id : cls.academicYearId,
         level: cls.level,
         groupNumber: cls.groupNumber || 1,
         capacity: cls.capacity || 30,
@@ -189,13 +193,10 @@ export default function AdminClassesPage() {
       });
     } else {
       setIsEditing(false);
-      const currentYearId = academicYears.find(y => y.isCurrent)?._id || '';
       setFormState({
         name: '',
         code: '',
         departmentId: '',
-        programId: '',
-        academicYearId: currentYearId,
         level: '',
         groupNumber: 1,
         capacity: 30,
@@ -212,8 +213,6 @@ export default function AdminClassesPage() {
         name: formState.name,
         code: formState.code.toUpperCase(),
         departmentId: formState.departmentId,
-        programId: formState.programId,
-        academicYearId: formState.academicYearId,
         level: formState.level,
         groupNumber: formState.groupNumber,
         capacity: formState.capacity,
@@ -308,19 +307,35 @@ export default function AdminClassesPage() {
                   <Hash size={80} />
                 </div>
                 
-                <div className="flex justify-between items-start mb-4 relative z-10">
+                <div className="flex justify-between items-start mb-4 relative z-20">
                   <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold">
                     <GraduationCap className="w-6 h-6" />
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        setSelectedClassForTeacher(cls);
+                        setSelectedSubjectId('');
+                        setSelectedTeacherId('');
+                        setIsTeacherModalOpen(true);
+                      }}
+                      className="rounded-xl hover:bg-primary/10 hover:text-primary text-muted-foreground group/teacher relative"
+                    >
+                      <UserPlus className="w-5 h-5" />
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-[10px] rounded opacity-0 group-hover/teacher:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+                        Professeurs
+                      </span>
+                    </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => handleOpenEnrollModal(cls)}
-                      className="rounded-xl hover:bg-primary/10 hover:text-primary text-muted-foreground mr-2 group/enroll relative"
+                      className="rounded-xl hover:bg-primary/10 hover:text-primary text-muted-foreground group/enroll relative"
                     >
                       <Plus className="w-5 h-5" />
-                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded opacity-0 group-hover/enroll:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-[10px] rounded opacity-0 group-hover/enroll:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
                         Inscrire
                       </span>
                     </Button>
@@ -343,7 +358,10 @@ export default function AdminClassesPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4 relative z-10">
+                <div 
+                  className="space-y-4 relative z-10 cursor-pointer"
+                  onClick={() => router.push(`/admin/classes/${cls._id}`)}
+                >
                   <div>
                     <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors uppercase tracking-tight truncate">
                       {cls.name}
@@ -362,10 +380,6 @@ export default function AdminClassesPage() {
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Building2 className="w-4 h-4 text-primary" />
                       <span className="truncate">{typeof cls.departmentId === 'object' ? cls.departmentId.name : cls.departmentId}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <BookOpen className="w-4 h-4 text-primary" />
-                      <span className="truncate">{typeof cls.programId === 'object' ? cls.programId.name : cls.programId}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <User className="w-4 h-4 text-primary" />
@@ -436,42 +450,6 @@ export default function AdminClassesPage() {
                   <SelectContent>
                     {departments.map((d) => (
                       <SelectItem key={d._id} value={d._id}>{d.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-muted-foreground">Programme</Label>
-                <Select
-                  value={formState.programId}
-                  onValueChange={(value) => setFormState({...formState, programId: value})}
-                  required
-                >
-                  <SelectTrigger className="w-full h-12 rounded-xl border border-border bg-muted/40 px-3">
-                    <SelectValue placeholder="Sélectionner..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {programs.map((p) => (
-                      <SelectItem key={p._id} value={p._id}>{p.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-muted-foreground">Année Académique</Label>
-                <Select
-                  value={formState.academicYearId}
-                  onValueChange={(value) => setFormState({...formState, academicYearId: value})}
-                  required
-                >
-                  <SelectTrigger className="w-full h-12 rounded-xl border border-border bg-muted/40 px-3">
-                    <SelectValue placeholder="Sélectionner..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {academicYears.map((y) => (
-                      <SelectItem key={y._id} value={y._id}>{y.year}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -652,6 +630,131 @@ export default function AdminClassesPage() {
               </Button>
             </DialogFooter>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Teacher Assignment Modal */}
+      <Dialog open={isTeacherModalOpen} onOpenChange={setIsTeacherModalOpen}>
+        <DialogContent className="bg-background border-border text-foreground rounded-3xl sm:max-w-xl max-h-[90vh] overflow-y-auto w-full">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">Gérer les Professeurs</DialogTitle>
+            <p className="text-sm text-muted-foreground mt-1">
+              Classe : {selectedClassForTeacher?.name}
+            </p>
+          </DialogHeader>
+          <div className="space-y-6 mt-4">
+            <div className="flex flex-col sm:flex-row gap-4 items-end">
+              <div className="space-y-2 flex-full w-full">
+                <Label>Matière</Label>
+                <Select value={selectedSubjectId} onValueChange={setSelectedSubjectId}>
+                  <SelectTrigger className="w-full h-12 rounded-xl text-foreground bg-background">
+                    <SelectValue placeholder="Sélectionner..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background text-foreground border border-border z-[100]">
+                    {subjects?.map(s => (
+                      <SelectItem key={s._id} value={s._id}>{s.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2 flex-full w-full">
+                <Label>Enseignant</Label>
+                <Select value={selectedTeacherId} onValueChange={setSelectedTeacherId}>
+                  <SelectTrigger className="w-full h-12 rounded-xl text-foreground bg-background">
+                    <SelectValue placeholder="Sélectionner..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background text-foreground border border-border z-[100]">
+                    {teachers?.map(t => (
+                      <SelectItem key={t._id} value={t._id}>{t.firstName} {t.lastName}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <Button 
+                onClick={async () => {
+                  if (!selectedClassForTeacher || !selectedSubjectId || !selectedTeacherId) return;
+                  try {
+                    await assignTeacherToClass(selectedClassForTeacher._id, selectedSubjectId, selectedTeacherId);
+                    toast.success('Professeur assigné avec succès');
+                    setSelectedSubjectId('');
+                    setSelectedTeacherId('');
+                    
+                    // Optimistic update
+                    const updatedClass = { ...selectedClassForTeacher };
+                    const subject = subjects.find(s => s._id === selectedSubjectId);
+                    const teacher = teachers.find(t => t._id === selectedTeacherId);
+                    
+                    if (!updatedClass.teachers) updatedClass.teachers = [];
+                    const existingIdx = updatedClass.teachers.findIndex((t: any) => 
+                      (typeof t.subjectId === 'object' ? t.subjectId._id : t.subjectId) === selectedSubjectId
+                    );
+                    
+                    const newTeacherObj = { subjectId: subject, teacherId: teacher };
+                    
+                    if (existingIdx > -1) {
+                      updatedClass.teachers[existingIdx] = newTeacherObj;
+                    } else {
+                      updatedClass.teachers.push(newTeacherObj);
+                    }
+                    setSelectedClassForTeacher(updatedClass);
+                    fetchData();
+                  } catch (error) {
+                    toast.error("Erreur lors de l'assignation");
+                  }
+                }}
+                disabled={!selectedSubjectId || !selectedTeacherId}
+                className="h-12 rounded-xl px-6 w-full sm:w-auto"
+              >
+                Ajouter
+              </Button>
+            </div>
+            
+            <div className="space-y-3">
+              <Label>Professeurs actuellement assignés</Label>
+              <div className="border border-border rounded-xl divide-y divide-border bg-muted/20">
+                {!selectedClassForTeacher?.teachers || selectedClassForTeacher?.teachers?.length === 0 ? (
+                  <div className="p-4 text-center text-muted-foreground text-sm">Aucun enseignant assigné.</div>
+                ) : (
+                  selectedClassForTeacher?.teachers?.map((t: any, idx) => {
+                    const subjectName = typeof t.subjectId === 'object' ? t.subjectId.name : 'Matière inconnue';
+                    const teacherName = typeof t.teacherId === 'object' ? `${t.teacherId.firstName} ${t.teacherId.lastName}` : 'Enseignant inconnu';
+                    return (
+                      <div key={idx} className="flex justify-between items-center p-3">
+                        <div>
+                          <p className="font-semibold text-sm">{subjectName}</p>
+                          <p className="text-xs text-muted-foreground">{teacherName}</p>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-destructive hover:bg-destructive/10 h-8 w-8"
+                          onClick={async () => {
+                            try {
+                              const teacherIdToUse = typeof t.teacherId === 'object' ? t.teacherId._id : t.teacherId;
+                              await removeTeacherFromClass(selectedClassForTeacher._id, teacherIdToUse);
+                              toast.success('Professeur retiré');
+                              
+                              // Optimistic update
+                              const updatedClass = { ...selectedClassForTeacher };
+                              updatedClass.teachers = updatedClass.teachers?.filter((ct: any) => 
+                                (typeof ct.teacherId === 'object' ? ct.teacherId._id : ct.teacherId) !== teacherIdToUse
+                              );
+                              setSelectedClassForTeacher(updatedClass);
+                              fetchData();
+                            } catch (error) {
+                              toast.error('Erreur lors du retrait');
+                            }
+                          }}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

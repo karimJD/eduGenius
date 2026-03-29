@@ -14,15 +14,19 @@ const ClassSchema = new Schema(
     programId: {
       type: Schema.Types.ObjectId,
       ref: 'StudyProgram',
-      required: true,
     },
     academicYearId: {
       type: Schema.Types.ObjectId,
       ref: 'AcademicYear',
-      required: true,
     },
     level: { type: String, required: true },
     groupNumber: { type: Number },
+    teachers: [
+      {
+        subjectId: { type: Schema.Types.ObjectId, ref: 'Subject', required: true },
+        teacherId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+      }
+    ],
     students: [
       {
         studentId: { type: Schema.Types.ObjectId, ref: 'User' },

@@ -16,9 +16,10 @@ interface ClassItem {
   _id: string;
   name: string;
   code: string;
-  studentIds: { _id: string; firstName: string; lastName: string }[];
-  schedule?: any[];
+  students: { studentId: any; status: string }[];
+  teachers: { subjectId: any; teacherId: any }[];
   departmentId?: { name: string };
+  level: string;
 }
 
 export default function TeacherClassesPage() {
@@ -32,7 +33,7 @@ export default function TeacherClassesPage() {
       try {
         setLoading(true);
         const data = await getMyClasses();
-        setClasses(data);
+        setClasses(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Failed to fetch classes:', err);
       } finally {
@@ -47,10 +48,10 @@ export default function TeacherClassesPage() {
     c.code?.toLowerCase().includes(search.toLowerCase())
   );
 
-  const totalStudents = classes.reduce((acc, c) => acc + (c.studentIds?.length || 0), 0);
+  const totalStudents = classes.reduce((acc, c) => acc + (c.students?.length || 0), 0);
 
   return (
-    <div className="p-6 space-y-8 max-w-7xl mx-auto">
+    <div className="p-6 space-y-8 mx-auto">
       {/* Header Section */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-1">
@@ -180,12 +181,12 @@ export default function TeacherClassesPage() {
                       <div className="flex items-center gap-1.5 font-medium">
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                         <Users className="w-3.5 h-3.5" /> 
-                        <span><b className="text-foreground">{cls.studentIds?.length || 0}</b> Étudiants</span>
+                        <span><b className="text-foreground">{cls.students?.length || 0}</b> Étudiants</span>
                       </div>
                       <div className="flex items-center gap-1.5 font-medium">
                         <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
                         <BookOpen className="w-3.5 h-3.5" /> 
-                        <span><b className="text-foreground">{cls.schedule?.length || 0}</b> Séances/sem</span>
+                        <span><b className="text-foreground text-xs">{cls.teachers?.length || 0}</b> Matières</span>
                       </div>
                     </div>
                   </div>

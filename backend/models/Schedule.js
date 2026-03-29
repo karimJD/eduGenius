@@ -6,8 +6,7 @@ const ScheduleSchema = new Schema(
   {
     title: { type: String, required: true },
     academicYearId: {
-      type: Schema.Types.ObjectId,
-      ref: 'AcademicYear',
+      type: String,
       required: true,
     },
     semester: { type: Number, enum: [1, 2], required: true },
@@ -19,7 +18,7 @@ const ScheduleSchema = new Schema(
     targetId: { type: Schema.Types.ObjectId, required: true },
     entries: [
       {
-        dayOfWeek: { type: Number, enum: [0, 1, 2, 3, 4] }, // 0=Sun...4=Thu
+        dayOfWeek: { type: Number, enum: [0, 1, 2, 3, 4, 5, 6] }, // 0=Sun...6=Sat
         startTime: { type: String },
         endTime: { type: String },
         subjectId: { type: Schema.Types.ObjectId, ref: 'Subject' },

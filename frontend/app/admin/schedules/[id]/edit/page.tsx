@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import {
   ArrowLeft, ArrowRight, Check, Plus, Trash2, Calendar,
   Clock, User, MapPin, Video, ChevronDown, RotateCcw,
@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import {
-  getClasses, getTeachers, getSubjects, createSchedule, getSchedules,
+  getClasses, getTeachers, getSubjects, updateSchedule, getSchedules, getSchedule
 } from '@/lib/api/admin';
 import clsx from 'clsx';
 
@@ -45,9 +45,7 @@ interface ConflictWarning {
 }
 
 const DAY_LABELS = ['Lundi','Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-const DAY_NUMS   = [1,2, 3, 4, 5, 6]; // 2=Mar … 6=Sam
-// Backend stores 0=Sun…4=Thu Tunisian style; we'll remap on save:
-// UI day index 0 (Lundi) → backend dayOfWeek 1, etc.
+const DAY_NUMS   = [1, 2, 3, 4, 5, 6];
 
 const SESSION_TYPE_LABELS: Record<string, string> = {
   lecture:  'Cours Magistral',
@@ -142,9 +140,13 @@ function SelectField({
 // ─────────────────────────────────────────────
 // Page
 // ─────────────────────────────────────────────
-export default function CreateSchedulePage() {
+export default function EditSchedulePage() {
   const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveAsDraft, setSaveAsDraft] = useState(true);
 
@@ -171,25 +173,52 @@ export default function CreateSchedulePage() {
 
   // ── Loaders
   const loadAll = useCallback(async () => {
-    const [c, t, s] = await Promise.all([
-      getClasses().catch(() => []),
-      getTeachers().catch(() => []),
-      getSubjects().catch(() => []),
-    ]);
-    setClasses(Array.isArray(c) ? c : c.classes || []);
-    setTeachers(Array.isArray(t) ? t : t.teachers || []);
-    setSubjects(Array.isArray(s) ? s : []);
-  }, []);
+    setLoading(true);
+    try {
+      const [c, t, s, schedData] = await Promise.all([
+        getClasses().catch(() => []),
+        getTeachers().catch(() => []),
+        getSubjects().catch(() => []),
+        getSchedule(id),
+      ]);
+      
+      setClasses(Array.isArray(c) ? c : c.classes || []);
+      setTeachers(Array.isArray(t) ? t : t.teachers || []);
+      setSubjects(Array.isArray(s) ? s : []);
+
+      const sched = schedData.schedule || schedData;
+      setTitle(sched.title);
+      setYearId(sched.academicYearId);
+      setSemester(sched.semester);
+      setTargetType(sched.targetType);
+      setTargetId(sched.targetId);
+      setSaveAsDraft(!sched.isPublished);
+      setEntries(sched.entries.map((e: any) => ({
+        ...e,
+        subjectId: e.subjectId?._id || e.subjectId,
+        teacherId: e.teacherId?._id || e.teacherId || '',
+        room: e.room || '',
+        notes: e.notes || '',
+        isRecursive: !!e.isRecursive,
+        recurrenceType: e.recurrenceType || 'semester',
+        weeksCount: e.weeksCount || 1,
+      })));
+    } catch {
+      alert('Erreur lors du chargement des données');
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
 
   useEffect(() => { loadAll(); }, [loadAll]);
 
-  // ── Step 2: add entry  
+  // Rest of functions copied from create/page.tsx
   const timesOverlap = (s1: string, e1: string, s2: string, e2: string) => {
     const toMins = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
     return toMins(s1) < toMins(e2) && toMins(s2) < toMins(e1);
   };
 
-  const detectLocalConflicts = (allEntries: EntryForm[]): ConflictWarning[] => {
+  const detectLocalConflicts = useCallback((allEntries: EntryForm[]): ConflictWarning[] => {
     const warnings: ConflictWarning[] = [];
     allEntries.forEach((e, i) => {
       allEntries.forEach((other, j) => {
@@ -213,13 +242,18 @@ export default function CreateSchedulePage() {
       });
     });
     return warnings;
-  };
+  }, [teachers]);
+
+  useEffect(() => {
+    if (entries.length > 0) {
+      setLocalConflicts(detectLocalConflicts(entries));
+    }
+  }, [entries, detectLocalConflicts]);
 
   const addEntry = () => {
     if (!newEntry.subjectId || !newEntry.startTime || !newEntry.endTime) return;
     const updated = [...entries, { ...newEntry }];
     setEntries(updated);
-    setLocalConflicts(detectLocalConflicts(updated));
     setNewEntry(emptyEntry());
     setShowAddEntry(false);
   };
@@ -227,26 +261,25 @@ export default function CreateSchedulePage() {
   const removeEntry = (i: number) => {
     const updated = entries.filter((_, idx) => idx !== i);
     setEntries(updated);
-    setLocalConflicts(detectLocalConflicts(updated));
   };
 
-  // ── Check backend conflicts then go to step 3
   const goToStep3 = async () => {
     setCheckingConflicts(true);
     setBackendConflicts([]);
     try {
-      // Fetch all existing schedules and look for teacher/room overlaps
       const existing = await getSchedules({ semester: String(semester), academicYear: academicYearId }).catch(() => []);
-      const existingEntries: Array<{ dayOfWeek: number; startTime: string; endTime: string; teacherId?: string; room?: string; scheduleTitle?: string }> = [];
-      const schedList = Array.isArray(existing) ? existing : (existing?.schedules ?? []);
-      schedList.forEach((sched: { title?: string; entries?: Array<{ dayOfWeek?: number; startTime?: string; endTime?: string; teacherId?: string; room?: string }> }) => {
-        (sched.entries ?? []).forEach(e => {
+      const existingEntries: any[] = [];
+      const schedList = (Array.isArray(existing) ? existing : (existing?.schedules ?? []))
+        .filter((s: any) => s._id !== id); // Exclude current schedule
+      
+      schedList.forEach((sched: any) => {
+        (sched.entries ?? []).forEach((e: any) => {
           if (e.dayOfWeek == null || !e.startTime || !e.endTime) return;
           existingEntries.push({
             dayOfWeek: e.dayOfWeek,
             startTime: e.startTime,
             endTime: e.endTime,
-            teacherId: e.teacherId,
+            teacherId: e.teacherId?._id || e.teacherId,
             room: e.room,
             scheduleTitle: sched.title,
           });
@@ -270,20 +303,14 @@ export default function CreateSchedulePage() {
         });
       });
 
-      // Deduplicate
       setBackendConflicts([...new Set(newConflicts)]);
     } catch {
-      // ignore – we don't block progress if the check fails
     } finally {
       setCheckingConflicts(false);
       setStep(3);
     }
   };
 
-  // ── Step 1 validation
-  const step1Valid = title.trim() && academicYearId && targetId;
-
-  // ── Submit
   const handleSave = async () => {
     setSaving(true);
     try {
@@ -308,14 +335,13 @@ export default function CreateSchedulePage() {
           weeksCount: e.isRecursive && e.recurrenceType === 'weeks' ? e.weeksCount : undefined,
         })),
       };
-      await createSchedule(payload);
-      router.push('/admin/schedules');
+      await updateSchedule(id, payload);
+      router.push(`/admin/schedules/${id}`);
     } catch {
-      alert("Erreur lors de l'enregistrement. Veuillez réessayer.");
+      alert("Erreur lors de l'enregistrement.");
     } finally { setSaving(false); }
   };
 
-  // ── Target label helper
   const targetLabel = () => {
     if (targetType === 'class') {
       const c = classes.find(cl => cl._id === targetId);
@@ -330,9 +356,16 @@ export default function CreateSchedulePage() {
     return s ? `${s.name} — ${s.code}` : id;
   };
 
-  // ══════════════════════════════════════════
-  // RENDER
-  // ══════════════════════════════════════════
+  if (loading) {
+    return (
+      <div className="flex h-[60vh] items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+      </div>
+    );
+  }
+
+  const step1Valid = title.trim() && academicYearId && targetId;
+
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -344,8 +377,8 @@ export default function CreateSchedulePage() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold">Créer un Emploi du Temps</h1>
-          <p className="text-muted-foreground text-sm">Configurez le planning hebdomadaire</p>
+          <h1 className="text-2xl font-bold font-heading">Modifier l'Emploi du Temps</h1>
+          <p className="text-muted-foreground text-sm">Mettez à jour les informations et séances</p>
         </div>
       </div>
 
@@ -353,7 +386,7 @@ export default function CreateSchedulePage() {
 
       {/* ────────────── STEP 1 ────────────── */}
       {step === 1 && (
-        <div className="bg-card border border-border rounded-2xl p-6 space-y-5">
+        <div className="bg-card border border-border rounded-2xl p-6 space-y-5 shadow-sm">
           <h2 className="font-semibold text-lg flex items-center gap-2">
             <Calendar className="h-5 w-5 text-primary" /> Informations générales
           </h2>
@@ -374,9 +407,7 @@ export default function CreateSchedulePage() {
               value={academicYearId} onChange={setYearId}
             >
               {generatedYears.map(year => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
+                <option key={year} value={year}>{year}</option>
               ))}
             </SelectField>
 
@@ -425,7 +456,7 @@ export default function CreateSchedulePage() {
       {/* ────────────── STEP 2 ────────────── */}
       {step === 2 && (
         <div className="space-y-4">
-          <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
+          <div className="bg-card border border-border rounded-2xl p-6 space-y-4 shadow-sm">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold text-lg flex items-center gap-2">
                 <Clock className="h-5 w-5 text-primary" /> Séances ({entries.length})
@@ -437,11 +468,10 @@ export default function CreateSchedulePage() {
               )}
             </div>
 
-            {/* Entry list */}
             {entries.length === 0 && !showAddEntry && (
               <div className="py-10 text-center border border-dashed border-border rounded-xl text-sm text-muted-foreground">
                 <Clock className="mx-auto mb-2 h-8 w-8 opacity-30" />
-                Aucune séance ajoutée. Cliquez sur "Ajouter une séance" pour commencer.
+                Aucune séance. Cliquez sur "Ajouter une séance" pour commencer.
               </div>
             )}
 
@@ -474,12 +504,6 @@ export default function CreateSchedulePage() {
                         {teachers.find(t => t._id === e.teacherId)?.firstName ?? ''}
                       </div>
                     )}
-                    {e.isRecursive && (
-                      <Badge variant="secondary" className="px-1.5 py-0 h-5 text-[10px] flex items-center gap-1 shrink-0 bg-primary/5 text-primary border-primary/20">
-                        <RotateCcw className="h-2.5 w-2.5" />
-                        {e.recurrenceType === 'semester' ? 'Semestre' : `${e.weeksCount} sem.`}
-                      </Badge>
-                    )}
                     <button
                       onClick={() => removeEntry(i)}
                       className="ml-auto p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
@@ -491,24 +515,9 @@ export default function CreateSchedulePage() {
               </div>
             )}
 
-            {/* Local conflict warnings */}
-            {localConflicts.length > 0 && (
-              <div className="p-3 rounded-xl border border-amber-400/50 bg-amber-50/60 dark:bg-amber-900/10 flex gap-3 items-start">
-                <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
-                <div className="space-y-1">
-                  <p className="text-xs font-semibold text-amber-700 dark:text-amber-400">Conflits détectés dans ce planning :</p>
-                  {[...new Set(localConflicts.map(c => c.message))].map((msg, idx) => (
-                    <p key={idx} className="text-xs text-amber-600 dark:text-amber-300">• {msg}</p>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Add Entry form */}
             {showAddEntry && (
               <div className="border border-primary/30 bg-primary/5 rounded-xl p-5 space-y-4">
                 <h3 className="text-sm font-semibold text-foreground">Nouvelle séance</h3>
-
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <SelectField
                     label="Jour" id="ne-day"
@@ -559,105 +568,18 @@ export default function CreateSchedulePage() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <SelectField
-                    label="Type de séance" id="ne-type"
-                    value={newEntry.sessionType}
-                    onChange={v => setNewEntry(p => ({ ...p, sessionType: v as EntryForm['sessionType'] }))}
-                  >
-                    {Object.entries(SESSION_TYPE_LABELS).map(([k, v]) => (
-                      <option key={k} value={k}>{v}</option>
-                    ))}
-                  </SelectField>
-
-                  <div className="space-y-1.5">
-                    <Label htmlFor="ne-room">Salle <span className="text-muted-foreground text-xs">(optionnel)</span></Label>
-                    <div className="relative">
-                      <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground pointer-events-none" />
-                      <Input id="ne-room" className="pl-8" placeholder="ex: A104"
-                        value={newEntry.room}
-                        onChange={e => setNewEntry(p => ({ ...p, room: e.target.value }))} />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="ne-notes">Notes <span className="text-muted-foreground text-xs">(optionnel)</span></Label>
-                  <Input id="ne-notes" placeholder="Informations additionnelles..."
-                    value={newEntry.notes}
-                    onChange={e => setNewEntry(p => ({ ...p, notes: e.target.value }))} />
-                </div>
-
-                <div className="pt-2 border-t border-border/50">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-background border border-border">
-                    <div className="flex items-center gap-3">
-                      <div className={clsx(
-                        "p-2 rounded-lg transition-colors",
-                        newEntry.isRecursive ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
-                      )}>
-                        <RotateCcw className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold">Récurrence</p>
-                        <p className="text-xs text-muted-foreground">Répéter cette séance sur plusieurs semaines</p>
-                      </div>
-                    </div>
-                    <Switch 
-                      checked={newEntry.isRecursive} 
-                      onCheckedChange={(checked) => setNewEntry(p => ({ ...p, isRecursive: checked }))} 
-                    />
-                  </div>
-
-                  {newEntry.isRecursive && (
-                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                      <SelectField
-                        label="Type de récurrence" id="ne-rec-type"
-                        value={newEntry.recurrenceType}
-                        onChange={v => setNewEntry(p => ({ ...p, recurrenceType: v as 'semester' | 'weeks' }))}
-                      >
-                        <option value="semester">Tout le semestre</option>
-                        <option value="weeks">Nombre de semaines spécifique</option>
-                      </SelectField>
-
-                      {newEntry.recurrenceType === 'weeks' && (
-                        <div className="space-y-1.5">
-                          <Label htmlFor="ne-weeks">Nombre de semaines</Label>
-                          <Input 
-                            id="ne-weeks" type="number" min={1} max={52} 
-                            value={newEntry.weeksCount}
-                            onChange={e => setNewEntry(p => ({ ...p, weeksCount: parseInt(e.target.value) || 1 }))} 
-                          />
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-
                 <div className="flex gap-2 justify-end pt-1">
-                  <Button variant="ghost" onClick={() => { setShowAddEntry(false); setNewEntry(emptyEntry()); }}>
-                    Annuler
-                  </Button>
-                  <Button onClick={addEntry} disabled={!newEntry.subjectId}>
-                    <Plus className="mr-2 h-4 w-4" /> Ajouter
-                  </Button>
+                  <Button variant="ghost" onClick={() => setShowAddEntry(false)}>Annuler</Button>
+                  <Button onClick={addEntry} disabled={!newEntry.subjectId}>Ajouter</Button>
                 </div>
               </div>
             )}
           </div>
 
           <div className="flex justify-between pt-2">
-            <Button variant="ghost" onClick={() => setStep(1)}>
-              <ArrowLeft className="mr-2 h-4 w-4" /> Retour
-            </Button>
+            <Button variant="ghost" onClick={() => setStep(1)}><ArrowLeft className="mr-2 h-4 w-4" /> Retour</Button>
             <Button onClick={goToStep3} disabled={checkingConflicts}>
-              {checkingConflicts ? (
-                <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                  Vérification...
-                </span>
-              ) : (
-                <>Suivant <ArrowRight className="ml-2 h-4 w-4" /></>
-              )}
+              {checkingConflicts ? "Vérification..." : <>Suivant <ArrowRight className="ml-2 h-4 w-4" /></>}
             </Button>
           </div>
         </div>
@@ -665,141 +587,33 @@ export default function CreateSchedulePage() {
 
       {/* ────────────── STEP 3 ────────────── */}
       {step === 3 && (
-        <div className="space-y-5">
-          <div className="bg-card border border-border rounded-2xl p-6 space-y-5">
-            <h2 className="font-semibold text-lg flex items-center gap-2">
-              <Check className="h-5 w-5 text-primary" /> Récapitulatif
-            </h2>
+        <div className="bg-card border border-border rounded-2xl p-6 space-y-5 shadow-sm">
+          <h2 className="font-semibold text-lg flex items-center gap-2">
+            <Check className="h-5 w-5 text-primary" /> Récapitulatif
+          </h2>
 
-            {/* Conflict warnings from backend */}
-            {backendConflicts.length > 0 && (
-              <div className="p-4 rounded-xl border border-amber-400/50 bg-amber-50/60 dark:bg-amber-900/10 space-y-2">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0" />
-                  <p className="text-sm font-semibold text-amber-700 dark:text-amber-400">
-                    {backendConflicts.length} conflit(s) avec des emplois existants
-                  </p>
-                </div>
-                <div className="space-y-1 pl-6">
-                  {backendConflicts.map((msg, i) => (
-                    <p key={i} className="text-xs text-amber-600 dark:text-amber-300">• {msg}</p>
-                  ))}
-                </div>
-                <p className="text-xs text-muted-foreground pl-6">Vous pouvez tout de même enregistrer, mais cela créera des conflits d'horaire.</p>
-              </div>
-            )}
-            {backendConflicts.length === 0 && entries.length > 0 && (
-              <div className="p-3 rounded-xl border border-emerald-400/50 bg-emerald-50/50 dark:bg-emerald-900/10 flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-emerald-500 shrink-0" />
-                <p className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Aucun conflit détecté avec les emplois existants.</p>
-              </div>
-            )}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+            <div className="p-3 bg-muted/30 rounded-xl"><p className="text-xs opacity-60">Titre</p><p className="font-bold">{title}</p></div>
+            <div className="p-3 bg-muted/30 rounded-xl"><p className="text-xs opacity-60">Année</p><p className="font-bold">{academicYearId}</p></div>
+            <div className="p-3 bg-muted/30 rounded-xl"><p className="text-xs opacity-60">Semestre</p><p className="font-bold">S{semester}</p></div>
+            <div className="p-3 bg-muted/30 rounded-xl"><p className="text-xs opacity-60">Cible</p><p className="font-bold truncate">{targetLabel()}</p></div>
+          </div>
 
-            {/* General info summary */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { label: 'Titre', value: title },
-                { label: 'Année', value: academicYearId },
-                { label: 'Semestre', value: `S${semester}` },
-                { label: 'Cible', value: targetLabel() },
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-background border border-border rounded-xl p-3">
-                  <p className="text-xs text-muted-foreground">{label}</p>
-                  <p className="text-sm font-semibold text-foreground mt-0.5 truncate">{value}</p>
-                </div>
-              ))}
+          <div className="flex items-center gap-3 p-4 bg-amber-500/5 border border-amber-500/10 rounded-xl">
+            <Video className="h-5 w-5 text-amber-500 shrink-0" />
+            <div className="flex-1">
+              <p className="text-sm font-semibold">Publication</p>
+              <p className="text-xs opacity-60">Modifier le statut de visibilité</p>
             </div>
-
-            {/* Visual grid by day */}
-            {entries.length === 0 ? (
-              <div className="py-8 text-center border border-dashed border-border rounded-xl text-sm text-muted-foreground">
-                Aucune séance — l'emploi du temps sera vide.
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm border-collapse">
-                  <thead>
-                    <tr>
-                      {DAY_LABELS.map((d, i) => (
-                        <th key={d} className="p-2 text-xs font-semibold text-muted-foreground bg-muted/40 border border-border first:rounded-tl-lg last:rounded-tr-lg">
-                          {d}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      {DAY_NUMS.map(day => {
-                        const dayEntries = entries.filter(e => e.dayOfWeek === day);
-                        return (
-                          <td key={day} className="align-top p-1.5 border border-border min-w-[120px]">
-                            {dayEntries.length === 0 ? (
-                              <div className="h-10 flex items-center justify-center text-muted-foreground/40 text-xs">—</div>
-                            ) : (
-                              <div className="space-y-1.5">
-                                {dayEntries.map((e, i) => (
-                                  <div key={i} className={clsx('p-2 rounded-lg text-xs space-y-0.5',
-                                    e.sessionType === 'lecture'  ? 'bg-blue-500/10 text-blue-700 dark:text-blue-300' :
-                                    e.sessionType === 'tutorial' ? 'bg-violet-500/10 text-violet-700 dark:text-violet-300' :
-                                    'bg-amber-500/10 text-amber-700 dark:text-amber-300'
-                                  )}>
-                                    <p className="font-semibold truncate">{subjectLabel(e.subjectId).split('—')[0].trim()}</p>
-                                    <p className="opacity-80">{e.startTime}–{e.endTime}</p>
-                                    {e.room && <p className="opacity-70">🏛 {e.room}</p>}
-                                    <span className="inline-block opacity-60 text-[10px]">
-                                      {e.sessionType === 'lecture' ? 'CM' : e.sessionType === 'tutorial' ? 'TD' : 'TP'}
-                                    </span>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )}
-
-            {/* Publish option */}
-            <div className="flex items-center gap-3 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-              <Video className="h-5 w-5 text-amber-500 shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-semibold text-foreground">Publication</p>
-                <p className="text-xs text-muted-foreground">
-                  Un brouillon est visible uniquement par les admins. Un emploi publié est visible par les étudiants et enseignants.
-                </p>
-              </div>
-              <label className="flex items-center gap-2 cursor-pointer shrink-0">
-                <input
-                  type="checkbox"
-                  checked={!saveAsDraft}
-                  onChange={e => setSaveAsDraft(!e.target.checked)}
-                  className="h-4 w-4 rounded border-border accent-primary"
-                />
-                <span className="text-sm font-medium">Publier maintenant</span>
-              </label>
-            </div>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={!saveAsDraft} onChange={e => setSaveAsDraft(!e.target.checked)} className="h-4 w-4 rounded accent-primary" />
+              <span className="text-sm font-medium">Publier</span>
+            </label>
           </div>
 
           <div className="flex justify-between">
-            <Button variant="ghost" onClick={() => setStep(2)}>
-              <ArrowLeft className="mr-2 h-4 w-4" /> Retour
-            </Button>
-            <Button onClick={handleSave} disabled={saving}>
-              {saving ? (
-                <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                  Enregistrement...
-                </span>
-              ) : (
-                <>
-                  <Check className="mr-2 h-4 w-4" />
-                  {saveAsDraft ? 'Enregistrer comme brouillon' : 'Enregistrer et publier'}
-                </>
-              )}
-            </Button>
+            <Button variant="ghost" onClick={() => setStep(2)}><ArrowLeft className="mr-2 h-4 w-4" /> Retour</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? 'Enregistrement...' : 'Mettre à jour'}</Button>
           </div>
         </div>
       )}

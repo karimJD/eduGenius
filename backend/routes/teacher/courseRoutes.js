@@ -6,7 +6,7 @@ const Class = require('../../models/Class');
 
 // Helper: verify teacher owns class
 async function verifyClassOwnership(classId, teacherId) {
-  const cls = await Class.findOne({ _id: classId, teacherId });
+  const cls = await Class.findOne({ _id: classId, 'teachers.teacherId': teacherId });
   return !!cls;
 }
 

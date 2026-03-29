@@ -5,9 +5,9 @@ const { authenticate } = require('../../middleware/auth');
 // Protect all teacher routes
 router.use(authenticate);
 
-// Role guard — teachers only
+// Role guard — teachers or admins only
 router.use((req, res, next) => {
-  if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
+  if (req.user.role !== 'teacher' && req.user.role !== 'admin' && req.user.role !== 'super_admin') {
     return res.status(403).json({ error: 'Teacher access required' });
   }
   next();

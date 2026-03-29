@@ -15,7 +15,6 @@ router.get('/', authenticate, adminAuth, async (req, res, next) => {
     if (semester) filter.semester = Number(semester);
     if (isPublished !== undefined) filter.isPublished = isPublished === 'true';
     const schedules = await Schedule.find(filter)
-      .populate('academicYearId', 'year')
       .populate('entries.subjectId', 'name code')
       .populate('entries.teacherId', 'firstName lastName')
       .populate('entries.classId', 'name code')
@@ -46,7 +45,6 @@ router.post('/', authenticate, adminAuth, async (req, res, next) => {
 router.get('/:id', authenticate, adminAuth, async (req, res, next) => {
   try {
     const schedule = await Schedule.findById(req.params.id)
-      .populate('academicYearId', 'year')
       .populate('entries.subjectId', 'name code hoursDistribution')
       .populate('entries.teacherId', 'firstName lastName')
       .populate('entries.classId', 'name code');
