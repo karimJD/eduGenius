@@ -4,6 +4,7 @@ const Course = require('../../models/Course');
 const Class = require('../../models/Class');
 const Submission = require('../../models/Submission');
 const Attendance = require('../../models/Attendance');
+const Schedule = require('../../models/Schedule');
 
 // GET /api/teacher/classes
 router.get('/', async (req, res, next) => {
@@ -53,7 +54,39 @@ router.get('/:id', async (req, res, next) => {
 
     if (!cls) return res.status(404).json({ error: 'Class not found or access denied' });
 
-    res.json(cls);
+    // Fetch all published schedules that might contain entries for this class
+    const schedules = await Schedule.find({
+      $or: [
+        { targetType: 'class', targetId: req.params.id },
+        { 'entries.classId': req.params.id }
+      ],
+      isPublished: true
+    })
+    .populate('entries.subjectId', 'name code')
+    .populate('entries.teacherId', 'firstName lastName email')
+    .lean();
+
+    // Extract and aggregate all entries belonging to this class
+    const allEntries = [];
+    const seenEntryIds = new Set();
+
+    schedules.forEach(s => {
+      s.entries.forEach(entry => {
+        // Determine if this entry belongs to the current class
+        const entryClassId = entry.classId ? entry.classId.toString() : (s.targetType === 'class' ? s.targetId.toString() : null);
+        
+        if (entryClassId === req.params.id && !seenEntryIds.has(entry._id.toString())) {
+          allEntries.push(entry);
+          seenEntryIds.add(entry._id.toString());
+        }
+      });
+    });
+    
+    // Map entries if schedule exists
+    const clsObj = cls.toObject();
+    clsObj.schedule = allEntries;
+
+    res.json(clsObj);
   } catch (err) {
     next(err);
   }

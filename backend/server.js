@@ -2,6 +2,8 @@ const express = require('express');
 const http = require('http');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
 const dotenv = require('dotenv');
 
 // Existing routes

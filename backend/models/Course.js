@@ -20,6 +20,7 @@ const ChapterSchema = new mongoose.Schema(
     title: { type: String, required: true },
     order: { type: Number, required: true },
     materials: [MaterialSchema],
+    exercises: [MaterialSchema],
   },
   { _id: true }
 );
