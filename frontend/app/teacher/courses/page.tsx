@@ -18,11 +18,17 @@ interface Course {
   _id: string;
   title: string;
   classId: string;
+  subjectId?: { _id: string; name: string; code: string };
   chapters: any[];
 }
 
+interface TeacherClass extends Class {
+  assignedSubjects: { subjectId: { _id: string; name: string; code: string } }[];
+  isAdvisor: boolean;
+}
+
 export default function CoursesPage() {
-  const [classes, setClasses] = useState<Class[]>([]);
+  const [classes, setClasses] = useState<TeacherClass[]>([]);
   const [courses, setCourses] = useState<Record<string, Course>>({});
   const [loading, setLoading] = useState(true);
 
@@ -106,7 +112,7 @@ export default function CoursesPage() {
                       <div className="flex flex-col">
                         <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Contenu</span>
                         <span className="text-sm font-black text-foreground">
-                          {course?.chapters?.length || 0} Chapitres
+                          {cls.assignedSubjects?.length || 0} Matière{cls.assignedSubjects?.length > 1 ? 's' : ''} folder{cls.assignedSubjects?.length > 1 ? 's' : ''}
                         </span>
                       </div>
                       <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">

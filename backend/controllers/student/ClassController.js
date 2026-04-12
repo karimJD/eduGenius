@@ -5,8 +5,8 @@ const getEnrolledClasses = async (req, res) => {
     const studentId = req.user._id;
     const classes = await Class.find({
       'students.studentId': studentId,
-      'students.status': 'active'
-    }).populate('teacher', 'firstName lastName email profileImage');
+      'students.status': 'enrolled'
+    }).populate('teachers.teacherId', 'firstName lastName email profileImage');
 
     res.status(200).json({ success: true, count: classes.length, data: classes });
   } catch (error) {
@@ -21,8 +21,8 @@ const getClassDetails = async (req, res) => {
     const classObj = await Class.findOne({
       _id: id,
       'students.studentId': studentId,
-      'students.status': 'active'
-    }).populate('teacher', 'firstName lastName email profileImage');
+      'students.status': 'enrolled'
+    }).populate('teachers.teacherId', 'firstName lastName email profileImage');
 
     if (!classObj) {
       return res.status(404).json({ success: false, message: 'Class not found or not enrolled' });

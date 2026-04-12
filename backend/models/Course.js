@@ -11,6 +11,8 @@ const MaterialSchema = new mongoose.Schema(
     name: { type: String, required: true },
     size: { type: Number, default: 0 }, // bytes
     uploadedAt: { type: Date, default: Date.now },
+    // Only used by exercises
+    dueDate: { type: Date, default: null },
   },
   { _id: true }
 );
@@ -19,6 +21,8 @@ const ChapterSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     order: { type: Number, required: true },
+    isPublished: { type: Boolean, default: false },
+    publishedAt: { type: Date },
     materials: [MaterialSchema],
     exercises: [MaterialSchema],
   },
@@ -49,6 +53,11 @@ const CourseSchema = new mongoose.Schema(
     teacherId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      default: null,
+    },
+    subjectId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subject',
       default: null,
     },
     chapters: [ChapterSchema],

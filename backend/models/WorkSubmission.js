@@ -2,17 +2,22 @@ const mongoose = require('mongoose');
 
 const WorkSubmissionSchema = new mongoose.Schema(
   {
-    courseId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course',
-      required: true,
-    },
     chapterId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     exerciseId: {
       type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    classId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Class',
+      required: true,
+    },
+    subjectId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Matiere',
       required: true,
     },
     studentId: {
@@ -32,7 +37,8 @@ const WorkSubmissionSchema = new mongoose.Schema(
   }
 );
 
-// Index for quick lookup of student submissions for a specific exercise
-WorkSubmissionSchema.index({ exerciseId: 1, studentId: 1 });
+// Unique index to prevent multiple submissions for the same exercise by the same student
+WorkSubmissionSchema.index({ exerciseId: 1, studentId: 1 }, { unique: true });
+WorkSubmissionSchema.index({ classId: 1, subjectId: 1 });
 
 module.exports = mongoose.model('WorkSubmission', WorkSubmissionSchema);

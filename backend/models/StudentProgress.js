@@ -16,6 +16,11 @@ const StudentProgressSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course',
     },
+    subjectId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subject',
+      required: true,
+    },
     chaptersProgress: [
       {
         chapterId: {
@@ -59,8 +64,8 @@ const StudentProgressSchema = new mongoose.Schema(
   }
 );
 
-StudentProgressSchema.index({ studentId: 1, classId: 1 }, { unique: true });
+StudentProgressSchema.index({ studentId: 1, classId: 1, subjectId: 1 }, { unique: true });
 StudentProgressSchema.index({ studentId: 1 });
-StudentProgressSchema.index({ classId: 1 });
+StudentProgressSchema.index({ classId: 1, subjectId: 1 });
 
 module.exports = mongoose.model('StudentProgress', StudentProgressSchema);

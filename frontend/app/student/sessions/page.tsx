@@ -51,7 +51,7 @@ export default function StudentSessionsPage() {
   };
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto pb-20">
+    <div className="space-y-8 mx-auto pb-20">
       <header className="space-y-1">
         <h1 className="text-4xl font-black text-white tracking-tighter">Mes Cours en Direct</h1>
         <p className="text-gray-500 font-medium">Rejoins tes professeurs pour des sessions d'apprentissage interactives.</p>
