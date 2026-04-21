@@ -17,9 +17,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-type RecipientType = 'teacher' | 'class' | 'admin';
+type RecipientType = 'student' | 'teacher' | 'class';
 
-export default function StudentMessagesPage() {
+export default function AdminMessagesPage() {
   const [recipients, setRecipients] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<RecipientType>('teacher');
   const [selectedChat, setSelectedChat] = useState<{ id: string, type: 'private' | 'class', title: string } | null>(null);
@@ -32,12 +32,9 @@ export default function StudentMessagesPage() {
         setLoading(true);
         let res;
         if (activeTab === 'class') {
-          // Assuming /api/student/classes or /api/classes works for student depending on middleware
-          res = await api.get('/student/classes');
-        } else if (activeTab === 'admin') {
-          res = await api.get('/users?role=admin');
+          res = await api.get('/classes');
         } else {
-          res = await api.get('/users?role=teacher');
+          res = await api.get(`/users?role=${activeTab}`);
         }
         setRecipients(res.data);
       } catch (error) {
@@ -60,12 +57,12 @@ export default function StudentMessagesPage() {
       <div className="w-80 flex flex-col gap-6">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Messages</h1>
-          <p className="text-xs text-gray-500 uppercase tracking-widest font-bold">Espace Étudiant</p>
+          <p className="text-xs text-gray-500 uppercase tracking-widest font-bold">Administrateur Central</p>
         </div>
 
         {/* Recipient Type Tabs */}
         <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-2xl border border-gray-200 dark:border-white/10">
-          {(['teacher', 'class', 'admin'] as const).map((tab) => (
+          {(['teacher', 'student', 'class'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => {
@@ -79,7 +76,7 @@ export default function StudentMessagesPage() {
                   : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-300"
               )}
             >
-              {tab === 'teacher' ? 'Profs' : tab === 'class' ? 'Classes' : 'Admin'}
+              {tab === 'teacher' ? 'Profs' : tab === 'student' ? 'Élèves' : 'Classes'}
             </button>
           ))}
         </div>
@@ -117,19 +114,19 @@ export default function StudentMessagesPage() {
                     <div className={cn(
                       "w-10 h-10 rounded-xl flex items-center justify-center",
                       activeTab === 'teacher' ? "bg-purple-500/10 text-purple-600 dark:text-purple-400" :
-                      activeTab === 'class' ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" :
-                      "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                      activeTab === 'student' ? "bg-orange-500/10 text-orange-600 dark:text-orange-400" :
+                      "bg-blue-500/10 text-blue-600 dark:text-blue-400"
                     )}>
                         {activeTab === 'teacher' ? <Briefcase size={18} /> :
-                         activeTab === 'class' ? <GraduationCap size={18} /> :
-                         <UserIcon size={18} />}
+                         activeTab === 'student' ? <UserIcon size={18} /> :
+                         <GraduationCap size={18} />}
                     </div>
                     <div className="text-left min-w-0">
                         <p className="text-sm font-bold truncate">
                           {activeTab === 'class' ? r.name : `${r.firstName} ${r.lastName}`}
                         </p>
                         <p className="text-[10px] opacity-60">
-                          {activeTab === 'class' ? 'Canal de classe' : r.role || 'Personnel'}
+                          {activeTab === 'class' ? 'Canal de classe' : r.role}
                         </p>
                     </div>
                 </button>
@@ -147,6 +144,7 @@ export default function StudentMessagesPage() {
             receiverId={selectedChat.type === 'private' ? selectedChat.id : undefined}
             classId={selectedChat.type === 'class' ? selectedChat.id : undefined}
             title={selectedChat.title}
+            isBroadcast={selectedChat.type === 'class'}
           />
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-center space-y-4 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-3xl">
@@ -154,9 +152,9 @@ export default function StudentMessagesPage() {
                 <MessageSquare size={40} />
              </div>
              <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Messagerie Étudiant</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Console de Messagerie Admin</h3>
                 <p className="text-sm text-gray-500 mt-1 max-w-xs">
-                  Séléctionnez un professeur, une classe ou l'administration pour commencer à échanger.
+                  Séléctionnez un enseignant, un étudiant ou une classe pour envoyer un message officiel.
                 </p>
              </div>
           </div>

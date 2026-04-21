@@ -1,55 +1,116 @@
-const AiService = require('../../services/AiService');
+const pdf = require('pdf-parse');
+const axios = require('axios');
+const OllamaService = require('../../services/OllamaService');
 const Course = require('../../models/Course');
+const Subject = require('../../models/Subject');
 const StudyMaterial = require('../../models/StudyMaterial');
 const StudentQuizAttempt = require('../../models/StudentQuizAttempt');
 const Submission = require('../../models/Submission');
 
 // Helper to extract text from a chapter or course
-const extractTextFromContent = async (reqClassId, chapterId) => {
-  // In a real app, you would fetch actual files/text. Providing mock content here.
-  const course = await Course.findOne({ classId: reqClassId });
-  let content = "Contenu de cours générique pour l'analyse IA.";
-  if (course) {
-    if (chapterId) {
-      const chapter = course.chapters.id(chapterId);
-      if (chapter) content = chapter.title + ' ' + (chapter.description || '');
-    } else {
-      content = course.title + ' ' + course.description;
+const extractTextFromContent = async (courseId, chapterIds = [], selectedMaterialIds = []) => {
+  const course = await Course.findById(courseId);
+  if (!course) return "Contenu introuvable.";
+
+  let content = "";
+  
+  // If specific materials are selected
+  if (selectedMaterialIds.length > 0) {
+    for (const chapter of course.chapters) {
+      for (const material of chapter.materials) {
+        if (selectedMaterialIds.includes(material._id.toString())) {
+          content += `\n\n--- Contenu de : ${material.name} ---\n`;
+          if (material.type === 'pdf') {
+            try {
+              const response = await axios.get(material.url, { responseType: 'arraybuffer' });
+              const pdfData = await pdf(response.data);
+              content += pdfData.text;
+            } catch (error) {
+              console.error(`Failed to parse PDF ${material.name}:`, error);
+              content += `(Erreur lors de l'extraction du contenu de ce fichier)`;
+            }
+          } else {
+            content += `${material.name} - ${material.type}`;
+          }
+        }
+      }
     }
+  } 
+  // Otherwise check if chapters are selected
+  else if (chapterIds.length > 0) {
+    for (const id of chapterIds) {
+      const chapter = course.chapters.id(id);
+      if (chapter) {
+        content += `\n\n### Chapitre : ${chapter.title}\n`;
+        content += chapter.description || '';
+        
+        // Also extract from all PDF materials in the chapter
+        for (const material of chapter.materials) {
+          if (material.type === 'pdf') {
+            try {
+              const response = await axios.get(material.url, { responseType: 'arraybuffer' });
+              const pdfData = await pdf(response.data);
+              content += `\n\n--- Contenu de : ${material.name} ---\n${pdfData.text}`;
+            } catch (error) {
+              console.error(`Failed to parse PDF in chapter:`, error);
+            }
+          }
+        }
+      }
+    }
+  } else {
+    // Full course summary
+    content = `${course.title}\n${course.description}\n\n`;
+    // Optionally extract from all PDFs in all chapters if it's not too large
+    // For now, let's keep it simple and just use the metadata if full course
+    content += course.content || '';
   }
+
   return content;
 };
 
 const generateSummary = async (req, res) => {
   try {
-    const { classId, courseId, chapterId, length, difficulty } = req.body;
-    const studentId = req.user._id;
+    const { classId, courseId, chapterId, selectedChapters, selectedMaterials, style, difficulty } = req.body;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
+    const mongooseClassId = new mongoose.Types.ObjectId(classId);
 
-    const contentText = await extractTextFromContent(classId, chapterId);
-    const summaryText = await AiService.generateSummary(contentText);
+    const targetCourseId = courseId || (await Course.findOne({ classId: mongooseClassId }))?._id;
+    const contentText = await extractTextFromContent(
+      targetCourseId, 
+      selectedChapters || (chapterId ? [chapterId] : []),
+      selectedMaterials || []
+    );
+    
+    const summaryText = await OllamaService.generateSummary(contentText, style || 'detailed');
 
     const studyMaterial = new StudyMaterial({
       studentId,
       classId,
-      courseId,
-      chapterId,
+      courseId: targetCourseId,
       type: 'summary',
-      title: 'Résumé IA',
+      title: `Résumé IA - ${new Date().toLocaleDateString()}`,
       content: summaryText,
       isAIGenerated: true,
-      aiGenerationParams: { sourceChapterId: chapterId, summaryLength: length || 'medium', difficulty: difficulty || 'medium', generatedAt: new Date() }
+      aiGenerationParams: { 
+        sourceChapterId: chapterId, 
+        summaryLength: 'medium', 
+        difficulty: difficulty || 'medium', 
+        generatedAt: new Date() 
+      }
     });
     await studyMaterial.save();
 
     res.status(200).json({ success: true, data: studyMaterial });
   } catch (error) {
+    console.error('Error in generateSummary:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
 const getSummaries = async (req, res) => {
   try {
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
     const summaries = await StudyMaterial.find({ studentId, type: 'summary' }).sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: summaries });
   } catch (error) {
@@ -59,25 +120,26 @@ const getSummaries = async (req, res) => {
 
 const generateFlashcards = async (req, res) => {
   try {
-    const { classId, courseId, chapterId, numberOfCards } = req.body;
-    const studentId = req.user._id;
+    const { classId, courseId, chapterId, selectedChapters, selectedMaterials } = req.body;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
+    const mongooseClassId = new mongoose.Types.ObjectId(classId);
 
-    // A simplified prompt for flashcards using the AiService
-    // Since AiService doesn't have generateFlashcards, we reuse enhanced summary or a direct model call.
-    // We'll mock the flashcards generation logic here relying on standard properties.
-    const flashcardsMock = [
-      { front: 'Question 1', back: 'Réponse 1', difficulty: 'medium' },
-      { front: 'Question 2', back: 'Réponse 2', difficulty: 'medium' }
-    ];
+    const targetCourseId = courseId || (await Course.findOne({ classId: mongooseClassId }))?._id;
+    const contentText = await extractTextFromContent(
+      targetCourseId, 
+      selectedChapters || (chapterId ? [chapterId] : []),
+      selectedMaterials || []
+    );
+
+    const generatedFlashcards = await OllamaService.generateFlashcards(contentText);
 
     const studyMaterial = new StudyMaterial({
       studentId,
       classId,
-      courseId,
-      chapterId,
+      courseId: targetCourseId,
       type: 'flashcard',
-      title: 'Flashcards IA',
-      flashcards: flashcardsMock,
+      title: `Flashcards IA - ${new Date().toLocaleDateString()}`,
+      flashcards: generatedFlashcards,
       isAIGenerated: true,
       aiGenerationParams: { sourceChapterId: chapterId, generatedAt: new Date() }
     });
@@ -85,6 +147,7 @@ const generateFlashcards = async (req, res) => {
 
     res.status(200).json({ success: true, data: studyMaterial });
   } catch (error) {
+    console.error('Error in generateFlashcards:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -92,8 +155,9 @@ const generateFlashcards = async (req, res) => {
 const getFlashcards = async (req, res) => {
   try {
     const { classId } = req.params;
-    const studentId = req.user._id;
-    const materials = await StudyMaterial.find({ studentId, classId, type: 'flashcard' });
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
+    const mongooseClassId = new mongoose.Types.ObjectId(classId);
+    const materials = await StudyMaterial.find({ studentId, classId: mongooseClassId, type: 'flashcard' });
     res.status(200).json({ success: true, data: materials });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -102,12 +166,18 @@ const getFlashcards = async (req, res) => {
 
 const generatePracticeQuiz = async (req, res) => {
   try {
-    const { classId, courseId, chapterId, numberOfQuestions } = req.body;
-    const studentId = req.user._id;
+    const { classId, courseId, chapterId, selectedChapters, selectedMaterials, numberOfQuestions } = req.body;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
+    const mongooseClassId = new mongoose.Types.ObjectId(classId);
 
-    const contentText = await extractTextFromContent(classId, chapterId);
-    // AiService returns parsed JSON array of questions
-    const generatedQuestions = await AiService.generateQuiz(contentText, numberOfQuestions || 5);
+    const targetCourseId = courseId || (await Course.findOne({ classId: mongooseClassId }))?._id;
+    const contentText = await extractTextFromContent(
+      targetCourseId, 
+      selectedChapters || (chapterId ? [chapterId] : []),
+      selectedMaterials || []
+    );
+    
+    const generatedQuestions = await OllamaService.generateQuiz(contentText, numberOfQuestions || 5);
 
     const questions = generatedQuestions.map(q => ({
       question: q.question,
@@ -118,7 +188,10 @@ const generatePracticeQuiz = async (req, res) => {
     }));
 
     const attempt = new StudentQuizAttempt({
-      studentId, classId, courseId, chapterId,
+      studentId, 
+      classId, 
+      courseId: targetCourseId, 
+      chapterId: chapterId || (selectedChapters ? selectedChapters[0] : null),
       quizTitle: 'Quiz d\'entraînement IA',
       isPracticeQuiz: true,
       questions,
@@ -128,6 +201,7 @@ const generatePracticeQuiz = async (req, res) => {
     await attempt.save();
     res.status(200).json({ success: true, data: attempt });
   } catch (error) {
+    console.error('Error in generatePracticeQuiz:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -135,7 +209,7 @@ const generatePracticeQuiz = async (req, res) => {
 const submitPracticeQuiz = async (req, res) => {
   try {
     const { id } = req.params;
-    const { answers } = req.body; // array of answered question options
+    const { answers } = req.body;
     const attempt = await StudentQuizAttempt.findById(id);
 
     if (!attempt) return res.status(404).json({ success: false, message: 'Attempt not found' });
@@ -145,7 +219,6 @@ const submitPracticeQuiz = async (req, res) => {
       q.studentAnswer = answers[idx];
       q.isCorrect = (q.studentAnswer === q.correctAnswer);
       if (q.isCorrect) score += q.points;
-      // Ideally generate explanation using AiService.explainMistakes
     });
 
     attempt.score = score;
@@ -162,7 +235,7 @@ const submitPracticeQuiz = async (req, res) => {
 
 const getPracticeHistory = async (req, res) => {
   try {
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
     const history = await StudentQuizAttempt.find({ studentId, isPracticeQuiz: true }).sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: history });
   } catch (error) {
@@ -175,7 +248,6 @@ const getRecommendations = async (req, res) => {
     const { classId } = req.params;
     const studentId = req.user._id;
     
-    // Simple mock logic for recommendations
     res.status(200).json({ 
       success: true, 
       data: {
@@ -198,3 +270,4 @@ module.exports = {
   getPracticeHistory,
   getRecommendations
 };
+

@@ -1,4 +1,6 @@
 const Message = require('../models/Message');
+const Class = require('../models/Class');
+const User = require('../models/User');
 
 /**
  * Set up real-time chat Socket.IO handlers
@@ -22,20 +24,21 @@ const setupChatHandlers = (io) => {
     });
 
     // Send a message: persist to DB and broadcast to room
-    socket.on('send-message', async ({ roomId, content, type, receiverId, classId, senderId, senderName }) => {
+    socket.on('send-message', async ({ roomId, content, messageType, receiverId, classId, senderId, senderName }) => {
       try {
+        // 1. Create the primary message (either private or class-wide)
         const msg = await Message.create({
           senderId,
-          receiverId: receiverId || undefined,
-          classId: classId || undefined,
+          receiverId: receiverId || null,
+          classId: classId || null,
           content,
-          type: type || 'text',
+          messageType: messageType || (classId ? 'class' : 'private'),
         });
 
         const payload = {
           _id: msg._id,
           content: msg.content,
-          type: msg.type,
+          messageType: msg.messageType,
           createdAt: msg.createdAt,
           senderId: {
             _id: senderId,
@@ -44,8 +47,42 @@ const setupChatHandlers = (io) => {
           },
         };
 
-        // Broadcast to everyone in room (including sender for confirmation)
+        // Broadcast to the primary room (the one the sender is currently viewing)
         io.to(`chat:${roomId}`).emit('new-message', payload);
+
+        // 2. BROADCAST LOGIC: If Admin sends to Class, create individual private messages for students
+        if (messageType === 'class' && classId) {
+          const sender = await User.findById(senderId);
+          if (sender && ['admin', 'super_admin'].includes(sender.role)) {
+            const classDoc = await Class.findById(classId).populate('students.studentId');
+            if (classDoc && classDoc.students) {
+              const broadcastPromises = classDoc.students.map(async (s) => {
+                const studentId = s.studentId?._id || s.studentId;
+                if (!studentId || studentId.toString() === senderId.toString()) return;
+
+                // Create individual private message
+                const privateMsg = await Message.create({
+                  senderId,
+                  receiverId: studentId,
+                  content,
+                  messageType: 'private',
+                });
+
+                const privatePayload = {
+                  ...payload,
+                  _id: privateMsg._id,
+                  messageType: 'private',
+                  receiverId: studentId,
+                };
+
+                // Emit to the private room of the student and admin
+                const privateRoomId = [senderId, studentId.toString()].sort().join('-');
+                io.to(`chat:${privateRoomId}`).emit('new-message', privatePayload);
+              });
+              await Promise.all(broadcastPromises);
+            }
+          }
+        }
       } catch (err) {
         console.error('send-message socket error:', err);
         socket.emit('message-error', { error: 'Failed to send message' });

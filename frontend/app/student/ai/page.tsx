@@ -22,6 +22,8 @@ import Link from 'next/link';
 import { cn } from '../../../lib/utils';
 import Image from 'next/image';
 import { GenerateSummaryModal } from '@/components/student/GenerateSummaryModal';
+import { GenerateFlashcardsModal } from '@/components/student/GenerateFlashcardsModal';
+import { GenerateQuizModal } from '@/components/student/GenerateQuizModal';
 import { QuizPlayer } from '@/components/student/QuizPlayer';
 import { FlashcardViewer } from '@/components/student/FlashcardViewer';
 
@@ -39,22 +41,23 @@ export default function StudentAIPage() {
   
   const [loading, setLoading] = useState(true);
   const [loadingFlashcards, setLoadingFlashcards] = useState(false);
+  
+  // Modals state
   const [summaryModalOpen, setSummaryModalOpen] = useState(false);
+  const [flashcardsModalOpen, setFlashcardsModalOpen] = useState(false);
+  const [quizModalOpen, setQuizModalOpen] = useState(false);
   
-  
-  // Quiz Player State
-  const [activeQuizCourseId, setActiveQuizCourseId] = useState<string | null>(null);
-
-  // Flashcards State
+  // Active Content State
+  const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
   const [activeFlashcardDeck, setActiveFlashcardDeck] = useState<any | null>(null);
 
   const loadData = async () => {
     try {
       setLoading(true);
       const [summariesRes, historyRes, classesRes] = await Promise.all([
-        api.get('/student/ai-tools/summaries'),
-        api.get('/student/ai-tools/practice-quizzes/history'),
-        api.get('/student/classes')
+        api.get('/student/ai/summaries'),
+        api.get('/student/ai/practice-quizzes/history'),
+        api.get('/student/courses')
       ]);
       
       if (summariesRes.data.success) setSummaries(summariesRes.data.data);
@@ -76,11 +79,39 @@ export default function StudentAIPage() {
     loadData();
   }, []);
 
-  const handleGenerateSummary = async (data: { classId: string; style: string }) => {
-    await api.post('/ai/summary', data);
-    // Reload summaries after generating
-    await loadData();
-    setActiveTab('summaries');
+  const handleGenerateSummary = async (data: any) => {
+    try {
+      await api.post('/student/ai/generate-summary', data);
+      await loadData();
+      setActiveTab('summaries');
+    } catch (error) {
+      console.error('Error generating summary:', error);
+    }
+  };
+
+  const handleGenerateFlashcards = async (data: any) => {
+    try {
+      const res = await api.post('/student/ai/generate-flashcards', data);
+      if (res.data.success) {
+        setFlashcards(prev => [res.data.data, ...prev]);
+        setActiveFlashcardDeck(res.data.data);
+        setActiveTab('flashcards');
+      }
+    } catch (error) {
+      console.error('Error generating flashcards:', error);
+    }
+  };
+
+  const handleGenerateQuiz = async (data: any) => {
+    try {
+      const res = await api.post('/student/ai/generate-practice-quiz', data);
+      if (res.data.success) {
+        setActiveQuizId(res.data.data._id);
+        setActiveTab('quizzes');
+      }
+    } catch (error) {
+      console.error('Error generating quiz:', error);
+    }
   };
 
   useEffect(() => {
@@ -88,7 +119,7 @@ export default function StudentAIPage() {
       if (!selectedClassId) return;
       try {
         setLoadingFlashcards(true);
-        const res = await api.get(`/student/ai-tools/flashcards/${selectedClassId}`);
+        const res = await api.get(`/student/ai/flashcards/${selectedClassId}`);
         if (res.data.success) {
           setFlashcards(res.data.data);
         }
@@ -98,6 +129,7 @@ export default function StudentAIPage() {
         setLoadingFlashcards(false);
       }
     };
+
 
     if (activeTab === 'flashcards' && selectedClassId) {
       fetchFlashcards();
@@ -134,12 +166,27 @@ export default function StudentAIPage() {
         </div>
       </div>
       
-      <GenerateSummaryModal 
-        open={summaryModalOpen} 
-        onOpenChange={setSummaryModalOpen}
-        classes={classes}
-        onGenerate={handleGenerateSummary}
-      />
+        <GenerateSummaryModal 
+          open={summaryModalOpen} 
+          onOpenChange={setSummaryModalOpen} 
+          classId={selectedClassId}
+          classes={classes}
+          onGenerate={handleGenerateSummary}
+        />
+        <GenerateFlashcardsModal
+          open={flashcardsModalOpen}
+          onOpenChange={setFlashcardsModalOpen}
+          classId={selectedClassId}
+          classes={classes}
+          onGenerate={handleGenerateFlashcards}
+        />
+        <GenerateQuizModal
+          open={quizModalOpen}
+          onOpenChange={setQuizModalOpen}
+          classId={selectedClassId}
+          classes={classes}
+          onGenerate={handleGenerateQuiz}
+        />
 
       {/* Navigation Tabs */}
       <div className="flex overflow-x-auto pb-2 custom-scrollbar border-b border-[#222222]">
@@ -151,7 +198,11 @@ export default function StudentAIPage() {
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as TabType)}
+            onClick={() => {
+              setActiveTab(tab.id as TabType);
+              if (tab.id !== 'quizzes') setActiveQuizId(null);
+              if (tab.id !== 'flashcards') setActiveFlashcardDeck(null);
+            }}
             className={cn(
               "flex items-center gap-2 px-6 py-4 font-medium text-sm transition-all whitespace-nowrap relative",
               activeTab === tab.id 
@@ -331,55 +382,58 @@ export default function StudentAIPage() {
                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                        <h2 className="text-xl font-bold text-white">Vos Jeux de Flashcards</h2>
                        
-                       <div className="flex items-center gap-2 w-full sm:w-auto">
-                         <span className="text-sm text-gray-500 whitespace-nowrap">Classe:</span>
-                         <select 
-                            value={selectedClassId}
-                            onChange={(e) => setSelectedClassId(e.target.value)}
-                            className="bg-[#111111] border border-[#333333] text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500 w-full sm:w-48"
-                         >
-                           {classes.map(cls => (
-                             <option key={cls._id} value={cls._id}>{cls.name}</option>
-                           ))}
-                           {classes.length === 0 && <option value="">Aucune classe</option>}
-                         </select>
-                       </div>
-                     </div>
-                     
-                     {loadingFlashcards ? (
-                        <div className="py-12 flex justify-center"><div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" /></div>
-                     ) : flashcards.length === 0 ? (
-                       <EmptyState 
-                         icon={Layers} 
-                         title="Aucun jeu de flashcards" 
-                         description="Sélectionnez une autre classe ou générez de nouvelles flashcards." 
-                       />
-                     ) : (
-                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                         {flashcards.map(deck => (
-                           <div key={deck._id} className="bg-[#111111] border border-[#222222] rounded-xl p-5 hover:border-purple-500/30 transition-all cursor-pointer group flex flex-col items-center text-center">
-                              <div className="relative mb-6 mt-2">
-                                 <div className="w-16 h-20 bg-[#1a1a1a] border border-[#333333] rounded-lg -rotate-6 absolute top-0 left-0 transform origin-bottom-left transition-transform group-hover:-rotate-12"></div>
-                                 <div className="w-16 h-20 bg-[#222222] border border-[#444444] rounded-lg rotate-6 absolute top-0 left-0 transform origin-bottom-right transition-transform group-hover:rotate-12"></div>
-                                 <div className="w-16 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg relative z-10 flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:-translate-y-2 transition-transform">
-                                    <span className="font-bold text-white text-xl">{deck.flashcards?.length || 0}</span>
-                                 </div>
-                              </div>
-                              <h3 className="font-bold text-white mb-2">{deck.title || "Jeu de cartes IA"}</h3>
-                              <p className="text-xs text-gray-500 mb-4 flex items-center gap-1">
-                                 <Clock className="w-3 h-3" />
-                                 Généré le {new Date(deck.createdAt).toLocaleDateString()}
-                              </p>
-                              <Button 
-                                onClick={() => setActiveFlashcardDeck(deck)}
-                                className="w-full bg-[#1a1a1a] border border-[#333333] text-white hover:bg-[#222222]"
-                              >
-                                Réviser
-                              </Button>
-                           </div>
-                         ))}
-                       </div>
-                     )}
+                        <div className="flex items-center gap-3">
+                           <select 
+                              value={selectedClassId}
+                              onChange={(e) => setSelectedClassId(e.target.value)}
+                              className="bg-[#111111] border border-[#222222] text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-purple-500"
+                           >
+                             {classes.map(c => (
+                               <option key={c._id} value={c._id}>{c.name}</option>
+                             ))}
+                           </select>
+                           <Button 
+                             onClick={() => setFlashcardsModalOpen(true)}
+                             className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl"
+                           >
+                             Nouveau Deck
+                           </Button>
+                        </div>
+                      </div>
+                      
+                      {loadingFlashcards ? (
+                         <div className="py-12 flex justify-center"><div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>
+                      ) : flashcards.length === 0 ? (
+                        <EmptyState 
+                          icon={Layers} 
+                          title="Aucun jeu de flashcards" 
+                          description="Sélectionnez une autre classe ou générez de nouvelles flashcards." 
+                        />
+                      ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {flashcards.map(deck => (
+                            <div key={deck._id} className="bg-[#111111] border border-[#222222] rounded-xl p-5 hover:border-purple-500/30 transition-all cursor-pointer group flex flex-col items-center text-center" onClick={() => setActiveFlashcardDeck(deck)}>
+                               <div className="relative mb-6 mt-2">
+                                  <div className="w-16 h-20 bg-[#1a1a1a] border border-[#333333] rounded-lg -rotate-6 absolute top-0 left-0 transform origin-bottom-left transition-transform group-hover:-rotate-12"></div>
+                                  <div className="w-16 h-20 bg-[#222222] border border-[#444444] rounded-lg rotate-6 absolute top-0 left-0 transform origin-bottom-right transition-transform group-hover:rotate-12"></div>
+                                  <div className="w-16 h-20 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg relative z-10 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:-translate-y-2 transition-transform">
+                                     <span className="font-bold text-white text-xl">{deck.flashcards?.length || 0}</span>
+                                  </div>
+                               </div>
+                               <h3 className="font-bold text-white mb-2">{deck.title || "Jeu de cartes IA"}</h3>
+                               <p className="text-xs text-gray-500 mb-4 flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  Généré le {new Date(deck.createdAt).toLocaleDateString()}
+                               </p>
+                               <Button 
+                                 className="w-full bg-[#1a1a1a] border border-[#333333] text-white hover:bg-[#222222]"
+                               >
+                                 Réviser
+                               </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                    </>
                  )}
                </div>
@@ -388,34 +442,26 @@ export default function StudentAIPage() {
               {/* === QUIZZES TAB === */}
               {activeTab === 'quizzes' && (
                 <div className="space-y-6">
-                  {activeQuizCourseId ? (
+                  {activeQuizId ? (
                      <QuizPlayer 
-                       courseId={activeQuizCourseId}
+                       quizId={activeQuizId}
                        onComplete={() => {
-                         setActiveQuizCourseId(null);
+                         setActiveQuizId(null);
                          loadData(); // reload history
                        }}
-                       onCancel={() => setActiveQuizCourseId(null)}
+                       onCancel={() => setActiveQuizId(null)}
                      />
                   ) : (
                     <>
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <h2 className="text-xl font-bold text-white">Historique d'Entraînement</h2>
                         
-                        <div className="flex items-center gap-2 w-full sm:w-auto">
-                          <span className="text-sm text-gray-500 whitespace-nowrap">Nouveau Quiz:</span>
-                          <select 
-                             value={selectedClassId}
-                             onChange={(e) => setActiveQuizCourseId(e.target.value)}
-                             className="bg-purple-600 border border-purple-500 text-white font-bold rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-400 w-full sm:w-48 appearance-none cursor-pointer hover:bg-purple-700 transition-colors"
-                          >
-                            <option value="" disabled>Choisir un cours...</option>
-                            {classes.map(cls => (
-                              <option key={cls._id} value={cls._id}>{cls.name}</option>
-                            ))}
-                            {classes.length === 0 && <option value="" disabled>Aucune classe</option>}
-                          </select>
-                        </div>
+                        <Button 
+                          onClick={() => setQuizModalOpen(true)}
+                          className="bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl px-8"
+                        >
+                          Nouvel Entraînement
+                        </Button>
                       </div>
                       
                       {quizHistory.length === 0 ? (

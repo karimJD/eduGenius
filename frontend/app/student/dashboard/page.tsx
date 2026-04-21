@@ -45,7 +45,9 @@ export default function StudentDashboard() {
     unreadMessages: 0
   });
 
-  const [courses, setCourses] = useState<any[]>([]);
+  const [pendingExercises, setPendingExercises] = useState<any[]>([]);
+
+  console.log(pendingExercises);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -57,11 +59,10 @@ export default function StudentDashboard() {
           setStats(statsRes.data.stats);
         }
         
-        // Get recent courses (we can reuse the classes endpoint or create a specific courses one)
-        // For now let's just fetch classes to show in learning hub
-        const coursesRes = await api.get('/student/classes');
-        if (coursesRes.data.success) {
-          setCourses(coursesRes.data.data.slice(0, 4)); // Get up to 4 recent classes
+        // Get pending exercises
+        const exercisesRes = await api.get('/student/dashboard/pending-exercises');
+        if (exercisesRes.data.success) {
+          setPendingExercises(exercisesRes.data.data);
         }
       } catch (error) {
         console.error('Error loading dashboard data:', error);
@@ -134,10 +135,10 @@ export default function StudentDashboard() {
         <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-white">
-                    <BookOpen className="w-6 h-6 text-indigo-400" />
-                    Mes Classes Récentes
+                    <FileText className="w-6 h-6 text-indigo-400" />
+                    Comptes rendu à rendre
                 </h2>
-                <Link href="/student/classes">
+                <Link href="/student/courses">
                     <Button variant="ghost" size="sm" className="text-sm text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10">Voir tout</Button>
                 </Link>
             </div>
@@ -148,15 +149,15 @@ export default function StudentDashboard() {
                     Array.from({ length: 4 }).map((_, i) => (
                         <div key={i} className="h-48 bg-[#111111] border border-[#222222] rounded-2xl animate-pulse" />
                     ))
-                ) : courses.length === 0 ? (
+                ) : pendingExercises.length === 0 ? (
                     <div className="col-span-full py-12 text-center text-gray-500 border border-dashed border-[#333333] rounded-2xl bg-[#0a0a0a]">
-                        <BookOpen className="w-12 h-12 mx-auto text-gray-600 mb-4" />
-                        Vous n'êtes inscrit à aucune classe pour le moment.
+                        <FileText className="w-12 h-12 mx-auto text-gray-600 mb-4" />
+                        Tous vos comptes rendus ont été soumis. Félicitations !
                     </div>
                 ) : (
-                    courses.map((cls, idx) => (
+                    pendingExercises.map((ex, idx) => (
                         <motion.div
-                            key={cls._id}
+                            key={ex._id}
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: idx * 0.05 }}
@@ -164,28 +165,27 @@ export default function StudentDashboard() {
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-bold group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
-                                    <Layers className="w-5 h-5" />
+                                    <FileText className="w-5 h-5" />
                                 </div>
                                 <span className="text-[10px] font-bold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-1 rounded-full uppercase tracking-wider">
-                                    CLASSE
+                                    EXERCICE
                                 </span>
                             </div>
-                            <h3 className="font-bold text-lg mb-1 text-white line-clamp-1 group-hover:text-indigo-400 transition-colors">{cls.name}</h3>
-                            <p className="text-sm text-gray-500 mb-4 line-clamp-1">{cls.subject} • Nv. {cls.level}</p>
+                            <h3 className="font-bold text-lg mb-1 text-white line-clamp-1 group-hover:text-indigo-400 transition-colors uppercase tracking-tight">{ex.name || ex.title}</h3>
+                            <p className="text-sm text-gray-500 mb-4 line-clamp-1">{ex.subjectName} • {ex.subjectCode}</p>
                             
-                            {/* Make a fake progress bar just for UI effect */}
-                            <div className="w-full bg-[#222222] h-1.5 rounded-full overflow-hidden mb-3">
-                                <motion.div 
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${Math.floor(Math.random() * 60) + 20}%` }}
-                                    className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full"
-                                />
+                            <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#222222]">
+                                <div className="flex items-center gap-2">
+                                    <Calendar className="w-3.5 h-3.5 text-gray-500" />
+                                    <span className="text-xs text-gray-500 font-medium">
+                                        {ex.dueDate ? `Échéance: ${new Date(ex.dueDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}` : 'Pas d\'échéance'}
+                                    </span>
+                                </div>
+                                <span className="flex items-center gap-1 text-[10px] font-black text-indigo-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform">
+                                    Accéder <Sparkles className="w-3 h-3" />
+                                </span>
                             </div>
-                            <div className="flex items-center justify-between text-xs text-gray-400">
-                                <span>En cours</span>
-                                <span className="flex items-center gap-1"><Clock className="w-3 h-3 text-indigo-400" /> Récemment</span>
-                            </div>
-                            <Link href={`/student/classes/${cls._id}`} className="absolute inset-0 z-10" />
+                            <Link href={`/student/courses/${ex.classId}/${ex.subjectId}/exercises/${ex._id}`} className="absolute inset-0 z-10" />
                         </motion.div>
                     ))
                 )}

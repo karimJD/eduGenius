@@ -8,11 +8,11 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { BrainCircuit, Loader2, FileText, List, Layers, Check, ChevronDown, BookOpen } from 'lucide-react';
+import { BrainCircuit, Loader2, Layers, Check, Sparkles, FileText, BookOpen, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import api from '@/lib/axios';
 
-interface GenerateSummaryModalProps {
+interface GenerateFlashcardsModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   classId: string;
@@ -22,44 +22,23 @@ interface GenerateSummaryModalProps {
     courseId: string;
     selectedChapters: string[];
     selectedMaterials: string[];
-    style: string;
+    count: number;
   }) => Promise<void>;
 }
 
-const STYLES = [
-  {
-    id: 'detailed',
-    title: 'Détaillé',
-    desc: 'Un résumé complet couvrant tous les aspects.',
-    icon: FileText,
-  },
-  {
-    id: 'bullets',
-    title: 'Points clés',
-    desc: 'Idéal pour une lecture rapide et directe.',
-    icon: List,
-  },
-  {
-    id: 'cheatSheet',
-    title: 'Fiche Mémo',
-    desc: 'Focus sur les formules et concepts essentiels.',
-    icon: Layers,
-  },
-];
-
-export function GenerateSummaryModal({
+export function GenerateFlashcardsModal({
   open,
   onOpenChange,
   classId,
   classes,
   onGenerate,
-}: GenerateSummaryModalProps) {
+}: GenerateFlashcardsModalProps) {
   const [subjectId, setSubjectId] = useState('');
   const [courseData, setCourseData] = useState<any>(null);
   const [selectedChapters, setSelectedChapters] = useState<string[]>([]);
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   const [expandedChapters, setExpandedChapters] = useState<string[]>([]);
-  const [style, setStyle] = useState('detailed');
+  const [count, setCount] = useState(10);
   const [loading, setLoading] = useState(false);
   const [fetchingStructure, setFetchingStructure] = useState(false);
 
@@ -104,9 +83,6 @@ export function GenerateSummaryModal({
         return [...prev, chapterId];
       }
     });
-
-    // If we select/deselect a chapter, we might want to automatically select/deselect its materials?
-    // Let's keep them separate for now but allow expansion.
   };
 
   const toggleMaterial = (materialId: string) => {
@@ -143,7 +119,7 @@ export function GenerateSummaryModal({
         courseId: courseData._id,
         selectedChapters,
         selectedMaterials,
-        style 
+        count
       });
       onOpenChange(false);
       // Reset state
@@ -152,7 +128,7 @@ export function GenerateSummaryModal({
       setSelectedChapters([]);
       setSelectedMaterials([]);
     } catch (error) {
-      console.error('Failed to generate summary', error);
+      console.error('Failed to generate flashcards', error);
     } finally {
       setLoading(false);
     }
@@ -163,10 +139,10 @@ export function GenerateSummaryModal({
       <DialogContent className="sm:max-w-xl bg-[#111111] border-[#222222] text-white max-h-[90vh] overflow-y-auto custom-scrollbar">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-2xl font-bold">
-            <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
-               <BrainCircuit className="w-5 h-5 text-purple-400" />
+            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center">
+               <Layers className="w-5 h-5 text-indigo-400" />
             </div>
-            Assistant IA EduGenius
+            Générer des Flashcards
           </DialogTitle>
         </DialogHeader>
 
@@ -179,7 +155,7 @@ export function GenerateSummaryModal({
               required
               value={subjectId}
               onChange={(e) => setSubjectId(e.target.value)}
-              className="w-full bg-[#0a0a0a] border border-[#333333] text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition-colors"
+              className="w-full bg-[#0a0a0a] border border-[#333333] text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
             >
               <option value="">Choisir une matière...</option>
               {subjects.map((s: any) => (
@@ -192,21 +168,21 @@ export function GenerateSummaryModal({
 
           {fetchingStructure ? (
             <div className="flex flex-col items-center justify-center py-8 gap-3 border border-dashed border-[#333333] rounded-xl bg-[#0a0a0a]">
-              <Loader2 className="w-6 h-6 text-purple-500 animate-spin" />
-              <p className="text-sm text-gray-500">Chargement du contenu du cours...</p>
+              <Loader2 className="w-6 h-6 text-indigo-500 animate-spin" />
+              <p className="text-sm text-gray-500">Chargement du contenu...</p>
             </div>
           ) : courseData && (
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  3. Sélectionner le contenu
+                  3. Contenu à réviser
                 </label>
                 <button 
                   type="button" 
                   onClick={handleSelectAll}
-                  className="text-[10px] text-purple-400 hover:text-purple-300 font-bold uppercase tracking-tighter"
+                  className="text-[10px] text-indigo-400 hover:text-indigo-300 font-bold uppercase tracking-tighter"
                 >
-                  {selectedChapters.length === courseData.chapters.length ? "Tout désélectionner" : "Tout sélectionner"}
+                  {selectedChapters.length === courseData.chapters.length ? "Désélectionner tout" : "Sélectionner tout"}
                 </button>
               </div>
               
@@ -215,16 +191,16 @@ export function GenerateSummaryModal({
                   <div key={chapter._id} className="space-y-1">
                     <div 
                       className={cn(
-                        "flex items-center justify-between p-3 rounded-lg border transition-all group",
+                        "flex items-center justify-between p-3 rounded-lg border transition-all",
                         selectedChapters.includes(chapter._id)
-                          ? "bg-purple-500/10 border-purple-500/50"
+                          ? "bg-indigo-500/10 border-indigo-500/50"
                           : "bg-[#0a0a0a] border-[#222222] hover:border-[#333333]"
                       )}
                     >
                       <div className="flex items-center gap-3 flex-1 cursor-pointer" onClick={() => toggleChapter(chapter._id)}>
                         <div className={cn(
                           "w-5 h-5 rounded-md border flex items-center justify-center transition-colors",
-                          selectedChapters.includes(chapter._id) ? "bg-purple-500 border-purple-500" : "border-[#444444]"
+                          selectedChapters.includes(chapter._id) ? "bg-indigo-500 border-indigo-500" : "border-[#444444]"
                         )}>
                           {selectedChapters.includes(chapter._id) && <Check className="w-3 h-3 text-white" />}
                         </div>
@@ -252,13 +228,13 @@ export function GenerateSummaryModal({
                               className={cn(
                                 "flex items-center gap-3 p-2 rounded-lg border cursor-pointer transition-all",
                                 selectedMaterials.includes(material._id)
-                                  ? "bg-purple-500/5 border-purple-500/30"
+                                  ? "bg-indigo-500/5 border-indigo-500/30"
                                   : "bg-transparent border-transparent hover:bg-white/5"
                               )}
                             >
                               <div className={cn(
                                 "w-4 h-4 rounded border flex items-center justify-center transition-colors",
-                                selectedMaterials.includes(material._id) ? "bg-purple-500 border-purple-500" : "border-[#444444]"
+                                selectedMaterials.includes(material._id) ? "bg-indigo-500 border-indigo-500" : "border-[#444444]"
                               )}>
                                 {selectedMaterials.includes(material._id) && <Check className="w-2.5 h-2.5 text-white" />}
                               </div>
@@ -286,51 +262,31 @@ export function GenerateSummaryModal({
                     )}
                   </div>
                 ))}
-                {courseData.chapters.length === 0 && (
-                  <div className="text-center py-4 text-xs text-gray-500 italic">
-                    Aucun chapitre publié pour ce cours.
-                  </div>
-                )}
               </div>
               <p className="text-[10px] text-gray-500 italic">
-                Note : Sélectionnez des chapitres entiers ou des documents spécifiques. Les PDFs seront analysés en priorité.
+                Note : Sélectionnez des chapitres ou des documents spécifiques pour générer vos flashcards.
               </p>
             </div>
           )}
 
           <div className="space-y-3">
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              4. Style du contenu
+              4. Nombre de cartes
             </label>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {STYLES.map((s) => (
+            <div className="grid grid-cols-3 gap-3">
+              {[5, 10, 20].map((n) => (
                 <button
-                  key={s.id}
+                  key={n}
                   type="button"
-                  onClick={() => setStyle(s.id)}
+                  onClick={() => setCount(n)}
                   className={cn(
-                    "flex flex-col items-start p-4 rounded-xl border transition-all text-left group",
-                    style === s.id
-                      ? "bg-purple-500/10 border-purple-500"
-                      : "bg-[#0a0a0a] border-[#333333] hover:border-[#444444]"
+                    "py-3 rounded-xl border font-bold transition-all",
+                    count === n
+                      ? "bg-indigo-500/10 border-indigo-500 text-white"
+                      : "bg-[#0a0a0a] border-[#333333] text-gray-500 hover:border-[#444444]"
                   )}
                 >
-                  <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center mb-3 transition-colors",
-                    style === s.id ? "bg-purple-500/20" : "bg-[#1a1a1a] group-hover:bg-[#222222]"
-                  )}>
-                    <s.icon className={cn(
-                      "w-4 h-4",
-                      style === s.id ? "text-purple-400" : "text-gray-500"
-                    )} />
-                  </div>
-                  <span className={cn(
-                    "font-bold text-sm mb-1",
-                    style === s.id ? "text-white" : "text-gray-300"
-                  )}>{s.title}</span>
-                  <span className="text-[10px] text-gray-500 leading-tight">
-                    {s.desc}
-                  </span>
+                  {n} Cartes
                 </button>
               ))}
             </div>
@@ -348,7 +304,7 @@ export function GenerateSummaryModal({
             <Button
               type="submit"
               disabled={loading || !classId || !subjectId || (courseData?.chapters?.length > 0 && selectedChapters.length === 0)}
-              className="bg-purple-600 hover:bg-purple-700 text-white min-w-[160px] font-bold"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white min-w-[160px] font-bold"
             >
               {loading ? (
                 <div className="flex items-center gap-2">
@@ -357,8 +313,8 @@ export function GenerateSummaryModal({
                 </div>
               ) : (
                 <>
-                  <BrainCircuit className="w-4 h-4 mr-2" />
-                  Générer avec l'IA
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Générer le deck
                 </>
               )}
             </Button>
@@ -368,4 +324,3 @@ export function GenerateSummaryModal({
     </Dialog>
   );
 }
-

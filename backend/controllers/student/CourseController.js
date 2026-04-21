@@ -68,6 +68,14 @@ const getAllStudentCourses = async (req, res) => {
         });
       });
 
+      // 4. Fallback: Discovery from existing Courses for this class
+      const coursesForClass = await Course.find({ classId }).populate('subjectId', 'name code').lean();
+      coursesForClass.forEach(c => {
+        if (c.subjectId) {
+          subjectMap.set(c.subjectId._id.toString(), c.subjectId);
+        }
+      });
+
       const assignedSubjects = Array.from(subjectMap.values()).map(s => ({ subjectId: s }));
 
       return {
@@ -86,7 +94,7 @@ const getCourseStructure = async (req, res) => {
   try {
     const { classId } = req.params;
     const { subjectId } = req.query;
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
 
     if (!subjectId) return res.status(400).json({ success: false, message: 'subjectId is required' });
 
@@ -168,7 +176,7 @@ const getProgress = async (req, res) => {
   try {
     const { classId } = req.params;
     const { subjectId } = req.query;
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
 
     if (!subjectId) return res.status(400).json({ success: false, message: 'subjectId is required' });
 
@@ -183,7 +191,7 @@ const trackMaterialView = async (req, res) => {
   try {
     const { classId, materialId } = req.params;
     const { subjectId } = req.query;
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
 
     if (!subjectId) return res.status(400).json({ success: false, message: 'subjectId is required' });
 
@@ -231,7 +239,7 @@ const trackMaterialDownload = async (req, res) => {
   try {
     const { classId, materialId } = req.params;
     const { subjectId } = req.query;
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
     let progress = await StudentProgress.findOne({ studentId, classId, subjectId });
     if (progress) {
       progress.lastAccessedAt = new Date();
@@ -247,7 +255,7 @@ const markChapterComplete = async (req, res) => {
   try {
     const { classId, chapterId } = req.params;
     const { subjectId } = req.query;
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
 
     if (!subjectId) return res.status(400).json({ success: false, message: 'subjectId is required' });
 
@@ -272,7 +280,7 @@ const markChapterComplete = async (req, res) => {
 const getStudentSubmissions = async (req, res) => {
   try {
     const { classId } = req.params;
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
     const WorkSubmission = require('../../models/WorkSubmission');
 
     const submissions = await WorkSubmission.find({ classId, studentId });
@@ -286,7 +294,7 @@ const getExerciseDetails = async (req, res) => {
   try {
     const { classId, exerciseId } = req.params;
     const { subjectId } = req.query;
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
 
     if (!subjectId) return res.status(400).json({ success: false, message: 'subjectId is required' });
 
@@ -332,7 +340,7 @@ const submitExercise = async (req, res) => {
   try {
     const { classId, chapterId, exerciseId } = req.params;
     const { subjectId } = req.body;
-    const studentId = req.user._id;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
 
     if (!req.file) return res.status(400).json({ success: false, message: 'No file uploaded' });
     if (!subjectId) return res.status(400).json({ success: false, message: 'subjectId is required' });

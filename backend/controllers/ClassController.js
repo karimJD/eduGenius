@@ -6,13 +6,16 @@ const User = require('../models/User');
 // @access  Private (Teacher/Admin)
 exports.createClass = async (req, res) => {
   try {
-    const { name, description, schedule } = req.body;
+    const { name, code, departmentId, programId, academicYearId, level } = req.body;
 
     const newClass = await Class.create({
       name,
-      description,
-      teacherId: req.user._id,
-      schedule,
+      code,
+      departmentId,
+      programId,
+      academicYearId,
+      level,
+      teachers: [{ teacherId: req.user._id, subjectId: req.body.subjectId || null }],
     });
 
     res.status(201).json(newClass);
@@ -31,19 +34,20 @@ exports.getClasses = async (req, res) => {
     
     // If student, only show classes they are enrolled in
     if (req.user.role === 'student') {
-      query = { studentIds: req.user._id };
+      query = { 'students.studentId': req.user._id, 'students.status': 'enrolled' };
     } 
     // If teacher, only show classes they teach
     else if (req.user.role === 'teacher') {
-      query = { teacherId: req.user._id };
+      query = { 'teachers.teacherId': req.user._id };
     }
     // Admin sees all
-    if (req.user.role === 'admin') {
+    else if (req.user.role === 'admin' || req.user.role === 'super_admin') {
       query = {}; // No filter, get all
     }
 
     const classes = await Class.find(query)
-      .populate('teacherId', 'firstName lastName email')
+      .populate('teachers.teacherId', 'firstName lastName email')
+      .populate('departmentId', 'name')
       .sort({ createdAt: -1 });
 
     res.json(classes);
@@ -59,18 +63,22 @@ exports.getClasses = async (req, res) => {
 exports.getClass = async (req, res) => {
   try {
     const classItem = await Class.findById(req.params.id)
-      .populate('teacherId', 'firstName lastName email')
-      .populate('studentIds', 'firstName lastName email');
+      .populate('teachers.teacherId', 'firstName lastName email')
+      .populate('students.studentId', 'firstName lastName email');
 
     if (!classItem) {
       return res.status(404).json({ message: 'Class not found' });
     }
 
     // Check access rights
-    if (req.user.role === 'student' && !classItem.studentIds.includes(req.user._id)) {
+    const isStudent = req.user.role === 'student';
+    const isTeacher = req.user.role === 'teacher';
+    const isAdmin = ['admin', 'super_admin'].includes(req.user.role);
+
+    if (isStudent && !classItem.students.some(s => s.studentId?._id?.toString() === req.user._id.toString() || s.studentId?.toString() === req.user._id.toString())) {
       return res.status(403).json({ message: 'Not authorized to view this class' });
     }
-    if (req.user.role === 'teacher' && classItem.teacherId._id.toString() !== req.user._id.toString()) {
+    if (isTeacher && !classItem.teachers.some(t => t.teacherId?._id?.toString() === req.user._id.toString() || t.teacherId?.toString() === req.user._id.toString())) {
       return res.status(403).json({ message: 'Not authorized to view this class' });
     }
 
@@ -94,11 +102,13 @@ exports.joinClass = async (req, res) => {
       return res.status(404).json({ message: 'Invalid class code' });
     }
 
-    if (classItem.studentIds.includes(req.user._id)) {
+    const alreadyEnrolled = classItem.students.some(s => s.studentId?.toString() === req.user._id.toString());
+    if (alreadyEnrolled) {
       return res.status(400).json({ message: 'Already enrolled in this class' });
     }
 
-    classItem.studentIds.push(req.user._id);
+    classItem.students.push({ studentId: req.user._id, enrollmentDate: new Date(), status: 'enrolled' });
+    classItem.currentEnrollment = classItem.students.filter(s => s.status === 'enrolled').length;
     await classItem.save();
 
     res.json({ message: 'Successfully joined class', classId: classItem._id });
@@ -120,7 +130,8 @@ exports.updateClass = async (req, res) => {
     }
 
     // Check ownership
-    if (req.user.role !== 'admin' && classItem.teacherId.toString() !== req.user._id.toString()) {
+    const isTeacher = classItem.teachers.some(t => t.teacherId.toString() === req.user._id.toString());
+    if (req.user.role !== 'admin' && req.user.role !== 'super_admin' && !isTeacher) {
       return res.status(403).json({ message: 'Not authorized to update this class' });
     }
 
@@ -148,7 +159,8 @@ exports.deleteClass = async (req, res) => {
     }
 
     // Check ownership
-    if (req.user.role !== 'admin' && classItem.teacherId.toString() !== req.user._id.toString()) {
+    const isTeacher = classItem.teachers.some(t => t.teacherId.toString() === req.user._id.toString());
+    if (req.user.role !== 'admin' && req.user.role !== 'super_admin' && !isTeacher) {
       return res.status(403).json({ message: 'Not authorized to delete this class' });
     }
 

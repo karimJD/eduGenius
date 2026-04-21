@@ -5,7 +5,9 @@ const User = require('../models/User');
 // @access  Private/Admin
 exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find({}).select('-password');
+    const { role } = req.query;
+    const query = role ? { role } : {};
+    const users = await User.find(query).select('-password');
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users', error: error.message });

@@ -8,7 +8,8 @@ import {
   Image as ImageIcon, 
   MoreVertical, 
   User,
-  Search
+  Search,
+  Info
 } from 'lucide-react';
 import api from '@/lib/axios';
 import { useAuth } from '@/context/AuthContext';
@@ -27,7 +28,7 @@ interface Message {
   };
   content: string;
   createdAt: string;
-  type: string;
+  messageType: string;
 }
 
 interface ChatProps {
@@ -35,9 +36,10 @@ interface ChatProps {
   classId?: string;
   type: 'private' | 'class';
   title: string;
+  isBroadcast?: boolean;
 }
 
-export function Chat({ receiverId, classId, type, title }: ChatProps) {
+export function Chat({ receiverId, classId, type, title, isBroadcast }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -131,7 +133,7 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
       socketRef.current?.emit('send-message', {
         roomId,
         content: newMessage,
-        type: 'text',
+        messageType: type, // Using the 'type' prop from the component
         receiverId,
         classId,
         senderId: user._id,
@@ -146,35 +148,35 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
   };
 
   return (
-    <div className="flex flex-col h-[600px] bg-white/5 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-xl">
+    <div className="flex flex-col h-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-3xl overflow-hidden backdrop-blur-xl">
       {/* Header */}
-      <div className="p-4 border-b border-white/10 flex items-center justify-between bg-black/20">
+      <div className="p-4 border-b border-gray-200 dark:border-white/10 flex items-center justify-between bg-gray-50/50 dark:bg-black/20">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center font-bold text-white text-sm">
             {title[0].toUpperCase()}
           </div>
           <div>
-            <h3 className="font-bold text-white leading-tight">{title}</h3>
-            <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Online</span>
-            </div>
+            <h3 className="font-bold text-gray-900 dark:text-white leading-tight">{title}</h3>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/5 text-gray-400">
-                <Search className="w-4 h-4" />
-            </Button>
-            <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/5 text-gray-400">
-                <MoreVertical className="w-4 h-4" />
-            </Button>
+        <div className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest font-bold px-3">
+            ID: {receiverId || classId?.slice(-6)}
         </div>
       </div>
+
+      {isBroadcast && (
+        <div className="bg-blue-500/10 border-b border-blue-500/10 px-4 py-2 flex items-center gap-2">
+          <Info className="w-4 h-4 text-blue-500" />
+          <p className="text-[10px] text-blue-600 dark:text-blue-400 font-medium">
+            Broadcast: Chaque étudiant recevra ce message individuellement et pourra répondre en privé.
+          </p>
+        </div>
+      )}
 
       {/* Messages Area */}
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat opacity-95"
+        className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat opacity-[0.03] dark:opacity-95"
       >
         <AnimatePresence>
           {messages.map((msg, idx) => {
@@ -186,18 +188,18 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`max-w-[75%] rounded-2xl px-4 py-3 text-sm shadow-xl ${
+                <div className={`max-w-[75%] rounded-2xl px-4 py-3 text-sm shadow-sm dark:shadow-xl ${
                   isMe 
                     ? 'bg-blue-600 text-white rounded-tr-none' 
-                    : 'bg-white/10 text-gray-200 border border-white/5 rounded-tl-none'
+                    : 'bg-gray-100 dark:bg-white/10 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-white/5 rounded-tl-none'
                 }`}>
                   {!isMe && type === 'class' && (
-                    <p className="text-[10px] font-bold text-blue-400 mb-1">
+                    <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 mb-1">
                         {msg.senderId.firstName} {msg.senderId.lastName}
                     </p>
                   )}
                   <p className="leading-relaxed">{msg.content}</p>
-                  <p className={`text-[10px] mt-1 text-right ${isMe ? 'text-blue-200' : 'text-gray-500'}`}>
+                  <p className={`text-[10px] mt-1 text-right ${isMe ? 'text-blue-100/70' : 'text-gray-500 dark:text-gray-500'}`}>
                     {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -211,12 +213,12 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
             animate={{ opacity: 1, scale: 1 }}
             className="flex justify-start"
           >
-            <div className="bg-white/10 text-gray-400 px-4 py-3 rounded-2xl rounded-tl-none text-xs italic border border-white/5 flex items-center gap-2">
+            <div className="bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 px-4 py-3 rounded-2xl rounded-tl-none text-xs italic border border-gray-200 dark:border-white/5 flex items-center gap-2">
               <span>{typingUser} est en train d'écrire</span>
               <span className="flex gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce" />
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce delay-75" />
-                <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce delay-150" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500 animate-bounce" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500 animate-bounce delay-75" />
+                <span className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500 animate-bounce delay-150" />
               </span>
             </div>
           </motion.div>
@@ -224,25 +226,18 @@ export function Chat({ receiverId, classId, type, title }: ChatProps) {
       </div>
 
       {/* Input Area */}
-      <form onSubmit={handleSendMessage} className="p-4 bg-black/40 border-t border-white/10">
+      <form onSubmit={handleSendMessage} className="p-4 bg-gray-50 dark:bg-black/40 border-t border-gray-200 dark:border-white/10">
         <div className="flex items-center gap-3">
-          <div className="flex gap-1">
-            <Button type="button" variant="ghost" size="icon" className="rounded-xl text-gray-500 hover:bg-white/5">
-                <Paperclip className="w-5 h-5" />
-            </Button>
-            <Button type="button" variant="ghost" size="icon" className="rounded-xl text-gray-500 hover:bg-white/5">
-                <ImageIcon className="w-5 h-5" />
-            </Button>
-          </div>
+          <div className="w-2" />
           <Input 
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Écris ton message ici..."
-            className="flex-1 bg-white/5 border-white/10 py-5 rounded-2xl focus:ring-blue-500/40 text-sm"
+            className="flex-1 bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 py-5 rounded-2xl focus:ring-blue-500/40 text-sm text-gray-900 dark:text-white"
           />
           <Button 
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-2xl shadow-lg shadow-blue-600/20 active:scale-95 transition-all"
+            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-2xl shadow-lg shadow-blue-600/20 active:scale-95 transition-all text-white"
           >
             <Send className="w-5 h-5" />
           </Button>

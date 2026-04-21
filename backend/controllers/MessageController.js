@@ -5,14 +5,14 @@ const Message = require('../models/Message');
 // @access  Private
 exports.sendMessage = async (req, res) => {
   try {
-    const { receiverId, classId, content, type } = req.body;
+    const { receiverId, classId, content, messageType } = req.body;
 
     const message = await Message.create({
       senderId: req.user._id,
-      receiverId: type === 'private' ? receiverId : null,
-      classId: type !== 'private' ? classId : null,
+      receiverId: messageType === 'private' ? receiverId : null,
+      classId: messageType !== 'private' ? classId : null,
       content,
-      type: type || 'private',
+      messageType: messageType || 'private',
       // Attachments handling would go here with uploadMiddleware
     });
 
@@ -42,7 +42,7 @@ exports.getMessages = async (req, res) => {
                 { senderId: req.user._id, receiverId: userId },
                 { senderId: userId, receiverId: req.user._id }
             ],
-            type: 'private'
+            messageType: 'private'
         };
     } else {
         // Recent chats (simplified)

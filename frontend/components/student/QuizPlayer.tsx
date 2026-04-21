@@ -49,13 +49,17 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
       try {
         setLoading(true);
         if (quizId) {
-          // TODO: Fetch existing quiz if needed
-          // For now, assume generated fresh
-        } else if (courseId) {
-          // Generate new
-          const res = await api.post('/ai/quiz', { classId: courseId, difficulty: 'Medium', questionCount: 5 });
+          // Fetch existing quiz
+          const res = await api.get(`/student/ai/practice-quizzes/${quizId}`);
           if (res.data.success) {
-             setQuizDetails({ _id: res.data.data._id, title: res.data.data.title });
+            setQuizDetails({ _id: res.data.data._id, title: res.data.data.quizTitle });
+            setQuestions(res.data.data.questions);
+          }
+        } else if (courseId) {
+          // Generate new (legacy flow, keep as fallback)
+          const res = await api.post('/student/ai/generate-practice-quiz', { courseId });
+          if (res.data.success) {
+             setQuizDetails({ _id: res.data.data._id, title: res.data.data.quizTitle });
              setQuestions(res.data.data.questions);
           }
         }
