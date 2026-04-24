@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState, useCallback } from 'react';
-import { Plus, Download, Upload } from 'lucide-react';
+import { Plus, Download, Upload, Users } from 'lucide-react';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import { Button } from '@/components/ui/button';
 import { DataTable, Column } from '@/components/shared/DataTable';
 import { SearchBar } from '@/components/shared/SearchBar';
@@ -101,26 +102,24 @@ export default function StudentsPage() {
   ];
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Étudiants</h1>
-          <p className="text-muted-foreground">{total} étudiant(s) au total</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm">
-            <Upload className="mr-2 h-4 w-4" /> Importer CSV
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="mr-2 h-4 w-4" /> Exporter
-          </Button>
-          <a href="/admin/users/students/create">
-            <Button size="sm">
-              <Plus className="mr-2 h-4 w-4" /> Ajouter
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title="Étudiants"
+        subtitle={`${total} étudiant(s) au total`}
+        icon={Users}
+        actions={
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" className="rounded-xl font-bold border-2 border-primary/20 hover:bg-primary/5 transition-all">
+              <Download className="mr-2 h-4 w-4" /> Exporter
             </Button>
-          </a>
-        </div>
-      </div>
+            <a href="/admin/users/students/create">
+              <Button size="sm" className="rounded-xl px-4 py-5 shadow-lg shadow-blue-500/10 font-bold">
+                <Plus className="mr-2 h-4 w-4" /> Ajouter
+              </Button>
+            </a>
+          </div>
+        }
+      />
 
       <div className="flex gap-3">
         <div className="flex-1">

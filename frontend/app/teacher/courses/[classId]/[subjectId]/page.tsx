@@ -10,6 +10,9 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '@/lib/axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+import { Button } from '@/components/ui/button';
 
 interface Material { _id: string; name: string; type: string; url: string; uploadedAt?: string; dueDate?: string; }
 interface Chapter { _id: string; title: string; order: number; isPublished?: boolean; materials: Material[]; exercises: Material[] }
@@ -18,6 +21,7 @@ interface Course { _id: string; title: string; chapters: Chapter[]; classId?: { 
 
 export default function CourseEditorPage() {
   const { classId, subjectId } = useParams<{ classId: string; subjectId: string }>();
+  const router = useRouter();
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -161,23 +165,27 @@ export default function CourseEditorPage() {
 
   return (
     <div className="p-6 space-y-8 mx-auto relative">
-      <div className="flex items-center gap-4">
-        <Link href={`/teacher/courses/${classId}`} 
-          className="p-3 bg-card border border-border rounded-2xl hover:bg-accent text-muted-foreground hover:text-foreground transition-all shadow-sm">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <div>
-          <h1 className="text-3xl font-black text-foreground tracking-tight">
-            {course?.subjectId?.name || 'Gestion du Cours'}
-          </h1>
-          <div className="flex items-center gap-2 mt-1">
-            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">
-              Dossier Matière — {course?.classId?.name} {course?.subjectId?.code && `(${course.subjectId.code})`}
-            </p>
-          </div>
-        </div>
-      </div>
+      <TeacherPageHeader
+        title={course?.subjectId?.name || 'Gestion du Cours'}
+        subtitle={`Dossier Matière — ${course?.classId?.name} ${course?.subjectId?.code ? `(${course.subjectId.code})` : ''}`}
+        category="Espace de Dépôt"
+        icon={BookOpen}
+        stats={[
+          { label: 'Chapitres', value: course?.chapters?.length || 0, icon: Folder },
+          { label: 'Supports', value: course?.chapters?.reduce((acc, ch) => acc + (ch.materials?.length || 0), 0) || 0, icon: FileText },
+          { label: 'Exercices', value: course?.chapters?.reduce((acc, ch) => acc + (ch.exercises?.length || 0), 0) || 0, icon: ClipboardList }
+        ]}
+        actions={
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="rounded-2xl text-xs font-bold gap-2"
+            onClick={() => router.push(`/teacher/courses/${classId}`)}
+          >
+            <ArrowLeft className="w-4 h-4" /> Retour
+          </Button>
+        }
+      />
 
       {/* Sections List */}
       <div className="flex flex-col gap-6">

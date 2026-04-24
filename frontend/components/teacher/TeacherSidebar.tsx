@@ -43,13 +43,13 @@ export function TeacherSidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-card border-r border-border flex flex-col z-40 overflow-y-auto">
       {/* Logo */}
-      <div className="p-5 border-b border-border flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-          <GraduationCap className="w-5 h-5 text-primary" />
+      <div className="p-6 border-b border-border/60 flex items-center gap-3 bg-gradient-to-b from-primary/5 to-transparent">
+        <div className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 ring-4 ring-primary/5">
+          <GraduationCap className="w-5 h-5 text-primary-foreground" />
         </div>
         <div>
-          <p className="font-bold text-sm text-foreground">EduGenius</p>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Teacher Panel</p>
+          <p className="font-black text-base text-foreground tracking-tight leading-tight">EduGenius</p>
+          <p className="text-[9px] text-primary font-black uppercase tracking-[0.2em]">Teacher Hub</p>
         </div>
       </div>
 

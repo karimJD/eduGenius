@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState, useCallback } from 'react';
 import { Plus, Building2, Edit2, Trash2, Users } from 'lucide-react';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import { Button } from '@/components/ui/button';
 import { SearchBar } from '@/components/shared/SearchBar';
 import { ConfirmDialog } from '@/components/shared/ConfirmDialog';
@@ -81,16 +82,20 @@ export default function DepartmentsPage() {
   );
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Départements</h1>
-          <p className="text-muted-foreground">{departments.length} département(s) au total</p>
-        </div>
-        <Button size="sm" onClick={openCreate}>
-          <Plus className="mr-2 h-4 w-4" /> Ajouter
-        </Button>
-      </div>
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title="Départements"
+        subtitle={`${departments.length} département(s) au total`}
+        icon={Building2}
+        actions={
+          <Button
+            onClick={openCreate}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-6 rounded-2xl flex gap-2 font-semibold shadow-lg shadow-primary/20 transition-all active:scale-95"
+          >
+            <Plus className="w-5 h-5" /> Nouveau Département
+          </Button>
+        }
+      />
 
       <div className="flex gap-3">
         <div className="flex-1">

@@ -5,6 +5,7 @@ const {
   generateSummary, getSummaries, 
   generateFlashcards, getFlashcards, 
   generatePracticeQuiz, submitPracticeQuiz, getPracticeHistory, 
+  getPracticeQuizById,
   getRecommendations 
 } = require('../../controllers/student/AiToolsController');
 
@@ -15,6 +16,7 @@ router.post('/generate-flashcards', auth, generateFlashcards);
 router.get('/flashcards/:classId', auth, getFlashcards);
 
 router.post('/generate-practice-quiz', auth, generatePracticeQuiz);
+router.get('/practice-quiz/:id', auth, getPracticeQuizById);
 router.post('/practice-quiz/:id/submit', auth, submitPracticeQuiz);
 router.get('/practice-quizzes/history', auth, getPracticeHistory);
 

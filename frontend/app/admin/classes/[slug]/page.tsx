@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { getClass, getSchedules } from '@/lib/api/admin';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import clsx from 'clsx';
 
 export default function ClassDetailsPage() {
@@ -66,72 +67,66 @@ export default function ClassDetailsPage() {
   );
 
   return (
-    <div className="p-6 space-y-8 max-w-full mx-auto">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => router.back()}
-            className="p-2.5 rounded-xl hover:bg-accent hover:text-primary transition-all active:scale-95"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <div className="space-y-1">
-            <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-extrabold uppercase tracking-tight text-foreground">
-                {cls.name}
-              </h1>
-              <Badge variant={cls.isActive ? "default" : "destructive"} className="rounded-lg px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
-                {cls.isActive ? 'Actif' : 'Inactif'}
-              </Badge>
-            </div>
-            <p className="text-muted-foreground text-sm flex items-center gap-2 font-medium">
-              <Hash className="h-4 w-4 text-primary" /> {cls.code} · {cls.level} · {cls.departmentId?.name}
-            </p>
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title={
+          <div className="flex items-center gap-3">
+            <span className="uppercase">{cls.name}</span>
+            <Badge variant={cls.isActive ? "default" : "destructive"} className="rounded-lg px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+              {cls.isActive ? 'Actif' : 'Inactif'}
+            </Badge>
           </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {schedules.length > 0 && (
+        }
+        subtitle={
+          <div className="flex items-center gap-2 font-medium">
+            <Hash className="h-4 w-4 text-primary" /> {cls.code} · {cls.level} · {cls.departmentId?.name}
+          </div>
+        }
+        icon={GraduationCap}
+        actions={
+          <div className="flex items-center gap-3">
+            {schedules.length > 0 && (
+              <Button 
+                variant="outline" 
+                className="rounded-xl border-primary/20 bg-primary/5 hover:bg-primary/10 text-primary transition-all font-bold px-4 py-5"
+                onClick={() => router.push(`/admin/schedules/${schedules[0]._id}`)}
+              >
+                <Calendar className="mr-2 h-4 w-4" /> Emploi du Temps
+              </Button>
+            )}
             <Button 
-              variant="outline" 
-              className="rounded-2xl border-primary/20 bg-primary/5 hover:bg-primary/10 text-primary transition-all"
-              onClick={() => router.push(`/admin/schedules/${schedules[0]._id}`)}
+              className="rounded-xl px-5 py-5 bg-primary shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all font-bold"
+              onClick={() => router.push(`/admin/classes`)}
             >
-              <Calendar className="mr-2 h-4 w-4" /> Emploi du Temps
+              <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
             </Button>
-          )}
-          <Button 
-            className="rounded-2xl px-6 bg-primary shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all font-bold"
-            onClick={() => router.push(`/admin/classes`)}
-          >
-            <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
-          </Button>
-        </div>
-      </div>
+          </div>
+        }
+      />
 
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-card border border-border p-5 rounded-3xl shadow-sm space-y-3 hover:translate-y-[-2px] transition-all duration-300">
-          <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-600">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-card border border-border p-4 rounded-2xl shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-300">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-600 shrink-0">
             <GraduationCap className="h-5 w-5" />
           </div>
           <div>
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Niveau</p>
-            <p className="text-lg font-bold text-foreground mt-1">{cls.level}</p>
+            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest leading-none mb-1">Niveau</p>
+            <p className="text-base font-bold text-foreground leading-none">{cls.level}</p>
           </div>
         </div>
 
-        <div className="bg-card border border-border p-5 rounded-3xl shadow-sm space-y-3 hover:translate-y-[-2px] transition-all duration-300">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600">
+        <div className="bg-card border border-border p-4 rounded-2xl shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-300">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 shrink-0">
             <Users className="h-5 w-5" />
           </div>
-          <div>
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Inscriptions</p>
-            <p className="text-lg font-bold text-foreground mt-1">
-              {cls.currentEnrollment} <span className="text-sm font-medium text-muted-foreground">/ {cls.capacity}</span>
-            </p>
-            <div className="w-full bg-muted h-1.5 rounded-full mt-2 overflow-hidden">
+          <div className="flex-1">
+            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest leading-none mb-1">Inscriptions</p>
+            <div className="flex items-baseline gap-1.5">
+              <p className="text-base font-bold text-foreground leading-none">{cls.currentEnrollment}</p>
+              <p className="text-[10px] font-bold text-muted-foreground">/ {cls.capacity}</p>
+            </div>
+            <div className="w-full bg-muted h-1 rounded-full mt-2 overflow-hidden">
               <div 
                 className="bg-emerald-500 h-full rounded-full transition-all duration-1000" 
                 style={{ width: `${Math.min((cls.currentEnrollment / (cls.capacity || 1)) * 100, 100)}%` }}
@@ -140,36 +135,36 @@ export default function ClassDetailsPage() {
           </div>
         </div>
 
-        <div className="bg-card border border-border p-5 rounded-3xl shadow-sm space-y-3 lg:col-span-2 hover:translate-y-[-2px] transition-all duration-300">
-          <div className="w-10 h-10 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600">
+        <div className="bg-card border border-border p-4 rounded-2xl shadow-sm lg:col-span-2 flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-300 relative overflow-hidden">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-600 shrink-0">
             <User className="h-5 w-5" />
           </div>
-          <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-3">
-            <div>
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Conseiller Académique</p>
-              <p className="text-lg font-bold text-foreground mt-1">
+          <div className="flex flex-1 justify-between items-center gap-4">
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest leading-none mb-1">Conseiller Académique</p>
+              <p className="text-base font-bold text-foreground truncate leading-none mb-1">
                 {cls.academicAdvisorId ? `${cls.academicAdvisorId.firstName} ${cls.academicAdvisorId.lastName}` : 'Non assigné'}
               </p>
               {cls.academicAdvisorId && (
-                <p className="text-xs text-muted-foreground flex items-center gap-1.5 mt-1 font-medium italic">
-                  <Mail className="h-3 w-3" /> {cls.academicAdvisorId.email || 'Pas d\'email'}
+                <p className="text-[10px] text-muted-foreground flex items-center gap-1.5 leading-none italic truncate font-medium">
+                  <Mail className="h-3 w-3" /> {cls.academicAdvisorId.email}
                 </p>
               )}
             </div>
             {cls.academicAdvisorId && (
-              <Button size="sm" variant="outline" className="rounded-xl border-amber-200 text-amber-600 hover:bg-amber-50 h-8 text-[11px] font-bold">
-                Profil Enseignant <ChevronRight className="ml-1 h-3 w-3" />
+              <Button size="sm" variant="outline" className="rounded-xl border-amber-200 text-amber-600 hover:bg-amber-50 h-8 px-3 text-[10px] font-bold shrink-0 hidden sm:flex">
+                Profil <ChevronRight className="ml-0.5 h-3 w-3" />
               </Button>
             )}
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Col: Students */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm flex flex-col h-full">
-            <div className="p-6 border-b border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-muted/20">
+          <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm flex flex-col h-full">
+            <div className="p-4 border-b border-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-muted/20">
               <h2 className="text-xl font-bold flex items-center gap-2">
                 <Users className="h-5 w-5 text-primary" /> Étudiants inscrits
                 <Badge variant="outline" className="ml-2 bg-background border-primary/20 text-primary">{enrolledStudents.length}</Badge>
@@ -236,7 +231,7 @@ export default function ClassDetailsPage() {
 
         {/* Right Col: Academic & Teachers */}
         <div className="space-y-6">
-          <div className="bg-card border border-border rounded-3xl p-6 space-y-6 shadow-sm">
+          <div className="bg-card border border-border rounded-2xl p-4 space-y-4 shadow-sm">
             <div className="space-y-4">
               <h2 className="text-lg font-bold flex items-center gap-2">
                 <BookOpen className="h-5 w-5 text-primary" /> Professeurs par matière
@@ -279,7 +274,7 @@ export default function ClassDetailsPage() {
                 {[
                   { label: 'Département', value: cls.departmentId?.name, icon: Building2 },
                   { label: 'Programme', value: cls.programId?.name || 'Tronc Commun', icon: FileText },
-                  { label: 'Année Académique', value: cls.academicYearId?.year, icon: Calendar },
+                  { label: 'Année Académique', value: cls.academicYearId?.year || new Date().getFullYear().toString(), icon: Calendar },
                   { label: 'Nombre de groupes', value: cls.groupNumber || 1, icon: Hash },
                 ].map((item, idx) => (
                   <div key={idx} className="flex flex-col gap-0.5 border-l-2 border-primary/10 pl-3">
@@ -294,7 +289,7 @@ export default function ClassDetailsPage() {
             </div>
           </div>
 
-          <div className="bg-primary/5 border border-primary/20 rounded-3xl p-6 space-y-4 shadow-sm relative overflow-hidden group">
+          <div className="bg-primary/5 border border-primary/20 rounded-2xl p-4 space-y-4 shadow-sm relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
               <Calendar size={120} />
             </div>

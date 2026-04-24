@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState, useCallback } from 'react';
 import { getGrades, bulkSaveGrades, getClasses } from '@/lib/api/admin';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import { Button } from '@/components/ui/button';
 import { FileText, Save } from 'lucide-react';
 
@@ -105,14 +106,18 @@ export default function GradesPage() {
   };
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Gestion des Notes</h1>
-        <Button onClick={handleSave} disabled={saving || rows.length === 0}>
-          <Save className="mr-2 h-4 w-4" />
-          {saving ? 'Enregistrement...' : 'Enregistrer'}
-        </Button>
-      </div>
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title="Gestion des Notes"
+        subtitle="Saisie et validation des notes par classe et matière"
+        icon={FileText}
+        actions={
+          <Button onClick={handleSave} disabled={saving || rows.length === 0} className="rounded-xl px-4 py-5 shadow-lg shadow-blue-500/10 font-bold">
+            <Save className="mr-2 h-4 w-4" />
+            {saving ? 'Enregistrement...' : 'Enregistrer'}
+          </Button>
+        }
+      />
 
       {/* Filters */}
       <div className="flex flex-wrap gap-3 rounded-xl border border-border bg-card p-4">

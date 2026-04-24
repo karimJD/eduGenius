@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState, useCallback } from 'react';
 import { Plus, ClipboardList, Edit2, Trash2 } from 'lucide-react';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import { Button } from '@/components/ui/button';
 import { DataTable, Column } from '@/components/shared/DataTable';
 import { SearchBar } from '@/components/shared/SearchBar';
@@ -170,16 +171,17 @@ export default function ProgramsPage() {
   ];
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Programmes d'études</h1>
-          <p className="text-muted-foreground">{programs.length} programme(s) au total</p>
-        </div>
-        <Button size="sm" onClick={openCreate}>
-          <Plus className="mr-2 h-4 w-4" /> Ajouter
-        </Button>
-      </div>
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title="Programmes d'études"
+        subtitle={`${programs.length} programme(s) au total`}
+        icon={ClipboardList}
+        actions={
+          <Button size="sm" onClick={openCreate} className="rounded-xl px-4 py-5 shadow-lg shadow-blue-500/10 font-bold">
+            <Plus className="mr-2 h-4 w-4" /> Ajouter
+          </Button>
+        }
+      />
 
       {/* Filters */}
       <div className="flex flex-wrap gap-3">

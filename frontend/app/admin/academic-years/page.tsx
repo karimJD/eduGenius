@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import {
   getAcademicYears, createAcademicYear,
 } from '@/lib/api/admin';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 
@@ -83,122 +84,113 @@ export default function AcademicYearsPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => router.back()}
-            className="p-2 rounded-lg hover:bg-accent transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold">Années Académiques</h1>
-            <p className="text-muted-foreground text-sm">Gérez les périodes d'études</p>
-          </div>
-        </div>
-
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" /> Nouvelle Année
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-md">
-            <DialogHeader>
-              <DialogTitle>Ajouter une année académique</DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4 pt-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="year">Nom de l'année (ex: 2023-2024)</Label>
-                <Input
-                  id="year"
-                  required
-                  value={newYear.year}
-                  onChange={e => setNewYear({ ...newYear, year: e.target.value })}
-                  placeholder="2023-2024"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
+    <div className="p-0 space-y-6">
+      <AdminPageHeader 
+        title="Années Académiques"
+        subtitle="Gérez les périodes d'études et semestres"
+        icon={Calendar}
+        actions={
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="rounded-xl px-4 py-5 shadow-lg shadow-blue-500/10 font-bold">
+                <Plus className="h-4 w-4 mr-2" /> Nouvelle Année
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>Ajouter une année académique</DialogTitle>
+              </DialogHeader>
+              <form onSubmit={handleSubmit} className="space-y-4 pt-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="start">Début</Label>
+                  <Label htmlFor="year">Nom de l'année (ex: 2023-2024)</Label>
                   <Input
-                    id="start"
-                    type="date"
+                    id="year"
                     required
-                    value={newYear.startDate}
-                    onChange={e => setNewYear({ ...newYear, startDate: e.target.value })}
+                    value={newYear.year}
+                    onChange={e => setNewYear({ ...newYear, year: e.target.value })}
+                    placeholder="2023-2024"
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="end">Fin</Label>
-                  <Input
-                    id="end"
-                    type="date"
-                    required
-                    value={newYear.endDate}
-                    onChange={e => setNewYear({ ...newYear, endDate: e.target.value })}
-                  />
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="start">Début</Label>
+                    <Input
+                      id="start"
+                      type="date"
+                      required
+                      value={newYear.startDate}
+                      onChange={e => setNewYear({ ...newYear, startDate: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="end">Fin</Label>
+                    <Input
+                      id="end"
+                      type="date"
+                      required
+                      value={newYear.endDate}
+                      onChange={e => setNewYear({ ...newYear, endDate: e.target.value })}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="isCurrent"
-                  checked={newYear.isCurrent}
-                  onChange={e => setNewYear({ ...newYear, isCurrent: e.target.checked })}
-                  className="h-4 w-4 rounded border-border accent-primary"
-                />
-                <Label htmlFor="isCurrent" className="cursor-pointer">Définir comme année en cours</Label>
-              </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="isCurrent"
+                    checked={newYear.isCurrent}
+                    onChange={e => setNewYear({ ...newYear, isCurrent: e.target.checked })}
+                    className="h-4 w-4 rounded border-border accent-primary"
+                  />
+                  <Label htmlFor="isCurrent" className="cursor-pointer">Définir comme année en cours</Label>
+                </div>
 
-              {/* Semesters */}
-              <div className="space-y-4 border-t pt-4 mt-2">
-                <h3 className="text-sm font-semibold">Semestres</h3>
-                {newYear.semesters.map((s, i) => (
-                  <div key={i} className="space-y-2">
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Semestre {s.number}</p>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <Label className="text-[10px] text-muted-foreground">Début</Label>
-                        <Input
-                          type="date"
-                          value={s.startDate}
-                          onChange={e => {
-                            const newSemesters = [...newYear.semesters];
-                            newSemesters[i].startDate = e.target.value;
-                            setNewYear({ ...newYear, semesters: newSemesters });
-                          }}
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[10px] text-muted-foreground">Fin</Label>
-                        <Input
-                          type="date"
-                          value={s.endDate}
-                          onChange={e => {
-                            const newSemesters = [...newYear.semesters];
-                            newSemesters[i].endDate = e.target.value;
-                            setNewYear({ ...newYear, semesters: newSemesters });
-                          }}
-                        />
+                {/* Semesters */}
+                <div className="space-y-4 border-t pt-4 mt-2">
+                  <h3 className="text-sm font-semibold">Semestres</h3>
+                  {newYear.semesters.map((s, i) => (
+                    <div key={i} className="space-y-2">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Semestre {s.number}</p>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <Label className="text-[10px] text-muted-foreground">Début</Label>
+                          <Input
+                            type="date"
+                            value={s.startDate}
+                            onChange={e => {
+                              const newSemesters = [...newYear.semesters];
+                              newSemesters[i].startDate = e.target.value;
+                              setNewYear({ ...newYear, semesters: newSemesters });
+                            }}
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-[10px] text-muted-foreground">Fin</Label>
+                          <Input
+                            type="date"
+                            value={s.endDate}
+                            onChange={e => {
+                              const newSemesters = [...newYear.semesters];
+                              newSemesters[i].endDate = e.target.value;
+                              setNewYear({ ...newYear, semesters: newSemesters });
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              <div className="flex justify-end gap-3 pt-4">
-                <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)}>Annuler</Button>
-                <Button type="submit">Créer</Button>
-              </div>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
+                <div className="flex justify-end gap-3 pt-4">
+                  <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)}>Annuler</Button>
+                  <Button type="submit">Créer</Button>
+                </div>
+              </form>
+            </DialogContent>
+          </Dialog>
+        }
+      />
 
       {/* Content */}
       {loading ? (

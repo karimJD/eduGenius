@@ -16,6 +16,7 @@ import {
   getClasses, getTeachers, getSubjects, updateSchedule, getSchedules, getSchedule
 } from '@/lib/api/admin';
 import clsx from 'clsx';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 
 // ─────────────────────────────────────────────
 // Types
@@ -367,20 +368,22 @@ export default function EditSchedulePage() {
   const step1Valid = title.trim() && academicYearId && targetId;
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <button
-          onClick={() => router.back()}
-          className="p-2 rounded-lg hover:bg-accent transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </button>
-        <div>
-          <h1 className="text-2xl font-bold font-heading">Modifier l'Emploi du Temps</h1>
-          <p className="text-muted-foreground text-sm">Mettez à jour les informations et séances</p>
-        </div>
-      </div>
+    <div className="space-y-6">
+      <AdminPageHeader
+        title={
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => router.back()}
+              className="p-1.5 -ml-1 rounded-lg hover:bg-accent transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <span className="uppercase">Modifier l'Emploi du Temps</span>
+          </div>
+        }
+        subtitle="Mettez à jour les informations et séances"
+        icon={Calendar}
+      />
 
       <StepBar current={step} />
 

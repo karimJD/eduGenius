@@ -5,6 +5,7 @@ import { BookOpen, ChevronRight, Calendar, PlusCircle } from 'lucide-react';
 import api from '@/lib/axios';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
 
 interface Class {
   _id: string;
@@ -50,11 +51,17 @@ export default function CoursesPage() {
   }, []);
 
   return (
-    <div className="p-6 space-y-8">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black text-foreground tracking-tight">Espaces de Dépôt</h1>
-        <p className="text-muted-foreground text-base">Gérez les chapitres et les supports de cours pour chacun de vos groupes.</p>
-      </div>
+    <div className="space-y-8">
+      <TeacherPageHeader
+        title="Espaces de Dépôt"
+        subtitle="Gérez les chapitres et les supports de cours pour chacun de vos groupes."
+        category="Cours"
+        icon={BookOpen}
+        stats={[
+          { label: 'Espaces', value: classes.length },
+          { label: 'Total Matières', value: classes.reduce((acc, cls) => acc + (cls.assignedSubjects?.length || 0), 0) }
+        ]}
+      />
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -11,6 +11,11 @@ export const getUpcomingSessions = async () => {
   return response.data;
 };
 
+export const getPendingWorkSubmissions = async () => {
+  const response = await api.get('/teacher/dashboard/pending-work');
+  return response.data;
+};
+
 // Classes
 export const getMyClasses = async (params?: any) => {
   const response = await api.get('/teacher/classes', { params });
@@ -31,6 +36,11 @@ export const getMySchedule = async (params?: any) => {
 // Announcements
 export const getRecentAnnouncements = async () => {
   const response = await api.get('/teacher/announcements/recent');
+  return response.data;
+};
+
+export const getClassAnnouncements = async (classId: string) => {
+  const response = await api.get(`/teacher/announcements/${classId}`);
   return response.data;
 };
 

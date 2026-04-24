@@ -1,19 +1,24 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { CheckSquare, ChevronRight, Clock, User } from 'lucide-react';
+import { CheckSquare, ChevronRight, Clock, User, Check } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import api from '@/lib/axios';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 interface Submission {
   _id: string;
-  studentId: { firstName: string; lastName: string; email: string };
-  quizId?: { title: string; classId?: { name: string } };
-  examId?: { title: string };
-  score: number;
-  totalPoints: number;
-  percentage: number;
+  type: 'quiz' | 'exam' | 'exercise';
+  studentId: { firstName: string; lastName: string; email: string; profileImage?: string };
+  title: string;
+  className: string;
+  classId?: string | { _id: string; name: string };
+  subjectId?: string | { _id: string; name: string };
+  score?: number;
+  totalPoints?: number;
+  percentage?: number;
   status: string;
   submittedAt: string;
 }
@@ -27,12 +32,12 @@ const exportToCsv = (submissions: Submission[]) => {
     sub.studentId.firstName || '',
     sub.studentId.lastName || '',
     sub.studentId.email || '',
-    sub.quizId?.title || sub.examId?.title || 'Assessment',
-    sub.quizId?.classId?.name || '',
-    sub.score,
-    sub.totalPoints,
-    `${sub.percentage}%`,
-    sub.status,
+    sub.title,
+    sub.className || '',
+    sub.score ?? '-',
+    sub.totalPoints ?? '-',
+    sub.percentage ? `${sub.percentage}%` : '-',
+    sub.status || 'En attente',
     new Date(sub.submittedAt).toLocaleDateString()
   ]);
 
@@ -53,6 +58,10 @@ const exportToCsv = (submissions: Submission[]) => {
 };
 
 
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+import { Button } from '@/components/ui/button';
+import { Download } from 'lucide-react';
+
 export default function GradingPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
@@ -65,20 +74,27 @@ export default function GradingPage() {
   }, []);
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Grading</h1>
-          <p className="text-muted-foreground text-sm mt-1">Review and grade student submissions.</p>
-        </div>
-        <button 
-          onClick={() => exportToCsv(submissions)}
-          disabled={submissions.length === 0}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-xl flex items-center gap-2 transition-colors"
-        >
-          Export CSV
-        </button>
-      </div>
+    <div className="space-y-6">
+      <TeacherPageHeader
+        title="Corrections"
+        subtitle="Révisez et notez les travaux soumis par les étudiants."
+        category="Évaluation"
+        icon={CheckSquare}
+        stats={[
+          { label: 'À Corriger', value: submissions.length }
+        ]}
+        actions={
+          <Button 
+            onClick={() => exportToCsv(submissions)}
+            disabled={submissions.length === 0}
+            className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            Exporter CSV
+          </Button>
+        }
+      />
+
 
       {loading ? (
         <div className="space-y-3">{[1, 2, 3].map(i => <div key={i} className="h-20 bg-card border border-border rounded-2xl animate-pulse" />)}</div>
@@ -95,22 +111,35 @@ export default function GradingPage() {
           </p>
           <div className="space-y-3">
             {submissions.map((sub, i) => {
-              const title = sub.quizId?.title || sub.examId?.title || 'Assessment';
-              const className = sub.quizId?.classId?.name;
+              const href = sub.type === 'exercise' 
+                ? `/teacher/courses/${typeof sub.classId === 'object' ? sub.classId?._id : sub.classId}/${typeof sub.subjectId === 'object' ? sub.subjectId?._id : sub.subjectId}`
+                : `/teacher/grading/${sub._id}`;
+
               return (
                 <motion.div key={sub._id}
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
-                  <Link href={`/teacher/grading/${sub._id}`}
+                  <Link href={href}
                     className="flex items-center gap-4 p-4 bg-card border border-border rounded-2xl hover:border-primary/30 transition-all group">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold shrink-0">
-                      {sub.studentId.firstName?.[0]}{sub.studentId.lastName?.[0]}
+                    <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center overflow-hidden border border-border shrink-0">
+                      {sub.studentId.profileImage ? (
+                        <img src={sub.studentId.profileImage} alt={sub.studentId.firstName} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white text-xs font-bold">
+                          {sub.studentId.firstName?.[0]}{sub.studentId.lastName?.[0]}
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-foreground text-sm">
-                        {sub.studentId.firstName} {sub.studentId.lastName}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-semibold text-foreground text-sm">
+                          {sub.studentId.firstName} {sub.studentId.lastName}
+                        </p>
+                        <Badge variant="outline" className="text-[9px] font-bold py-0 h-4 uppercase">
+                          {sub.type}
+                        </Badge>
+                      </div>
                       <p className="text-xs text-muted-foreground mt-0.5">
-                        {title}{className ? ` · ${className}` : ''}
+                        {sub.title}{sub.className ? ` · ${sub.className}` : ''}
                       </p>
                     </div>
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
@@ -118,8 +147,11 @@ export default function GradingPage() {
                         <Clock className="w-3 h-3" />
                         {new Date(sub.submittedAt).toLocaleDateString()}
                       </span>
-                      <span className="px-2 py-0.5 bg-amber-500/10 text-amber-500 font-semibold rounded-full uppercase tracking-wide text-[10px]">
-                        {sub.status}
+                      <span className={cn(
+                        "px-2 py-0.5 font-semibold rounded-full uppercase tracking-wide text-[10px]",
+                        sub.type === 'exercise' ? "bg-primary/10 text-primary" : "bg-amber-500/10 text-amber-500"
+                      )}>
+                        {sub.type === 'exercise' ? 'À corriger' : sub.status}
                       </span>
                     </div>
                     <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />

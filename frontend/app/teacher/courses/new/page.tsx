@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
 
 export default function NewCoursePage() {
   const router = useRouter();
@@ -70,18 +71,25 @@ export default function NewCoursePage() {
 
   return (
     <div className="p-6 space-y-8 pb-20">
-      <header className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => router.back()} className="rounded-xl border border-white/10 hover:bg-white/5">
-            <ArrowLeft className="w-5 h-5" />
-        </Button>
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Sparkles className="w-7 h-7 text-green-500" />
-            Create AI Course
-          </h1>
-          <p className="text-gray-400 text-sm">Convert text or PDF into structured chapters, summaries, and quizzes.</p>
-        </div>
-      </header>
+      <TeacherPageHeader
+        title="Création IA de Cours"
+        subtitle="Convertissez vos textes ou PDF en chapitres structurés, résumés et quiz grâce à l'IA."
+        category="Intelligence Artificielle"
+        icon={Sparkles}
+        stats={[
+          { label: 'Cours Générés', value: 24, icon: BookOpen }
+        ]}
+        actions={
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="rounded-2xl text-xs font-bold gap-2"
+            onClick={() => router.back()}
+          >
+            <ArrowLeft className="w-4 h-4" /> Retour
+          </Button>
+        }
+      />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}

@@ -55,6 +55,8 @@ interface CalendarEvent {
   };
 }
 
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+
 export default function TeacherSchedulePage() {
   const { user } = useAuth();
   const router = useRouter();
@@ -286,22 +288,14 @@ export default function TeacherSchedulePage() {
   }
 
   return (
-    <div className="p-6 space-y-8 max-w-full mx-auto bg-background min-h-screen">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="space-y-1">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-[10px] font-black uppercase tracking-widest"
-          >
-            <CalendarIcon className="w-3 h-3" />
-            <span>Votre emploi du temps</span>
-          </motion.div>
-          <h1 className="text-4xl font-black tracking-tighter text-foreground uppercase italic">Planning Hebdomadaire</h1>
-          <p className="text-muted-foreground font-medium text-sm">Gérez vos sessions de cours et rejoignez vos classes virtuelles.</p>
-        </div>
-
-        <div className="flex items-center gap-3">
+    <div className="space-y-8 max-w-full mx-auto bg-background min-h-screen">
+      <TeacherPageHeader
+        title="Planning Hebdomadaire"
+        subtitle="Gérez vos sessions de cours et rejoignez vos classes virtuelles."
+        category="Emploi du temps"
+        icon={CalendarIcon}
+        actions={
+          <div className="flex items-center gap-3">
             <Button 
                 variant={view === Views.WEEK ? "default" : "outline"} 
                 onClick={() => setView(Views.WEEK)}
@@ -316,8 +310,10 @@ export default function TeacherSchedulePage() {
             >
                 Jour
             </Button>
-        </div>
-      </div>
+          </div>
+        }
+      />
+
 
       <div className="bg-card border border-border rounded-[2.5rem] p-6 shadow-2xl relative overflow-hidden h-[800px]">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full -mr-48 -mt-48" />
@@ -352,7 +348,7 @@ export default function TeacherSchedulePage() {
 
       {/* Lobby Modal */}
       <Dialog open={isLobbyOpen} onOpenChange={setIsLobbyOpen}>
-        <DialogContent className="max-w-2xl bg-zinc-900 border-white/10 p-0 overflow-hidden rounded-[2rem] shadow-2xl">
+        <DialogContent className="max-w-2xl bg-card border-border p-0 overflow-hidden rounded-[2rem] shadow-2xl">
           {selectedEvent && (
             <div className="flex flex-col">
               {/* Header / Banner */}
@@ -374,24 +370,24 @@ export default function TeacherSchedulePage() {
                 <div className="grid grid-cols-2 gap-8">
                   <div className="space-y-6">
                     <div className="space-y-1.5">
-                      <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Matière</p>
-                      <p className="text-white font-bold text-xl tracking-tight">{selectedEvent.resource.subjectName}</p>
+                      <p className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Matière</p>
+                      <p className="text-foreground font-bold text-xl tracking-tight">{selectedEvent.resource.subjectName}</p>
                     </div>
                     <div className="space-y-1.5">
-                      <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Classe / Groupe</p>
-                      <p className="text-white font-semibold text-lg">{selectedEvent.resource.className}</p>
+                      <p className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Classe / Groupe</p>
+                      <p className="text-foreground font-semibold text-lg">{selectedEvent.resource.className}</p>
                     </div>
                   </div>
                   <div className="space-y-6">
                     <div className="space-y-1.5">
-                      <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Horaire Prévu</p>
-                      <div className="flex items-center gap-2 text-white font-bold text-xl">
+                      <p className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Horaire Prévu</p>
+                      <div className="flex items-center gap-2 text-foreground font-bold text-xl">
                         <Clock className="w-5 h-5 text-violet-400" />
                         {moment(selectedEvent.start).format('HH:mm')} - {moment(selectedEvent.end).format('HH:mm')}
                       </div>
                     </div>
                     <div className="space-y-1.5">
-                      <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Lieu de Session</p>
+                      <p className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Lieu de Session</p>
                       <div className="flex items-center gap-2 text-emerald-400 font-bold text-lg italic">
                         <MapPin className="w-5 h-5" />
                         {selectedEvent.resource.room}
@@ -400,14 +396,14 @@ export default function TeacherSchedulePage() {
                   </div>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex items-start gap-6 relative overflow-hidden group">
+                <div className="bg-primary/5 border border-primary/10 rounded-3xl p-8 flex items-start gap-6 relative overflow-hidden group">
                   <div className="absolute inset-y-0 left-0 w-1 bg-violet-500" />
                   <div className="w-12 h-12 bg-violet-500/10 rounded-2xl flex items-center justify-center shrink-0 border border-violet-500/20">
                     <Users className="text-violet-400 w-6 h-6" />
                   </div>
                   <div className="space-y-2">
-                    <p className="text-white font-bold text-lg tracking-tight">Prêt à enseigner ?</p>
-                    <p className="text-zinc-400 text-sm leading-relaxed">
+                    <p className="text-foreground font-bold text-lg tracking-tight">Prêt à enseigner ?</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
                       L'appel s'ouvrira dans un environnement immersif plein écran. Assurez-vous d'être dans un endroit calme et vérifiez votre matériel audiovisuel.
                     </p>
                   </div>
@@ -417,7 +413,7 @@ export default function TeacherSchedulePage() {
                   <Button 
                     onClick={handleJoinCall}
                     disabled={joining}
-                    className="flex-1 h-16 bg-white text-black hover:bg-zinc-200 rounded-2xl font-black text-lg shadow-2xl shadow-white/5 group transition-all"
+                    className="flex-1 h-16 bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl font-black text-lg shadow-2xl shadow-primary/20 group transition-all"
                   >
                     {joining ? (
                       <>
@@ -427,21 +423,21 @@ export default function TeacherSchedulePage() {
                     ) : (
                       <>
                         REJOINDRE LA CLASSE
-                        <Play className="ml-3 w-5 h-5 fill-black group-hover:translate-x-1 transition-transform" />
+                        <Play className="ml-3 w-5 h-5 fill-current group-hover:translate-x-1 transition-transform" />
                       </>
                     )}
                   </Button>
                   <Button 
                     variant="ghost" 
                     onClick={() => setIsLobbyOpen(false)}
-                    className="h-16 px-10 rounded-2xl border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 font-bold uppercase tracking-widest text-xs"
+                    className="h-16 px-10 rounded-2xl border border-border text-muted-foreground hover:text-foreground hover:bg-accent font-bold uppercase tracking-widest text-xs"
                   >
                     Fermer
                   </Button>
                 </div>
 
                 {selectedEvent.resource.existingSession && (
-                  <div className="pt-4 border-t border-white/5 flex justify-center">
+                  <div className="pt-4 border-t border-border flex justify-center">
                     <button 
                       onClick={() => handleEndActiveSession(selectedEvent.resource.existingSession._id)}
                       className="text-red-500/60 hover:text-red-500 text-[10px] font-black uppercase tracking-[0.2em] transition-colors"

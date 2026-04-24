@@ -54,19 +54,17 @@ export default function StudentAIPage() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [summariesRes, historyRes, classesRes] = await Promise.all([
+      const [summariesRes, historyRes, aiCoursesRes] = await Promise.all([
         api.get('/student/ai/summaries'),
         api.get('/student/ai/practice-quizzes/history'),
-        api.get('/student/courses')
+        api.get('/student/ai/courses')
       ]);
       
       if (summariesRes.data.success) setSummaries(summariesRes.data.data);
       if (historyRes.data.success) setQuizHistory(historyRes.data.data);
-      if (classesRes.data.success) {
-        setClasses(classesRes.data.data);
-        if (classesRes.data.data.length > 0) {
-          setSelectedClassId(classesRes.data.data[0]._id);
-        }
+      if (aiCoursesRes.data.success) {
+        setClasses(aiCoursesRes.data.data.courses);
+        setSelectedClassId(aiCoursesRes.data.data.classId);
       }
     } catch (error) {
       console.error('Error fetching AI data:', error);

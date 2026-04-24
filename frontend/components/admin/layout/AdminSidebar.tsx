@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import {
   LayoutDashboard, Users, GraduationCap, Calendar, Activity,
   BarChart2, FileText, Settings, BookOpen, Building2, ClipboardList, LogOut,
+  MessageSquare, Megaphone,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { clsx } from 'clsx';
@@ -37,6 +38,13 @@ const navGroups = [
     items: [
       { href: '/admin/schedules', label: 'Emplois du temps', icon: Calendar },
       { href: '/admin/subjects', label: 'Matières', icon: BookOpen },
+    ],
+  },
+  {
+    label: 'Communication',
+    items: [
+      { href: '/admin/messages', label: 'Messages', icon: MessageSquare },
+      { href: '/admin/announcements', label: 'Annonces', icon: Megaphone },
     ],
   },
 ];

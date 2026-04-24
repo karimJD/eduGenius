@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { getAttendanceRecords } from '@/lib/api/admin';
 import { DataTable, Column } from '@/components/shared/DataTable';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import { Button } from '@/components/ui/button';
 import { BarChart2, FileDown } from 'lucide-react';
 
@@ -60,17 +61,17 @@ export default function AttendanceReportsPage() {
     : '—';
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold">
-            <BarChart2 className="h-6 w-6" /> Rapports de Présence
-          </h1>
-        </div>
-        <Button variant="outline" size="sm">
-          <FileDown className="mr-2 h-4 w-4" /> Exporter CSV
-        </Button>
-      </div>
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title="Rapports de Présence"
+        subtitle="Analysez l'assiduité des étudiants par période"
+        icon={BarChart2}
+        actions={
+          <Button variant="outline" size="sm" className="rounded-xl font-bold border-2">
+            <FileDown className="mr-2 h-4 w-4" /> Exporter CSV
+          </Button>
+        }
+      />
 
       {/* Filters */}
       <div className="flex flex-wrap items-end gap-4 rounded-xl border border-border bg-card p-4">

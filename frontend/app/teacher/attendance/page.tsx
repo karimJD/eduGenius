@@ -22,6 +22,8 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; dot: string 
   excused: { label: 'Excused', color: 'bg-blue-500/10 text-blue-500 border-blue-500/30', dot: 'bg-blue-500' },
 };
 
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+
 export default function AttendancePage() {
   const [classes, setClasses] = useState<Class[]>([]);
   const [selectedClass, setSelectedClass] = useState<Class | null>(null);
@@ -64,11 +66,17 @@ export default function AttendancePage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Attendance</h1>
-        <p className="text-muted-foreground text-sm mt-1">Track and manage student attendance per session.</p>
-      </div>
+    <div className="space-y-6">
+      <TeacherPageHeader
+        title="Présences"
+        subtitle="Suivez et gérez l'assiduité des étudiants par session."
+        category="Gestion"
+        icon={Clock}
+        stats={[
+          { label: 'Mes Classes', value: classes.length }
+        ]}
+      />
+
 
       {/* Class selector */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

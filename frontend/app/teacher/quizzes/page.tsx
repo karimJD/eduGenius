@@ -25,6 +25,9 @@ const difficultyColors: Record<string, string> = {
   mixed: 'text-violet-500 bg-violet-500/10',
 };
 
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+import { Button } from '@/components/ui/button';
+
 export default function QuizzesPage() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,17 +57,22 @@ export default function QuizzesPage() {
   );
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Quizzes</h1>
-          <p className="text-muted-foreground text-sm mt-1">Create and manage quizzes for your classes.</p>
-        </div>
-        <Link href="/teacher/quizzes/new"
-          className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:opacity-90 transition-opacity">
-          <PlusCircle className="w-4 h-4" /> New Quiz
-        </Link>
-      </div>
+    <div className="space-y-6">
+      <TeacherPageHeader
+        title="Quizzes"
+        subtitle="Créez et gérez des quiz pour vos classes."
+        category="Évaluation"
+        icon={ClipboardList}
+        actions={
+          <Button asChild className="rounded-xl shadow-lg shadow-primary/20">
+            <Link href="/teacher/quizzes/new">
+              <PlusCircle className="w-4 h-4 mr-2" />
+              Nouveau Quiz
+            </Link>
+          </Button>
+        }
+      />
+
 
       <div className="relative max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />

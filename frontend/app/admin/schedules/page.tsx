@@ -3,7 +3,9 @@ import { useEffect, useState, useCallback } from 'react';
 import { getSchedules, publishSchedule, deleteSchedule } from '@/lib/api/admin';
 import { DataTable, Column } from '@/components/shared/DataTable';
 import { Button } from '@/components/ui/button';
-import { Calendar, Plus } from 'lucide-react';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
+import { Calendar, Plus, Clock } from 'lucide-react';
+import Link from 'next/link';
 
 interface ScheduleEntry extends Record<string, unknown> {
   day: string;
@@ -122,19 +124,19 @@ export default function SchedulesPage() {
   ];
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold">
-            <Calendar className="h-6 w-6" /> Emplois du Temps
-          </h1>
-        </div>
-        <a href="/admin/schedules/create">
-          <Button>
-            <Plus className="mr-2 h-4 w-4" /> Créer
-          </Button>
-        </a>
-      </div>
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title="Emplois du Temps"
+        subtitle="Gérez les horaires de cours par classe"
+        icon={Clock}
+        actions={
+          <Link href="/admin/schedules/create">
+            <Button className="rounded-xl px-4 py-5 shadow-lg shadow-blue-500/10 font-bold gap-2">
+              <Plus className="h-4 w-4" /> Créer
+            </Button>
+          </Link>
+        }
+      />
 
       <DataTable
         columns={columnsWithActions}

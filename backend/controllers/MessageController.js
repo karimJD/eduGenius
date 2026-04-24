@@ -63,3 +63,93 @@ exports.getMessages = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
+// @desc    Get active conversations
+// @route   GET /api/messages/conversations
+// @access  Private
+exports.getConversations = async (req, res) => {
+  try {
+    const currentUserId = req.user._id;
+
+    const conversations = await Message.aggregate([
+      {
+        $match: {
+          $or: [{ senderId: currentUserId }, { receiverId: currentUserId }],
+          messageType: 'private',
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      {
+        $group: {
+          _id: {
+            $cond: [
+              { $eq: ["$senderId", currentUserId] },
+              "$receiverId",
+              "$senderId"
+            ]
+          },
+          lastMessage: { $first: "$content" },
+          lastMessageTime: { $first: "$createdAt" },
+          unreadCount: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $eq: ["$receiverId", currentUserId] },
+                    { $eq: ["$isRead", false] }
+                  ]
+                },
+                1,
+                0
+              ]
+            }
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      { $unwind: "$user" },
+      {
+        $project: {
+          _id: 1,
+          lastMessage: 1,
+          lastMessageTime: 1,
+          unreadCount: 1,
+          firstName: "$user.firstName",
+          lastName: "$user.lastName",
+          email: "$user.email",
+          role: "$user.role"
+        }
+      },
+      { $sort: { lastMessageTime: -1 } }
+    ]);
+
+    res.json(conversations);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching conversations', error: error.message });
+  }
+};
+
+// @desc    Mark messages as read
+// @route   PATCH /api/messages/read
+// @access  Private
+exports.markAsRead = async (req, res) => {
+  try {
+    const { senderId } = req.body;
+    await Message.updateMany(
+      { senderId, receiverId: req.user._id, isRead: false },
+      { $set: { isRead: true, readAt: new Date() } }
+    );
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error marking messages as read', error: error.message });
+  }
+};

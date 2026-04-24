@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Search, Edit2, Trash2, UserCheck, UserX, Shield, GraduationCap, School } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, UserCheck, UserX, Shield, GraduationCap, School, Users } from 'lucide-react';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import api from '@/lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -141,20 +142,17 @@ export default function AdminUsersPage() {
 
   return (
     <div className="space-y-8 mx-auto">
-      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-        <div className="space-y-1">
-          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-muted-foreground">
-            User Management
-          </h1>
-          <p className="text-muted-foreground">Manage students, teachers, and platform administrators.</p>
-        </div>
-        <Button
-          onClick={() => handleOpenModal()}
-        >
-          <Plus className="w-5 h-5" />
-          Add New User
-        </Button>
-      </header>
+      <AdminPageHeader 
+        title="Gestion des Utilisateurs"
+        subtitle="Gérez les étudiants, enseignants et administrateurs"
+        icon={Users}
+        actions={
+          <Button onClick={() => handleOpenModal()} className="rounded-xl px-6 py-5 shadow-lg shadow-blue-500/10 font-bold">
+            <Plus className="w-5 h-5 mr-2" />
+            Nouveau Utilisateur
+          </Button>
+        }
+      />
 
       <div className="bg-card border border-border rounded-3xl overflow-hidden backdrop-blur-sm relative">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>

@@ -10,17 +10,20 @@ const {
 const { protect } = require('../middleware/authMiddleware');
 const { authorize } = require('../middleware/roleMiddleware');
 
-// Protect all user routes and restrict to admins
+// Protect all user routes
 router.use(protect);
-router.use(authorize('admin'));
 
-router.route('/')
-  .get(getUsers)
-  .post(createUser);
+// GET /api/users - Allow all authenticated roles for messaging
+router.get('/', authorize('admin', 'teacher', 'student'), getUsers);
 
-router.route('/:id')
-  .get(getUserById)
-  .put(updateUser)
-  .delete(deleteUser);
+// POST /api/users - Only admins
+router.post('/', authorize('admin'), createUser);
+
+// GET /api/users/:id - Allow all authenticated roles
+router.get('/:id', authorize('admin', 'teacher', 'student'), getUserById);
+
+// PUT / DELETE - Only admins
+router.put('/:id', authorize('admin'), updateUser);
+router.delete('/:id', authorize('admin'), deleteUser);
 
 module.exports = router;

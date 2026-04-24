@@ -5,25 +5,74 @@ const Exam = require('../../models/Exam');
 const Submission = require('../../models/Submission');
 const Class = require('../../models/Class');
 
+const Course = require('../../models/Course');
+const WorkSubmission = require('../../models/WorkSubmission');
+
 // GET /api/teacher/grading/pending  — all submitted, ungraded submissions for this teacher
 router.get('/pending', async (req, res, next) => {
   try {
     const teacherId = req.user._id;
 
+    // 1. Quizzes and Exams
     const myQuizIds = (await Quiz.find({ teacherId }).select('_id')).map((q) => q._id);
     const myExamIds = (await Exam.find({ teacherId }).select('_id')).map((e) => e._id);
 
-    const submissions = await Submission.find({
+    const assessments = await Submission.find({
       status: 'submitted',
       $or: [{ quizId: { $in: myQuizIds } }, { examId: { $in: myExamIds } }],
     })
-      .populate('studentId', 'firstName lastName email')
+      .populate('studentId', 'firstName lastName email profileImage')
       .populate('quizId', 'title classId')
       .populate('examId', 'title classId')
-      .sort({ submittedAt: -1 })
-      .limit(Number(req.query.limit) || 50);
+      .lean();
 
-    res.json(submissions);
+    // 2. Course Exercises (WorkSubmissions)
+    const myCourses = await Course.find({ teacherId }).select('chapters');
+    const allMyChapterIds = myCourses.reduce((acc, course) => {
+      return acc.concat(course.chapters.map(ch => ch._id));
+    }, []);
+
+    const workSubmissions = await WorkSubmission.find({
+      chapterId: { $in: allMyChapterIds },
+      grade: null
+    })
+      .populate('studentId', 'firstName lastName email profileImage')
+      .populate('classId', 'name')
+      .populate('subjectId', 'name')
+      .lean();
+
+    // Enrich work submissions with exercise names
+    const enrichedWork = workSubmissions.map(sub => {
+      const course = myCourses.find(c => c.chapters.some(ch => ch._id.toString() === sub.chapterId.toString()));
+      let exerciseName = 'Exercice';
+      if (course) {
+        const chapter = course.chapters.id(sub.chapterId);
+        const exercise = chapter?.exercises.id(sub.exerciseId);
+        exerciseName = exercise?.name || 'Exercice';
+      }
+      return {
+        ...sub,
+        type: 'exercise',
+        title: exerciseName,
+        className: sub.classId?.name,
+        submittedAt: sub.submittedAt
+      };
+    });
+
+    const enrichedAssessments = assessments.map(sub => ({
+      ...sub,
+      type: sub.quizId ? 'quiz' : 'exam',
+      title: sub.quizId?.title || sub.examId?.title || 'Assessment',
+      className: sub.quizId?.classId?.name || sub.examId?.classId?.name,
+      submittedAt: sub.submittedAt
+    }));
+
+    // Combine and sort
+    const allPending = [...enrichedAssessments, ...enrichedWork].sort((a, b) => 
+      new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
+    );
+
+    res.json(allPending);
   } catch (err) {
     next(err);
   }

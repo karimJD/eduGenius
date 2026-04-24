@@ -1,11 +1,12 @@
 'use client';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createStudent } from '@/lib/api/admin';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 
 type FormData = {
   firstName: string;
@@ -72,13 +73,19 @@ export default function CreateStudentPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6 p-6">
-      <div className="flex items-center gap-3">
-        <button onClick={() => window.history.back()} className="rounded-lg p-2 hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </button>
-        <h1 className="text-2xl font-bold">Ajouter un étudiant</h1>
-      </div>
+    <div className="space-y-6">
+      <AdminPageHeader 
+        title="Ajouter un étudiant"
+        subtitle="Création d'un nouveau profil académique"
+        icon={Users}
+        iconColor="text-blue-500"
+        actions={
+          <Button variant="outline" onClick={() => window.history.back()} className="rounded-xl border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 font-bold">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Retour
+          </Button>
+        }
+      />
 
       {/* Step indicator */}
       <div className="flex gap-2">

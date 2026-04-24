@@ -22,7 +22,7 @@ router.get('/', authenticate, adminAuth, async (req, res, next) => {
       .populate('programId', 'name code')
       .populate('academicYearId', 'year')
       .populate('academicAdvisorId', 'firstName lastName')
-      .populate('teachers.subjectId', 'name')
+      .populate('teachers.subjectId', 'name code')
       .populate('teachers.teacherId', 'firstName lastName email')
       .sort({ name: 1 });
     res.json(classes);
@@ -47,7 +47,7 @@ router.get('/:id', authenticate, adminAuth, async (req, res, next) => {
       .populate('academicYearId', 'year')
       .populate('students.studentId', 'firstName lastName cin studentId')
       .populate('academicAdvisorId', 'firstName lastName')
-      .populate('teachers.subjectId', 'name')
+      .populate('teachers.subjectId', 'name code')
       .populate('teachers.teacherId', 'firstName lastName email');
     if (!cls) return res.status(404).json({ error: 'Class not found' });
     res.json(cls);

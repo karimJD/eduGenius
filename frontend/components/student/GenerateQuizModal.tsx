@@ -50,8 +50,7 @@ export function GenerateQuizModal({
   const [loading, setLoading] = useState(false);
   const [fetchingStructure, setFetchingStructure] = useState(false);
 
-  const selectedClass = classes.find(c => c._id === classId);
-  const subjects = selectedClass?.assignedSubjects || [];
+  const subjects = classes || [];
 
   useEffect(() => {
     setSubjectId('');
@@ -168,8 +167,8 @@ export function GenerateQuizModal({
             >
               <option value="">Choisir une matière...</option>
               {subjects.map((s: any) => (
-                <option key={s.subjectId._id} value={s.subjectId._id}>
-                  {s.subjectId.name}
+                <option key={s.id} value={s.id}>
+                  {s.name} ({s.code})
                 </option>
               ))}
             </select>

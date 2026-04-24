@@ -53,8 +53,47 @@ const updateProfile = async (req, res) => {
 // --- Announcements ---
 const getAnnouncements = async (req, res) => {
   try {
-    // Should filter by enrolled classes
-    const announcements = await Announcement.find({}).sort({ createdAt: -1 });
+    const studentId = req.user._id;
+    const now = new Date();
+    
+    // Find classes the student is enrolled in
+    const enrolledClasses = await Class.find({ 
+      'students.studentId': studentId,
+      'students.status': 'enrolled'
+    }).select('_id');
+    const classIds = enrolledClasses.map(c => c._id);
+
+    // Fetch announcements targeting those classes or all students
+    const query = {
+      $and: [
+        {
+          $or: [
+            { targetType: 'all_students' },
+            { targetType: 'all' },
+            { targetType: 'specific_classes', targetClasses: { $in: classIds } },
+            { classId: { $in: classIds } }
+          ]
+        },
+        { isPublished: true },
+        { 
+          $or: [
+            { publishAt: null }, 
+            { publishAt: { $lte: now } }
+          ] 
+        },
+        { 
+          $or: [
+            { expiresAt: null }, 
+            { expiresAt: { $gt: now } }
+          ] 
+        }
+      ]
+    };
+
+    const announcements = await Announcement.find(query)
+    .sort({ isPinned: -1, createdAt: -1 })
+    .populate('teacherId', 'firstName lastName avatar');
+
     res.status(200).json({ success: true, data: announcements });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

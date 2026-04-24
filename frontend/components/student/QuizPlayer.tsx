@@ -50,7 +50,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
         setLoading(true);
         if (quizId) {
           // Fetch existing quiz
-          const res = await api.get(`/student/ai/practice-quizzes/${quizId}`);
+          const res = await api.get(`/student/ai/practice-quiz/${quizId}`);
           if (res.data.success) {
             setQuizDetails({ _id: res.data.data._id, title: res.data.data.quizTitle });
             setQuestions(res.data.data.questions);
@@ -103,7 +103,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
 
     try {
       setSaving(true);
-      await api.put(`/ai/quiz/${quizDetails._id}/submit`, { score });
+      await api.post(`/student/ai/practice-quiz/${quizDetails._id}/submit`, { score });
     } catch (err) {
       console.error('Failed to save score', err);
     } finally {

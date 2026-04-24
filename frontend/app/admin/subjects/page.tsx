@@ -3,8 +3,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  Plus, ArrowLeft, GraduationCap, ChevronDown, ChevronUp
+  Plus, ArrowLeft, GraduationCap, ChevronDown, ChevronUp, BookOpen
 } from 'lucide-react';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -260,26 +261,15 @@ export default function SubjectsPage() {
   ];
 
   return (
-    <div className="space-y-6 p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => router.back()}
-            className="p-2 rounded-lg hover:bg-accent transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold">Matières &amp; Modules</h1>
-            <p className="text-muted-foreground text-sm">{total} matière(s) au total – système LMD tunisien</p>
-          </div>
-        </div>
-
-        <div className="flex gap-2">
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title="Matières & Modules"
+        subtitle={`${total} matière(s) au total – système LMD tunisien`}
+        icon={BookOpen}
+        actions={
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="sm" className="gap-2">
+              <Button size="sm" className="rounded-xl px-4 py-5 shadow-lg shadow-blue-500/10 font-bold gap-2">
                 <Plus className="h-4 w-4" /> Ajouter
               </Button>
             </DialogTrigger>
@@ -424,8 +414,8 @@ export default function SubjectsPage() {
               </form>
             </DialogContent>
           </Dialog>
-        </div>
-      </div>
+        }
+      />
 
       {/* Search */}
       <div className="flex gap-3">

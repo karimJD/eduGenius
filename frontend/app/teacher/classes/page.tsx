@@ -18,9 +18,12 @@ interface ClassItem {
   code: string;
   students: { studentId: any; status: string }[];
   teachers: { subjectId: any; teacherId: any }[];
+  assignedSubjects?: { subjectId: any }[];
   departmentId?: { name: string };
   level: string;
 }
+
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
 
 export default function TeacherClassesPage() {
   const [classes, setClasses] = useState<ClassItem[]>([]);
@@ -51,44 +54,34 @@ export default function TeacherClassesPage() {
   const totalStudents = classes.reduce((acc, c) => acc + (c.students?.length || 0), 0);
 
   return (
-    <div className="p-6 space-y-8 mx-auto">
+    <div className="space-y-8 mx-auto">
       {/* Header Section */}
-      <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 text-primary">
-            <Users className="w-5 h-5" />
-            <span className="text-sm font-bold uppercase tracking-wider">Éducation</span>
-          </div>
-          <h1 className="text-4xl font-extrabold text-white tracking-tight">Mes Classes</h1>
-          <p className="text-muted-foreground max-w-md">Gérez vos classes assignées, consultez les listes d'étudiants et suivez le planning.</p>
-        </div>
+      <TeacherPageHeader
+        title="Mes Classes"
+        subtitle="Gérez vos classes assignées, consultez les listes d'étudiants et suivez le planning."
+        category="Éducation"
+        icon={Users}
+        stats={[
+          { label: 'Classes', value: classes.length },
+          { label: 'Étudiants', value: totalStudents }
+        ]}
+      />
 
-        <div className="flex items-center gap-4 bg-card border border-border p-4 rounded-3xl shadow-sm">
-            <div className="px-4 border-r border-border text-center">
-                <p className="text-2xl font-bold text-foreground">{classes.length}</p>
-                <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-tighter">Classes</p>
-            </div>
-            <div className="px-4 text-center">
-                <p className="text-2xl font-bold text-foreground">{totalStudents}</p>
-                <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-tighter">Étudiants</p>
-            </div>
-        </div>
-      </header>
 
       {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#111111]/50 p-2 rounded-2xl border border-[#222222]">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-secondary/50 p-2 rounded-2xl border border-border">
         <div className="relative w-full sm:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Rechercher une classe..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="pl-10 h-11 bg-background border-[#222222] rounded-xl focus:ring-primary/20"
+            className="pl-10 h-11 bg-background border-border rounded-xl focus:ring-primary/20"
           />
         </div>
 
         <div className="flex items-center gap-2 self-end sm:self-auto">
-            <div className="flex items-center bg-background border border-[#222222] p-1 rounded-xl mr-2">
+            <div className="flex items-center bg-background border border-border p-1 rounded-xl mr-2">
                 <button 
                     onClick={() => setViewMode('grid')}
                     className={cn("p-2 rounded-lg transition-all", viewMode === 'grid' ? "bg-primary/10 text-primary shadow-sm" : "text-muted-foreground hover:text-foreground")}
@@ -123,7 +116,7 @@ export default function TeacherClassesPage() {
           <div className="w-20 h-20 bg-muted/30 rounded-full flex items-center justify-center mx-auto mb-6">
             <Users className="w-10 h-10 text-muted-foreground/30" />
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">Aucune classe trouvée</h3>
+          <h3 className="text-xl font-bold text-foreground mb-2">Aucune classe trouvée</h3>
           <p className="text-muted-foreground max-w-sm mx-auto">
             {search ? `Aucun résultat pour "${search}"` : "Vous n'avez pas encore de classes assignées."}
           </p>
@@ -186,7 +179,7 @@ export default function TeacherClassesPage() {
                       <div className="flex items-center gap-1.5 font-medium">
                         <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
                         <BookOpen className="w-3.5 h-3.5" /> 
-                        <span><b className="text-foreground text-xs">{cls.teachers?.length || 0}</b> Matières</span>
+                        <span><b className="text-foreground text-xs">{cls.assignedSubjects?.length || cls.teachers?.length || 0}</b> Matières</span>
                       </div>
                     </div>
                   </div>

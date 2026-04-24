@@ -5,17 +5,75 @@ const Attendance = require('../../models/Attendance');
 const Grade = require('../../models/Grade');
 const VideoSession = require('../../models/VideoSession');
 const Class = require('../../models/Class');
+const Course = require('../../models/Course');
+const StudyMaterial = require('../../models/StudyMaterial');
+const Quiz = require('../../models/Quiz');
+const Announcement = require('../../models/Announcement');
+const WorkSubmission = require('../../models/WorkSubmission');
 const { authenticate, adminAuth } = require('../../middleware/auth');
 
 // GET /api/admin/reports/dashboard - Dashboard overview stats
 router.get('/dashboard', authenticate, adminAuth, async (req, res, next) => {
   try {
-    const [totalStudents, totalTeachers, totalClasses, liveSessions] = await Promise.all([
+    const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const [
+      totalStudents, 
+      totalTeachers, 
+      totalClasses, 
+      liveSessions, 
+      recentUsers, 
+      classes, 
+      alerts,
+      studentGrowth,
+      contentStats,
+      recentAnnouncements,
+      recentSubmissions
+    ] = await Promise.all([
       User.countDocuments({ role: 'student', isActive: true }),
       User.countDocuments({ role: 'teacher', isActive: true }),
       Class.countDocuments({ isActive: true }),
       VideoSession.countDocuments({ status: 'live' }),
+      User.find({ role: { $in: ['student', 'teacher'] } })
+        .sort({ createdAt: -1 })
+        .limit(5)
+        .select('firstName lastName role createdAt'),
+      Class.find({ isActive: true }).select('name students teachers'),
+      (async () => {
+        const [pendingGrades, unassignedClasses, unpublishedSchedules] = await Promise.all([
+          Grade.countDocuments({ validatedAt: { $exists: false } }),
+          Class.countDocuments({ 'teachers.0': { $exists: false }, isActive: true }),
+          require('../../models/Schedule').countDocuments({ isPublished: false }),
+        ]);
+        return { pendingGrades, unassignedClasses, unpublishedSchedules };
+      })(),
+      User.countDocuments({ role: 'student', createdAt: { $gte: thirtyDaysAgo } }),
+      (async () => {
+        const [courses, materials, quizzes] = await Promise.all([
+          Course.countDocuments(),
+          StudyMaterial.countDocuments(),
+          Quiz.countDocuments(),
+        ]);
+        return { courses, materials, quizzes };
+      })(),
+      Announcement.find()
+        .sort({ createdAt: -1 })
+        .limit(3)
+        .select('title type createdAt isPublished'),
+      WorkSubmission.find()
+        .sort({ createdAt: -1 })
+        .limit(5)
+        .populate('studentId', 'firstName lastName')
+        .populate('exerciseId', 'title')
+        .select('createdAt status')
     ]);
+
+    // Format class distribution
+    const classDistribution = classes.map(c => ({
+      name: c.name,
+      count: c.students ? c.students.length : 0
+    })).sort((a, b) => b.count - a.count).slice(0, 5);
+
     // Today's attendance rate
     const today = new Date(); today.setHours(0, 0, 0, 0);
     const todayAttendances = await Attendance.find({ sessionDate: { $gte: today } });
@@ -24,7 +82,21 @@ router.get('/dashboard', authenticate, adminAuth, async (req, res, next) => {
       const rates = todayAttendances.map(a => a.statistics.attendanceRate || 0);
       todayAttendanceRate = Math.round(rates.reduce((s, r) => s + r, 0) / rates.length * 100) / 100;
     }
-    res.json({ totalStudents, totalTeachers, totalClasses, liveSessions, todayAttendanceRate });
+
+    res.json({ 
+      totalStudents, 
+      totalTeachers, 
+      totalClasses, 
+      liveSessions, 
+      todayAttendanceRate,
+      recentUsers,
+      classDistribution,
+      alerts,
+      studentGrowth,
+      contentStats,
+      recentAnnouncements,
+      recentSubmissions
+    });
   } catch (err) { next(err); }
 });
 

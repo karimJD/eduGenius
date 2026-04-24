@@ -4,26 +4,43 @@ import { useEffect, useState } from 'react';
 import {
   Users, BookOpen, Video, ClipboardList, CheckSquare,
   Calendar, Megaphone, ChevronRight, TrendingUp, Clock,
-  Plus, Pin, AlertCircle
+  Plus, Pin, AlertCircle, Check
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { 
   getDashboardStats, 
   getUpcomingSessions, 
-  getRecentAnnouncements 
+  getRecentAnnouncements,
+  getPendingWorkSubmissions
 } from '@/lib/api/teacher';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+import { API_BASE_URL } from '@/lib/api/axios';
+
+/** Convert an imageUrl to a displayable src. */
+function getImageSrc(imageUrl: string): string {
+  if (!imageUrl) return '';
+  const s3Pattern = /https?:\/\/[^.]+\.s3\.[^.]+\.amazonaws\.com\/(.+)$/;
+  const m = imageUrl.match(s3Pattern);
+  if (m) {
+    const key = m[1];
+    return `${API_BASE_URL}/api/admin/announcements/image-proxy?key=${encodeURIComponent(key)}`;
+  }
+  if (imageUrl.startsWith('http')) return imageUrl;
+  return `${API_BASE_URL}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
+}
 
 interface Stats {
   totalClasses: number;
   totalStudents: number;
   totalAssessments: number;
   pendingGrading: number;
-  upcomingSessions: number;
+  pendingWork: number;
+  todaySessions: number;
 }
 
 interface Session {
@@ -43,28 +60,128 @@ interface Announcement {
   isPinned: boolean;
   createdAt: string;
   classId?: { name: string; code: string };
+  teacherId?: { firstName: string; lastName: string };
+  imageUrl?: string;
 }
+
+interface PendingWork {
+  _id: string;
+  studentId: { firstName: string; lastName: string; profileImage?: string };
+  classId: { _id: string; name: string };
+  subjectId: { _id: string; name: string };
+  chapterId: string;
+  exerciseId: string;
+  exerciseName: string;
+  fileName: string;
+  submittedAt: string;
+}
+
+function AnnouncementSlideshow({ announcements }: { announcements: Announcement[] }) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (announcements.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % announcements.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [announcements.length]);
+
+  if (announcements.length === 0) return null;
+
+  const current = announcements[index];
+
+  return (
+    <div className="group relative overflow-hidden bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-[2rem] p-5 flex items-center gap-6 transition-all hover:bg-primary/[0.08]">
+      <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-primary flex items-center justify-center shrink-0 shadow-xl shadow-primary/20 relative overflow-hidden group/img">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent z-10" />
+        {current.imageUrl && !current.imageUrl.includes('mock-s3-bucket') ? (
+          <img 
+            src={getImageSrc(current.imageUrl)} 
+            alt={current.title} 
+            className="w-full h-full object-cover relative z-0 transition-transform duration-500 group-hover/img:scale-110"
+          />
+        ) : (
+          <Megaphone className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground relative z-20" />
+        )}
+      </div>
+      
+      <div className="flex-1 min-w-0">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current._id}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.4, ease: "circOut" }}
+            className="space-y-1"
+          >
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-[9px] font-black uppercase tracking-[0.15em] px-2 py-0.5">
+                {current.priority === 'urgent' ? '🚨 Urgent' : '📢 Annonce'}
+              </Badge>
+              <span className="text-[10px] text-muted-foreground font-bold">• {new Date(current.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</span>
+              {current.teacherId && (
+                <span className="text-[10px] text-primary/60 font-bold">• {current.teacherId.firstName}</span>
+              )}
+            </div>
+            <h4 className="text-lg font-black text-foreground tracking-tight truncate group-hover:text-primary transition-colors">
+              {current.title}
+            </h4>
+            <p className="text-sm text-muted-foreground line-clamp-1 font-medium">
+              {current.content}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      <div className="flex flex-col items-end gap-3 shrink-0">
+        <Button asChild size="sm" className="rounded-xl h-10 px-6 font-bold shadow-lg shadow-primary/10">
+          <Link href="/teacher/announcements">Détails</Link>
+        </Button>
+        {announcements.length > 1 && (
+          <div className="flex gap-1.5 px-2">
+            {announcements.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                className={cn(
+                  "h-1.5 rounded-full transition-all duration-500",
+                  i === index ? "bg-primary w-6" : "bg-primary/20 w-1.5 hover:bg-primary/40"
+                )}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 
 export default function TeacherDashboard() {
   const { user } = useAuth();
   const [stats, setStats] = useState<Stats | null>(null);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [pendingWork, setPendingWork] = useState<PendingWork[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadDashboardData = async () => {
       try {
         setLoading(true);
-        const [statsData, sessionsData, announcementsData] = await Promise.all([
+        const [statsData, sessionsData, announcementsData, pendingWorkData] = await Promise.all([
           getDashboardStats(),
           getUpcomingSessions(),
-          getRecentAnnouncements()
+          getRecentAnnouncements(),
+          getPendingWorkSubmissions()
         ]);
         
         setStats(statsData);
         setSessions(sessionsData);
         setAnnouncements(announcementsData);
+        setPendingWork(pendingWorkData);
       } catch (err) {
         console.error('Failed to load dashboard data:', err);
       } finally {
@@ -80,8 +197,8 @@ export default function TeacherDashboard() {
   const statCards = [
     { label: 'Mes Classes', value: stats?.totalClasses, icon: Calendar, color: 'text-violet-400', bg: 'bg-violet-500/10' },
     { label: 'Total Étudiants', value: stats?.totalStudents, icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
-    { label: 'Évaluations', value: stats?.totalAssessments, icon: ClipboardList, color: 'text-green-400', bg: 'bg-green-500/10' },
-    { label: 'Corrections', value: stats?.pendingGrading, icon: CheckSquare, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+    { label: 'Rendus à corriger', value: (stats?.pendingWork ?? 0) + (stats?.pendingGrading ?? 0), icon: ClipboardList, color: 'text-green-400', bg: 'bg-green-500/10' },
+    { label: 'Séances aujourd’hui', value: stats?.todaySessions, icon: Video, color: 'text-amber-400', bg: 'bg-amber-500/10' },
   ];
 
   const quickLinks = [
@@ -92,26 +209,42 @@ export default function TeacherDashboard() {
   ];
 
   return (
-    <div className="p-6 space-y-8">
-      {/* Header */}
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">
-            Bonjour,{' '}
-            <span className="text-primary">{user?.firstName}</span> 👋
-          </h1>
-          <p className="text-muted-foreground mt-1">Voici un aperçu de vos activités d'aujourd'hui.</p>
-        </div>
-        <div className="flex items-center gap-3">
-            <Button asChild variant="outline" className="rounded-xl">
-                <Link href="/teacher/schedule">Voir Planning</Link>
+    <div className="space-y-8 mx-auto">
+      {/* Header Section */}
+      <TeacherPageHeader
+        title={`Bon ${getTimeOfDay()}, ${user?.firstName} 👋`}
+        subtitle="Voici un aperçu de vos activités d'aujourd'hui."
+        actions={
+          <div className="flex items-center gap-3">
+            <Button asChild variant="outline" className="rounded-xl border-border hover:bg-accent transition-all hidden sm:flex">
+                <Link href="/teacher/schedule">
+                   <Calendar className="w-4 h-4 mr-2" />
+                   Voir Planning
+                </Link>
             </Button>
-            <Button className="rounded-xl shadow-lg shadow-primary/20">
-                <Plus className="w-4 h-4 mr-2" />
-                Nouveau Cours
+            <Button asChild className="rounded-xl shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90">
+                <Link href="/teacher/courses">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Nouveau Cours
+                </Link>
             </Button>
-        </div>
-      </header>
+          </div>
+        }
+      />
+
+      {/* Announcement Slideshow */}
+      <AnimatePresence>
+        {!loading && announcements.length > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative"
+          >
+            <AnnouncementSlideshow announcements={announcements} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
 
       {/* Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -185,8 +318,8 @@ export default function TeacherDashboard() {
                         )}
                       </div>
                     </div>
-                    <Button size="sm" variant="secondary" className="rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                        Détails
+                    <Button asChild size="sm" variant="secondary" className="rounded-lg opacity-0 group-hover:opacity-100 transition-all scale-95 group-hover:scale-100">
+                        <Link href="/teacher/schedule">Détails</Link>
                     </Button>
                   </div>
                 ))
@@ -194,57 +327,57 @@ export default function TeacherDashboard() {
             </div>
           </section>
 
-          {/* Announcements */}
+          {/* Exercises to Grade */}
           <section className="bg-card border border-border rounded-3xl p-6 space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                <Megaphone className="w-5 h-5 text-primary" /> Annonces Récentes
+                <CheckSquare className="w-5 h-5 text-primary" /> Travaux à corriger
               </h2>
               <Button asChild variant="ghost" size="sm" className="text-xs font-bold text-muted-foreground hover:text-primary">
-                <Link href="/teacher/announcements">Gérer</Link>
+                <Link href="/teacher/courses">Voir tout</Link>
               </Button>
             </div>
 
             <div className="space-y-4">
                {loading ? (
-                   [1, 2].map(i => <div key={i} className="h-24 bg-muted rounded-2xl animate-pulse" />)
-               ) : announcements.length === 0 ? (
+                   [1, 2, 3].map(i => <div key={i} className="h-20 bg-muted rounded-2xl animate-pulse" />)
+               ) : pendingWork.length === 0 ? (
                    <div className="py-12 text-center bg-muted/30 border border-dashed border-border rounded-2xl">
-                        <Megaphone className="w-8 h-8 text-muted-foreground/30 mx-auto mb-3" />
-                        <p className="text-sm text-muted-foreground">Aucune annonce publiée</p>
+                        <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-3">
+                          <Check className="w-6 h-6 text-green-500" />
+                        </div>
+                        <p className="text-sm font-bold text-foreground">Tout est à jour !</p>
+                        <p className="text-xs text-muted-foreground mt-1">Aucun nouvel exercice en attente de correction.</p>
                    </div>
                ) : (
-                   announcements.map(ann => (
-                       <div key={ann._id} className="p-4 border border-border rounded-2xl space-y-3 hover:border-primary/30 transition-colors relative group">
-                           {ann.isPinned && (
-                               <Pin className="w-3.5 h-3.5 text-primary absolute top-4 right-4 fill-primary" />
-                           )}
-                           <div className="flex items-start justify-between gap-4">
-                               <div className="space-y-1">
-                                   <div className="flex items-center gap-2">
-                                        <h4 className="font-bold text-sm text-foreground">{ann.title}</h4>
-                                        <span className={cn(
-                                            "text-[9px] px-1.5 py-0.5 rounded-full font-bold uppercase",
-                                            ann.priority === 'urgent' ? 'bg-red-500/10 text-red-500' :
-                                            ann.priority === 'high' ? 'bg-orange-500/10 text-orange-500' : 'bg-blue-500/10 text-blue-500'
-                                        )}>
-                                            {ann.priority}
-                                        </span>
+                   pendingWork.map(work => (
+                       <div key={work._id} className="p-4 border border-border rounded-2xl hover:border-primary/30 transition-all group bg-background/50">
+                           <div className="flex items-center gap-4">
+                               <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center overflow-hidden border border-border shrink-0">
+                                  {work.studentId.profileImage ? (
+                                    <img src={work.studentId.profileImage} alt={work.studentId.firstName} className="w-full h-full object-cover" />
+                                  ) : (
+                                    <Users className="w-5 h-5 text-muted-foreground" />
+                                  )}
+                               </div>
+                               <div className="flex-1 min-w-0">
+                                   <div className="flex items-center justify-between">
+                                      <h4 className="font-bold text-sm text-foreground truncate">
+                                        {work.studentId.firstName} {work.studentId.lastName}
+                                      </h4>
+                                      <span className="text-[10px] text-muted-foreground font-medium">
+                                        {new Date(work.submittedAt).toLocaleDateString('fr-FR')}
+                                      </span>
                                    </div>
-                                   <p className="text-xs text-muted-foreground line-clamp-2">{ann.content}</p>
+                                   <div className="flex items-center gap-2 mt-0.5">
+                                      <p className="text-xs text-primary font-bold truncate">{work.exerciseName}</p>
+                                      <div className="w-1 h-1 rounded-full bg-border" />
+                                      <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-tight">{work.classId.name}</p>
+                                   </div>
                                </div>
-                           </div>
-                           <div className="flex items-center justify-between pt-2 border-t border-border/50">
-                               <div className="flex items-center gap-3">
-                                   <span className="text-[10px] text-muted-foreground flex items-center gap-1 font-medium">
-                                       <Calendar className="w-3 h-3" />
-                                       {new Date(ann.createdAt).toLocaleDateString()}
-                                   </span>
-                                   {ann.classId && (
-                                       <Badge variant="secondary" className="text-[9px] font-bold py-0">{ann.classId.name}</Badge>
-                                   )}
-                               </div>
-                               <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] font-bold">Voir</Button>
+                               <Button asChild size="sm" className="rounded-xl h-8 px-4 text-[10px] font-bold shadow-sm opacity-0 group-hover:opacity-100 transition-all">
+                                   <Link href={`/teacher/courses/${work.classId._id}/${work.subjectId._id}`}>Corriger</Link>
+                               </Button>
                            </div>
                        </div>
                    ))

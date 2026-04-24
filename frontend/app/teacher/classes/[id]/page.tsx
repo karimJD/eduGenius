@@ -12,7 +12,8 @@ import {
   getClassDetails, 
   getVideoSessions, 
   createVideoSession, 
-  endVideoSession 
+  endVideoSession,
+  getClassAnnouncements 
 } from '@/lib/api/teacher';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
@@ -21,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
 import {
   Dialog,
   DialogContent,
@@ -28,6 +30,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import { CreateAnnouncementModal } from '@/components/teacher/CreateAnnouncementModal';
 
 // React Big Calendar
 import { Calendar, momentLocalizer, Views, EventProps, View } from 'react-big-calendar';
@@ -69,6 +72,15 @@ interface ClassDetail {
   }[];
   departmentId?: { name: string };
   schedule?: ScheduleEntry[];
+  assignedSubjects?: { 
+    subjectId: { 
+      _id: string; 
+      name: string; 
+      code: string; 
+      coefficient?: number; 
+      credits?: number; 
+    } 
+  }[];
 }
 
 interface CalendarEvent {
@@ -112,6 +124,10 @@ export default function ClassDetailPage() {
   const [isLobbyOpen, setIsLobbyOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [joining, setJoining] = useState(false);
+  const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
+  const [announcements, setAnnouncements] = useState<any[]>([]);
+  const [announcementsLoading, setAnnouncementsLoading] = useState(false);
+  const [announcementFilter, setAnnouncementFilter] = useState<'all' | 'mine'>('all');
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -119,6 +135,8 @@ export default function ClassDetailPage() {
         setLoading(true);
         const data = await getClassDetails(id);
         setCls(data);
+        // Fetch announcements in parallel
+        fetchAnnouncements();
       } catch (err) {
         console.error('Failed to fetch class details:', err);
         toast.error('Erreur lors du chargement des détails de la classe');
@@ -127,8 +145,56 @@ export default function ClassDetailPage() {
       }
     };
 
+    const fetchAnnouncements = async () => {
+      try {
+        setAnnouncementsLoading(true);
+        const data = await getClassAnnouncements(id);
+        setAnnouncements(data || []);
+      } catch (e) {
+        console.error('Failed to fetch announcements:', e);
+      } finally {
+        setAnnouncementsLoading(false);
+      }
+    };
+
     if (id) fetchDetails();
   }, [id]);
+
+  const filteredAnnouncements = useMemo(() => {
+    if (announcementFilter === 'all') return announcements;
+    return announcements.filter(ann => {
+        const authorId = typeof ann.teacherId === 'object' ? ann.teacherId._id : ann.teacherId;
+        return authorId === user?._id;
+    });
+  }, [announcements, announcementFilter, user?._id]);
+
+  const nextSession = useMemo(() => {
+    if (!cls?.schedule || cls.schedule.length === 0) return null;
+    
+    const now = moment();
+    const today = now.day();
+    
+    const sortedEntries = [...cls.schedule].sort((a, b) => {
+      if (a.dayOfWeek !== b.dayOfWeek) return a.dayOfWeek - b.dayOfWeek;
+      return a.startTime.localeCompare(b.startTime);
+    });
+    
+    const nextToday = sortedEntries.find(e => 
+      e.dayOfWeek === today && e.startTime > now.format('HH:mm')
+    );
+    if (nextToday) return { ...nextToday, dateLabel: 'Aujourd\'hui' };
+    
+    for (let i = 1; i <= 7; i++) {
+      const day = (today + i) % 7;
+      const nextDay = sortedEntries.find(e => e.dayOfWeek === day);
+      if (nextDay) {
+        const dayLabel = i === 1 ? 'Demain' : DAYS[day];
+        return { ...nextDay, dateLabel: dayLabel };
+      }
+    }
+    
+    return { ...sortedEntries[0], dateLabel: DAYS[sortedEntries[0].dayOfWeek] };
+  }, [cls?.schedule]);
 
   // Convert schedule entries to calendar events
   useEffect(() => {
@@ -294,48 +360,27 @@ export default function ClassDetailPage() {
 
   return (
     <div className="p-6 space-y-8 mx-auto">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden bg-[#111111] border border-[#222222] rounded-[2.5rem] p-8 md:p-12">
-          {/* Background decoration */}
-          <div className="absolute top-0 right-0 -mr-24 -mt-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
-          
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
-              <div className="space-y-4">
-                  <Link 
-                    href="/teacher/classes" 
-                    className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest"
-                  >
-                    <ArrowLeft className="w-4 h-4" /> Retour au Dashboard
-                  </Link>
-                  <div className="space-y-2">
-                      <div className="flex items-center gap-3">
-                          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter">{cls.name}</h1>
-                          <Badge className="bg-primary/20 text-primary border-primary/20 px-3 py-1 font-black text-xs uppercase shadow-sm">
-                              {cls.code}
-                          </Badge>
-                      </div>
-                      {cls.departmentId && (
-                          <div className="flex items-center gap-2 text-muted-foreground font-medium">
-                              <GraduationCap className="w-4 h-4" />
-                              <span>Département de {cls.departmentId.name}</span>
-                          </div>
-                      )}
-                  </div>
-              </div>
-
-              <div className="flex flex-wrap gap-4">
-                  <div className="bg-background/40 backdrop-blur-md border border-white/5 p-4 rounded-2xl min-w-[120px] text-center">
-                      <p className="text-3xl font-black text-white">{cls.students?.length || 0}</p>
-                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1 text-nowrap">Étudiants</p>
-                  </div>
-                  <div className="bg-background/40 backdrop-blur-md border border-white/5 p-4 rounded-2xl min-w-[120px] text-center">
-                      <p className="text-3xl font-black text-white">{cls.schedule?.length || 0}</p>
-                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1 text-nowrap">Séances / Sem</p>
-                  </div>
-              </div>
-          </div>
-      </div>
+      {/* Header Section */}
+      <TeacherPageHeader
+        title={cls.name}
+        subtitle={cls.departmentId ? `Département de ${cls.departmentId.name}` : "Détails de la classe"}
+        category={cls.code}
+        icon={GraduationCap}
+        stats={[
+          { label: 'Étudiants', value: cls.students?.length || 0, icon: Users },
+          { label: 'Séances / Sem', value: cls.schedule?.length || 0, icon: Clock }
+        ]}
+        actions={
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="rounded-2xl text-xs font-bold gap-2"
+            onClick={() => router.push('/teacher/classes')}
+          >
+            <ArrowLeft className="w-4 h-4" /> Retour
+          </Button>
+        }
+      />
 
       {/* Tabs Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -423,50 +468,185 @@ export default function ClassDetailPage() {
                         className="space-y-6"
                       >
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              <div className="bg-card border border-border rounded-3xl p-6 space-y-4">
-                                  <h4 className="font-bold flex items-center gap-2">
-                                      <FileText className="w-4 h-4 text-primary" /> Détails du Module
-                                  </h4>
-                                  <div className="space-y-4 pt-2">
-                                      <div className="flex justify-between items-center py-2 border-b border-border/50 text-sm">
-                                          <span className="text-muted-foreground">Type de Module</span>
-                                          <span className="font-bold text-foreground">Élément Constitutif (EC)</span>
+                              <div className="space-y-6">
+                                  {cls?.assignedSubjects?.map((item) => (
+                                      <div key={item.subjectId._id} className="bg-card/50 border border-border rounded-2xl p-4 shadow-sm hover:border-primary/30 transition-all group">
+                                          <div className="flex items-center justify-between gap-4 mb-3">
+                                              <div className="flex items-center gap-2">
+                                                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                                      <BookOpen className="w-4 h-4" />
+                                                  </div>
+                                                  <h4 className="font-bold text-sm">{item.subjectId.name}</h4>
+                                              </div>
+                                              <span className="text-[10px] font-black px-2 py-1 bg-muted rounded-md text-muted-foreground uppercase tracking-wider">
+                                                  {item.subjectId.code}
+                                              </span>
+                                          </div>
+                                          
+                                          <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border/50">
+                                              <div className="flex flex-col">
+                                                  <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-tight">Coefficient</span>
+                                                  <span className="text-sm font-black">{item.subjectId.coefficient || '2.0'}</span>
+                                              </div>
+                                              <div className="flex flex-col border-l border-border/50 pl-3">
+                                                  <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-tight">Crédits ECTS</span>
+                                                  <span className="text-sm font-black text-primary">{item.subjectId.credits || '4'}</span>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div className="flex justify-between items-center py-2 border-b border-border/50 text-sm">
-                                          <span className="text-muted-foreground">Coefficient</span>
-                                          <span className="font-bold text-foreground">2.0</span>
+                                  ))}
+
+                                  {(!cls?.assignedSubjects || cls.assignedSubjects.length === 0) && (
+                                      <div className="bg-card border border-border rounded-3xl p-6 text-center">
+                                          <p className="text-muted-foreground text-sm">Aucun module assigné.</p>
                                       </div>
-                                      <div className="flex justify-between items-center py-2 text-sm text-foreground">
-                                          <span className="text-muted-foreground">Crédits ECTS</span>
-                                          <span className="font-bold">4</span>
-                                      </div>
-                                  </div>
+                                  )}
                               </div>
 
                               <div className="bg-card border border-border rounded-3xl p-6 space-y-4">
                                   <h4 className="font-bold flex items-center gap-2">
-                                      <Calendar className="w-4 h-4 text-primary" localizer={localizer}/> Prochaine Séance
+                                      <CalendarIcon className="w-4 h-4 text-primary" /> Prochaine Séance
                                   </h4>
-                                  <div className="p-4 bg-primary/5 border border-primary/10 rounded-2xl flex items-center gap-4">
-                                      <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
-                                          <Clock className="w-6 h-6" />
-                                      </div>
-                                      <div>
-                                          <p className="text-sm font-bold">Lundi, 21 Mars</p>
-                                          <p className="text-xs text-muted-foreground">08:30 - 10:00 · Salle 402</p>
-                                      </div>
-                                  </div>
-                                  <Button variant="outline" className="w-full rounded-xl text-xs font-bold border-border">Voir l'emploi du temps complet</Button>
+                                  
+                                  {nextSession ? (
+                                    <div className="p-4 bg-primary/5 border border-primary/10 rounded-2xl flex items-center gap-4">
+                                        <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
+                                            <Clock className="w-6 h-6" />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="text-sm font-bold truncate">{(nextSession as any).subjectId?.name || 'Session'}</p>
+                                            <p className="text-xs text-muted-foreground font-medium">
+                                              {(nextSession as any).dateLabel}, {nextSession.startTime} - {nextSession.endTime}
+                                            </p>
+                                        </div>
+                                    </div>
+                                  ) : (
+                                    <div className="p-8 text-center bg-muted/20 rounded-2xl border border-dashed border-border">
+                                        <p className="text-xs text-muted-foreground font-medium">Aucune séance prévue.</p>
+                                    </div>
+                                  )}
+                                  
+                                  <Button 
+                                    variant="outline" 
+                                    onClick={() => setActiveTab('schedule')}
+                                    className="w-full rounded-xl text-[10px] font-black uppercase tracking-widest border-border hover:bg-muted"
+                                  >
+                                    Voir l'emploi du temps
+                                  </Button>
                               </div>
                           </div>
 
-                          <div className="bg-card border border-border rounded-3xl p-8 text-center space-y-4">
-                              <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                  <Megaphone className="w-8 h-8 text-blue-500" />
+                          <div className="bg-card border border-border rounded-[2.5rem] p-8 space-y-8 overflow-hidden relative shadow-sm">
+                              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full -mr-32 -mt-32" />
+                              
+                              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+                                  <div>
+                                      <h3 className="text-xl font-black flex items-center gap-3">
+                                          <div className="p-2 bg-blue-500/10 text-blue-500 rounded-xl">
+                                              <Megaphone className="w-5 h-5" />
+                                          </div>
+                                          Annonces de la Classe
+                                      </h3>
+                                      <p className="text-xs text-muted-foreground font-medium mt-1">Gérez la communication et les informations importantes.</p>
+                                  </div>
+                                  
+                                  <div className="flex items-center gap-3">
+                                      <div className="flex items-center gap-1 p-1 bg-muted/50 border border-border rounded-xl">
+                                          <button 
+                                              onClick={() => setAnnouncementFilter('all')}
+                                              className={cn(
+                                                  "px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all",
+                                                  announcementFilter === 'all' ? "bg-background shadow-sm text-primary" : "text-muted-foreground hover:text-foreground"
+                                              )}
+                                          >
+                                              Toutes
+                                          </button>
+                                          <button 
+                                              onClick={() => setAnnouncementFilter('mine')}
+                                              className={cn(
+                                                  "px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all",
+                                                  announcementFilter === 'mine' ? "bg-background shadow-sm text-primary" : "text-muted-foreground hover:text-foreground"
+                                              )}
+                                          >
+                                              Mes annonces
+                                          </button>
+                                      </div>
+                                      <Button 
+                                          onClick={() => setIsAnnouncementModalOpen(true)}
+                                          className="rounded-xl px-6 h-10 shadow-lg shadow-primary/20 font-bold gap-2 text-xs"
+                                      >
+                                          <Megaphone className="w-3.5 h-3.5" />
+                                          Publier
+                                      </Button>
+                                  </div>
                               </div>
-                              <h3 className="text-xl font-bold">Publier une annonce</h3>
-                              <p className="text-sm text-muted-foreground max-w-sm mx-auto">Informez vos étudiants des dernières nouvelles, changements d'emploi du temps ou ressources partagées.</p>
-                              <Button className="rounded-xl px-8 shadow-lg shadow-primary/20">Créer une annonce</Button>
+
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
+                                  {announcementsLoading ? (
+                                      <div className="col-span-full flex items-center justify-center py-20">
+                                          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                                      </div>
+                                  ) : filteredAnnouncements.length === 0 ? (
+                                      <div className="col-span-full text-center py-20 bg-muted/30 rounded-3xl border border-dashed border-border/50">
+                                          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4 opacity-40">
+                                              <Megaphone className="w-8 h-8" />
+                                          </div>
+                                          <p className="text-sm font-bold text-muted-foreground">
+                                              {announcementFilter === 'mine' ? "Vous n'avez publié aucune annonce" : "Aucune annonce pour le moment"}
+                                          </p>
+                                          <p className="text-xs text-muted-foreground/60 mt-1">Commencez par créer votre première annonce pour cette classe.</p>
+                                      </div>
+                                  ) : (
+                                      filteredAnnouncements.slice(0, 6).map((ann) => (
+                                          <div key={ann._id} className="bg-white/50 backdrop-blur-sm border border-border/50 p-5 rounded-[2rem] hover:border-primary/30 transition-all group flex flex-col h-full shadow-sm relative overflow-hidden">
+                                              {ann.isPinned && (
+                                                  <div className="absolute top-0 right-0 p-3">
+                                                      <Badge className="bg-primary/10 text-primary border-none text-[9px] px-1.5 h-4.5 font-bold uppercase tracking-tighter">Épinglé</Badge>
+                                                  </div>
+                                              )}
+                                              
+                                              <div className="flex items-center gap-2 mb-4">
+                                                  <Badge variant="outline" className={cn(
+                                                      "text-[9px] h-5 px-2 font-black uppercase tracking-wider",
+                                                      ann.priority === 'urgent' ? "bg-red-500/10 text-red-500 border-red-500/20" :
+                                                      ann.priority === 'high' ? "bg-orange-500/10 text-orange-500 border-orange-500/20" :
+                                                      "bg-blue-500/10 text-blue-500 border-blue-500/20"
+                                                  )}>
+                                                      {ann.priority}
+                                                  </Badge>
+                                                  <span className="text-[10px] font-bold text-muted-foreground/50">{moment(ann.createdAt).fromNow()}</span>
+                                              </div>
+                                              
+                                              <h4 className="text-sm font-black mb-2 group-hover:text-primary transition-colors line-clamp-1">{ann.title}</h4>
+                                              <p className="text-xs text-muted-foreground line-clamp-3 mb-4 flex-grow leading-relaxed">
+                                                  {ann.content}
+                                              </p>
+
+                                              <div className="pt-4 border-t border-border/30 flex items-center justify-between">
+                                                  <div className="flex items-center gap-2">
+                                                      <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-primary text-[8px] font-bold">
+                                                          {typeof ann.teacherId === 'object' ? ann.teacherId.firstName[0] : 'T'}
+                                                      </div>
+                                                      <span className="text-[10px] font-bold text-muted-foreground">
+                                                          {typeof ann.teacherId === 'object' ? `${ann.teacherId.firstName} ${ann.teacherId.lastName}` : 'Enseignant'}
+                                                      </span>
+                                                  </div>
+                                                  <Link href={`/teacher/announcements?classId=${id}`} className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Détails</Link>
+                                              </div>
+                                          </div>
+                                      ))
+                                  )}
+                              </div>
+
+                              {filteredAnnouncements.length > 0 && (
+                                  <div className="pt-4 flex justify-center relative z-10">
+                                      <Link href={`/teacher/announcements?classId=${id}`}>
+                                          <Button variant="ghost" className="rounded-xl text-xs font-black uppercase tracking-widest text-primary hover:bg-primary/5">
+                                              Voir toutes les annonces ({filteredAnnouncements.length})
+                                          </Button>
+                                      </Link>
+                                  </div>
+                              )}
                           </div>
                       </motion.div>
                   )}
@@ -684,6 +864,24 @@ export default function ClassDetailPage() {
           )}
         </DialogContent>
       </Dialog>
+
+      <CreateAnnouncementModal
+        isOpen={isAnnouncementModalOpen}
+        onClose={() => setIsAnnouncementModalOpen(false)}
+        onSuccess={async () => {
+          setIsAnnouncementModalOpen(false);
+          toast.success("Annonce publiée avec succès !");
+          // Refresh announcements list
+          try {
+            const data = await getClassAnnouncements(id);
+            setAnnouncements(data || []);
+          } catch (e) {
+            console.error(e);
+          }
+        }}
+        classes={cls ? [{ _id: cls._id, name: cls.name, code: cls.code }] : []}
+        initialClassId={cls?._id}
+      />
     </div>
   );
 }

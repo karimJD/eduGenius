@@ -9,7 +9,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { getSchedule, getTeachers, getSubjects, getClasses } from '@/lib/api/admin';
 import { Badge } from '@/components/ui/badge';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
 import clsx from 'clsx';
+import { Hash } from 'lucide-react';
 
 // Constants aligned with create/page.tsx
 const DAY_LABELS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
@@ -124,41 +126,42 @@ export default function ViewSchedulePage() {
   }
 
   return (
-    <div className="p-6 space-y-6 mx-auto">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => router.back()}
-            className="p-2 rounded-lg hover:bg-accent transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold flex items-center gap-2">
-              {schedule.title}
-              {!schedule.isPublished && (
-                <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 text-[10px] uppercase tracking-wider font-bold">
-                  Brouillon
-                </Badge>
-              )}
-            </h1>
-            <p className="text-muted-foreground text-sm flex items-center gap-2">
-              <Calendar className="h-3.5 w-3.5" />
-              {schedule.academicYearId} · Semestre {schedule.semester} · {schedule.targetType === 'class' ? 'Classe' : 'Enseignant'}: {getTargetLabel()}
-            </p>
+    <div className="space-y-6 mx-auto">
+      <AdminPageHeader 
+        title={
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => router.back()}
+              className="p-1.5 -ml-1 rounded-lg hover:bg-accent transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <span className="uppercase">{schedule.title}</span>
+            {!schedule.isPublished && (
+              <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 text-[10px] uppercase tracking-wider font-bold">
+                Brouillon
+              </Badge>
+            )}
           </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => window.print()} className="hidden sm:flex">
-            <Printer className="mr-2 h-4 w-4" /> Imprimer
-          </Button>
-          <Button size="sm" onClick={() => router.push(`/admin/schedules/${id}/edit`)}>
-            <Edit className="mr-2 h-4 w-4" /> Modifier
-          </Button>
-        </div>
-      </div>
+        }
+        subtitle={
+          <div className="flex items-center gap-2 font-medium text-[11px] uppercase tracking-wider">
+            <Calendar className="h-3.5 w-3.5 text-primary" /> 
+            {schedule.academicYearId} · Semestre {schedule.semester} · {schedule.targetType === 'class' ? 'Classe' : 'Enseignant'}: {getTargetLabel()}
+          </div>
+        }
+        icon={Clock}
+        actions={
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={() => window.print()} className="hidden sm:flex rounded-xl h-10 px-4 font-bold border-primary/20 bg-primary/5 hover:bg-primary/10 text-primary">
+              <Printer className="mr-2 h-4 w-4" /> Imprimer
+            </Button>
+            <Button size="sm" onClick={() => router.push(`/admin/schedules/${id}/edit`)} className="rounded-xl h-10 px-5 font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30">
+              <Edit className="mr-2 h-4 w-4" /> Modifier
+            </Button>
+          </div>
+        }
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main Grid */}

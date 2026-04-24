@@ -243,6 +243,20 @@ const getPracticeHistory = async (req, res) => {
   }
 };
 
+const getPracticeQuizById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
+    
+    const quiz = await StudentQuizAttempt.findOne({ _id: id, studentId });
+    if (!quiz) return res.status(404).json({ success: false, message: 'Quiz introuvable' });
+    
+    res.status(200).json({ success: true, data: quiz });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 const getRecommendations = async (req, res) => {
   try {
     const { classId } = req.params;
@@ -268,6 +282,7 @@ module.exports = {
   generatePracticeQuiz,
   submitPracticeQuiz,
   getPracticeHistory,
+  getPracticeQuizById,
   getRecommendations
 };
 

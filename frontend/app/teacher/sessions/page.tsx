@@ -31,6 +31,9 @@ const STATUS_STYLES: Record<string, string> = {
   cancelled: 'bg-muted text-muted-foreground',
 };
 
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+import { Button } from '@/components/ui/button';
+
 export default function TeacherSessionsPage() {
   const router = useRouter();
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -68,61 +71,63 @@ export default function TeacherSessionsPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <header className="flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Live Sessions</h1>
-          <p className="text-muted-foreground text-sm mt-1">Schedule and manage your interactive video classes.</p>
-        </div>
+    <div className="space-y-6">
+      <TeacherPageHeader
+        title="Sessions Live"
+        subtitle="Planifiez et gérez vos cours interactifs en vidéo."
+        category="Direct"
+        icon={Video}
+        actions={
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button className="rounded-xl shadow-lg shadow-primary/20">
+                <PlusCircle className="w-4 h-4 mr-2" />
+                Planifier une Session
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2 text-xl">
+                  <Video className="w-5 h-5 text-primary" /> Nouvelle Session Live
+                </DialogTitle>
+              </DialogHeader>
+              <form onSubmit={create} className="space-y-4 pt-2">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Titre</label>
+                  <input required value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
+                    placeholder="ex: Introduction aux Algorithmes"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Description</label>
+                  <input value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
+                    placeholder="Description optionnelle"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Classe</label>
+                  <select required value={form.classId} onChange={e => setForm(p => ({ ...p, classId: e.target.value }))}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                    <option value="">Sélectionner une classe</option>
+                    {classes.map(c => <option key={c._id} value={c._id}>{c.name} ({c.code})</option>)}
+                  </select>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Date & Heure</label>
+                  <input required type="datetime-local" value={form.scheduledStart}
+                    onChange={e => setForm(p => ({ ...p, scheduledStart: e.target.value }))}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                </div>
+                <Button type="submit" disabled={saving} className="w-full py-6 rounded-xl font-bold">
+                  {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                  {saving ? 'Création de la salle Daily.co...' : 'Planifier la Session'}
+                </Button>
+              </form>
+            </DialogContent>
+          </Dialog>
+        }
+      />
 
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <button className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:opacity-90 transition-opacity">
-              <PlusCircle className="w-4 h-4" /> Schedule Session
-            </button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2 text-xl">
-                <Video className="w-5 h-5 text-primary" /> New Live Session
-              </DialogTitle>
-            </DialogHeader>
-            <form onSubmit={create} className="space-y-4 pt-2">
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Title</label>
-                <input required value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
-                  placeholder="e.g. Introduction to Algorithms"
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Description</label>
-                <input value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
-                  placeholder="Optional description"
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Class</label>
-                <select required value={form.classId} onChange={e => setForm(p => ({ ...p, classId: e.target.value }))}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
-                  <option value="">Select a class</option>
-                  {classes.map(c => <option key={c._id} value={c._id}>{c.name} ({c.code})</option>)}
-                </select>
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Date & Time</label>
-                <input required type="datetime-local" value={form.scheduledStart}
-                  onChange={e => setForm(p => ({ ...p, scheduledStart: e.target.value }))}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
-              </div>
-              <button type="submit" disabled={saving}
-                className="w-full py-3 bg-primary text-primary-foreground rounded-xl font-medium text-sm hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center gap-2">
-                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-                {saving ? 'Creating Daily.co room...' : 'Schedule Session'}
-              </button>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </header>
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

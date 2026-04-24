@@ -19,6 +19,8 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
+import { SearchBar } from '@/components/shared/SearchBar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -254,32 +256,25 @@ export default function AdminClassesPage() {
 
   return (
     <div className="space-y-8 mx-auto">
-      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-        <div className="space-y-1">
-          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-muted-foreground uppercase tracking-tight">
-            Gestion des Classes
-          </h1>
-          <p className="text-muted-foreground">Gérez les sections, les conseillers et les inscriptions.</p>
-        </div>
-        <Button
-          onClick={() => handleOpenModal()}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-6 rounded-2xl flex gap-2 font-semibold shadow-lg shadow-primary/20 transition-all active:scale-95"
-        >
-          <Plus className="w-5 h-5" />
-          Nouvelle Classe
-        </Button>
-      </header>
+      <AdminPageHeader 
+        title="Gestion des Classes"
+        subtitle="Gérez les sections, les conseillers et les inscriptions"
+        icon={GraduationCap}
+        iconColor="text-blue-500"
+        actions={
+          <Button
+            onClick={() => handleOpenModal()}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-6 rounded-2xl flex gap-2 font-semibold shadow-lg shadow-primary/20 transition-all active:scale-95"
+          >
+            <Plus className="w-5 h-5" />
+            Nouvelle Classe
+          </Button>
+        }
+      />
 
-      <div className="flex items-center gap-4 max-w-md">
-        <div className="relative w-full group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-          <Input
-            type="text"
-            placeholder="Rechercher une classe..."
-            className="pl-11 bg-card border-border py-6 rounded-2xl focus:ring-primary/40"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+      <div className="flex gap-3">
+        <div className="flex-1">
+          <SearchBar placeholder="Rechercher une classe..." onSearch={setSearchTerm} />
         </div>
       </div>
 

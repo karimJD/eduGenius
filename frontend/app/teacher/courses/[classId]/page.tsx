@@ -6,6 +6,8 @@ import { ArrowLeft, BookOpen, ChevronRight, Folder } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '@/lib/axios';
 import Link from 'next/link';
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+import { Button } from '@/components/ui/button';
 
 interface SubjectInfo {
   _id: string;
@@ -57,20 +59,25 @@ export default function SubjectSelectorPage() {
 
   return (
     <div className="p-6 space-y-8">
-      <div className="flex items-center gap-4">
-        <Link href="/teacher/courses" 
-          className="p-3 bg-card border border-border rounded-2xl hover:bg-accent text-muted-foreground hover:text-foreground transition-all shadow-sm">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <div>
-          <h1 className="text-3xl font-black text-foreground tracking-tight">
-            Matières — {classDetail.name}
-          </h1>
-          <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest mt-1">
-            Sélectionnez une matière pour accéder à l'espace de dépôt
-          </p>
-        </div>
-      </div>
+      <TeacherPageHeader
+        title={`Matières — ${classDetail.name}`}
+        subtitle="Sélectionnez une matière pour accéder à l'espace de dépôt et gérer vos chapitres."
+        category={classDetail.code}
+        icon={BookOpen}
+        stats={[
+          { label: 'Matières', value: classDetail.assignedSubjects?.length || 0, icon: Folder }
+        ]}
+        actions={
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="rounded-2xl text-xs font-bold gap-2"
+            onClick={() => router.push('/teacher/courses')}
+          >
+            <ArrowLeft className="w-4 h-4" /> Retour
+          </Button>
+        }
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {classDetail.assignedSubjects?.map((item, i) => (

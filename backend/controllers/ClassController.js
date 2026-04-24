@@ -64,7 +64,12 @@ exports.getClass = async (req, res) => {
   try {
     const classItem = await Class.findById(req.params.id)
       .populate('teachers.teacherId', 'firstName lastName email')
-      .populate('students.studentId', 'firstName lastName email');
+      .populate('teachers.subjectId', 'name code')
+      .populate('students.studentId', 'firstName lastName email studentId cin')
+      .populate('departmentId', 'name')
+      .populate('programId', 'name')
+      .populate('academicYearId', 'year')
+      .populate('academicAdvisorId', 'firstName lastName email');
 
     if (!classItem) {
       return res.status(404).json({ message: 'Class not found' });

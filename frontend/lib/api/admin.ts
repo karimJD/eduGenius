@@ -197,3 +197,18 @@ export const getSettings = () =>
 
 export const updateSettings = (data: Record<string, unknown>) =>
   axiosInstance.put('/api/admin/settings', data).then(r => r.data);
+
+// ---------- Announcements ----------
+export const getAnnouncements = () =>
+  axiosInstance.get('/api/admin/announcements').then(r => r.data);
+
+export const createAnnouncement = (data: any) =>
+  axiosInstance.post('/api/admin/announcements', data, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }).then(r => r.data);
+
+export const deleteAnnouncement = (id: string) =>
+  axiosInstance.delete(`/api/admin/announcements/${id}`).then(r => r.data);
+
+export const toggleAnnouncementStatus = (id: string, isPublished: boolean) =>
+  axiosInstance.patch(`/api/admin/announcements/${id}/status`, { isPublished }).then(r => r.data);

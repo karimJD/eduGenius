@@ -176,8 +176,10 @@ export function Chat({ receiverId, classId, type, title, isBroadcast }: ChatProp
       {/* Messages Area */}
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat opacity-[0.03] dark:opacity-95"
+        className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide relative"
       >
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] bg-repeat opacity-[0.03] pointer-events-none" />
+        
         <AnimatePresence>
           {messages.map((msg, idx) => {
             const isMe = msg.senderId._id === user?._id;
@@ -186,7 +188,7 @@ export function Chat({ receiverId, classId, type, title, isBroadcast }: ChatProp
                 key={msg._id || idx}
                 initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}
+                className={`flex ${isMe ? 'justify-end' : 'justify-start'} relative z-10`}
               >
                 <div className={`max-w-[75%] rounded-2xl px-4 py-3 text-sm shadow-sm dark:shadow-xl ${
                   isMe 
@@ -211,7 +213,7 @@ export function Chat({ receiverId, classId, type, title, isBroadcast }: ChatProp
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex justify-start"
+            className="flex justify-start relative z-10"
           >
             <div className="bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 px-4 py-3 rounded-2xl rounded-tl-none text-xs italic border border-gray-200 dark:border-white/5 flex items-center gap-2">
               <span>{typingUser} est en train d'écrire</span>

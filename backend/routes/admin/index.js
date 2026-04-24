@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Mount all admin sub-routes
+router.use('/announcements', require('./announcements'));
 router.use('/users', require('./users'));
 router.use('/students', require('./students'));
 router.use('/teachers', require('./teachers'));

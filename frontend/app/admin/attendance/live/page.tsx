@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { getLiveAttendance, endSession } from '@/lib/api/admin';
-import { Activity, Clock, Users, Video } from 'lucide-react';
+import { AdminPageHeader } from '@/components/shared/AdminPageHeader';
+import { Activity, Clock, Users, Video, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface LiveSession {
@@ -49,20 +50,25 @@ export default function LiveAttendancePage() {
   };
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold">
-            <span className="relative h-2 w-2">
+    <div className="space-y-6 pt-0">
+      <AdminPageHeader 
+        title={
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-500" />
             </span>
             Surveillance en Direct
-          </h1>
-          <p className="text-muted-foreground">{sessions.length} session(s) active(s) · actualisation auto toutes les 10s</p>
-        </div>
-        <Button variant="outline" size="sm" onClick={fetchSessions}>Rafraîchir</Button>
-      </div>
+          </div>
+        }
+        subtitle={`${sessions.length} session(s) active(s) · actualisation auto toutes les 10s`}
+        icon={Video}
+        actions={
+          <Button variant="outline" size="sm" onClick={fetchSessions} className="rounded-xl font-bold border-2">
+            <RefreshCw className="mr-2 h-4 w-4" /> Rafraîchir
+          </Button>
+        }
+      />
 
       {loading ? (
         <div className="flex items-center justify-center py-12 text-muted-foreground">
