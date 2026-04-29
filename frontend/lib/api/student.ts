@@ -22,3 +22,9 @@ export const joinVideoSession = async (sessionId: string) => {
   const response = await api.post(`/student/video-sessions/${sessionId}/join`);
   return response.data;
 };
+
+// Announcements
+export const getAnnouncements = async (params?: any) => {
+  const response = await api.get('/student/other/announcements', { params });
+  return response.data;
+};

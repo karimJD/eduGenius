@@ -1,0 +1,36 @@
+\begin{thebibliography}{1}
+
+\bibitem{daily_co}
+Daily.co.
+\newblock The daily api for video calls, 2024.
+
+\bibitem{google_gemini}
+Google DeepMind.
+\newblock Gemini: A family of highly capable multimodal models, 2023.
+
+\bibitem{mongodb_manual}
+MongoDB Inc.
+\newblock The mongodb manual, 2024.
+
+\bibitem{mern_stack}
+MongoDB Inc.
+\newblock What is the mern stack?, 2024.
+
+\bibitem{scrum_guide}
+Ken Schwaber and Jeff Sutherland.
+\newblock {\em The Scrum Guide}.
+\newblock 2020.
+
+\bibitem{socket_io}
+Socket.io.
+\newblock Real-time bidirectional event-based communication, 2024.
+
+\bibitem{ai_education}
+UNESCO.
+\newblock Artificial intelligence in education, 2023.
+
+\bibitem{nextjs_docs}
+Vercel.
+\newblock Next.js documentation, 2025.
+
+\end{thebibliography}

@@ -51,7 +51,7 @@ export default function StudentLiveSessionPage() {
           <div className="w-16 h-16 border-4 border-[#222222] rounded-full" />
           <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin absolute inset-0" />
         </div>
-        <p className="text-white font-semibold">Connexion à la session...</p>
+        <p className="text-foreground dark:text-white font-semibold">Connexion à la session...</p>
       </div>
     );
   }
@@ -63,12 +63,12 @@ export default function StudentLiveSessionPage() {
           <AlertCircle className="w-8 h-8 text-red-400" />
         </div>
         <div className="text-center">
-          <h2 className="text-xl font-bold text-white mb-2">Impossible de rejoindre</h2>
-          <p className="text-gray-400 max-w-sm">{error}</p>
+          <h2 className="text-xl font-bold text-foreground dark:text-white mb-2">Impossible de rejoindre</h2>
+          <p className="text-muted-foreground dark:text-gray-400 max-w-sm">{error}</p>
         </div>
         <Link
           href="/student/video"
-          className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-medium transition-colors"
+          className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-foreground dark:text-white rounded-xl font-medium transition-colors"
         >
           <ArrowLeft className="w-4 h-4" /> Retour aux sessions
         </Link>
@@ -81,14 +81,14 @@ export default function StudentLiveSessionPage() {
       {/* Top Bar */}
       <header className="flex items-center justify-between px-6 py-3 border-b border-[#222222] bg-[#111111] shrink-0">
         <div className="flex items-center gap-3">
-          <Link href="/student/video" className="text-gray-500 hover:text-white transition-colors">
+          <Link href="/student/video" className="text-muted-foreground dark:text-gray-500 hover:text-foreground dark:hover:text-white transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-            <span className="font-semibold text-white">{data.session.title}</span>
+            <span className="font-semibold text-foreground dark:text-white">{data.session.title}</span>
             {data.session.classId && (
-              <span className="text-xs text-gray-500 bg-[#222222] px-2 py-0.5 rounded-full">
+              <span className="text-xs text-muted-foreground dark:text-gray-500 bg-[#222222] px-2 py-0.5 rounded-full">
                 {data.session.classId.name}
               </span>
             )}

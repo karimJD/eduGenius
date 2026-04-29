@@ -6,6 +6,7 @@ import { ArrowLeft, BookOpen, ChevronRight, Folder } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '@/lib/axios';
 import Link from 'next/link';
+import { PageHeader } from '../../../../components/student/PageHeader';
 
 interface SubjectInfo {
   _id: string;
@@ -52,27 +53,20 @@ export default function StudentSubjectSelectorPage() {
 
   if (!classDetail) return (
     <div className="p-6 text-center">
-      <p className="text-muted-foreground font-bold text-white">Classe introuvable.</p>
+      <p className="text-muted-foreground font-bold text-foreground dark:text-white">Classe introuvable.</p>
       <Link href="/student/courses" className="text-primary hover:underline mt-4 inline-block">Retour aux cours</Link>
     </div>
   );
 
   return (
-    <div className="p-6 space-y-8">
-      <div className="flex items-center gap-4">
-        <Link href="/student/courses" 
-          className="p-3 bg-[#111111] border border-[#222222] rounded-2xl hover:bg-[#1a1a1a] text-gray-400 hover:text-white transition-all shadow-sm">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">
-             Espace de dépôt — {classDetail.name}
-          </h1>
-          <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mt-1">
-            Sélectionnez une matière pour voir le contenu
-          </p>
-        </div>
-      </div>
+    <div className="space-y-8">
+      <PageHeader
+        title={`Espace de dépôt — ${classDetail.name}`}
+        description="Sélectionnez une matière pour voir le contenu"
+        icon={Folder}
+        badgeText="Cours & Matériels"
+        badgeClassName="bg-blue-500/10 border-blue-500/20 text-blue-400"
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {classDetail.assignedSubjects?.map((item, i) => (
@@ -84,30 +78,30 @@ export default function StudentSubjectSelectorPage() {
           >
             <Link
               href={`/student/courses/${classId}/${item.subjectId._id}`}
-              className="group block relative bg-[#111111] border border-[#222222] rounded-[2rem] p-6 transition-all hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-500/30 overflow-hidden"
+              className="group block relative bg-card dark:bg-[#111111] border border-border dark:border-[#222222] rounded-[2rem] p-6 transition-all hover:shadow-2xl hover:shadow-blue-500/5 hover:border-blue-500/30 overflow-hidden"
             >
               <div className="flex flex-col space-y-4">
                 <div className="flex justify-between items-start">
                   <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform duration-300">
                     <Folder className="w-6 h-6" />
                   </div>
-                  <div className="px-3 py-1 rounded-full bg-[#1a1a1a] border border-[#222222] text-[10px] font-black uppercase tracking-wider text-gray-500">
+                  <div className="px-3 py-1 rounded-full bg-muted dark:bg-[#1a1a1a] border border-border dark:border-[#222222] text-[10px] font-black uppercase tracking-wider text-muted-foreground dark:text-gray-500">
                     {item.subjectId.code}
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-black text-white group-hover:text-blue-400 transition-colors leading-tight">
+                  <h3 className="text-xl font-black text-foreground dark:text-white group-hover:text-blue-400 transition-colors leading-tight">
                     {item.subjectId.name}
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1 uppercase tracking-widest font-bold">
+                  <p className="text-xs text-muted-foreground dark:text-gray-500 mt-1 uppercase tracking-widest font-bold">
                     Dossier de cours
                   </p>
                 </div>
 
-                <div className="pt-4 mt-auto border-t border-[#222222] flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Voir le contenu</span>
-                  <div className="w-8 h-8 rounded-full bg-blue-500/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                <div className="pt-4 mt-auto border-t border-border dark:border-[#222222] flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-muted-foreground dark:text-gray-500 uppercase tracking-widest">Voir le contenu</span>
+                  <div className="w-8 h-8 rounded-full bg-blue-500/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-foreground dark:group-hover:text-white transition-all duration-300">
                     <ChevronRight className="w-4 h-4" />
                   </div>
                 </div>
@@ -117,9 +111,9 @@ export default function StudentSubjectSelectorPage() {
         ))}
 
         {(!classDetail.assignedSubjects || classDetail.assignedSubjects.length === 0) && (
-          <div className="col-span-full py-12 text-center border-2 border-dashed border-[#222222] rounded-[2rem] bg-[#0a0a0a]">
-             <BookOpen className="w-10 h-10 text-gray-600 mx-auto mb-4 opacity-20" />
-             <p className="text-sm font-bold text-gray-500">Aucune matière n'a encore été assignée à cet espace.</p>
+          <div className="col-span-full py-12 text-center border-2 border-dashed border-border dark:border-[#222222] rounded-[2rem] bg-muted/20 dark:bg-[#0a0a0a]">
+             <BookOpen className="w-10 h-10 text-muted-foreground dark:text-gray-600 mx-auto mb-4 opacity-20" />
+             <p className="text-sm font-bold text-muted-foreground dark:text-gray-500">Aucune matière n'a encore été assignée à cet espace.</p>
           </div>
         )}
       </div>

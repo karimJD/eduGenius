@@ -115,8 +115,8 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
     return (
       <div className="flex flex-col items-center justify-center p-12 text-center bg-[#111111] rounded-3xl border border-[#222222]">
         <Loader2 className="w-12 h-12 text-purple-500 animate-spin mb-4" />
-        <h3 className="text-xl font-bold text-white mb-2">Génération du Quiz</h3>
-        <p className="text-gray-400">L'IA analyse vos cours pour créer des questions pertinentes...</p>
+        <h3 className="text-xl font-bold text-foreground dark:text-white mb-2">Génération du Quiz</h3>
+        <p className="text-muted-foreground dark:text-gray-400">L'IA analyse vos cours pour créer des questions pertinentes...</p>
       </div>
     );
   }
@@ -125,7 +125,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
     return (
       <div className="p-12 text-center bg-[#111111] rounded-3xl border border-red-500/20">
         <p className="text-red-400 mb-4">{error || "Aucune question trouvée."}</p>
-        <Button onClick={onCancel} variant="outline" className="text-white border-[#333333]">Retour</Button>
+        <Button onClick={onCancel} variant="outline" className="text-foreground dark:text-white border-[#333333]">Retour</Button>
       </div>
     );
   }
@@ -142,28 +142,28 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
            <Trophy className="w-12 h-12 text-green-400" />
         </div>
         
-        <h2 className="text-3xl font-bold text-white mb-2">Quiz Terminé !</h2>
-        <p className="text-gray-400 mb-8">Voici votre résultat pour : {quizDetails?.title}</p>
+        <h2 className="text-3xl font-bold text-foreground dark:text-white mb-2">Quiz Terminé !</h2>
+        <p className="text-muted-foreground dark:text-gray-400 mb-8">Voici votre résultat pour : {quizDetails?.title}</p>
         
         <div className="flex justify-center gap-8 mb-8">
            <div className="text-center">
-              <div className="text-5xl font-black text-white mb-1">{score}<span className="text-2xl text-gray-500">/{questions.length}</span></div>
-              <div className="text-sm text-gray-500 uppercase font-bold tracking-wider">Score</div>
+              <div className="text-5xl font-black text-foreground dark:text-white mb-1">{score}<span className="text-2xl text-muted-foreground dark:text-gray-500">/{questions.length}</span></div>
+              <div className="text-sm text-muted-foreground dark:text-gray-500 uppercase font-bold tracking-wider">Score</div>
            </div>
            <div className="w-px bg-[#222222]" />
            <div className="text-center">
               <div className={cn("text-5xl font-black mb-1", percentage >= 80 ? "text-green-400" : percentage >= 50 ? "text-yellow-400" : "text-red-400")}>
                 {percentage}%
               </div>
-              <div className="text-sm text-gray-500 uppercase font-bold tracking-wider">Précision</div>
+              <div className="text-sm text-muted-foreground dark:text-gray-500 uppercase font-bold tracking-wider">Précision</div>
            </div>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-           <Button onClick={onCancel} className="bg-[#222222] text-white hover:bg-[#333333] border-0 h-12 px-8 rounded-xl font-bold">
+           <Button onClick={onCancel} className="bg-[#222222] text-foreground dark:text-white hover:bg-[#333333] border-0 h-12 px-8 rounded-xl font-bold">
              Terminer
            </Button>
-           <Button onClick={onComplete} className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white h-12 px-8 border-0 shadow-lg rounded-xl font-bold">
+           <Button onClick={onComplete} className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-foreground dark:text-white h-12 px-8 border-0 shadow-lg rounded-xl font-bold">
              Voir l'historique
            </Button>
         </div>
@@ -195,14 +195,14 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
              <BrainCircuit className="w-4 h-4" />
              {quizDetails?.title || 'Quiz IA'}
            </div>
-           <div className="text-sm font-bold text-gray-500">
+           <div className="text-sm font-bold text-muted-foreground dark:text-gray-500">
              Question {currentIndex + 1} / {questions.length}
            </div>
         </div>
 
         {/* Question */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white leading-tight">
+          <h2 className="text-2xl font-bold text-foreground dark:text-white leading-tight">
             {question.questionText}
           </h2>
         </div>
@@ -222,10 +222,10 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
                 } else if (isSelected && !isCorrect) {
                   stateClass = "bg-red-500/10 border-red-500 text-red-100";
                 } else {
-                  stateClass = "bg-[#1a1a1a] border-[#222222] text-gray-500 opacity-50";
+                  stateClass = "bg-[#1a1a1a] border-[#222222] text-muted-foreground dark:text-gray-500 opacity-50";
                 }
               } else if (isSelected) {
-                stateClass = "bg-purple-500/20 border-purple-500 text-white";
+                stateClass = "bg-purple-500/20 border-purple-500 text-foreground dark:text-white";
               }
 
               return (
@@ -266,7 +266,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
 
         {/* Footer Actions */}
         <div className="mt-8 pt-6 border-t border-[#222222] flex justify-between items-center">
-          <Button variant="ghost" className="text-gray-500 hover:text-white" onClick={onCancel}>
+          <Button variant="ghost" className="text-muted-foreground dark:text-gray-500 hover:text-foreground dark:hover:text-white" onClick={onCancel}>
             Quitter
           </Button>
 
@@ -274,7 +274,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
             <Button 
               onClick={handleCheck} 
               disabled={!selectedOption}
-              className="bg-purple-600 hover:bg-purple-700 text-white rounded-xl px-8 h-12 font-bold"
+              className="bg-purple-600 hover:bg-purple-700 text-foreground dark:text-white rounded-xl px-8 h-12 font-bold"
             >
               Valider
             </Button>

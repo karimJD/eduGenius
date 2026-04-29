@@ -1,0 +1,56 @@
+\chapter{Sprint 5 : Tableau de bord et IA}
+
+\section{Introduction}
+L'ultime sprint du projet se concentre sur l'expérience utilisateur finale, avec la réalisation des tableaux de bord interactifs et l'intégration profonde des fonctionnalités d'IA générative.
+
+\section{Backlog du Sprint 5}
+\begin{itemize}
+    \item \textbf{US-13} : Développement des Dashboards (Admin, Teacher, Student).
+    \item \textbf{US-14} : Intégration de la visioconférence (Daily.co).
+    \item \textbf{US-15} : Finalisation des générateurs de résumés et de quiz IA.
+\end{itemize}
+
+\section{Analyse}
+\subsection{Diagramme de cas d'utilisation}
+L'Étudiant consulte son dashboard pour voir sa progression (XP). L'Enseignant lance une session vidéo. L'Administrateur surveille les statistiques globales.
+
+\subsection{Description textuelle des cas d'utilisation}
+L'enseignant clique sur "Générer Résumé". Le système appelle l'API Gemini, traite le résultat et l'affiche à l'écran. L'étudiant peut alors consulter ce résumé à côté de son support de cours.
+
+\section{Conception}
+\subsection{Diagrammes de séquence}
+Le diagramme de séquence pour le lancement d'un Live montre l'interaction avec l'API Daily.co pour obtenir un token de salle.
+
+\subsection{Diagramme de classes}
+Classes \texttt{AIQuizController}, \texttt{AISummaryController} et les composants React du Dashboard.
+
+\subsection{Représentation graphique de la base de données}
+Documents stockant les résumés générés (\texttt{AISummary}) et les flashcards.
+
+\section{Réalisation}
+\subsection{Dashboard Étudiant avec Gamification}
+Interface affichant les points d'expérience (XP), le GPA et les cours récents.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Capture d'écran - Student Dashboard}
+    \caption{Tableau de bord intelligent de l'étudiant}
+\end{figure}
+
+\subsection{Interface de Visioconférence Intégrée}
+Salle de classe virtuelle avec chat et liste des participants en temps réel.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Capture d'écran - Live Session}
+    \caption{Module de visioconférence Daily.co}
+\end{figure}
+
+\section{Tests}
+\subsection{Tests unitaires}
+Tests des fonctions de formatage des réponses de l'IA.
+\subsection{Tests d'intégration}
+Validation de la persistance des résumés générés dans MongoDB.
+\subsection{Tests fonctionnels}
+Scénario complet : Upload d'un PDF $\rightarrow$ Génération d'un résumé $\rightarrow$ Consultation par l'étudiant $\rightarrow$ Passage du quiz lié.
+
+\section{Conclusion}
+Le Sprint 5 clôture la phase de développement avec une plateforme complète, intelligente et fonctionnelle, prête pour la mise en production.

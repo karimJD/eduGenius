@@ -30,6 +30,9 @@ const teacherRoutes = require('./routes/teacher/index');
 // Student routes
 const studentRoutes = require('./routes/student/index');
 
+// Arena cron
+const { startArenaCronJob } = require('./jobs/arenaCronJob');
+
 // Middleware
 const { errorHandler } = require('./middleware/errorHandler');
 
@@ -43,10 +46,12 @@ const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 
 // CORS
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+  }),
+);
 app.use(express.json({ limit: '10mb' }));
 
 // Serve static files
@@ -78,12 +83,19 @@ app.use('/api/student', studentRoutes);
 app.use(errorHandler);
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error('MongoDB Connection Error:', err));
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('MongoDB Connected');
+    startArenaCronJob();
+  })
+  .catch((err) => console.error('MongoDB Connection Error:', err));
 
 // Initialize Socket.IO
-initializeSocketIO(httpServer);
+const io = initializeSocketIO(httpServer);
+
+// Export io instance globally for use in controllers
+global.io = io;
 
 // Start Server
 httpServer.listen(PORT, () => {

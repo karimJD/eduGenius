@@ -31,10 +31,10 @@ export function FlashcardViewer({ deck, onClose }: FlashcardViewerProps) {
   if (!deck.flashcards || deck.flashcards.length === 0) {
     return (
       <div className="bg-[#111111] border border-[#222222] rounded-3xl p-8 text-center max-w-2xl mx-auto">
-         <Layers className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-         <h3 className="text-xl font-bold text-white mb-2">Aucune carte</h3>
-         <p className="text-gray-400 mb-6">Ce deck ne contient aucune flashcard.</p>
-         <Button onClick={onClose} variant="outline" className="text-white border-[#333333]">Retour</Button>
+         <Layers className="w-12 h-12 text-muted-foreground dark:text-gray-500 mx-auto mb-4" />
+         <h3 className="text-xl font-bold text-foreground dark:text-white mb-2">Aucune carte</h3>
+         <p className="text-muted-foreground dark:text-gray-400 mb-6">Ce deck ne contient aucune flashcard.</p>
+         <Button onClick={onClose} variant="outline" className="text-foreground dark:text-white border-[#333333]">Retour</Button>
       </div>
     );
   }
@@ -65,13 +65,13 @@ export function FlashcardViewer({ deck, onClose }: FlashcardViewerProps) {
                <Layers className="w-5 h-5 text-purple-400" />
             </div>
             <div>
-               <h2 className="text-lg font-bold text-white">Révison : {deck.title}</h2>
-               <p className="text-xs text-gray-400">
+               <h2 className="text-lg font-bold text-foreground dark:text-white">Révison : {deck.title}</h2>
+               <p className="text-xs text-muted-foreground dark:text-gray-400">
                  Carte {currentIndex + 1} sur {deck.flashcards.length}
                </p>
             </div>
          </div>
-         <Button variant="ghost" size="icon" onClick={onClose} className="text-gray-400 hover:text-white hover:bg-[#222222] rounded-full">
+         <Button variant="ghost" size="icon" onClick={onClose} className="text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white hover:bg-[#222222] rounded-full">
             <X className="w-5 h-5" />
          </Button>
       </div>
@@ -105,23 +105,23 @@ export function FlashcardViewer({ deck, onClose }: FlashcardViewerProps) {
               style={{ transformStyle: 'preserve-3d' }}
             >
                <div className="absolute top-4 right-4">
-                  <RotateCcw className={cn("w-5 h-5", isFlipped ? "text-purple-400" : "text-gray-500")} />
+                  <RotateCcw className={cn("w-5 h-5", isFlipped ? "text-purple-400" : "text-muted-foreground dark:text-gray-500")} />
                </div>
                
                <div className="space-y-4">
-                 <span className="text-[10px] uppercase font-bold tracking-widest text-gray-500 block mb-2">
+                 <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground dark:text-gray-500 block mb-2">
                    {isFlipped ? 'Réponse' : 'Question'}
                  </span>
                  <p className={cn(
                    "font-medium",
-                   isFlipped ? "text-xl sm:text-2xl text-white" : "text-2xl sm:text-3xl text-white leading-tight"
+                   isFlipped ? "text-xl sm:text-2xl text-foreground dark:text-white" : "text-2xl sm:text-3xl text-foreground dark:text-white leading-tight"
                  )}>
                    {isFlipped ? card.back : card.front}
                  </p>
                </div>
                
                <div className="absolute bottom-4 left-0 right-0 text-center">
-                  <span className="text-xs text-gray-500">Cliquez pour retourner</span>
+                  <span className="text-xs text-muted-foreground dark:text-gray-500">Cliquez pour retourner</span>
                </div>
             </motion.div>
          </AnimatePresence>
@@ -133,7 +133,7 @@ export function FlashcardViewer({ deck, onClose }: FlashcardViewerProps) {
            variant="outline" 
            onClick={handlePrev} 
            disabled={currentIndex === 0}
-           className="border-[#333333] text-gray-300 hover:text-white hover:bg-[#222222] w-12 h-12 rounded-xl p-0"
+           className="border-[#333333] text-gray-600 dark:text-gray-300 hover:text-foreground dark:hover:text-white hover:bg-[#222222] w-12 h-12 rounded-xl p-0"
          >
            <ChevronLeft className="w-5 h-5" />
          </Button>
@@ -142,7 +142,7 @@ export function FlashcardViewer({ deck, onClose }: FlashcardViewerProps) {
             {!isFlipped ? (
                <Button 
                  onClick={() => setIsFlipped(true)}
-                 className="bg-purple-600 hover:bg-purple-700 text-white rounded-xl px-8 h-12 font-bold"
+                 className="bg-purple-600 hover:bg-purple-700 text-foreground dark:text-white rounded-xl px-8 h-12 font-bold"
                >
                  Voir la réponse
                </Button>
@@ -156,7 +156,7 @@ export function FlashcardViewer({ deck, onClose }: FlashcardViewerProps) {
             ) : (
                <Button 
                  onClick={onClose}
-                 className="bg-green-600 hover:bg-green-700 text-white rounded-xl px-8 h-12 font-bold"
+                 className="bg-green-600 hover:bg-green-700 text-foreground dark:text-white rounded-xl px-8 h-12 font-bold"
                >
                  Terminer la session
                </Button>
@@ -167,7 +167,7 @@ export function FlashcardViewer({ deck, onClose }: FlashcardViewerProps) {
            variant="outline" 
            onClick={handleNext} 
            disabled={currentIndex === deck.flashcards.length - 1}
-           className="border-[#333333] text-gray-300 hover:text-white hover:bg-[#222222] w-12 h-12 rounded-xl p-0"
+           className="border-[#333333] text-gray-600 dark:text-gray-300 hover:text-foreground dark:hover:text-white hover:bg-[#222222] w-12 h-12 rounded-xl p-0"
          >
            <ChevronRight className="w-5 h-5" />
          </Button>

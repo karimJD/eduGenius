@@ -88,16 +88,16 @@ export default function QuizTakingPage() {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
+    <div className="flex items-center justify-center min-h-screen bg-background dark:bg-black">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
     </div>
   );
 
-  if (!quiz) return <div className="text-center py-20 text-gray-400">Quiz not found.</div>;
+  if (!quiz) return <div className="text-center py-20 text-muted-foreground dark:text-gray-400">Quiz not found.</div>;
 
   if (isFinished) {
     return (
-        <div className="min-h-screen bg-black text-white flex items-center justify-center p-6">
+        <div className="min-h-screen bg-background dark:bg-black text-foreground dark:text-white flex items-center justify-center p-6">
             <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -108,22 +108,22 @@ export default function QuizTakingPage() {
                 </div>
                 <div className="space-y-2">
                     <h1 className="text-3xl font-bold">Quiz Terminé !</h1>
-                    <p className="text-gray-400">Excellent effort ! Voici vos résultats :</p>
+                    <p className="text-muted-foreground dark:text-gray-400">Excellent effort ! Voici vos résultats :</p>
                 </div>
                 
-                <div className="py-8 bg-black/40 rounded-2xl border border-white/5">
-                    <p className="text-5xl font-black text-white">{score}%</p>
-                    <p className="text-xs text-gray-500 mt-2 uppercase tracking-widest font-bold">Score Final</p>
+                <div className="py-8 bg-background dark:bg-black/40 rounded-2xl border border-white/5">
+                    <p className="text-5xl font-black text-foreground dark:text-white">{score}%</p>
+                    <p className="text-xs text-muted-foreground dark:text-gray-500 mt-2 uppercase tracking-widest font-bold">Score Final</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
                         <p className="text-xl font-bold text-blue-400">+{Math.round(score * 1.5)}</p>
-                        <p className="text-[10px] text-gray-500 uppercase font-bold">XP Gagnés</p>
+                        <p className="text-[10px] text-muted-foreground dark:text-gray-500 uppercase font-bold">XP Gagnés</p>
                     </div>
                      <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
                         <p className="text-xl font-bold text-purple-400">A-</p>
-                        <p className="text-[10px] text-gray-500 uppercase font-bold">Rang</p>
+                        <p className="text-[10px] text-muted-foreground dark:text-gray-500 uppercase font-bold">Rang</p>
                     </div>
                 </div>
 
@@ -142,14 +142,14 @@ export default function QuizTakingPage() {
   const progress = ((currentStep + 1) / quiz.questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen bg-background dark:bg-black text-foreground dark:text-white flex flex-col">
         {/* Header */}
         <header className="p-6 border-b border-white/10 flex items-center justify-between">
-            <Button variant="ghost" onClick={() => router.back()} className="rounded-xl text-gray-400">
+            <Button variant="ghost" onClick={() => router.back()} className="rounded-xl text-muted-foreground dark:text-gray-400">
                 <ArrowLeft className="w-5 h-5 mr-2" /> Quitter
             </Button>
             <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2 text-gray-400 text-sm font-medium">
+                <div className="flex items-center gap-2 text-muted-foreground dark:text-gray-400 text-sm font-medium">
                     <Timer className="w-4 h-4" /> 04:52
                 </div>
                 <div className="w-32 bg-white/5 h-2 rounded-full overflow-hidden">
@@ -159,7 +159,7 @@ export default function QuizTakingPage() {
                         className="bg-blue-600 h-full rounded-full"
                     />
                 </div>
-                <span className="text-xs font-bold text-gray-500">{currentStep + 1} / {quiz.questions.length}</span>
+                <span className="text-xs font-bold text-muted-foreground dark:text-gray-500">{currentStep + 1} / {quiz.questions.length}</span>
             </div>
         </header>
 
@@ -193,7 +193,7 @@ export default function QuizTakingPage() {
                             >
                                 <div className="flex items-center gap-4 relative z-10">
                                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm transition-all ${
-                                        answers[currentStep] === idx ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-500'
+                                        answers[currentStep] === idx ? 'bg-blue-600 text-foreground dark:text-white' : 'bg-white/5 text-muted-foreground dark:text-gray-500'
                                     }`}>
                                         {String.fromCharCode(65 + idx)}
                                     </div>
@@ -210,12 +210,12 @@ export default function QuizTakingPage() {
         </main>
 
         {/* Footer */}
-        <footer className="fixed bottom-0 left-0 w-full p-6 bg-black/80 backdrop-blur-xl border-t border-white/10 flex justify-center">
+        <footer className="fixed bottom-0 left-0 w-full p-6 bg-background dark:bg-black/80 backdrop-blur-xl border-t border-white/10 flex justify-center">
              <div className="max-w-2xl w-full flex justify-end">
                 <Button 
                     onClick={handleNext}
                     disabled={answers[currentStep] === undefined}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-14 px-10 rounded-2xl shadow-xl shadow-blue-600/20 active:scale-95 transition-all disabled:opacity-50"
+                    className="bg-blue-600 hover:bg-blue-700 text-foreground dark:text-white font-bold h-14 px-10 rounded-2xl shadow-xl shadow-blue-600/20 active:scale-95 transition-all disabled:opacity-50"
                 >
                     {currentStep === quiz.questions.length - 1 ? 'Terminer le Quiz' : 'Question Suivante'}
                     <ChevronRight className="w-5 h-5 ml-2" />

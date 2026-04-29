@@ -1,0 +1,74 @@
+\chapter{Préparation du projet}
+
+\section{Introduction}
+La préparation du projet est une phase déterminante où les besoins sont identifiés, modélisés et où l'architecture technique est définie pour supporter le développement agile.
+
+\section{Spécifications des besoins}
+\subsection{Identification des acteurs}
+Le système eduGenius identifie trois acteurs majeurs : l'Administrateur (gestion du système), l'Enseignant (création pédagogique) et l'Étudiant (consommation et interaction).
+
+\subsection{Besoins fonctionnels}
+Les besoins fonctionnels incluent la gestion des utilisateurs, la gestion des cours (upload, chapitres), les services d'IA (résumés, quiz), la communication temps réel (chat, vidéo) et le suivi des performances (PV, GPA).
+
+\subsection{Besoins non fonctionnels}
+\begin{itemize}
+    \item \textbf{Sécurité} : Authentification JWT, hachage des mots de passe.
+    \item \textbf{Performance} : Temps de réponse rapide pour les services IA.
+    \item \textbf{Disponibilité} : Architecture cloud résiliente.
+    \item \textbf{Ergonomie} : Interface responsive et intuitive.
+\end{itemize}
+
+\section{Modélisation des besoins}
+\subsection{Diagramme de cas d'utilisation global}
+Le diagramme suivant présente les interactions entre les acteurs et les fonctionnalités majeures du système.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Diagramme de Cas d'Utilisation Global}
+    \caption{Cas d'utilisation global d'eduGenius}
+\end{figure}
+
+\section{Pilotage du projet avec Scrum}
+\subsection{Définition des rôles Scrum}
+Le projet a mobilisé un Product Owner (PO), un Scrum Master (SM) et une équipe de développement Full-stack.
+
+\subsection{Backlog produit}
+Le backlog produit a été découpé en 5 sprints thématiques couvrant l'ensemble des besoins identifiés.
+
+\subsection{Planification des sprints}
+\begin{itemize}
+    \item Sprint 1 : Authentification et Sécurité.
+    \item Sprint 2 : Gestion des Projets (Classes) et Membres.
+    \item Sprint 3 : Gestion des Microservices (Services Backend).
+    \item Sprint 4 : Gestion des Endpoints et des Modèles.
+    \item Sprint 5 : Tableau de bord et IA.
+\end{itemize}
+
+\subsection{Diagramme de Gantt}
+Le planning prévisionnel sur 4 mois est représenté par le diagramme de Gantt suivant.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Diagramme de Gantt}
+    \caption{Planning de réalisation du projet}
+\end{figure}
+
+\section{Environnements de travail}
+\subsection{Environnement matériel}
+Le développement et les tests ont été réalisés sur des machines équipées de CPU haute performance et de GPU (RTX 4060 Ti) pour l'inférence locale de l'IA.
+
+\subsection{Environnement logiciel}
+\begin{itemize}
+    \item \textbf{IDE} : Visual Studio Code.
+    \item \textbf{Backend} : Node.js, Express, MongoDB.
+    \item \textbf{Frontend} : Next.js, Tailwind CSS.
+    \item \textbf{Services} : AWS S3, Daily.co, Ollama.
+\end{itemize}
+
+\section{Architecture de l'application}
+\subsection{Architecture physique}
+L'architecture physique repose sur un déploiement Cloud hybride combinant Vercel (Frontend), Render (Backend) et MongoDB Atlas (Données).
+
+\subsection{Architecture logicielle}
+Nous avons adopté une architecture N-Tier (3-tiers) avec une séparation nette entre la présentation, la logique applicative et la persistence des données.
+
+\section{Conclusion}
+La phase de préparation a permis d'établir une feuille de route claire. Nous allons maintenant détailler la réalisation de chaque sprint dans les chapitres suivants.

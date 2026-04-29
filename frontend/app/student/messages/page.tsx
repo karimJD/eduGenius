@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Chat } from '@/components/chat/Chat';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { PageHeader } from '@/components/student/PageHeader';
 import { cn } from '@/lib/utils';
 
 type RecipientType = 'active' | 'teacher' | 'class' | 'admin';
@@ -76,10 +77,14 @@ export default function StudentMessagesPage() {
     <div className="h-[calc(100vh-4.5rem)] flex gap-8 p-0">
       {/* Sidebar - Contacts */}
       <div className="w-80 flex flex-col gap-6">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Messages</h1>
-          <p className="text-xs text-gray-500 uppercase tracking-widest font-bold">Espace Étudiant</p>
-        </div>
+        <PageHeader 
+          title="Messages"
+          icon={MessageSquare}
+          badgeText="Communication"
+          badgeClassName="bg-blue-500/10 border-blue-500/20 text-blue-400"
+          titleClassName="text-3xl font-bold text-foreground dark:text-white tracking-tight"
+          className="mb-2"
+        />
 
         {/* Recipient Type Tabs */}
         <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-2xl border border-gray-200 dark:border-white/10">
@@ -94,8 +99,8 @@ export default function StudentMessagesPage() {
               className={cn(
                 "flex-1 py-2 px-1 rounded-xl text-[10px] font-bold transition-all capitalize",
                 activeTab === tab 
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" 
-                  : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-300"
+                  ? "bg-blue-600 text-foreground dark:text-white shadow-lg shadow-blue-600/20" 
+                  : "text-muted-foreground dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-600 dark:text-gray-300"
               )}
             >
               {tab === 'active' ? 'Inbox' : tab === 'teacher' ? 'Profs' : tab === 'class' ? 'Classes' : 'Admin'}
@@ -120,12 +125,12 @@ export default function StudentMessagesPage() {
         )}
 
         <div className="relative group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-blue-500 transition-colors" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground dark:text-gray-500 group-focus-within:text-blue-500 transition-colors" />
             <Input 
                 placeholder="Rechercher..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 rounded-xl h-12 text-gray-900 dark:text-white placeholder:text-gray-500"
+                className="pl-10 bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 rounded-xl h-12 text-gray-900 dark:text-white placeholder:text-muted-foreground dark:text-gray-500"
             />
         </div>
 
@@ -151,7 +156,7 @@ export default function StudentMessagesPage() {
                     className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all border ${
                         selectedChat?.id === r._id 
                             ? 'bg-blue-600/10 border-blue-500/50 text-blue-600 dark:text-blue-400' 
-                            : 'bg-transparent border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
+                            : 'bg-transparent border-transparent text-muted-foreground dark:text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-foreground dark:text-white'
                     }`}
                 >
                     <div className={cn(
@@ -200,7 +205,7 @@ export default function StudentMessagesPage() {
              </div>
              <div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">Messagerie Étudiant</h3>
-                <p className="text-sm text-gray-500 mt-1 max-w-xs">
+                <p className="text-sm text-muted-foreground dark:text-gray-500 mt-1 max-w-xs">
                   Séléctionnez un professeur, une classe ou l'administration pour commencer à échanger.
                 </p>
              </div>

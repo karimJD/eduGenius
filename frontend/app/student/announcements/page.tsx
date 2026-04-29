@@ -12,8 +12,9 @@ import {
   Pin
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../../lib/utils';
 import { Button } from '../../../components/ui/button';
+import { PageHeader } from '../../../components/student/PageHeader';
+import { cn } from '../../../lib/utils';
 
 export default function StudentAnnouncementsPage() {
   const { user } = useAuth();
@@ -84,22 +85,13 @@ export default function StudentAnnouncementsPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 relative z-10">
-        <div className="space-y-2">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium w-fit"
-          >
-            <Megaphone className="w-4 h-4" />
-            <span>Annonces & Actualités</span>
-          </motion.div>
-          <h1 className="text-4xl font-bold text-white tracking-tight">Tableau d'Affichage</h1>
-          <p className="text-gray-400 max-w-xl">
-             Restez informé des dernières nouvelles de l'école et de vos classes.
-          </p>
-        </div>
-      </div>
+      <PageHeader 
+        title="Tableau d'Affichage"
+        description="Restez informé des dernières nouvelles de l'école et de vos classes."
+        icon={Megaphone}
+        badgeText="Annonces & Actualités"
+        badgeClassName="bg-yellow-500/10 border-yellow-500/20 text-yellow-400"
+      />
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main Content Area */}
@@ -108,19 +100,19 @@ export default function StudentAnnouncementsPage() {
            <div className="flex gap-2 pb-2 overflow-x-auto custom-scrollbar">
              <Button
                onClick={() => setFilter('all')}
-               className={cn("rounded-full px-6 transition-all", filter === 'all' ? "bg-white text-black hover:bg-gray-200" : "bg-[#111111] text-gray-400 hover:text-white border border-[#222222]")}
+               className={cn("rounded-full px-6 transition-all", filter === 'all' ? "bg-white text-black hover:bg-gray-200" : "bg-[#111111] text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white border border-[#222222]")}
              >
                Toutes
              </Button>
              <Button
                onClick={() => setFilter('important')}
-               className={cn("rounded-full px-6 transition-all", filter === 'important' ? "bg-red-500 text-white hover:bg-red-600" : "bg-[#111111] text-gray-400 hover:text-white border border-[#222222]")}
+               className={cn("rounded-full px-6 transition-all", filter === 'important' ? "bg-red-500 text-foreground dark:text-white hover:bg-red-600" : "bg-[#111111] text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white border border-[#222222]")}
              >
                Importantes
              </Button>
              <Button
                onClick={() => setFilter('class')}
-               className={cn("rounded-full px-6 transition-all", filter === 'class' ? "bg-blue-500 text-white hover:bg-blue-600" : "bg-[#111111] text-gray-400 hover:text-white border border-[#222222]")}
+               className={cn("rounded-full px-6 transition-all", filter === 'class' ? "bg-blue-500 text-foreground dark:text-white hover:bg-blue-600" : "bg-[#111111] text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white border border-[#222222]")}
              >
                Classes
              </Button>
@@ -150,13 +142,13 @@ export default function StudentAnnouncementsPage() {
                              "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border",
                              announcement.priority === 'urgent' || announcement.priority === 'high' ? "bg-red-500/10 border-red-500/20 text-red-500" :
                              announcement.type === 'assignment' || announcement.type === 'exam' ? "bg-blue-500/10 border-blue-500/20 text-blue-500" :
-                             "bg-gray-800 border-gray-700 text-gray-300"
+                             "bg-gray-800 border-gray-700 text-gray-600 dark:text-gray-300"
                           )}>
                              {announcement.isPinned ? <Pin className="w-5 h-5 fill-current" /> : <Bell className="w-5 h-5" />}
                           </div>
                           <div className="flex-1">
                              <div className="flex items-center gap-3 mb-2">
-                                <h3 className="text-xl font-bold text-white group-hover:text-orange-400 transition-colors">
+                                <h3 className="text-xl font-bold text-foreground dark:text-white group-hover:text-orange-400 transition-colors">
                                    {announcement.title}
                                 </h3>
                                 {announcement.priority === 'urgent' || announcement.priority === 'high' && (
@@ -165,13 +157,13 @@ export default function StudentAnnouncementsPage() {
                                    </span>
                                 )}
                              </div>
-                             <p className="text-gray-400 leading-relaxed mb-4">
+                             <p className="text-muted-foreground dark:text-gray-400 leading-relaxed mb-4">
                                 {announcement.content}
                              </p>
-                             <div className="flex items-center gap-4 text-xs font-medium text-gray-500">
+                             <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground dark:text-gray-500">
                                 <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {new Date(announcement.date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}</span>
                                 <span>•</span>
-                                <span>De : <span className="text-gray-300">{announcement.author}</span></span>
+                                <span>De : <span className="text-gray-600 dark:text-gray-300">{announcement.author}</span></span>
                              </div>
                           </div>
                        </div>
@@ -179,7 +171,7 @@ export default function StudentAnnouncementsPage() {
                  ))}
                  
                  {filteredAnnouncements.length === 0 && (
-                    <div className="bg-[#111111] border border-[#222222] rounded-2xl p-12 text-center text-gray-500">
+                    <div className="bg-[#111111] border border-[#222222] rounded-2xl p-12 text-center text-muted-foreground dark:text-gray-500">
                        <Megaphone className="w-12 h-12 mx-auto mb-4 opacity-20" />
                        <p>Aucune annonce pour le moment.</p>
                     </div>
@@ -194,11 +186,11 @@ export default function StudentAnnouncementsPage() {
               <div className="absolute -right-4 -bottom-4 opacity-10">
                  <Bell size={100} className="text-orange-500" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2 relative z-10">Notifications SMS</h3>
-              <p className="text-sm text-gray-400 mb-4 relative z-10">
+              <h3 className="text-lg font-bold text-foreground dark:text-white mb-2 relative z-10">Notifications SMS</h3>
+              <p className="text-sm text-muted-foreground dark:text-gray-400 mb-4 relative z-10">
                  Recevez les alertes urgentes (fermeture, absences profs) directement sur votre téléphone.
               </p>
-              <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/20 relative z-10">
+              <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-foreground dark:text-white shadow-lg shadow-orange-500/20 relative z-10">
                  Activer les alertes
               </Button>
            </div>

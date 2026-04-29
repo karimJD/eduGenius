@@ -1,0 +1,56 @@
+\chapter{Sprint 3 : Gestion des Microservices}
+
+\section{Introduction}
+Le Sprint 3 est dédié à l'implémentation des services transverses qui apportent de l'intelligence et des capacités de stockage à la plateforme. Bien que l'architecture soit monolithique, ces services sont conçus de manière modulaire, simulant une architecture de microservices.
+
+\section{Backlog du Sprint 3}
+\begin{itemize}
+    \item \textbf{US-07} : Intégration du service de stockage AWS S3.
+    \item \textbf{US-08} : Mise en place du service d'IA (Gemini/Ollama).
+    \item \textbf{US-09} : Développement du service de communication temps réel (Socket.io).
+\end{itemize}
+
+\section{Analyse}
+\subsection{Diagramme de cas d'utilisation}
+L'Enseignant upload des fichiers PDF qui sont stockés sur le cloud. Le système traite ces fichiers pour générer des services à valeur ajoutée (Résumés).
+
+\subsection{Description textuelle des cas d'utilisation}
+L'utilisateur envoie un fichier. Le service S3 gère l'upload et renvoie une URL. Le service IA récupère le contenu pour analyse. Le service Socket notifie les utilisateurs des nouveaux contenus disponibles.
+
+\section{Conception}
+\subsection{Diagrammes de séquence}
+Le diagramme de séquence montre l'orchestration entre le \texttt{CourseController}, le \texttt{S3Service} et le \texttt{AiService}.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Diagramme de Séquence - Flux de Services}
+    \caption{Interactions entre les services backend}
+\end{figure}
+
+\subsection{Diagramme de classes}
+Les classes \texttt{S3Utils}, \texttt{AiService} et \texttt{SocketHandler} encapsulent la logique de communication avec les APIs tierces.
+
+\subsection{Représentation graphique de la base de données}
+Mise à jour des schémas \texttt{Course} et \texttt{StudyMaterial} pour inclure les URLs S3 et les résultats des traitements IA.
+
+\section{Réalisation}
+\subsection{Interface d'Upload vers AWS S3}
+Une barre de progression indique l'état de l'upload vers le cloud Amazon.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Capture d'écran - File Upload}
+    \caption{Interface de dépôt de documents}
+\end{figure}
+
+\subsection{Module de Communication Temps Réel}
+Implémentation de Socket.io pour la messagerie instantanée au sein des classes.
+
+\section{Tests}
+\subsection{Tests unitaires}
+Validation des fonctions d'extraction de texte PDF.
+\subsection{Tests d'intégration}
+Vérification de la connectivité avec les buckets AWS S3 et l'API Gemini.
+\subsection{Tests fonctionnels}
+Test de réception des notifications en temps réel sur plusieurs clients simultanés.
+
+\section{Conclusion}
+Les services de base étant opérationnels, le sprint suivant se focalisera sur l'exposition de ces services via des endpoints REST et la modélisation fine des données.

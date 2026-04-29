@@ -1,0 +1,51 @@
+\chapter{Sprint 2 : Gestion des Projets, Membres et Sources de Données}
+
+\section{Introduction}
+Ce sprint se concentre sur l'organisation structurelle de la plateforme, incluant la gestion des classes (projets), des membres et la mise en place des données académiques de base.
+
+\section{Backlog du Sprint 2}
+\begin{itemize}
+    \item \textbf{US-04} : CRUD des Années Académiques et Départements.
+    \item \textbf{US-05} : Gestion des Classes et des Matières (Subjects).
+    \item \textbf{US-06} : Importation et gestion des membres (étudiants et enseignants).
+\end{itemize}
+
+\section{Analyse}
+\subsection{Diagramme de cas d'utilisation}
+L'Administrateur peut créer des structures académiques et assigner des enseignants à des classes. L'Enseignant peut consulter ses classes assignées.
+
+\subsection{Description textuelle des cas d'utilisation}
+L'administrateur définit une année académique actuelle, crée des départements, puis des classes au sein de ces départements. Il importe ensuite les étudiants via des fichiers CSV ou des formulaires.
+
+\section{Conception}
+\subsection{Diagrammes de séquence}
+Le diagramme de séquence pour la création d'une classe montre l'interaction entre le panel admin et le backend pour persister les relations entre départements et classes.
+
+\subsection{Diagramme de classes}
+Les classes \texttt{AcademicYear}, \texttt{Department}, \texttt{Class}, \texttt{Subject} et \texttt{User} sont liées par des relations de composition et d'association.
+
+\subsection{Représentation graphique de la base de données}
+Utilisation de références (\texttt{ObjectId}) pour lier les classes aux départements et les étudiants aux classes, assurant l'intégrité référentielle.
+
+\section{Réalisation}
+\subsection{Interface de Gestion des Classes}
+Un tableau de bord intuitif permet à l'admin de visualiser et de gérer les structures de l'université.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Capture d'écran - Admin Class Management}
+    \caption{Gestion des classes et départements}
+\end{figure}
+
+\subsection{Module d'Assignation des Enseignants}
+Interface permettant de lier un enseignant à une matière spécifique au sein d'une classe.
+
+\section{Tests}
+\subsection{Tests unitaires}
+Vérification des modèles Mongoose pour s'assurer que les champs requis sont présents.
+\subsection{Tests d'intégration}
+Test des routes CRUD pour les départements et les classes.
+\subsection{Tests fonctionnels}
+Validation de l'importation massive d'étudiants via un script de seeding ou une interface.
+
+\section{Conclusion}
+La structure académique étant en place, nous pouvons maintenant développer les services backend qui feront fonctionner la logique métier.

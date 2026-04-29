@@ -155,7 +155,8 @@ const getPendingExercises = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: pendingExercises.slice(0, 5)
+      data: pendingExercises.slice(0, 5),
+      totalCount: pendingExercises.length
     });
   } catch (error) {
     console.error('Error fetching pending exercises:', error);
@@ -168,3 +169,50 @@ module.exports = {
   getRecentActivity,
   getPendingExercises
 };
+
+const getTodaySchedule = async (req, res) => {
+  try {
+    const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
+    
+    // Get student's class
+    const User = require('../../models/User');
+    const userProfile = await User.findById(studentId).select('student.classId');
+    const classId = userProfile?.student?.classId;
+    
+    if (!classId) {
+      return res.status(200).json({ success: true, data: [] });
+    }
+    
+    const Schedule = require('../../models/Schedule');
+    const schedule = await Schedule.findOne({
+      targetType: 'class',
+      targetId: classId,
+      isPublished: true
+    }).populate('entries.subjectId', 'name color')
+      .populate('entries.teacherId', 'firstName lastName')
+      .lean();
+      
+    if (!schedule || !schedule.entries) {
+      return res.status(200).json({ success: true, data: [] });
+    }
+    
+    const today = new Date().getDay();
+    const todayEntries = schedule.entries
+      .filter(entry => entry.dayOfWeek === today)
+      .sort((a, b) => {
+        if (a.startTime < b.startTime) return -1;
+        if (a.startTime > b.startTime) return 1;
+        return 0;
+      });
+      
+    res.status(200).json({
+      success: true,
+      data: todayEntries
+    });
+  } catch (error) {
+    console.error('Error fetching today schedule:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports.getTodaySchedule = getTodaySchedule;

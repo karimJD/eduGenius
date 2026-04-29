@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { PageHeader } from '@/components/student/PageHeader';
 import api from '@/lib/axios';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -116,7 +117,7 @@ export default function StudentExercisePage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
         <Loader2 className="w-12 h-12 text-blue-500 animate-spin" />
-        <p className="text-gray-400 font-medium tracking-tight">Chargement de l'exercice...</p>
+        <p className="text-muted-foreground dark:text-gray-400 font-medium tracking-tight">Chargement de l'exercice...</p>
       </div>
     );
   }
@@ -127,8 +128,8 @@ export default function StudentExercisePage() {
         <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-4">
           <AlertCircle className="w-8 h-8 text-red-500" />
         </div>
-        <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tighter">Oups !</h2>
-        <p className="text-gray-400 max-w-md mb-6">{error}</p>
+        <h2 className="text-2xl font-black text-foreground dark:text-white mb-2 uppercase tracking-tighter">Oups !</h2>
+        <p className="text-muted-foreground dark:text-gray-400 max-w-md mb-6">{error}</p>
         <Button onClick={() => router.back()} variant="outline" className="rounded-full px-8">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Retour
@@ -144,54 +145,38 @@ export default function StudentExercisePage() {
 
   return (
     <div className="mx-auto space-y-8 pb-20">
-      {/* Navigation */}
-      <button 
-        onClick={() => router.back()}
-        className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors group"
-      >
-        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        <span className="text-sm font-bold uppercase tracking-widest">Retour au cours</span>
-      </button>
-
-      {/* Header Card */}
-      <div className="bg-[#111111] border border-[#222222] rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-[100px] -mr-32 -mt-32 rounded-full" />
-        
-        <div className="relative z-10 space-y-6">
-          <div className="flex flex-wrap items-center gap-3">
-             <span className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold tracking-widest uppercase rounded-full">
-              {subject.code}
-            </span>
-            <span className="px-3 py-1 bg-white/5 border border-white/10 text-gray-400 text-[10px] font-bold tracking-widest uppercase rounded-full flex items-center gap-2">
-              <Calendar className="w-3 h-3" />
-              {exercise.dueDate ? `À rendre avant le ${format(new Date(exercise.dueDate), 'd MMMM yyyy', { locale: fr })}` : 'Pas de date limite'}
-            </span>
-            {submission && (
-              <span className="px-3 py-1 bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] font-bold tracking-widest uppercase rounded-full flex items-center gap-2">
-                <CheckCircle2 className="w-3 h-3" />
-                Rendu envoyé
+      <PageHeader
+        title={exercise.title}
+        description={
+          <div className="space-y-4 pt-2">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3 py-1 bg-white/5 border border-white/10 text-muted-foreground dark:text-gray-400 text-[10px] font-bold tracking-widest uppercase rounded-full flex items-center gap-2">
+                <Calendar className="w-3 h-3" />
+                {exercise.dueDate ? `À rendre avant le ${format(new Date(exercise.dueDate), 'd MMMM yyyy', { locale: fr })}` : 'Pas de date limite'}
               </span>
-            )}
-          </div>
-
-          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-            {exercise.title}
-          </h1>
-
-          <div className="prose prose-invert max-w-none">
-            <p className="text-gray-400 text-lg leading-relaxed font-medium italic border-l-4 border-blue-500/30 pl-6">
+              {submission && (
+                <span className="px-3 py-1 bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] font-bold tracking-widest uppercase rounded-full flex items-center gap-2">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Rendu envoyé
+                </span>
+              )}
+            </div>
+            <p className="text-muted-foreground dark:text-gray-400 text-lg leading-relaxed font-medium italic border-l-4 border-blue-500/30 pl-6">
               {exercise.description}
             </p>
           </div>
-        </div>
-      </div>
+        }
+        badgeText={subject.code}
+        badgeClassName="bg-blue-500/10 border-blue-500/20 text-blue-400"
+        onBack={() => router.back()}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Left Column: Submission Status */}
         <div className="md:col-span-2 space-y-8">
           {/* File Upload Section */}
-          <div className="bg-[#0a0a0a] border border-[#222222] rounded-[2rem] p-8 space-y-6">
-            <h3 className="text-xl font-bold text-white flex items-center gap-3 uppercase tracking-tight">
+          <div className="bg-muted/20 dark:bg-[#0a0a0a] border border-border dark:border-[#222222] rounded-[2rem] p-8 space-y-6">
+            <h3 className="text-xl font-bold text-foreground dark:text-white flex items-center gap-3 uppercase tracking-tight">
               <Upload className="w-5 h-5 text-blue-500" />
               Déposer mon travail
             </h3>
@@ -205,12 +190,12 @@ export default function StudentExercisePage() {
               >
                 {!file ? (
                   <>
-                    <div className="w-16 h-16 bg-white/5 backdrop-blur-xl rounded-2xl flex items-center justify-center text-gray-400 border border-white/10 shadow-xl group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 bg-white/5 backdrop-blur-xl rounded-2xl flex items-center justify-center text-muted-foreground dark:text-gray-400 border border-white/10 shadow-xl group-hover:scale-110 transition-transform">
                       <FileIcon className="w-8 h-8" />
                     </div>
                     <div className="space-y-1">
-                      <p className="text-white font-bold">Glissez-déposez votre fichier ici</p>
-                      <p className="text-xs text-gray-500 uppercase tracking-widest">ou cliquez pour parcourir</p>
+                      <p className="text-foreground dark:text-white font-bold">Glissez-déposez votre fichier ici</p>
+                      <p className="text-xs text-muted-foreground dark:text-gray-500 uppercase tracking-widest">ou cliquez pour parcourir</p>
                     </div>
                     <input 
                       type="file" 
@@ -221,15 +206,15 @@ export default function StudentExercisePage() {
                   </>
                 ) : (
                   <div className="w-full space-y-6">
-                    <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl border border-white/5">
+                    <div className="flex items-center gap-4 bg-background dark:bg-black/40 p-4 rounded-2xl border border-white/5">
                       <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400">
                         <FileIcon className="w-6 h-6" />
                       </div>
                       <div className="flex-1 text-left min-w-0">
-                        <p className="text-white font-bold truncate">{file.name}</p>
-                        <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                        <p className="text-foreground dark:text-white font-bold truncate">{file.name}</p>
+                        <p className="text-[10px] text-muted-foreground dark:text-gray-500 font-black uppercase tracking-widest">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                       </div>
-                      <button onClick={() => setFile(null)} className="p-2 hover:bg-white/5 rounded-full text-gray-400 hover:text-red-400 transition-colors">
+                      <button onClick={() => setFile(null)} className="p-2 hover:bg-white/5 rounded-full text-muted-foreground dark:text-gray-400 hover:text-red-400 transition-colors">
                         <X className="w-5 h-5" />
                       </button>
                     </div>
@@ -237,7 +222,7 @@ export default function StudentExercisePage() {
                     <Button 
                       onClick={handleUpload}
                       disabled={uploading}
-                      className="w-full h-14 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-blue-900/20 disabled:opacity-50"
+                      className="w-full h-14 bg-blue-600 hover:bg-blue-500 text-foreground dark:text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-blue-900/20 disabled:opacity-50"
                     >
                       {uploading ? (
                         <>
@@ -257,15 +242,15 @@ export default function StudentExercisePage() {
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <div className="space-y-2">
-                  <h4 className="text-2xl font-black text-white uppercase tracking-tighter">Travail remis !</h4>
-                  <p className="text-gray-400 text-sm font-medium">Votre fichier a été déposé avec succès le {format(new Date(submission.submittedAt), 'd MMMM HH:mm', { locale: fr })}.</p>
+                  <h4 className="text-2xl font-black text-foreground dark:text-white uppercase tracking-tighter">Travail remis !</h4>
+                  <p className="text-muted-foreground dark:text-gray-400 text-sm font-medium">Votre fichier a été déposé avec succès le {format(new Date(submission.submittedAt), 'd MMMM HH:mm', { locale: fr })}.</p>
                 </div>
                 
                 <div className="flex items-center gap-4 w-full">
-                  <div className="flex-1 bg-black/40 border border-white/5 p-4 rounded-2xl flex items-center gap-3 text-left min-w-0">
-                    <FileIcon className="w-5 h-5 text-gray-400" />
+                  <div className="flex-1 bg-background dark:bg-black/40 border border-white/5 p-4 rounded-2xl flex items-center gap-3 text-left min-w-0">
+                    <FileIcon className="w-5 h-5 text-muted-foreground dark:text-gray-400" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-white text-xs font-bold truncate">{submission.fileName}</p>
+                      <p className="text-foreground dark:text-white text-xs font-bold truncate">{submission.fileName}</p>
                     </div>
                     <a 
                       href={submission.fileUrl} 
@@ -284,7 +269,7 @@ export default function StudentExercisePage() {
                         setData({ ...data, submission: null });
                       }
                     }}
-                    className="h-full px-6 border-[#222222] text-gray-400 hover:text-white hover:bg-[#1a1a1a] rounded-2xl group"
+                    className="h-full px-6 border-[#222222] text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white hover:bg-[#1a1a1a] rounded-2xl group"
                   >
                     <Trash2 className="w-5 h-5 group-hover:text-red-400" />
                   </Button>
@@ -304,28 +289,28 @@ export default function StudentExercisePage() {
         {/* Right Column: Feedback & Metadata */}
         <div className="space-y-8">
           {/* Grade Card */}
-          <div className="bg-[#111111] border border-[#222222] rounded-[2rem] p-8 text-center space-y-4 shadow-xl">
-             <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em]">Note Finale</p>
-             <div className="text-6xl font-black text-white px-6 py-4 bg-white/5 rounded-3xl inline-block min-w-[120px]">
+          <div className="bg-card dark:bg-[#111111] border border-border dark:border-[#222222] rounded-[2rem] p-8 text-center space-y-4 shadow-xl">
+             <p className="text-[10px] text-muted-foreground dark:text-gray-500 font-black uppercase tracking-[0.2em]">Note Finale</p>
+             <div className="text-6xl font-black text-foreground dark:text-white px-6 py-4 bg-white/5 rounded-3xl inline-block min-w-[120px]">
                {submission?.grade !== null && submission?.grade !== undefined ? (
                  <span className="text-blue-400">{submission.grade}<span className="text-2xl text-gray-600">/20</span></span>
                ) : (
                  <span className="text-gray-700">--</span>
                )}
              </div>
-             <p className="text-xs text-gray-500 font-medium">
+             <p className="text-xs text-muted-foreground dark:text-gray-500 font-medium">
                {submission?.grade !== null ? 'Évalué par l\'enseignant' : 'En attente d\'évaluation'}
              </p>
           </div>
 
           {/* Feedback Card */}
-          <div className="bg-[#0a0a0a] border border-[#222222] rounded-[2rem] p-8 space-y-4">
-            <h4 className="text-sm font-black text-gray-400 flex items-center gap-2 uppercase tracking-widest">
+          <div className="bg-muted/20 dark:bg-[#0a0a0a] border border-border dark:border-[#222222] rounded-[2rem] p-8 space-y-4">
+            <h4 className="text-sm font-black text-muted-foreground dark:text-gray-400 flex items-center gap-2 uppercase tracking-widest">
               <MessageSquare className="w-4 h-4" />
               Commentaires
             </h4>
             {submission?.feedback ? (
-              <p className="text-white text-sm leading-relaxed font-medium bg-[#111111] p-4 rounded-2xl border border-white/5 italic">
+              <p className="text-foreground dark:text-white text-sm leading-relaxed font-medium bg-card dark:bg-[#111111] p-4 rounded-2xl border border-border dark:border-white/5 italic">
                 "{submission.feedback}"
               </p>
             ) : (

@@ -2,6 +2,7 @@ const { Server } = require('socket.io');
 const { setupVideoHandlers } = require('./videoHandlers');
 const { setupAttendanceHandlers } = require('./attendanceHandlers');
 const { setupChatHandlers } = require('./chatHandlers');
+const { setupAIToolsHandlers } = require('./aiToolsHandlers');
 
 /**
  * Initialize Socket.IO server
@@ -22,10 +23,10 @@ const initializeSocketIO = (httpServer) => {
   setupVideoHandlers(io);
   setupAttendanceHandlers(io);
   setupChatHandlers(io);
+  setupAIToolsHandlers(io);
 
   console.log('Socket.IO initialized');
   return io;
 };
 
 module.exports = { initializeSocketIO };
-

@@ -1,0 +1,56 @@
+\chapter{Sprint 4 : Gestion des Endpoints et des Modèles}
+
+\section{Introduction}
+Ce sprint se focalise sur le développement de l'API RESTful et la définition précise des modèles de données Mongoose pour assurer une persistence cohérente et performante.
+
+\section{Backlog du Sprint 4}
+\begin{itemize}
+    \item \textbf{US-10} : Développement des contrôleurs pour les Cours et les Quiz.
+    \item \textbf{US-11} : Définition des schémas de données complexes (Attendance, Submissions).
+    \item \textbf{US-12} : Mise en place des routes API sécurisées.
+\end{itemize}
+
+\section{Analyse}
+\subsection{Diagramme de cas d'utilisation}
+L'Enseignant crée des examens et des quiz. L'Étudiant soumet ses travaux. L'Administrateur génère des PV de notes.
+
+\subsection{Description textuelle des cas d'utilisation}
+L'enseignant définit les paramètres d'un quiz (temps, questions). L'étudiant répond aux questions. Le système enregistre les réponses dans la collection \texttt{StudentQuizAttempt} et calcule le score automatiquement.
+
+\section{Conception}
+\subsection{Diagrammes de séquence}
+Le diagramme de séquence pour la soumission d'un examen illustre le flux depuis le client jusqu'à la validation et l'enregistrement des notes en base de données.
+
+\subsection{Diagramme de classes}
+Détail des modèles \texttt{Quiz}, \texttt{Question}, \texttt{Exam}, \texttt{Submission} et \texttt{Grade}.
+
+\subsection{Représentation graphique de la base de données}
+Schéma complet de la base de données MongoDB illustrant les relations entre les collections académiques et les collections d'évaluation.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Schéma ER / MongoDB}
+    \caption{Architecture des données d'eduGenius}
+\end{figure}
+
+\section{Réalisation}
+\subsection{Interface de Création de Quiz}
+Formulaire dynamique permettant d'ajouter des questions, des options et de définir la bonne réponse.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Capture d'écran - Quiz Creator}
+    \caption{Interface de création d'évaluations}
+\end{figure}
+
+\subsection{Implémentation des Contrôleurs REST}
+Développement de la logique métier dans \texttt{QuizController.js} et \texttt{ExamController.js}.
+
+\section{Tests}
+\subsection{Tests unitaires}
+Validation de la logique de calcul des scores des quiz.
+\subsection{Tests d'intégration}
+Test des endpoints de soumission de travaux avec gestion des fichiers joints.
+\subsection{Tests fonctionnels}
+Vérification de la génération correcte des moyennes dans le module PV.
+
+\section{Conclusion}
+L'API étant complète et robuste, le dernier sprint sera consacré à l'interface utilisateur finale et à l'intégration poussée de l'IA.

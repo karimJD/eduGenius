@@ -19,16 +19,16 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-background dark:bg-black flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-background dark:bg-black text-foreground dark:text-white flex selection:bg-indigo-500/30">
       <StudentSidebar />
-      <main className="flex-1 lg:ml-64 p-4 md:p-8 overflow-y-auto h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-[#111111]">
+      <main className="flex-1 lg:ml-64 p-4 md:p-8 overflow-y-auto h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-black dark:via-[#0a0a0a] dark:to-[#111111]">
         <div className="mx-auto">
           {children}
         </div>

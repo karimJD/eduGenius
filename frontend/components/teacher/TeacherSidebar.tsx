@@ -48,8 +48,8 @@ export function TeacherSidebar() {
           <GraduationCap className="w-5 h-5 text-primary-foreground" />
         </div>
         <div>
-          <p className="font-black text-base text-foreground tracking-tight leading-tight">EduGenius</p>
-          <p className="text-[9px] text-primary font-black uppercase tracking-[0.2em]">Teacher Hub</p>
+          <p className="font-bold text-sm text-foreground">EduGenius</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Teacher Panel</p>
         </div>
       </div>
 

@@ -1,16 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const { authenticate: auth } = require('../../middleware/auth');
-const { 
-  generateSummary, getSummaries, 
-  generateFlashcards, getFlashcards, 
-  generatePracticeQuiz, submitPracticeQuiz, getPracticeHistory, 
+const {
+  generateSummary,
+  getSummaries,
+  deleteSummary,
+  generateFlashcards,
+  getFlashcards,
+  generatePracticeQuiz,
+  submitPracticeQuiz,
+  getPracticeHistory,
   getPracticeQuizById,
-  getRecommendations 
+  getRecommendations,
+  explainText,
 } = require('../../controllers/student/AiToolsController');
 
 router.post('/generate-summary', auth, generateSummary);
 router.get('/summaries', auth, getSummaries);
+router.delete('/summaries/:id', auth, deleteSummary);
 
 router.post('/generate-flashcards', auth, generateFlashcards);
 router.get('/flashcards/:classId', auth, getFlashcards);
@@ -21,5 +28,7 @@ router.post('/practice-quiz/:id/submit', auth, submitPracticeQuiz);
 router.get('/practice-quizzes/history', auth, getPracticeHistory);
 
 router.get('/recommendations/:classId', auth, getRecommendations);
+
+router.post('/explain-text', auth, explainText);
 
 module.exports = router;

@@ -74,8 +74,8 @@ export default function StudentVideoSessionsPage() {
             <MonitorPlay className="w-4 h-4" />
             <span>Visioconférences</span>
           </motion.div>
-          <h1 className="text-4xl font-bold text-white tracking-tight">Cours en Direct</h1>
-          <p className="text-gray-400 max-w-xl">
+          <h1 className="text-4xl font-bold text-foreground dark:text-white tracking-tight">Cours en Direct</h1>
+          <p className="text-muted-foreground dark:text-gray-400 max-w-xl">
             Rejoignez vos cours en direct et revoyez les enregistrements des sessions passées.
           </p>
         </div>
@@ -89,15 +89,15 @@ export default function StudentVideoSessionsPage() {
             className={cn(
               "px-6 py-2.5 text-sm font-medium rounded-xl transition-all flex items-center gap-2",
               activeTab === 'upcoming'
-                ? "bg-[#222222] text-white shadow border border-[#333333]"
-                : "text-gray-500 hover:text-gray-300 hover:bg-[#151515]"
+                ? "bg-[#222222] text-foreground dark:text-white shadow border border-[#333333]"
+                : "text-muted-foreground dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-[#151515]"
             )}
           >
             <Video className="w-4 h-4" />
             Sessions à venir
             <span className={cn(
               "ml-2 px-2 py-0.5 rounded-full text-xs",
-              activeTab === 'upcoming' ? "bg-indigo-500 text-white" : "bg-[#222222] text-gray-400"
+              activeTab === 'upcoming' ? "bg-indigo-500 text-foreground dark:text-white" : "bg-[#222222] text-muted-foreground dark:text-gray-400"
             )}>
               {upcoming.length}
             </span>
@@ -107,15 +107,15 @@ export default function StudentVideoSessionsPage() {
             className={cn(
               "px-6 py-2.5 text-sm font-medium rounded-xl transition-all flex items-center gap-2",
               activeTab === 'recordings'
-                ? "bg-[#222222] text-white shadow border border-[#333333]"
-                : "text-gray-500 hover:text-gray-300 hover:bg-[#151515]"
+                ? "bg-[#222222] text-foreground dark:text-white shadow border border-[#333333]"
+                : "text-muted-foreground dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-[#151515]"
             )}
           >
             <PlayCircle className="w-4 h-4" />
             Enregistrements
             <span className={cn(
               "ml-2 px-2 py-0.5 rounded-full text-xs",
-              activeTab === 'recordings' ? "bg-indigo-500 text-white" : "bg-[#222222] text-gray-400"
+              activeTab === 'recordings' ? "bg-indigo-500 text-foreground dark:text-white" : "bg-[#222222] text-muted-foreground dark:text-gray-400"
             )}>
               {recordings.length}
             </span>
@@ -133,7 +133,7 @@ export default function StudentVideoSessionsPage() {
                 className="space-y-4"
               >
                 {upcoming.length === 0 ? (
-                  <div className="text-center p-12 text-gray-500 border border-dashed border-[#333333] rounded-2xl">
+                  <div className="text-center p-12 text-muted-foreground dark:text-gray-500 border border-dashed border-[#333333] rounded-2xl">
                     <Video className="w-12 h-12 mx-auto mb-4 opacity-20" />
                     <p>Aucune session vidéo prévue pour le moment.</p>
                   </div>
@@ -146,7 +146,7 @@ export default function StudentVideoSessionsPage() {
                         <div key={session._id} className="bg-[#1a1a1a] border border-[#2b2b2b] rounded-2xl p-6 flex flex-col justify-between group hover:border-indigo-500/50 transition-all">
                           <div>
                             <div className="flex justify-between items-start mb-4">
-                              <span className="text-xs font-bold uppercase tracking-wider text-gray-400 bg-[#222222] px-2 py-1 rounded">
+                              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground dark:text-gray-400 bg-[#222222] px-2 py-1 rounded">
                                 {session.classId?.name || 'Classe'}
                               </span>
                               <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded flex items-center gap-1.5 border ${statusCfg.className}`}>
@@ -155,9 +155,9 @@ export default function StudentVideoSessionsPage() {
                               </span>
                             </div>
 
-                            <h3 className="text-xl font-bold text-white mb-2 leading-tight">{session.title}</h3>
+                            <h3 className="text-xl font-bold text-foreground dark:text-white mb-2 leading-tight">{session.title}</h3>
                             {session.teacherId && (
-                              <p className="text-sm text-gray-400 mb-4 flex items-center gap-2">
+                              <p className="text-sm text-muted-foreground dark:text-gray-400 mb-4 flex items-center gap-2">
                                 <Users className="w-4 h-4" />
                                 {session.teacherId.firstName} {session.teacherId.lastName}
                               </p>
@@ -166,11 +166,11 @@ export default function StudentVideoSessionsPage() {
                             <div className="space-y-2 mb-6">
                               {session.scheduledStart && (
                                 <>
-                                  <div className="flex items-center gap-3 text-sm text-gray-300 bg-[#222222] p-3 rounded-xl border border-[#333333]">
+                                  <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300 bg-[#222222] p-3 rounded-xl border border-[#333333]">
                                     <Calendar className="w-4 h-4 text-indigo-400" />
                                     {new Date(session.scheduledStart).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}
                                   </div>
-                                  <div className="flex items-center gap-3 text-sm text-gray-300 bg-[#222222] p-3 rounded-xl border border-[#333333]">
+                                  <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300 bg-[#222222] p-3 rounded-xl border border-[#333333]">
                                     <Clock className="w-4 h-4 text-indigo-400" />
                                     {new Date(session.scheduledStart).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                                   </div>
@@ -185,8 +185,8 @@ export default function StudentVideoSessionsPage() {
                             className={cn(
                               "w-full font-bold h-12 rounded-xl transition-all shadow-lg",
                               canJoin
-                                ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20"
-                                : "bg-[#222222] text-gray-500 border border-[#333333] cursor-not-allowed"
+                                ? "bg-indigo-600 hover:bg-indigo-500 text-foreground dark:text-white shadow-indigo-600/20"
+                                : "bg-[#222222] text-muted-foreground dark:text-gray-500 border border-[#333333] cursor-not-allowed"
                             )}
                           >
                             <Video className="w-4 h-4 mr-2" />
@@ -207,7 +207,7 @@ export default function StudentVideoSessionsPage() {
                 className="space-y-4"
               >
                 {recordings.length === 0 ? (
-                  <div className="text-center p-12 text-gray-500 border border-dashed border-[#333333] rounded-2xl">
+                  <div className="text-center p-12 text-muted-foreground dark:text-gray-500 border border-dashed border-[#333333] rounded-2xl">
                     <PlayCircle className="w-12 h-12 mx-auto mb-4 opacity-20" />
                     <p>Aucun enregistrement disponible.</p>
                     <p className="text-xs mt-2 text-gray-600">Les enregistrements apparaissent ici après la fin d'une session.</p>
@@ -219,25 +219,25 @@ export default function StudentVideoSessionsPage() {
                         <div className="aspect-video relative bg-gradient-to-br from-[#222222] to-[#111111] flex items-center justify-center border-b border-[#2b2b2b]">
                           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                             <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex items-center justify-center shadow-2xl">
-                              <PlayCircle className="w-8 h-8 text-white ml-1" />
+                              <PlayCircle className="w-8 h-8 text-foreground dark:text-white ml-1" />
                             </div>
                           </div>
                           <MonitorPlay className="w-12 h-12 text-[#333333]" />
                           {rec.recording?.recordingDuration && (
-                            <div className="absolute bottom-3 right-3 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded-md">
+                            <div className="absolute bottom-3 right-3 bg-background dark:bg-black/80 text-foreground dark:text-white text-xs font-bold px-2 py-1 rounded-md">
                               {Math.round(rec.recording.recordingDuration / 60)}m
                             </div>
                           )}
                         </div>
                         <div className="p-5">
                           <div className="flex justify-between items-start mb-2">
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 bg-[#222222] px-2 py-0.5 rounded">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground dark:text-gray-400 bg-[#222222] px-2 py-0.5 rounded">
                               {rec.classId?.name || 'Classe'}
                             </span>
                           </div>
-                          <h3 className="font-bold text-white mb-1 group-hover:text-teal-400 transition-colors line-clamp-2">{rec.title}</h3>
+                          <h3 className="font-bold text-foreground dark:text-white mb-1 group-hover:text-teal-400 transition-colors line-clamp-2">{rec.title}</h3>
                           {rec.teacherId && (
-                            <div className="flex items-center justify-between text-xs text-gray-500 mt-4">
+                            <div className="flex items-center justify-between text-xs text-muted-foreground dark:text-gray-500 mt-4">
                               <span>{rec.teacherId.firstName} {rec.teacherId.lastName}</span>
                               <span>{new Date(rec.scheduledStart).toLocaleDateString('fr-FR')}</span>
                             </div>

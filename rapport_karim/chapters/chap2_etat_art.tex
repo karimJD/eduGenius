@@ -1,0 +1,47 @@
+\chapter{État de l'art}
+
+\section{Introduction}
+La réalisation d'une plateforme de l'envergure d'eduGenius nécessite une synergie parfaite entre des technologies de pointe. Ce chapitre explore les fondements théoriques et les outils technologiques qui constituent le socle de notre solution. Nous détaillons ici chaque composant de notre pile technologique, en justifiant les choix effectués pour répondre aux exigences de performance, de sécurité et d'ergonomie.
+
+\section{Développement Frontend : L'Expérience Utilisateur}
+\subsection{Next.js 16}
+\textbf{Définition} : Next.js est un framework React open-source développé par Vercel qui permet de créer des applications web ultra-rapides grâce au Server-Side Rendering (SSR) et à la génération de sites statiques (SSG).
+\newline \textbf{Justification} : Pour eduGenius, Next.js a été choisi pour son système de \textit{App Router} et sa gestion native de l'optimisation des images et des polices. Le SSR est crucial pour charger les tableaux de bord complexes instantanément, améliorant ainsi l'engagement des étudiants.
+
+\subsection{Tailwind CSS}
+\textbf{Définition} : Un framework CSS "utility-first" qui permet de styliser les composants directement dans le HTML via des classes prédéfinies.
+\newline \textbf{Justification} : Ce choix garantit une cohérence visuelle totale et une vitesse de développement accrue. Tailwind permet de créer une interface "Responsive" s'adaptant parfaitement aux smartphones des étudiants et aux écrans larges des enseignants.
+
+\subsection{Shadcn/UI}
+\textbf{Définition} : Une collection de composants UI réutilisables, accessibles et hautement personnalisables, bâtis sur Radix UI et Tailwind CSS.
+\newline \textbf{Justification} : Shadcn/UI nous a permis de livrer une interface de niveau professionnel (similaire à Microsoft Teams) en un temps record, tout en gardant un contrôle total sur le code source de chaque composant.
+
+\section{Développement Backend et Persistence}
+\subsection{Node.js \& Express}
+\textbf{Définition} : Node.js est un environnement d'exécution JavaScript côté serveur, tandis qu'Express est un framework minimaliste pour Node.js facilitant la création d'APIs REST.
+\newline \textbf{Justification} : Cette pile permet d'utiliser le même langage (JavaScript/TypeScript) du frontend au backend, facilitant la maintenance. Sa nature non-bloquante est idéale pour gérer les nombreuses requêtes asynchrones liées à l'IA et aux notifications.
+
+\subsection{MongoDB}
+\textbf{Définition} : Une base de données NoSQL orientée documents qui stocke les données sous format JSON (BSON).
+\newline \textbf{Justification} : eduGenius manipule des objets "Cours" et "Quiz" avec des structures de chapitres hautement imbriquées. La flexibilité de MongoDB permet de stocker ces documents complexes sans les contraintes de schémas rigides du SQL, optimisant ainsi les temps de réponse.
+
+\section{Services Cloud et Intelligence Artificielle}
+\subsection{Amazon S3 (Simple Storage Service)}
+\textbf{Définition} : Un service de stockage d'objets offrant une scalabilité, une disponibilité des données et une sécurité de premier plan.
+\newline \textbf{Justification} : Pour stocker les supports de cours PDF et les enregistrements vidéo, S3 est indispensable. Il déleste notre serveur principal de la charge de stockage et garantit que les fichiers sont servis via un CDN sécurisé.
+
+\subsection{Ollama \& Gemma 3:4b}
+\textbf{Définition} : Ollama est un orchestrateur de modèles de langage (LLM) locaux. Gemma 3:4b est un modèle de langage léger développé par Google pour l'exécution locale.
+\newline \textbf{Justification} : Ce choix est le cœur de notre proposition de valeur. En exécutant Gemma localement sur les serveurs de BES2I, nous garantissons la \textbf{confidentialité totale} des données académiques et éliminons les coûts récurrents liés aux APIs Cloud.
+
+\section{Communication et Temps Réel}
+\subsection{Socket.io}
+\textbf{Définition} : Une bibliothèque permettant une communication bidirectionnelle, en temps réel et basée sur des événements entre les navigateurs et le serveur.
+\newline \textbf{Justification} : Socket.io est utilisé pour le chat de classe et les notifications instantanées. Il assure que les étudiants reçoivent les messages de leurs professeurs en moins de 100ms.
+
+\subsection{Daily.co}
+\textbf{Définition} : Une API de visioconférence robuste permettant d'intégrer des appels audio et vidéo directement dans les applications web.
+\newline \textbf{Justification} : Plutôt que de développer un serveur WebRTC complexe à partir de zéro, nous avons choisi Daily.co pour sa fiabilité et ses fonctionnalités avancées (partage d'écran, enregistrement cloud) qui sont essentielles pour simuler une salle de classe virtuelle.
+
+\section{Conclusion}
+La convergence de ces technologies (Pile MERN, IA locale et WebRTC) fait d'eduGenius une plateforme unique sur le marché tunisien. Forts de ces choix technologiques, nous passons au chapitre suivant pour l'analyse détaillée des besoins.

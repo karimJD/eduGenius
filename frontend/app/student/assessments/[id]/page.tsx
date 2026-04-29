@@ -98,7 +98,7 @@ export default function StudentTakeAssessmentPage() {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-black">
+      <div className="flex h-screen items-center justify-center bg-background dark:bg-black">
         <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -106,10 +106,10 @@ export default function StudentTakeAssessmentPage() {
 
   if (!assessment) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-black text-center space-y-4">
+      <div className="flex flex-col items-center justify-center h-screen bg-background dark:bg-black text-center space-y-4">
         <AlertTriangle className="w-16 h-16 text-yellow-500" />
-        <h2 className="text-2xl font-bold text-white">Évaluation introuvable</h2>
-        <Button onClick={() => router.push('/student/assessments')} variant="outline" className="border-[#333333] text-white">
+        <h2 className="text-2xl font-bold text-foreground dark:text-white">Évaluation introuvable</h2>
+        <Button onClick={() => router.push('/student/assessments')} variant="outline" className="border-[#333333] text-foreground dark:text-white">
           Retour
         </Button>
       </div>
@@ -126,8 +126,8 @@ export default function StudentTakeAssessmentPage() {
       <div className="h-16 border-b border-[#222222] bg-[#111111] flex flex-col justify-center px-6 relative shrink-0">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-white">{assessment.title}</h1>
-            <p className="text-xs text-gray-400">Question {currentQuestionIndex + 1} sur {assessment.questions.length}</p>
+            <h1 className="text-lg font-bold text-foreground dark:text-white">{assessment.title}</h1>
+            <p className="text-xs text-muted-foreground dark:text-gray-400">Question {currentQuestionIndex + 1} sur {assessment.questions.length}</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-sm font-semibold text-orange-400 bg-orange-500/10 px-3 py-1.5 rounded-lg border border-orange-500/20">
@@ -136,7 +136,7 @@ export default function StudentTakeAssessmentPage() {
             </div>
             <Button 
                onClick={() => setShowConfirm(true)}
-               className="bg-orange-600 hover:bg-orange-500 text-white font-medium shadow-lg shadow-orange-500/20"
+               className="bg-orange-600 hover:bg-orange-500 text-foreground dark:text-white font-medium shadow-lg shadow-orange-500/20"
             >
               Terminer & Soumettre
             </Button>
@@ -163,10 +163,10 @@ export default function StudentTakeAssessmentPage() {
                   <span className="text-orange-400 font-bold tracking-widest text-xs uppercase px-2.5 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full">
                     {currentQuestion.type === 'mcq' ? 'QCM' : currentQuestion.type === 'true-false' ? 'Vrai ou Faux' : 'Question Courte'}
                   </span>
-                  <span className="text-gray-500 text-sm font-medium">{currentQuestion.points || 1} Point(s)</span>
+                  <span className="text-muted-foreground dark:text-gray-500 text-sm font-medium">{currentQuestion.points || 1} Point(s)</span>
                 </div>
 
-                <h2 className="text-2xl lg:text-3xl font-bold text-white leading-relaxed">
+                <h2 className="text-2xl lg:text-3xl font-bold text-foreground dark:text-white leading-relaxed">
                   {currentQuestion.question}
                 </h2>
 
@@ -181,8 +181,8 @@ export default function StudentTakeAssessmentPage() {
                         className={cn(
                           "w-full p-5 flex items-center gap-4 border rounded-2xl text-left transition-all",
                           isSelected 
-                            ? "bg-orange-500/10 border-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.15)]" 
-                            : "bg-[#111111] border-[#333333] hover:border-gray-500 text-gray-300 hover:bg-[#1a1a1a]"
+                            ? "bg-orange-500/10 border-orange-500 text-foreground dark:text-white shadow-[0_0_15px_rgba(249,115,22,0.15)]" 
+                            : "bg-[#111111] border-[#333333] hover:border-gray-500 text-gray-600 dark:text-gray-300 hover:bg-[#1a1a1a]"
                         )}
                       >
                         <div className={cn(
@@ -201,7 +201,7 @@ export default function StudentTakeAssessmentPage() {
                       value={answers[currentQuestion._id] || ''}
                       onChange={(e) => handleAnswerSelect(currentQuestion._id, e.target.value)}
                       placeholder="Saisissez votre réponse ici..."
-                      className="w-full bg-[#111111] border border-[#333333] rounded-2xl p-5 text-white placeholder:text-gray-600 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 min-h-[200px] text-lg resize-none"
+                      className="w-full bg-[#111111] border border-[#333333] rounded-2xl p-5 text-foreground dark:text-white placeholder:text-gray-600 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 min-h-[200px] text-lg resize-none"
                     />
                   )}
                 </div>
@@ -213,8 +213,8 @@ export default function StudentTakeAssessmentPage() {
         {/* Sidebar Navigation */}
         <div className="hidden lg:flex flex-col w-80 bg-[#111111] border-l border-[#222222]">
           <div className="p-6 border-b border-[#222222]">
-            <h3 className="text-lg font-bold text-white mb-2">Navigation</h3>
-            <p className="text-sm text-gray-500 flex items-center justify-between">
+            <h3 className="text-lg font-bold text-foreground dark:text-white mb-2">Navigation</h3>
+            <p className="text-sm text-muted-foreground dark:text-gray-500 flex items-center justify-between">
               <span>Répondues: {answeredCount}</span>
               <span>Total: {assessment.questions.length}</span>
             </p>
@@ -230,9 +230,9 @@ export default function StudentTakeAssessmentPage() {
                      onClick={() => setCurrentQuestionIndex(i)}
                      className={cn(
                        "aspect-square rounded-xl font-bold flex items-center justify-center transition-all",
-                       isCurrent ? "bg-orange-500 text-white shadow-lg ring-2 ring-orange-500 ring-offset-2 ring-offset-[#111111]" :
-                       isAnswered ? "bg-[#222222] text-gray-300 border border-[#444444]" :
-                       "bg-transparent border border-[#333333] text-gray-600 hover:border-gray-500 hover:text-gray-400"
+                       isCurrent ? "bg-orange-500 text-foreground dark:text-white shadow-lg ring-2 ring-orange-500 ring-offset-2 ring-offset-[#111111]" :
+                       isAnswered ? "bg-[#222222] text-gray-600 dark:text-gray-300 border border-[#444444]" :
+                       "bg-transparent border border-[#333333] text-gray-600 hover:border-gray-500 hover:text-muted-foreground dark:hover:text-gray-400"
                      )}
                    >
                      {i + 1}
@@ -250,12 +250,12 @@ export default function StudentTakeAssessmentPage() {
             variant="outline" 
             onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
             disabled={currentQuestionIndex === 0}
-            className="border-[#333333] text-white hover:bg-[#222222] gap-2 lg:px-8 h-12 rounded-xl"
+            className="border-[#333333] text-foreground dark:text-white hover:bg-[#222222] gap-2 lg:px-8 h-12 rounded-xl"
          >
             <ChevronLeft className="w-4 h-4" /> Précédent
          </Button>
 
-         <div className="lg:hidden text-sm font-bold text-gray-400">
+         <div className="lg:hidden text-sm font-bold text-muted-foreground dark:text-gray-400">
            {currentQuestionIndex + 1} / {assessment.questions.length}
          </div>
 
@@ -270,7 +270,7 @@ export default function StudentTakeAssessmentPage() {
             className={cn(
               "gap-2 lg:px-8 h-12 rounded-xl font-bold transition-all",
               currentQuestionIndex === assessment.questions.length - 1 
-                ? "bg-orange-600 hover:bg-orange-500 text-white" 
+                ? "bg-orange-600 hover:bg-orange-500 text-foreground dark:text-white" 
                 : "bg-white text-black hover:bg-gray-200"
             )}
          >
@@ -281,7 +281,7 @@ export default function StudentTakeAssessmentPage() {
 
       {/* Confirmation Modal */}
       {showConfirm && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-background dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -290,14 +290,14 @@ export default function StudentTakeAssessmentPage() {
             <div className="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mb-6 mx-auto">
               <CheckCircle2 className="w-8 h-8 text-orange-500" />
             </div>
-            <h3 className="text-2xl font-bold text-white text-center mb-2">Prêt à soumettre ?</h3>
+            <h3 className="text-2xl font-bold text-foreground dark:text-white text-center mb-2">Prêt à soumettre ?</h3>
             
             {answeredCount < assessment.questions.length ? (
-              <p className="text-center text-gray-400 mb-6">
-                Attention, vous avez répondu à <strong className="text-white">{answeredCount}</strong> questions sur <strong className="text-white">{assessment.questions.length}</strong>. Vous pouvez y retourner pour compléter.
+              <p className="text-center text-muted-foreground dark:text-gray-400 mb-6">
+                Attention, vous avez répondu à <strong className="text-foreground dark:text-white">{answeredCount}</strong> questions sur <strong className="text-foreground dark:text-white">{assessment.questions.length}</strong>. Vous pouvez y retourner pour compléter.
               </p>
             ) : (
-              <p className="text-center text-gray-400 mb-6">
+              <p className="text-center text-muted-foreground dark:text-gray-400 mb-6">
                 Vous avez répondu à toutes les questions. Confirmez-vous la soumission définitive de cette évaluation ?
               </p>
             )}
@@ -306,14 +306,14 @@ export default function StudentTakeAssessmentPage() {
               <Button 
                 onClick={handleSubmit} 
                 disabled={submitting}
-                className="w-full bg-orange-600 hover:bg-orange-500 text-white h-12 rounded-xl font-bold"
+                className="w-full bg-orange-600 hover:bg-orange-500 text-foreground dark:text-white h-12 rounded-xl font-bold"
               >
                 {submitting ? 'Soumission...' : 'Confirmer et Soumettre'}
               </Button>
               <Button 
                 variant="ghost" 
                 onClick={() => setShowConfirm(false)}
-                className="w-full text-gray-400 hover:text-white hover:bg-[#222222] h-12 rounded-xl"
+                className="w-full text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white hover:bg-[#222222] h-12 rounded-xl"
               >
                 Retour au Quiz
               </Button>

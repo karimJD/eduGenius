@@ -1,0 +1,56 @@
+\chapter{Sprint 1 : Authentification et Sécurité}
+
+\section{Introduction}
+L'objectif de ce premier sprint est de mettre en place le socle sécuritaire de la plateforme, garantissant que chaque utilisateur accède aux fonctionnalités correspondant à son rôle.
+
+\section{Backlog du Sprint 1}
+\begin{itemize}
+    \item \textbf{US-01} : Développement du module d'inscription et de connexion.
+    \item \textbf{US-02} : Mise en place du middleware d'authentification JWT.
+    \item \textbf{US-03} : Gestion des rôles (RBAC : Role-Based Access Control).
+\end{itemize}
+
+\section{Analyse}
+\subsection{Diagramme de cas d'utilisation}
+Le cas d'utilisation principal est "S'authentifier", permettant aux administrateurs, enseignants et étudiants d'accéder à leurs espaces respectifs.
+
+\subsection{Description textuelle des cas d'utilisation}
+L'utilisateur saisit son email et son mot de passe. Le système vérifie les identifiants en base de données, génère un token JWT si les données sont valides, et renvoie le token au client.
+
+\section{Conception}
+\subsection{Diagramme de séquence}
+Le diagramme de séquence de l'authentification montre les échanges entre le Frontend, le Controller d'authentification, le Modèle User et la base de données MongoDB.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Diagramme de Séquence - Authentification}
+    \caption{Processus d'authentification JWT}
+\end{figure}
+
+\subsection{Diagramme de classes}
+La classe \texttt{User} est au centre de ce sprint, contenant les attributs \texttt{email}, \texttt{password} (haché), \texttt{role}, et \texttt{profileInfo}.
+
+\subsection{Représentation graphique de la base de données}
+La collection \texttt{users} dans MongoDB stocke les documents utilisateurs avec des schémas flexibles pour accommoder les différents types de profils.
+
+\section{Réalisation}
+\subsection{Interface de Connexion}
+L'interface de connexion a été développée avec Tailwind CSS pour un aspect moderne et épuré.
+\begin{figure}[H]
+    \centering
+    \fbox{Placeholder: Capture d'écran - Login Page}
+    \caption{Interface de connexion d'eduGenius}
+\end{figure}
+
+\subsection{Implémentation du middleware JWT}
+Le middleware \texttt{authMiddleware.js} intercepte les requêtes, vérifie la validité du token et injecte l'utilisateur dans l'objet \texttt{req}.
+
+\section{Tests}
+\subsection{Tests unitaires}
+Validation de la fonction de hachage des mots de passe avec \texttt{bcrypt}.
+\subsection{Tests d'intégration}
+Test des endpoints \texttt{/api/auth/login} et \texttt{/api/auth/register} avec Postman.
+\subsection{Tests fonctionnels}
+Vérification que l'accès aux routes protégées est bien bloqué sans token valide.
+
+\section{Conclusion}
+Le Sprint 1 a permis de sécuriser l'accès à la plateforme. Nous passons maintenant à la gestion des entités structurelles de l'application.

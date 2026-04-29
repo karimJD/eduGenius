@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: plain.bst
+Database file #1: biblio.bib
+Warning--entry type for "mern_stack" isn't style-file defined
+--line 1 of file biblio.bib
+Warning--entry type for "nextjs_docs" isn't style-file defined
+--line 8 of file biblio.bib
+Warning--entry type for "google_gemini" isn't style-file defined
+--line 15 of file biblio.bib
+Warning--entry type for "daily_co" isn't style-file defined
+--line 22 of file biblio.bib
+Warning--entry type for "socket_io" isn't style-file defined
+--line 35 of file biblio.bib
+Warning--entry type for "ai_education" isn't style-file defined
+--line 42 of file biblio.bib
+Warning--entry type for "mongodb_manual" isn't style-file defined
+--line 49 of file biblio.bib
+Warning--empty publisher in scrum_guide
+You've used 8 entries,
+            2118 wiz_defined-function locations,
+            524 strings with 4422 characters,
+and the built_in function-call counts, 1657 in all, are:
+= -- 140
+> -- 62
+< -- 0
++ -- 29
+- -- 18
+* -- 58
+:= -- 276
+add.period$ -- 17
+call.type$ -- 8
+change.case$ -- 32
+chr.to.int$ -- 0
+cite$ -- 9
+duplicate$ -- 61
+empty$ -- 177
+format.name$ -- 18
+if$ -- 354
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 2
+newline$ -- 36
+num.names$ -- 16
+pop$ -- 73
+preamble$ -- 1
+purify$ -- 25
+quote$ -- 0
+skip$ -- 63
+stack$ -- 0
+substring$ -- 43
+swap$ -- 8
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 30
+warning$ -- 1
+while$ -- 16
+width$ -- 9
+write$ -- 67
+(There were 8 warnings)

@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../../../components/ui/button';
+import { PageHeader } from '../../../components/student/PageHeader';
 
 export default function StudentProfilePage() {
   const { user } = useAuth();
@@ -64,6 +65,15 @@ export default function StudentProfilePage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-12">
+      {/* Page Header */}
+      <PageHeader 
+        title="Profil & Paramètres"
+        description="Gérez vos informations personnelles et vos préférences de compte."
+        icon={User}
+        badgeText="Mon Compte"
+        badgeClassName="bg-orange-500/10 border-orange-500/20 text-orange-400"
+      />
+
       {/* Header Profile Card */}
       <div className="bg-[#111111] border border-[#222222] rounded-3xl p-8 relative overflow-hidden">
          {/* Decorative background */}
@@ -72,18 +82,18 @@ export default function StudentProfilePage() {
          <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-end gap-6 pt-12">
             <div className="relative group">
                <div className="w-32 h-32 rounded-3xl bg-[#222222] border-4 border-[#111111] shadow-2xl overflow-hidden flex items-center justify-center">
-                  <div className="text-4xl font-bold text-gray-500">
+                  <div className="text-4xl font-bold text-muted-foreground dark:text-gray-500">
                      {user.firstName?.charAt(0)}{user.lastName?.charAt(0)}
                   </div>
                </div>
-               <button className="absolute -bottom-2 -right-2 w-10 h-10 bg-orange-500 text-white rounded-xl shadow-lg flex items-center justify-center hover:bg-orange-600 transition-all opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100">
+               <button className="absolute -bottom-2 -right-2 w-10 h-10 bg-orange-500 text-foreground dark:text-white rounded-xl shadow-lg flex items-center justify-center hover:bg-orange-600 transition-all opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100">
                   <Camera className="w-5 h-5" />
                </button>
             </div>
             
             <div className="flex-1 text-center sm:text-left">
-               <h1 className="text-3xl font-bold text-white">{user.firstName} {user.lastName}</h1>
-               <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mt-2 text-gray-400">
+               <h1 className="text-3xl font-bold text-foreground dark:text-white">{user.firstName} {user.lastName}</h1>
+               <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mt-2 text-muted-foreground dark:text-gray-400">
                   <span className="flex items-center gap-1.5 bg-[#222222] px-3 py-1 rounded-full text-sm font-medium">
                      <GraduationCap className="w-4 h-4 text-orange-500" />
                      Étudiant
@@ -101,15 +111,15 @@ export default function StudentProfilePage() {
          {/* Settings Navigation (Sidebar) */}
          <div className="md:col-span-1 space-y-2 relative">
             <div className="sticky top-24">
-               <button className="w-full flex items-center gap-3 px-4 py-3 bg-[#222222] text-white rounded-xl font-medium border border-[#333333] mb-2">
+               <button className="w-full flex items-center gap-3 px-4 py-3 bg-[#222222] text-foreground dark:text-white rounded-xl font-medium border border-[#333333] mb-2">
                   <User className="w-5 h-5 text-orange-400" />
                   Informations Personnelles
                </button>
-               <button className="w-full flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-[#1a1a1a] rounded-xl font-medium transition-colors mb-2">
+               <button className="w-full flex items-center gap-3 px-4 py-3 text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white hover:bg-[#1a1a1a] rounded-xl font-medium transition-colors mb-2">
                   <Shield className="w-5 h-5" />
                   Sécurité & Mot de passe
                </button>
-               <button className="w-full flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-[#1a1a1a] rounded-xl font-medium transition-colors">
+               <button className="w-full flex items-center gap-3 px-4 py-3 text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white hover:bg-[#1a1a1a] rounded-xl font-medium transition-colors">
                   <Mail className="w-5 h-5" />
                   Préférences de Notification
                </button>
@@ -119,34 +129,34 @@ export default function StudentProfilePage() {
          {/* Form Area */}
          <div className="md:col-span-2 space-y-6">
             <div className="bg-[#111111] border border-[#222222] rounded-3xl p-6 sm:p-8">
-               <h2 className="text-xl font-bold text-white mb-6 border-b border-[#222222] pb-4">Détails du Profil</h2>
+               <h2 className="text-xl font-bold text-foreground dark:text-white mb-6 border-b border-[#222222] pb-4">Détails du Profil</h2>
                
                <div className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-400 ml-1">Prénom</label>
+                        <label className="text-sm font-medium text-muted-foreground dark:text-gray-400 ml-1">Prénom</label>
                         <input 
                            type="text" 
                            name="firstName"
                            value={formData.firstName}
                            onChange={handleChange}
-                           className="w-full bg-[#0a0a0a] border border-[#333333] text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
+                           className="w-full bg-[#0a0a0a] border border-[#333333] text-foreground dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
                         />
                      </div>
                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-400 ml-1">Nom</label>
+                        <label className="text-sm font-medium text-muted-foreground dark:text-gray-400 ml-1">Nom</label>
                         <input 
                            type="text" 
                            name="lastName"
                            value={formData.lastName}
                            onChange={handleChange}
-                           className="w-full bg-[#0a0a0a] border border-[#333333] text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
+                           className="w-full bg-[#0a0a0a] border border-[#333333] text-foreground dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
                         />
                      </div>
                   </div>
 
                   <div className="space-y-2">
-                     <label className="text-sm font-medium text-gray-400 ml-1 flex items-center gap-2">
+                     <label className="text-sm font-medium text-muted-foreground dark:text-gray-400 ml-1 flex items-center gap-2">
                         <Mail className="w-4 h-4" /> Adresse Email
                      </label>
                      <input 
@@ -154,12 +164,12 @@ export default function StudentProfilePage() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full bg-[#0a0a0a] border border-[#333333] text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
+                        className="w-full bg-[#0a0a0a] border border-[#333333] text-foreground dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
                      />
                   </div>
 
                   <div className="space-y-2">
-                     <label className="text-sm font-medium text-gray-400 ml-1 flex items-center gap-2">
+                     <label className="text-sm font-medium text-muted-foreground dark:text-gray-400 ml-1 flex items-center gap-2">
                         <Phone className="w-4 h-4" /> Téléphone
                      </label>
                      <input 
@@ -167,12 +177,12 @@ export default function StudentProfilePage() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full bg-[#0a0a0a] border border-[#333333] text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
+                        className="w-full bg-[#0a0a0a] border border-[#333333] text-foreground dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
                      />
                   </div>
 
                   <div className="space-y-2">
-                     <label className="text-sm font-medium text-gray-400 ml-1 flex items-center gap-2">
+                     <label className="text-sm font-medium text-muted-foreground dark:text-gray-400 ml-1 flex items-center gap-2">
                         <MapPin className="w-4 h-4" /> Adresse Postale
                      </label>
                      <input 
@@ -180,18 +190,18 @@ export default function StudentProfilePage() {
                         name="address"
                         value={formData.address}
                         onChange={handleChange}
-                        className="w-full bg-[#0a0a0a] border border-[#333333] text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
+                        className="w-full bg-[#0a0a0a] border border-[#333333] text-foreground dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium"
                      />
                   </div>
 
                   <div className="space-y-2">
-                     <label className="text-sm font-medium text-gray-400 ml-1">À propos de moi</label>
+                     <label className="text-sm font-medium text-muted-foreground dark:text-gray-400 ml-1">À propos de moi</label>
                      <textarea 
                         name="bio"
                         value={formData.bio}
                         onChange={handleChange}
                         rows={4}
-                        className="w-full bg-[#0a0a0a] border border-[#333333] text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium resize-none"
+                        className="w-full bg-[#0a0a0a] border border-[#333333] text-foreground dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium resize-none"
                      />
                   </div>
                </div>
@@ -199,7 +209,7 @@ export default function StudentProfilePage() {
                <div className="mt-8 pt-6 border-t border-[#222222] flex justify-end">
                   <Button 
                      onClick={handleSave}
-                     className="bg-orange-600 hover:bg-orange-500 text-white font-bold h-12 px-8 rounded-xl shadow-lg shadow-orange-600/20"
+                     className="bg-orange-600 hover:bg-orange-500 text-foreground dark:text-white font-bold h-12 px-8 rounded-xl shadow-lg shadow-orange-600/20"
                   >
                      <Save className="w-4 h-4 mr-2" />
                      Enregistrer les modifications

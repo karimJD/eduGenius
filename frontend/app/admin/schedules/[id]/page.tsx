@@ -126,7 +126,7 @@ export default function ViewSchedulePage() {
   }
 
   return (
-    <div className="space-y-6 mx-auto">
+    <div className="p-4 space-y-6 mx-auto">
       <AdminPageHeader 
         title={
           <div className="flex items-center gap-3">

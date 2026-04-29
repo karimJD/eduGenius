@@ -1,0 +1,214 @@
+\chapter{Contexte et Cadrage Stratégique}
+
+\section*{Introduction}
+Ce chapitre inaugural constitue le socle stratégique de notre étude. L'objectif est de situer le projet EduGenius non seulement dans son environnement technique, mais aussi dans sa réalité organisationnelle. Nous débuterons par une immersion au sein de l'organisme d'accueil afin d'appréhender son "ADN numérique" et les expertises métier qui ont jalonné le développement de cette solution. Cette compréhension est indispensable pour justifier les choix architecturaux et technologiques qui seront détaillés dans les phases ultérieures de ce rapport.
+
+\section{Immersion au sein de l’organisme d’accueil}
+L'innovation logicielle est le reflet de la culture qui la porte. Le projet EduGenius a été conçu au sein de BES2I, un cabinet de conseil et d'expertise technologique dont la philosophie repose sur l'alliance entre l'excellence technique et l'aventure humaine.
+
+\subsection{Vision et Stratégie de l'entreprise : L'Esprit BES2I}
+BES2I se définit comme un "accélérateur de transformation digitale" dont la mission dépasse la simple prestation technique. Sa vision repose sur trois piliers fondamentaux : la proximité avec ses partenaires, l'agilité opérationnelle et l'engagement envers la réussite des projets.
+
+Contrairement aux grandes structures impersonnelles, BES2I cultive un ADN marqué par une forte réactivité et une capacité à intervenir sur des problématiques à haute valeur ajoutée. L'entreprise prône une transformation digitale durable et raisonnée, où chaque ligne de code doit servir un objectif métier précis. C'est cet esprit entrepreneurial et cette culture de "Software Craftsmanship" qui ont permis de donner naissance à un projet ambitieux comme EduGenius, conçu pour humaniser l'apprentissage numérique.
+
+\subsection{Écosystème de compétences}
+L’organisation de BES2I est structurée pour offrir un accompagnement de bout en bout, de la réflexion stratégique au déploiement opérationnel.
+
+\subsubsection{Pôle Ingénierie \& Développement Cloud}
+Ce pôle représente le cœur d'expertise technique de l'entreprise. Spécialisé dans le développement sur-mesure et les architectures modernes (Cloud, Web, Mobile), il garantit la conception de solutions robustes et évolutives. Pour EduGenius, ce pôle a apporté la maîtrise des frameworks de dernière génération (Stack MERN) et des protocoles de communication temps réel, assurant une plateforme fluide capable de supporter des charges d'utilisateurs simultanés.
+
+\subsubsection{Division IA \& Intelligence Cognitive}
+Au cœur de la stratégie d'innovation de BES2I, cette division explore les applications concrètes de l'intelligence artificielle générative. Elle transforme les concepts théoriques en fonctionnalités tangibles : automatisation de la rédaction, analyse prédictive des données et personnalisation de l'expérience utilisateur. Cette expertise a été le moteur du module IA d'EduGenius, permettant la génération automatisée de ressources pédagogiques (résumés, quiz) et l'adaptation du parcours au rythme de l'étudiant.
+
+\subsection{Rayonnement et enjeux concurrentiels}
+Dans un marché de l’EdTech (Education Technology) en pleine mutation, BES2I se positionne comme un créateur de solutions disruptives. Son rayonnement repose sur sa capacité à proposer des outils qui ne sont pas de simples référentiels de documents, mais de véritables écosystèmes interactifs.
+
+L’enjeu concurrentiel pour BES2I est de démontrer qu'une expertise pointue en ingénierie peut radicalement améliorer l'engagement étudiant. En intégrant l'IA et le collaboratif synchrone au sein d'une même plateforme, l'entreprise se démarque des solutions "legacy" souvent trop rigidies, affirmant ainsi sa position de leader dans la conception de logiciels à fort impact social et éducatif.
+
+\section{Genèse et Enjeux du Projet}
+
+La conception d'EduGenius ne relève pas d'une simple volonté de numérisation, mais d'une réponse stratégique aux mutations structurelles de l'éducation globale et aux nouvelles exigences de performance académique. Ce projet vise à redéfinir la relation entre l'apprenant, le formateur et l'outil numérique en plaçant l'engagement et l'intelligence au cœur du système.
+
+\subsection{Contexte du Projet EduGenius}
+Le projet EduGenius s'inscrit dans un paysage éducatif marqué par l'accélération numérique post-crise sanitaire. Si la période de pandémie a imposé l'usage d'outils de fortune pour assurer la continuité, l'ère actuelle exige une \textbf{professionnalisation des environnements numériques d'apprentissage (ENA)}.
+
+Aujourd'hui, l'enseignement hybride est devenu une modalité pédagogique de choix. Cependant, la dispersion actuelle des outils — un logiciel pour la vidéo, un autre pour les documents, un troisième pour les quiz — crée une "fatigue numérique" et une fragmentation critique des données. EduGenius naît de la volonté de \textbf{BES2I} d'unifier ces silos technologiques dans un écosystème cohérent, capable de supporter une charge importante d'utilisateurs tout en offrant une expérience fluide, souveraine et sécurisée, conforme aux standards du Web moderne.
+
+\subsection{Diagnostic de la Problématique}
+L'analyse menée lors de la phase de cadrage a permis d'identifier des points de rupture critiques au sein des plateformes conventionnelles. Le diagnostic révèle que les échecs du e-learning actuel sont autant ergonomiques que pédagogiques.
+
+\begin{itemize}
+    \item \textbf{L’austérité visuelle et l’obsolescence de l’UX :} La majorité des plateformes actuelles (LMS classiques) souffrent d'une interface austère et d'une ergonomie rigide. Cette absence de soin apporté à l'interface utilisateur (UI) crée une barrière psychologique dès la connexion. Pour la génération "Digital Native", une plateforme visuellement peu attrayante est perçue comme un outil de contrainte plutôt qu'un espace de découverte.
+    
+    \item \textbf{L’apprentissage passif et l'absence de stimuli ludiques :} Le modèle traditionnel de consommation de contenu favorise la passivité. L'absence d'un \textbf{"Game Hub"} ou de mécanismes de gamification rend le parcours linéaire et monotone. Sans défis progressifs ou sentiment de récompense, l'étudiant perd rapidement sa motivation, justifiant l'introduction de zones d'interactivité ludique pour maintenir un éveil cognitif élevé.
+
+    \item \textbf{Le fardeau administratif et le manque d'assistance intelligente :} Les enseignants consacrent une part disproportionnée de leur temps à des tâches répétitives : résumé de chapitres et conception de questionnaires. Parallèlement, l'étudiant se retrouve souvent seul face à des documents denses. L'absence de briques d'intelligence artificielle intégrées crée une latence pédagogique qui nuit à la fluidité de l'apprentissage.
+\end{itemize}
+
+\subsection{Vision Cible et Objectifs SMART}
+La vision d'EduGenius est de devenir le hub central de l'apprentissage "Intelligent-First" et "User-Centric". Cette ambition se traduit par des objectifs rigoureux :
+
+\begin{itemize}
+    \item \textbf{Spécifique :} Concevoir une plateforme web intégrée (All-in-One) alliant modernité visuelle et puissance technologique via trois piliers :
+    \begin{enumerate}
+        \item \textit{Intelligence Artificielle Souveraine :} Intégration d'\textbf{Ollama} pour fournir une assistance à la génération de résumés et de quiz, garantissant la confidentialité absolue des données.
+        \item \textit{Collaboration Synchrone Immersive :} Exploitation du \textbf{SDK Daily.co} pour offrir une expérience de visioconférence fluide et stable.
+        \item \textit{Ludo-pédagogie (Game Hub) :} Implémentation d'un espace dédié à la gamification pour transformer l'apprentissage en un parcours de réussite stimulant.
+    \end{enumerate}
+
+    \item \textbf{Mesurable :} 
+    \begin{itemize}
+        \item Optimiser la productivité des formateurs en divisant par trois le temps consacré à la synthèse de documents grâce à l'assistance générative locale.
+        \item Garantir une qualité de flux vidéo HD constante avec une latence minimale via l'infrastructure managée de Daily.co.
+        \item Augmenter le temps de rétention des étudiants sur la plateforme de \textbf{40 \%} grâce à l'attractivité du Game Hub.
+    \end{itemize}
+
+    \item \textbf{Atteignable :} La faisabilité repose sur l'utilisation d'une stack technologique de pointe (Next.js, Tailwind CSS et Ollama), assurant un développement agile et performant.
+
+    \item \textbf{Pertinent :} Le projet répond aux nouveaux standards de l'EdTech en offrant une solution souveraine qui traite le problème de l'engagement étudiant par le design et l'IA.
+
+    \item \textbf{Temporel :} Le projet suit un cycle de développement structuré en sprints, avec une livraison finale prévue au terme de la période de stage.
+\end{itemize}
+
+\section{État de l’Art et Analyse Critique}
+
+L'évolution des technologies éducatives (EdTech) a transformé les méthodes de transmission du savoir. Cependant, l'analyse du paysage actuel révèle une fracture importante entre les capacités techniques disponibles et l'expérience utilisateur réelle. Cette section dresse un panorama critique des solutions existantes pour justifier le positionnement disruptif d'EduGenius.
+
+\subsection{Étude de l’existant}
+L'écosystème numérique d'apprentissage actuel est marqué par une forte fragmentation. Les établissements utilisent généralement une combinaison de trois types d'outils : des systèmes de gestion (LMS), des outils de communication synchrone (Visioconférence) et des outils de gestion administrative comme \textbf{KEDUX}.
+
+Bien que performantes dans leurs domaines respectifs, ces solutions fonctionnent en "silos". L'apprenant doit constamment basculer d'un environnement à un autre (Context Switching), ce qui entraîne une déperdition d'information, une baisse de la concentration et une charge cognitive inutile. Le manque d'intégration native de l'intelligence artificielle et l'austérité des interfaces restent les obstacles majeurs à une adoption fluide.
+
+\subsection{Benchmark des solutions du marché}
+
+\subsubsection{Analyse des LMS Traditionnels (Moodle, Canvas, KEDUX)}
+Les Learning Management Systems (LMS) sont les piliers de l'éducation numérique depuis deux décennies.
+\begin{itemize}
+\item \textbf{Points Forts :} Une gestion rigoureuse des cursus, des inscriptions et des notes. KEDUX, par exemple, excelle dans la gestion administrative des institutions académiques tunisiennes.
+\item \textbf{Limites Critiques :} Ces plateformes sont souvent perçues comme des "dépôts de fichiers". L'ergonomie est centrée sur l'administration et non sur l'apprenant. L'interface est rigide, souvent datée, et ne propose aucun mécanisme d'engagement profond, ce qui favorise un apprentissage passif et un taux de décrochage élevé.
+\end{itemize}
+
+\subsubsection{Analyse des outils "Engage-Tech" (Kahoot, Duolingo)}
+À l'opposé des LMS, ces outils se concentrent exclusivement sur la rétention et le plaisir de l'utilisateur.
+\begin{itemize}
+\item \textbf{Points Forts :} Utilisation massive de la dopamine via des badges, des classements et des interfaces colorées. Le taux d'engagement est extrêmement élevé.
+\item \textbf{Limites Critiques :} Ils manquent de "profondeur académique". Ce sont des outils périphériques qui ne permettent pas d'héberger un cours complet, de gérer des interactions vidéo professionnelles ou de traiter des données pédagogiques complexes. Ils ne peuvent pas constituer l'environnement de travail principal d'un étudiant.
+\end{itemize}
+
+\subsection{Identification du Gap Technologique}
+L'analyse comparative met en évidence un "fossé technologique" sur trois axes majeurs :
+
+\begin{enumerate}
+\item \textbf{Le Verrou de la Souveraineté IA :} Les solutions actuelles qui intègrent l'IA dépendent quasi-exclusivement d'API Cloud (OpenAI, Anthropic). Cela pose des problèmes de coûts prohibitifs à l'échelle d'une institution et, surtout, des risques de fuite de données pédagogiques sensibles. L'absence d'IA locale (\textit{On-Premise}) est un manque critique.
+\item \textbf{L'Instabilité des flux synchrones :} Les solutions WebRTC "maison" sont souvent peu fiables. La plupart des LMS délèguent cette partie à des outils tiers (Zoom, Meet), brisant ainsi l'unité de la plateforme.
+\item \textbf{L'Érosion de la Motivation :} Aucune solution leader ne parvient à marier le sérieux d'un cursus académique (LMS) avec l'attractivité d'un environnement ludique (Game Hub), créant une "fatigue digitale" chez les étudiants.
+\end{enumerate}
+
+\subsection{Synthèse et Proposition de Valeur}
+EduGenius se positionne comme un ENA (Environnement Numérique d'Apprentissage) de troisième génération. Notre proposition de valeur repose sur la convergence inédite de quatre piliers :
+
+\begin{itemize}
+\item \textbf{Intelligence Cognitive Souveraine :} Grâce à l'intégration d'\textbf{Ollama}, nous offrons une assistance IA puissante (résumés, quiz) dont les données ne quittent jamais le serveur local.
+\item \textbf{Fluidité Native :} L'utilisation du \textbf{SDK Daily.co} permet d'intégrer une visioconférence de classe industrielle directement dans le parcours de cours, sans redirection externe.
+\item \textbf{Engagement par le Design :} Une interface moderne sous \textbf{Next.js} couplée à un \textbf{Game Hub} pour transformer l'effort académique en un défi stimulant.
+\item \textbf{Complémentarité Stratégique :} Là où KEDUX gère l'aspect administratif, EduGenius gère l'expérience d'apprentissage. Nous passons d'un outil de \textit{gestion} à un outil d'\textit{immersion}.
+\end{itemize}
+
+\section{Ingénierie du Périmètre et Acteurs}
+
+La réussite d'un projet d'envergure tel qu'EduGenius repose sur une définition stricte de son périmètre d'action et une identification claire des interactions entre ses différents acteurs. Cette section détaille l'organisation fonctionnelle du système et la structure de gouvernance associée.
+
+\subsection{Cartographie Fonctionnelle (The 6 Pillars)}
+
+Le périmètre d'EduGenius s'articule autour de six piliers fondamentaux qui garantissent une expérience d'apprentissage complète, centralisée et technologiquement avancée :
+
+\begin{enumerate}
+\item \textbf{Identity and Access Management (IAM) :} Ce pilier assure la gestion sécurisée des authentifications et la segmentation des rôles (Étudiant, Enseignant, Administrateur). Il garantit l'étanchéité des données et la personnalisation des interfaces selon le profil utilisateur.
+\item \textbf{Course Management System (CMS) :} C'est le cœur pédagogique de la plateforme. Il permet aux enseignants d'organiser les chapitres, d'héberger des ressources multimédias et de structurer le parcours académique. Contrairement aux systèmes classiques, ce CMS est optimisé pour une navigation fluide et rapide.
+\item \textbf{Cognitive AI Engine (Ollama) :} La couche d'intelligence souveraine. Ce pilier utilise la puissance des modèles de langage locaux pour traiter les contenus de cours. Il génère automatiquement des résumés structurés et des questionnaires interactifs, agissant comme un tuteur cognitif disponible 24h/24 sans compromettre la confidentialité des données.
+\item \textbf{Live Collaboration Hub (Daily.co) :} Le module de communication synchrone. En intégrant nativement le SDK Daily.co, EduGenius offre une expérience de visioconférence HD, le partage d'écran et l'interaction temps réel. L'étudiant reste dans l'écosystème de la plateforme, évitant ainsi la dispersion vers des outils tiers.
+\item \textbf{The Game Hub :} Le moteur d'engagement et de rétention. Ce pilier transforme les activités pédagogiques en défis stimulants. Il gère la logique de gamification : attribution de points, déblocage de badges de progression et mise à jour des classements pour transformer l'apprentissage en une expérience gratifiante.
+\item \textbf{Notification and Messaging Layer :} Le système nerveux de la plateforme. Il assure le maintien du lien pédagogique par des notifications en temps réel concernant les sessions live, les nouveaux contenus disponibles ou les feedbacks immédiats sur les quiz générés par l'IA.
+\end{enumerate}
+
+\subsection{Gouvernance du Projet}
+
+La gouvernance définit le cadre de décision et d'exécution du projet, assurant l'alignement entre les besoins de l'entreprise et les développements techniques.
+
+\subsubsection{Typologie des Parties Prenantes}
+
+Le projet EduGenius implique plusieurs catégories d'acteurs, chacun ayant des attentes spécifiques sur le cycle de vie du produit :
+
+\begin{itemize}
+\item \textbf{Le Maître d'Ouvrage (Client) :} Représenté par la direction de \textbf{BES2I}. Son rôle est de définir les objectifs stratégiques et de valider la pertinence métier de la solution finale.
+\item \textbf{Le Maître d'Œuvre (Équipe Technique) :} Responsable de la conception logicielle, du développement (Stack Next.js) et du déploiement des infrastructures (Ollama, Daily.co).
+\item \textbf{Les Utilisateurs Cibles :}
+\begin{itemize}
+\item \textit{Enseignants :} Cherchent à optimiser leur temps de préparation et à obtenir une meilleure visibilité sur la progression des élèves.
+\item \textit{Étudiants :} Bénéficiaires directs d'une interface moderne, interactive et ludique.
+\end{itemize}
+\item \textbf{Les Partenaires Technologiques :} Fournisseurs de SDK (Daily.co) et communautés Open-Source (Ollama), fournissant les briques technologiques essentielles à l'innovation du projet.
+\end{itemize}
+
+\subsubsection{Matrice de Responsabilités (RACI)}
+
+Pour assurer une exécution fluide, les responsabilités sont réparties selon le modèle RACI :
+
+\begin{itemize}
+\item \textbf{Architecture et Développement :} L'étudiant développeur est \textbf{Responsable (R)}, le tuteur en entreprise est \textbf{Redevable (A)}. Les experts techniques sont \textbf{Consultés (C)}.
+\item \textbf{Intégration de l'IA (Ollama) :} L'équipe technique est \textbf{Responsable (R)}. La direction est \textbf{Informée (I)} des avancées concernant la confidentialité des données.
+\item \textbf{Conception du Game Hub :} L'équipe technique est \textbf{Responsable (R)}. Un panel d'utilisateurs tests est \textbf{Consulté (C)} pour valider l'aspect ludique.
+\item \textbf{Validation des Jalons :} La direction de BES2I est \textbf{Redevable (A)} pour la signature des étapes clés, tandis que l'équipe technique est \textbf{Informée (I)} des ajustements de priorité.
+\end{itemize}
+
+\section{Cadre Méthodologique et Écosystème Technique}
+
+La réussite d'un projet logiciel complexe ne dépend pas uniquement de la qualité du code, mais de la rigueur de la méthode de travail et de la pertinence de la stack d'outils utilisée. Cette section expose les choix méthodologiques et l'écosystème technique adoptés pour le développement d'EduGenius.
+
+\subsection{Choix de la démarche Agile (Scrum)}
+
+Pour répondre aux exigences de flexibilité et de rapidité du marché de l'EdTech, nous avons opté pour la méthodologie \textbf{Scrum}, issue du manifeste Agile. Cette approche est particulièrement adaptée à EduGenius pour plusieurs raisons :
+
+\begin{itemize}
+\item \textbf{Adaptabilité :} L'intégration de technologies innovantes comme les LLM (Ollama) nécessite des ajustements fréquents. Scrum permet d'affiner les fonctionnalités à la fin de chaque itération selon les retours techniques.
+\item \textbf{Cycles de livraison courts (Sprints) :} Le projet est découpé en sprints de deux semaines. Chaque sprint produit un incrément logiciel fonctionnel et testable, garantissant une visibilité constante pour l'entreprise BES2I.
+\item \textbf{Cérémonies Scrum :}
+\begin{itemize}
+    \item \textit{Sprint Planning} : Définition des objectifs et sélection des User Stories prioritaires dans le backlog.
+    \item \textit{Daily Stand-up} : Synchronisation quotidienne pour identifier les points de blocage.
+    \item \textit{Sprint Review} : Démonstration des fonctionnalités développées et validation par les parties prenantes.
+    \item \textit{Sprint Retrospective} : Analyse interne de l'équipe pour l'amélioration continue du processus de travail.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Paradigme de Modélisation (UML 2.5 \& User Stories)}
+
+Afin d'assurer une communication claire entre la phase de conception et l'implémentation, nous utilisons un double paradigme de modélisation :
+
+\begin{itemize}
+\item \textbf{User Stories (Approche Métier) :} Chaque fonctionnalité est décrite du point de vue de l'utilisateur final. Cette approche garantit que chaque développement apporte une valeur d'usage réelle (ex: "En tant qu'étudiant, je veux générer un résumé pour réviser plus efficacement").
+\item \textbf{UML 2.5 (Approche Structurelle) :} Pour la rigueur technique, nous utilisons les diagrammes UML :
+\begin{itemize}
+\item \textit{Diagrammes de Cas d'Utilisation} : Pour définir les interactions entre les acteurs (Étudiant, Enseignant) et le système.
+\item \textit{Diagrammes de Séquence} : Essentiels pour modéliser les flux complexes, notamment les appels au SDK Daily.co et les requêtes asynchrones vers le moteur IA Ollama.
+\item \textit{Diagrammes de Classes} : Pour structurer le modèle de données et les relations entre les cours, les utilisateurs et les éléments de gamification.
+\end{itemize}
+\end{itemize}
+
+\subsection{Écosystème d'Outils et de Collaboration}
+
+L'efficacité du développement est soutenue par un ensemble d'outils modernes favorisant l'automatisation et la collaboration fluide :
+
+\begin{itemize}
+    \item \textbf{Gestion de Projet \& Suivi :} Utilisation de \textbf{Trello} pour le pilotage du Product Backlog. L'organisation en tableaux Kanban permet une visualisation claire de l'avancement des tâches (To Do, In Progress, Done) et facilite la gestion des sprints.
+    \item \textbf{Gestion du Code Source :} \textbf{Git} est utilisé pour le versioning, avec la plateforme \textbf{GitHub} pour la centralisation des dépôts. Nous appliquons une stratégie de branches rigoureuse pour isoler les développements avant leur fusion sur la branche principale.
+    \item \textbf{Conception d'Interface (UI/UX) :} \textbf{Figma} a été l'outil central pour prototyper les écrans d'EduGenius. Cela a permis de valider l'aspect visuel et l'ergonomie avant de passer à l'intégration technique.
+    \item \textbf{Environnement de Développement \& MCP :} Le développement est réalisé sous \textbf{VS Code}, enrichi par des serveurs \textbf{MCP (Model Context Protocol)} pour automatiser certaines tâches de configuration et d'analyse, optimisant ainsi le workflow de développement.
+    \item \textbf{Communication \& Collaboration :} \textbf{Microsoft Teams} est l'outil unique utilisé pour les échanges. Il centralise les réunions de Sprint, le partage de documents techniques et les discussions quotidiennes au sein de l'équipe.
+\end{itemize}
+
+\section*{Conclusion}
+
+En résumé, ce chapitre a permis de poser les fondements stratégiques et méthodologiques du projet \textbf{EduGenius}. À travers l’analyse de l’existant et le benchmark des solutions actuelles, nous avons identifié les leviers d’innovation nécessaires pour répondre aux enjeux de l’éducation numérique moderne. La définition du périmètre en six piliers et le choix de la démarche Agile Scrum garantissent un cadre de travail structuré et adaptable.
+
+Les éléments présentés jusqu’ici permettent de mieux appréhender l’écosystème dans lequel le projet s’inscrit. Le chapitre suivant, intitulé \textbf{« Préparation du projet »}, constituera l'étape charnière de ce travail. Il détaillera la spécification approfondie des besoins, la modélisation des cas d’utilisation, ainsi que l’architecture technique et l’environnement logiciel retenus pour la mise en œuvre de la solution.

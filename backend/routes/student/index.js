@@ -8,6 +8,7 @@ const aiToolsRoutes = require('./aiToolsRoutes');
 const assessmentRoutes = require('./assessmentRoutes');
 const performanceRoutes = require('./performanceRoutes');
 const otherRoutes = require('./otherRoutes');
+const arenaRoutes = require('./arenaRoutes');
 
 router.use('/dashboard', dashboardRoutes);
 router.use('/classes', classRoutes);
@@ -16,5 +17,6 @@ router.use('/ai', aiToolsRoutes);
 router.use('/assessments', assessmentRoutes);
 router.use('/performance', performanceRoutes);
 router.use('/other', otherRoutes); // Covers profile, schedule, announcements
+router.use('/arena', arenaRoutes);
 
 module.exports = router;

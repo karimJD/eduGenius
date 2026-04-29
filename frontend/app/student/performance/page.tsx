@@ -13,6 +13,7 @@ import {
   Star
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { PageHeader } from '../../../components/student/PageHeader';
 
 interface Grade {
   _id: string;
@@ -124,22 +125,13 @@ export default function StudentPerformancePage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 relative z-10">
-        <div className="space-y-2">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium w-fit"
-          >
-            <BarChart3 className="w-4 h-4" />
-            <span>Mes Performances</span>
-          </motion.div>
-          <h1 className="text-4xl font-bold text-white tracking-tight">Vue d'ensemble</h1>
-          <p className="text-gray-400 max-w-xl">
-            Suivez votre progression, analysez vos résultats et restez au top de vos objectifs.
-          </p>
-        </div>
-      </div>
+      <PageHeader 
+        title="Vue d'ensemble"
+        description="Suivez votre progression, analysez vos résultats et restez au top de vos objectifs."
+        icon={BarChart3}
+        badgeText="Mes Performances"
+        badgeClassName="bg-blue-500/10 border-blue-500/20 text-blue-400"
+      />
 
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -150,10 +142,10 @@ export default function StudentPerformancePage() {
               <TrendingUp className="w-6 h-6" />
             </div>
           </div>
-          <p className="text-gray-400 font-medium mb-1 relative z-10">Moyenne Générale</p>
+          <p className="text-muted-foreground dark:text-gray-400 font-medium mb-1 relative z-10">Moyenne Générale</p>
           <div className="flex items-baseline gap-2 relative z-10">
-            <h3 className="text-4xl font-black text-white">{performanceData.gpa}</h3>
-            <span className="text-sm font-medium text-gray-500">/ 20</span>
+            <h3 className="text-4xl font-black text-foreground dark:text-white">{performanceData.gpa}</h3>
+            <span className="text-sm font-medium text-muted-foreground dark:text-gray-500">/ 20</span>
           </div>
         </div>
 
@@ -164,10 +156,10 @@ export default function StudentPerformancePage() {
               <Award className="w-6 h-6" />
             </div>
           </div>
-          <p className="text-gray-400 font-medium mb-1 relative z-10">Total XP</p>
+          <p className="text-muted-foreground dark:text-gray-400 font-medium mb-1 relative z-10">Total XP</p>
           <div className="flex items-baseline gap-2 relative z-10">
-            <h3 className="text-4xl font-black text-white">{performanceData.totalXP}</h3>
-            <span className="text-sm font-medium text-gray-500">XP</span>
+            <h3 className="text-4xl font-black text-foreground dark:text-white">{performanceData.totalXP}</h3>
+            <span className="text-sm font-medium text-muted-foreground dark:text-gray-500">XP</span>
           </div>
         </div>
 
@@ -178,9 +170,9 @@ export default function StudentPerformancePage() {
               <BookOpen className="w-6 h-6" />
             </div>
           </div>
-          <p className="text-gray-400 font-medium mb-1 relative z-10">Matières actives</p>
+          <p className="text-muted-foreground dark:text-gray-400 font-medium mb-1 relative z-10">Matières actives</p>
           <div className="flex items-baseline gap-2 relative z-10">
-            <h3 className="text-4xl font-black text-white">{performanceData.completedClasses}</h3>
+            <h3 className="text-4xl font-black text-foreground dark:text-white">{performanceData.completedClasses}</h3>
           </div>
         </div>
 
@@ -191,9 +183,9 @@ export default function StudentPerformancePage() {
               <Target className="w-6 h-6" />
             </div>
           </div>
-          <p className="text-gray-400 font-medium mb-1 relative z-10">Assiduité</p>
+          <p className="text-muted-foreground dark:text-gray-400 font-medium mb-1 relative z-10">Assiduité</p>
           <div className="flex items-baseline gap-2 relative z-10">
-            <h3 className="text-4xl font-black text-white">{performanceData.attendanceRate}%</h3>
+            <h3 className="text-4xl font-black text-foreground dark:text-white">{performanceData.attendanceRate}%</h3>
           </div>
         </div>
       </div>
@@ -202,7 +194,7 @@ export default function StudentPerformancePage() {
         {/* Recent Grades */}
         <div className="bg-[#111111] border border-[#222222] rounded-3xl p-8">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-white">Dernières Évaluations</h2>
+            <h2 className="text-xl font-bold text-foreground dark:text-white">Dernières Évaluations</h2>
             {performanceData.recentGrades.length > 0 && (
                 <button className="text-sm font-medium text-orange-500 hover:text-orange-400 transition-colors">Tout voir</button>
             )}
@@ -210,7 +202,7 @@ export default function StudentPerformancePage() {
           
           <div className="space-y-4">
             {performanceData.recentGrades.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">Aucune évaluation passée.</div>
+                <div className="text-center py-8 text-muted-foreground dark:text-gray-500">Aucune évaluation passée.</div>
             ) : (
                 performanceData.recentGrades.map((grade, idx) => (
                 <div key={idx} className="flex items-center justify-between p-4 bg-[#1a1a1a] rounded-2xl border border-[#2b2b2b] hover:border-[#333333] transition-colors">
@@ -219,12 +211,12 @@ export default function StudentPerformancePage() {
                         <Star className="w-5 h-5 text-yellow-500" />
                     </div>
                     <div>
-                        <h4 className="font-bold text-white text-base">{grade.title}</h4>
-                        <p className="text-xs font-medium text-gray-400 mt-0.5">{grade.subject} • {new Date(grade.date).toLocaleDateString()}</p>
+                        <h4 className="font-bold text-foreground dark:text-white text-base">{grade.title}</h4>
+                        <p className="text-xs font-medium text-muted-foreground dark:text-gray-400 mt-0.5">{grade.subject} • {new Date(grade.date).toLocaleDateString()}</p>
                     </div>
                     </div>
                     <div className="text-right">
-                    <div className="text-xl font-bold text-white">{grade.score}<span className="text-sm text-gray-500">/{grade.max}</span></div>
+                    <div className="text-xl font-bold text-foreground dark:text-white">{grade.score}<span className="text-sm text-muted-foreground dark:text-gray-500">/{grade.max}</span></div>
                     </div>
                 </div>
                 ))
@@ -235,19 +227,19 @@ export default function StudentPerformancePage() {
         {/* Moyennes par matière */}
         <div className="bg-[#111111] border border-[#222222] rounded-3xl p-8">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-white">Moyennes par Matière</h2>
+            <h2 className="text-xl font-bold text-foreground dark:text-white">Moyennes par Matière</h2>
           </div>
 
           <div className="space-y-8">
             {performanceData.subjectAverages.length === 0 ? (
-                 <div className="text-center py-8 text-gray-500">Aucune moyenne disponible.</div>
+                 <div className="text-center py-8 text-muted-foreground dark:text-gray-500">Aucune moyenne disponible.</div>
             ) : (
                 performanceData.subjectAverages.map((subject, idx) => (
                 <div key={idx} className="group">
                     <div className="flex items-center justify-between mb-3 text-sm">
-                    <span className="font-semibold text-gray-300 group-hover:text-white transition-colors">{subject.subject}</span>
-                    <span className="font-bold text-white flex items-center gap-2">
-                        {subject.average.toFixed(1)} <span className="text-gray-500 font-medium">/ 20</span>
+                    <span className="font-semibold text-gray-600 dark:text-gray-300 group-hover:text-foreground dark:group-hover:text-white transition-colors">{subject.subject}</span>
+                    <span className="font-bold text-foreground dark:text-white flex items-center gap-2">
+                        {subject.average.toFixed(1)} <span className="text-muted-foreground dark:text-gray-500 font-medium">/ 20</span>
                     </span>
                     </div>
                     <div className="h-3 w-full bg-[#222222] rounded-full overflow-hidden border border-[#333333]">

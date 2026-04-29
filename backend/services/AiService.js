@@ -3,8 +3,9 @@ require('dotenv').config();
 
 class AiService {
   constructor() {
-    this.ollamaUrl = process.env.OLLAMA_URL || 'http://localhost:11434/api/generate';
-    this.model = 'gemma3:4b';
+    this.ollamaUrl =
+      process.env.OLLAMA_URL || 'http://localhost:11434/api/generate';
+    this.model = 'gemma3:1b';
   }
 
   async _callOllama(prompt, options = {}) {
@@ -14,15 +15,17 @@ class AiService {
         prompt: prompt,
         stream: false,
         format: options.json ? 'json' : undefined,
-        ...options
+        ...options,
       });
       return response.data.response;
     } catch (error) {
-      console.error("Ollama API Error:", error.message);
+      console.error('Ollama API Error:', error.message);
       if (error.code === 'ECONNREFUSED') {
-        throw new Error("Ollama is not running. Please start it on " + this.ollamaUrl);
+        throw new Error(
+          'Ollama is not running. Please start it on ' + this.ollamaUrl,
+        );
       }
-      throw new Error("Failed to communicate with AI model");
+      throw new Error('Failed to communicate with AI model');
     }
   }
 
@@ -47,13 +50,13 @@ class AiService {
       const response = await this._callOllama(prompt, { json: true });
       return JSON.parse(response);
     } catch (error) {
-      console.error("Error generating quiz:", error);
+      console.error('Error generating quiz:', error);
       // Fallback: try to find JSON in the string if not strictly JSON
       try {
         const jsonMatch = error.message.match(/\[.*\]/s);
         if (jsonMatch) return JSON.parse(jsonMatch[0]);
       } catch (e) {}
-      throw new Error("Failed to generate quiz");
+      throw new Error('Failed to generate quiz');
     }
   }
 
@@ -78,8 +81,8 @@ class AiService {
       const response = await this._callOllama(prompt, { json: true });
       return JSON.parse(response);
     } catch (error) {
-      console.error("Error generating flashcards:", error);
-      throw new Error("Failed to generate flashcards");
+      console.error('Error generating flashcards:', error);
+      throw new Error('Failed to generate flashcards');
     }
   }
 
@@ -107,8 +110,8 @@ class AiService {
     try {
       return await this._callOllama(prompt);
     } catch (error) {
-      console.error("Error generating summary:", error);
-      throw new Error("Failed to generate summary");
+      console.error('Error generating summary:', error);
+      throw new Error('Failed to generate summary');
     }
   }
 
@@ -144,8 +147,8 @@ class AiService {
     try {
       return await this._callOllama(prompt);
     } catch (error) {
-      console.error("Error generating enhanced summary:", error);
-      throw new Error("Failed to generate enhanced summary");
+      console.error('Error generating enhanced summary:', error);
+      throw new Error('Failed to generate enhanced summary');
     }
   }
 
@@ -156,19 +159,23 @@ class AiService {
         options: q.options,
         userAnswer: userAnswers[index],
         correctAnswer: q.correctAnswerIndex,
-        isWrong: userAnswers[index] !== q.correctAnswerIndex
+        isWrong: userAnswers[index] !== q.correctAnswerIndex,
       }))
-      .filter(m => m.isWrong);
+      .filter((m) => m.isWrong);
 
     if (mistakes.length === 0) {
       return "Félicitations ! Vous n'avez fait aucune erreur. 🎉";
     }
 
-    const mistakesText = mistakes.map((m, i) => `
+    const mistakesText = mistakes
+      .map(
+        (m, i) => `
 Question ${i + 1}: ${m.question}
 Votre réponse: ${m.options[m.userAnswer]}
 Bonne réponse: ${m.options[m.correctAnswer]}
-    `).join('\n');
+    `,
+      )
+      .join('\n');
 
     const prompt = `
       Tu es un professeur bienveillant. Explique les erreurs suivantes commises dans un quiz.
@@ -189,8 +196,8 @@ Bonne réponse: ${m.options[m.correctAnswer]}
     try {
       return await this._callOllama(prompt);
     } catch (error) {
-      console.error("Error explaining mistakes:", error);
-      throw new Error("Failed to explain mistakes");
+      console.error('Error explaining mistakes:', error);
+      throw new Error('Failed to explain mistakes');
     }
   }
 }

@@ -1,0 +1,162 @@
+\documentclass[12pt,a4paper]{report}
+
+% --- Font & Language ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\babelprovide[main, import]{french}
+
+% --- Margins ---
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+
+% --- Layout & Graphics ---
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{tocloft}
+
+% --- TOC Customization ---
+% Add dots for chapters
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+% Prefix "Chapitre X : " in TOC
+\renewcommand{\cftchappresnum}{Chapitre }
+\renewcommand{\cftchapaftersnum}{ : }
+\newlength{\chapnumwidth}
+\settowidth{\chapnumwidth}{\bfseries Chapitre 99 : }
+\addtolength{\cftchapnumwidth}{\chapnumwidth}
+
+% Fix for ?contentsname? and ?listfigurename?
+\addto\captionsfrench{%
+  \renewcommand{\contentsname}{Table des matières}%
+  \renewcommand{\listfigurename}{Liste des figures}%
+  \renewcommand{\listtablename}{Liste des tableaux}%
+}
+
+% --- Hyperref (Should be loaded last) ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Rapport de PFE - eduGenius},
+    pdfauthor={Karim Joudi},
+    pdfpagemode=UseOutlines,
+}
+
+% --- Code Syntax Highlighting ---
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with, as, async, await, const, let, yield},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  commentstyle=\color{codegreen}\ttfamily,
+  stringstyle=\color{codepurple}\ttfamily,
+}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=JavaScript
+}
+\lstset{style=mystyle}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+\begin{document}
+\selectlanguage{french}
+
+% --- Preliminary Pages ---
+\pagenumbering{roman}
+\input{front/title_page}
+\clearpage
+\input{front/dedications}
+\clearpage
+\input{front/acknowledgements}
+\clearpage
+
+% --- Table of Contents ---
+\phantomsection
+\addcontentsline{toc}{chapter}{Table des matières}
+\tableofcontents
+\clearpage
+
+% --- Lists ---
+\phantomsection
+\addcontentsline{toc}{chapter}{Liste des figures}
+\listoffigures
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+\listoftables
+\clearpage
+
+\pagenumbering{arabic}
+
+% --- Chapters ---
+\input{chapters/intro_generale}
+\input{chapters/chap1_cadre_general}
+\input{chapters/chap2_preparation}
+\input{chapters/chap3_sprint1}
+\input{chapters/chap4_sprint2}
+\input{chapters/chap5_sprint3}
+\input{chapters/chap6_sprint4}
+\input{chapters/chap7_sprint5}
+\input{chapters/conclusion_generale}
+
+% --- References ---
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliographie}
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\chapter*{Webographie}
+\addcontentsline{toc}{chapter}{Webographie}
+\begin{itemize}
+    \item \url{https://nextjs.org/docs}
+    \item \url{https://expressjs.com/}
+    \item \url{https://www.mongodb.com/docs/}
+    \item \url{https://aws.amazon.com/s3/}
+    \item \url{https://daily.co/}
+    \item \url{https://ollama.com/}
+\end{itemize}
+
+\end{document}

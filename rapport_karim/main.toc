@@ -1,0 +1,148 @@
+\babel@toc {french}{}\relax 
+\babel@toc {french}{}\relax 
+\contentsline {chapter}{Dédicaces}{i}{section*.2}%
+\contentsline {chapter}{Remerciements}{ii}{section*.4}%
+\contentsline {chapter}{Table des matières}{iii}{section*.5}%
+\contentsline {chapter}{Liste des figures}{viii}{section*.6}%
+\contentsline {chapter}{Liste des tableaux}{ix}{section*.7}%
+\contentsline {chapter}{Introduction Générale}{1}{section*.9}%
+\contentsline {chapter}{\numberline {1}Contexte et Cadrage Stratégique}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Immersion au sein de l’organisme d’accueil}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Vision et Stratégie de l'entreprise : L'Esprit BES2I}{3}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Écosystème de compétences}{4}{subsection.1.1.2}%
+\contentsline {subsubsection}{Pôle Ingénierie \& Développement Cloud}{4}{subsubsection*.10}%
+\contentsline {subsubsection}{Division IA \& Intelligence Cognitive}{4}{subsubsection*.11}%
+\contentsline {subsection}{\numberline {1.1.3}Rayonnement et enjeux concurrentiels}{4}{subsection.1.1.3}%
+\contentsline {section}{\numberline {1.2}Genèse et Enjeux du Projet}{4}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Contexte du Projet EduGenius}{5}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Diagnostic de la Problématique}{5}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Vision Cible et Objectifs SMART}{6}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}État de l’Art et Analyse Critique}{7}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Étude de l’existant}{7}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Benchmark des solutions du marché}{7}{subsection.1.3.2}%
+\contentsline {subsubsection}{Analyse des LMS Traditionnels (Moodle, Canvas, KEDUX)}{7}{subsubsection*.12}%
+\contentsline {subsubsection}{Analyse des outils "Engage-Tech" (Kahoot, Duolingo)}{7}{subsubsection*.13}%
+\contentsline {subsection}{\numberline {1.3.3}Identification du Gap Technologique}{8}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Synthèse et Proposition de Valeur}{8}{subsection.1.3.4}%
+\contentsline {section}{\numberline {1.4}Ingénierie du Périmètre et Acteurs}{9}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Cartographie Fonctionnelle (The 6 Pillars)}{9}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Gouvernance du Projet}{10}{subsection.1.4.2}%
+\contentsline {subsubsection}{Typologie des Parties Prenantes}{10}{subsubsection*.14}%
+\contentsline {subsubsection}{Matrice de Responsabilités (RACI)}{10}{subsubsection*.15}%
+\contentsline {section}{\numberline {1.5}Cadre Méthodologique et Écosystème Technique}{11}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Choix de la démarche Agile (Scrum)}{11}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Paradigme de Modélisation (UML 2.5 \& User Stories)}{12}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Écosystème d'Outils et de Collaboration}{12}{subsection.1.5.3}%
+\contentsline {chapter}{\numberline {2}Préparation du projet}{14}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Introduction}{14}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Spécifications des besoins}{14}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Identification des acteurs}{14}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Besoins fonctionnels}{14}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Besoins non fonctionnels}{14}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Modélisation des besoins}{15}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Diagramme de cas d'utilisation global}{15}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.4}Pilotage du projet avec Scrum}{15}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Définition des rôles Scrum}{15}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Backlog produit}{15}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Planification des sprints}{15}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Diagramme de Gantt}{15}{subsection.2.4.4}%
+\contentsline {section}{\numberline {2.5}Environnements de travail}{16}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Environnement matériel}{16}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Environnement logiciel}{16}{subsection.2.5.2}%
+\contentsline {section}{\numberline {2.6}Architecture de l'application}{16}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Architecture physique}{16}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Architecture logicielle}{16}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Conclusion}{16}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Sprint 1 : Authentification et Sécurité}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introduction}{17}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Backlog du Sprint 1}{17}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Analyse}{17}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Diagramme de cas d'utilisation}{17}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Description textuelle des cas d'utilisation}{17}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Conception}{18}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Diagramme de séquence}{18}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Diagramme de classes}{18}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Représentation graphique de la base de données}{18}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Réalisation}{18}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Interface de Connexion}{18}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Implémentation du middleware JWT}{18}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.6}Tests}{18}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Tests unitaires}{18}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Tests d'intégration}{19}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Tests fonctionnels}{19}{subsection.3.6.3}%
+\contentsline {section}{\numberline {3.7}Conclusion}{19}{section.3.7}%
+\contentsline {chapter}{\numberline {4}Sprint 2 : Gestion des Projets, Membres et Sources de Données}{20}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Introduction}{20}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Backlog du Sprint 2}{20}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Analyse}{20}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Diagramme de cas d'utilisation}{20}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Description textuelle des cas d'utilisation}{20}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Conception}{21}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Diagrammes de séquence}{21}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Diagramme de classes}{21}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Représentation graphique de la base de données}{21}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Réalisation}{21}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Interface de Gestion des Classes}{21}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Module d'Assignation des Enseignants}{21}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}Tests}{21}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Tests unitaires}{21}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Tests d'intégration}{21}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Tests fonctionnels}{22}{subsection.4.6.3}%
+\contentsline {section}{\numberline {4.7}Conclusion}{22}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Sprint 3 : Gestion des Microservices}{23}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Introduction}{23}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Backlog du Sprint 3}{23}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Analyse}{23}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Diagramme de cas d'utilisation}{23}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Description textuelle des cas d'utilisation}{23}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Conception}{24}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Diagrammes de séquence}{24}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Diagramme de classes}{24}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Représentation graphique de la base de données}{24}{subsection.5.4.3}%
+\contentsline {section}{\numberline {5.5}Réalisation}{24}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Interface d'Upload vers AWS S3}{24}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Module de Communication Temps Réel}{24}{subsection.5.5.2}%
+\contentsline {section}{\numberline {5.6}Tests}{24}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Tests unitaires}{24}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Tests d'intégration}{25}{subsection.5.6.2}%
+\contentsline {subsection}{\numberline {5.6.3}Tests fonctionnels}{25}{subsection.5.6.3}%
+\contentsline {section}{\numberline {5.7}Conclusion}{25}{section.5.7}%
+\contentsline {chapter}{\numberline {6}Sprint 4 : Gestion des Endpoints et des Modèles}{26}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Introduction}{26}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Backlog du Sprint 4}{26}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Analyse}{26}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Diagramme de cas d'utilisation}{26}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Description textuelle des cas d'utilisation}{26}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}Conception}{27}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Diagrammes de séquence}{27}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Diagramme de classes}{27}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Représentation graphique de la base de données}{27}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Réalisation}{27}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Interface de Création de Quiz}{27}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Implémentation des Contrôleurs REST}{27}{subsection.6.5.2}%
+\contentsline {section}{\numberline {6.6}Tests}{27}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}Tests unitaires}{27}{subsection.6.6.1}%
+\contentsline {subsection}{\numberline {6.6.2}Tests d'intégration}{28}{subsection.6.6.2}%
+\contentsline {subsection}{\numberline {6.6.3}Tests fonctionnels}{28}{subsection.6.6.3}%
+\contentsline {section}{\numberline {6.7}Conclusion}{28}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Sprint 5 : Tableau de bord et IA}{29}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Introduction}{29}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Backlog du Sprint 5}{29}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Analyse}{29}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Diagramme de cas d'utilisation}{29}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Description textuelle des cas d'utilisation}{29}{subsection.7.3.2}%
+\contentsline {section}{\numberline {7.4}Conception}{30}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Diagrammes de séquence}{30}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Diagramme de classes}{30}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}Représentation graphique de la base de données}{30}{subsection.7.4.3}%
+\contentsline {section}{\numberline {7.5}Réalisation}{30}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}Dashboard Étudiant avec Gamification}{30}{subsection.7.5.1}%
+\contentsline {subsection}{\numberline {7.5.2}Interface de Visioconférence Intégrée}{30}{subsection.7.5.2}%
+\contentsline {section}{\numberline {7.6}Tests}{30}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}Tests unitaires}{30}{subsection.7.6.1}%
+\contentsline {subsection}{\numberline {7.6.2}Tests d'intégration}{30}{subsection.7.6.2}%
+\contentsline {subsection}{\numberline {7.6.3}Tests fonctionnels}{31}{subsection.7.6.3}%
+\contentsline {section}{\numberline {7.7}Conclusion}{31}{section.7.7}%
+\contentsline {chapter}{Conclusion Générale}{32}{section*.28}%
+\contentsline {chapter}{Bibliographie}{33}{section*.29}%
+\contentsline {chapter}{Webographie}{34}{chapter*.31}%
