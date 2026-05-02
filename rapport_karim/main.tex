@@ -20,14 +20,26 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{tocloft}
+\usepackage{tabularx}
 
 % --- TOC Customization ---
 % Add dots for chapters
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+% --- Chapter Title Design ---
+\titleformat{\chapter}[display]
+  {\normalfont\Huge\bfseries\color{black}}
+  {\filleft\textsf{\LARGE\chaptertitlename\ \thechapter}}
+  {20pt}
+  {\titlerule\vspace{1.5ex}\filcenter\Huge}
+  [\vspace{1ex}\titlerule]
+
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+
 % Prefix "Chapitre X : " in TOC
 \renewcommand{\cftchappresnum}{Chapitre }
 \renewcommand{\cftchapaftersnum}{ : }
@@ -135,11 +147,11 @@
 \input{chapters/chap1_cadre_general}
 \input{chapters/chap2_etat_art}
 \input{chapters/chap3_sprint1}
-\input{chapters/chap4_sprint2}
-\input{chapters/chap5_sprint3}
-\input{chapters/chap6_sprint4}
-\input{chapters/chap7_sprint5}
-\input{chapters/conclusion_generale}
+% \input{chapters/chap4_sprint2}
+% \input{chapters/chap5_sprint3}
+% \input{chapters/chap6_sprint4}
+% \input{chapters/chap7_sprint5}
+% \input{chapters/conclusion_generale}
 
 % --- References ---
 \newpage

@@ -2,12 +2,8 @@
 
 % --- Introduction du chapitre ---
 \section*{Introduction}
+Ce chapitre constitue la phase de conception détaillée du projet \textbf{EduGenius}. Il s'agit de traduire les objectifs stratégiques en spécifications techniques et organisationnelles. Nous y détaillerons l'analyse des besoins, la méthodologie de pilotage Scrum, ainsi que les choix architecturaux (Next.js, Express, MongoDB, IA locale) qui garantissent la robustesse et la souveraineté du système.
 
-Avant d’entamer toute phase de développement, il est impératif de procéder à une préparation rigoureuse du projet. Ce chapitre présente ainsi les travaux menés durant cette étape critique pour le projet \textbf{EduGenius}. Il s'agit d’identifier les besoins métiers et techniques du système à mettre en place, et de modéliser les interactions utilisateur à l’aide de diagrammes de cas d’utilisation UML. 
-
-La préparation comprend également l’étude approfondie de l’environnement de travail, justifiant le choix des frameworks et technologies retenus (Next.js, Node.js, MongoDB), ainsi que la définition de l’architecture logicielle et physique garantissant l’intégration de l’IA locale via \textbf{Ollama} et des flux temps réel avec \textbf{Daily.co}. Enfin, ce chapitre expose la planification agile du projet via la méthodologie \textbf{Scrum}, permettant d'orchestrer le développement de manière itérative et structurée.
-
-\newpage
 
 % --- Section 1 : Besoins ---
 \section{Analyse Dimensionnelle des Besoins}
@@ -15,7 +11,6 @@ La préparation comprend également l’étude approfondie de l’environnement 
 L’ingénierie des besoins constitue le socle de la conception logicielle. Cette phase permet de définir précisément le périmètre d’intervention du système \textbf{EduGenius} en segmentant les attentes des utilisateurs et les contraintes de qualité indispensables à la réussite d'une plateforme d'apprentissage intelligente.
 
 \subsection{Écosystème des Acteurs et Matrice d'Accès}
-
 Le système repose sur une interaction entre trois acteurs principaux, dont les privilèges sont strictement définis pour garantir l'intégrité des données et la fluidité des processus pédagogiques :
 
 \begin{itemize}
@@ -24,8 +19,7 @@ Le système repose sur une interaction entre trois acteurs principaux, dont les 
     \item \textbf{L’Étudiant (Apprenant) :} Acteur final de la plateforme, il accède aux ressources de manière structurée. Il peut consulter les cours, participer aux sessions vidéo, passer des quiz générés par l'IA, suivre sa progression, interagir via le chat et bénéficier des outils de révision adaptatifs (flashcards, résumés).
 \end{itemize}
 
-\subsection{Spécifications des Besoins Fonctionnels}
-
+\subsection{Ingénierie des Exigences Fonctionnelles (User Stories)}
 Le système EduGenius doit fournir un ensemble de services cohérents pour assurer une gestion complète de l'apprentissage numérique :
 
 \begin{enumerate}
@@ -37,7 +31,6 @@ Le système EduGenius doit fournir un ensemble de services cohérents pour assur
 \end{enumerate}
 
 \subsection{Attributs Qualitatifs et Contraintes de Design}
-
 Les besoins non fonctionnels définissent la robustesse et l'efficacité opérationnelle du système :
 
 \begin{itemize}
@@ -49,43 +42,7 @@ Les besoins non fonctionnels définissent la robustesse et l'efficacité opérat
     \item \textbf{Contraintes d'IA :} Temps de génération des contenus par le LLM acceptable et résultats pertinents avec des paramètres ajustables (difficulté, longueur).
 \end{itemize}
 
-\subsection{Modélisation des besoins}
 
-La modélisation des besoins a pour objectif de transformer les exigences fonctionnelles en une représentation graphique claire des interactions entre les utilisateurs et le système. À cet effet, nous utilisons le \textbf{Diagramme de Cas d'Utilisation (Use Case Diagram)} issu du langage UML. 
-
-Compte tenu de la richesse fonctionnelle d'EduGenius, nous avons segmenté cette modélisation en trois diagrammes distincts, permettant une lecture granulaire des droits et interactions par profil d'acteur :
-
-\begin{itemize}
-    \item \textbf{Le périmètre administratif :} Il illustre l'orchestration de la structure globale. Ce diagramme (voir Figure \ref{fig:use_case_admin}) détaille les actions de l'administrateur concernant la gouvernance des comptes, la configuration des départements et l'établissement des plannings.
-    \item \textbf{Le périmètre enseignant :} Centré sur la gestion pédagogique, ce diagramme (voir Figure \ref{fig:use_case_teacher}) met en lumière la création de contenus, l'animation des sessions live via \textbf{Daily.co} et la génération d'évaluations assistée par l'IA locale \textbf{Ollama}.
-    \item \textbf{Le périmètre étudiant :} Ce diagramme (voir Figure \ref{fig:use_case_student}) se focalise sur l'expérience d'apprentissage, incluant la consommation des ressources, la participation aux classes virtuelles et le suivi de progression gamifié.
-\end{itemize}
-
-% --- Figures des 3 Diagrammes ---
-
-\begin{figure}[H]
-    \centering
-    \textbf{Cas d'utilisation : Périmètre Administrateur} \\[0.5cm]
-    \includegraphics[width=0.8\textwidth]{images/use_case_global_admin.png}
-    \caption{Diagramme de cas d'utilisation : Acteur Administrateur}
-    \label{fig:use_case_admin}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \textbf{Cas d'utilisation : Périmètre Enseignant} \\[0.5cm]
-    \includegraphics[width=0.8\textwidth]{images/use_case_global_teacher.png}
-    \caption{Diagramme de cas d'utilisation : Acteur Enseignant}
-    \label{fig:use_case_teacher}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \textbf{Cas d'utilisation : Périmètre Étudiant} \\[0.5cm]
-    \includegraphics[width=0.8\textwidth]{images/use_case_global_student.png}
-    \caption{Diagramme de cas d'utilisation : Acteur Étudiant}
-    \label{fig:use_case_student}
-\end{figure}
 
 % --- Section 2 : Agilité ---
 \section{Pilotage du Projet via la Méthodologie Scrum}
@@ -93,7 +50,6 @@ Compte tenu de la richesse fonctionnelle d'EduGenius, nous avons segmenté cette
 Le développement de la plateforme \textbf{EduGenius} s'inscrit dans une démarche \textbf{Agile}, utilisant le cadre méthodologique \textbf{Scrum}. Ce choix se justifie par la nature itérative du projet, notamment pour l'intégration de technologies émergentes comme l'intelligence artificielle locale et les flux vidéo en temps réel, nécessitant une validation continue des briques technologiques.
 
 \subsection{Organisation et Rôles Scrum}
-
 Bien que ce projet ait été réalisé en autonomie, j'ai adopté une structure de gestion rigoureuse en assumant la transversalité des rôles Scrum. Cette approche a permis de maintenir une discipline d'ingénierie logicielle tout au long du cycle de vie du produit :
 
 \begin{itemize}
@@ -103,14 +59,12 @@ Bien que ce projet ait été réalisé en autonomie, j'ai adopté une structure 
 \end{itemize}
 
 \subsection{Gestion du Product Backlog}
-
 Le \textit{Product Backlog} constitue le référentiel exhaustif des exigences du système EduGenius. Pour ce projet, il a été structuré en 10 Épiques majeures, regroupant un total de 42 récits utilisateurs (\textit{User Stories}). Cette granularité a permis une estimation précise de la charge de travail et une priorisation efficace via la méthode \textbf{MoSCoW} (Must have, Should have, Could have, Won't have). Les priorités sont réparties comme suit : \textbf{Haute} (indispensable pour le MVP), \textbf{Moyenne} (amélioration importante) et \textbf{Basse} (optionnelle).
 
 Le tableau ci-dessous détaille l'intégralité du Backlog produit avec les identifiants (US-01 à US-42), les épics associés, les titres, les user stories et les priorités.
 
 \bigskip
 
-% Nécessite les packages : longtable, array
 \renewcommand{\arraystretch}{1.5}
 \begin{longtable}{|
     >{\raggedright\arraybackslash}p{3cm} |
@@ -119,6 +73,7 @@ Le tableau ci-dessous détaille l'intégralité du Backlog produit avec les iden
     >{\raggedright\arraybackslash}p{6cm} |
     >{\centering\arraybackslash}p{1.8cm} |
 }
+\caption{Backlog produit détaillé d'EduGenius} \label{tab:backlog} \\
 \hline
 \textbf{Epic} & \textbf{ID} & \textbf{Titre} & \textbf{User Story} & \textbf{Priorité} \\
 \hline
@@ -138,7 +93,7 @@ Le tableau ci-dessous détaille l'intégralité du Backlog produit avec les iden
 \endlastfoot
 
 % EPIC 1
-EPIC 1 – Authentification \& rôles & US-01 & Inscription et connexion sécurisée & En tant qu'utilisateur, je veux pouvoir m'inscrire et me connecter avec email/mot de passe, afin d'accéder à mon espace personnel. & Haute \\ \cline{2-5}
+EPIC 1 – Authentification \& rôles & US-01 & Connexion sécurisée & En tant qu'utilisateur, je veux pouvoir me connecter avec mes identifiants fournis par l'administrateur, afin d'accéder à mon espace personnel. & Haute \\ \cline{2-5}
  & US-02 & Gestion des rôles & En tant qu'Admin, je veux définir le rôle de chaque utilisateur lors de la création de compte, afin de contrôler les accès. & Haute \\ \cline{2-5}
  & US-03 & Profil utilisateur & En tant qu'utilisateur, je veux consulter et modifier mon profil (nom, photo, mot de passe), afin de personnaliser mon expérience. & Moyenne \\ \hline
 
@@ -205,44 +160,172 @@ EPIC 10 – Transverse & US-39 & Dashboard unifié (calendrier, prochaines éval
 
 L'intégralité du backlog, incluant les identifiants de tâches (US-01 à US-42) et les critères d'acceptation, a été pilotée via l'outil \textbf{Trello}, permettant un suivi dynamique du flux de développement (\textit{To Do, In Progress, Done}).
 
-\begin{figure}[h!]
-    \centering
-    % \includegraphics[width=0.9\textwidth]{images/trello_backlog.png}
-    \caption{Visualisation du Backlog produit sur Trello}
-    \label{fig:trello}
-\end{figure}
+\subsection{Planification et Orchestration des Sprints}
+Le cycle de développement a été segmenté en quatre itérations (\textit{Sprints}) de quatre semaines chacune. Ce découpage opérationnel a permis de transformer le \textit{Product Backlog} en livrables fonctionnels selon la répartition suivante :
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|p{3.5cm}|p{4cm}|c|p{4cm}|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Sprint} & \textbf{Fonctionnalité} & \textbf{Objectifs Principaux} & \textbf{Durée} & \textbf{User Stories (IDs)} \\ \hline
+\textbf{Sprint 1} & Authentification \& Sécurité & Socle technique, sécurité et Auth & 4 sem & EG-1, EG-2, EG-3, EG-4, EG-39, EG-41 \\ \hline
+\textbf{Sprint 2} & Gestion CMS \& Cloud & Gestion CMS et infrastructure Cloud & 4 sem & EG-7, EG-14, EG-5, EG-6, EG-22, EG-42 \\ \hline
+\textbf{Sprint 3} & IA \& Analytics & Intelligence Artificielle et Analytics & 4 sem & EG-8, EG-9, EG-15, EG-16, EG-31, EG-32, EG-35, EG-36 \\ \hline
+\textbf{Sprint 4} & Collaboration \& Évaluations & Collaboration Temps Réel et Évaluations & 4 sem & EG-10, EG-11, EG-12, EG-17, EG-19, EG-23, EG-24, EG-28 \\ \hline
+\end{tabular}
+\caption{Planification opérationnelle des Sprints et couverture du Backlog}
+\label{tab:sprint_mapping}
+\end{table}
+
 \subsection{Chronogramme de Réalisation (Diagramme de Gantt)}
-% Contenu : Insertion de la figure du Gantt.
+La planification temporelle des différentes phases (Analyse, Développement des Sprints, Tests, Déploiement) est illustrée par le diagramme de Gantt suivant :
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/gantt_diagram_global.png}
+    \caption{Chronogramme de réalisation (Diagramme de Gantt)}
+    \label{fig:gantt}
+\end{figure}
+
 
 
 % --- Section 3 : Modélisation ---
 \section{Modélisation Sémantique et Comportementale}
 
+La modélisation des besoins a pour objectif de transformer les exigences fonctionnelles en une représentation graphique claire des interactions entre les utilisateurs et le système. À cet effet, nous utilisons le \textbf{Diagramme de Cas d'Utilisation (Use Case Diagram)} issu du langage UML. 
+
+Compte tenu de la richesse fonctionnelle d'EduGenius, nous avons segmenté cette modélisation en trois diagrammes distincts, permettant une lecture granulaire des droits et interactions par profil d'acteur :
+
+\begin{itemize}
+    \item \textbf{Le périmètre administratif :} Il illustre l'orchestration de la structure globale. Ce diagramme (voir Figure \ref{fig:use_case_admin}) détaille les actions de l'administrateur concernant la gouvernance des comptes, la configuration des départements et l'établissement des plannings.
+    \item \textbf{Le périmètre enseignant :} Centré sur la gestion pédagogique, ce diagramme (voir Figure \ref{fig:use_case_teacher}) met en lumière la création de contenus, l'animation des sessions live via \textbf{Daily.co} et la génération d'évaluations assistée par l'IA locale \textbf{Ollama}.
+    \item \textbf{Le périmètre étudiant :} Ce diagramme (voir Figure \ref{fig:use_case_student}) se focalise sur l'expérience d'apprentissage, incluant la consommation des ressources, la participation aux classes virtuelles et le suivi de progression gamifié.
+\end{itemize}
+
 \subsection{Diagramme de Cas d'Utilisation Global}
 
+\begin{figure}[H]
+    \centering
+    \textbf{Cas d'utilisation : Périmètre Administrateur} \\[0.5cm]
+    \includegraphics[width=1\textwidth]{images/use_case_global_admin.png}
+    \caption{Diagramme de cas d'utilisation : Acteur Administrateur}
+    \label{fig:use_case_admin}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \textbf{Cas d'utilisation : Périmètre Enseignant} \\[0.5cm]
+    \includegraphics[width=1\textwidth]{images/use_case_global_teacher.png}
+    \caption{Diagramme de cas d'utilisation : Acteur Enseignant}
+    \label{fig:use_case_teacher}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \textbf{Cas d'utilisation : Périmètre Étudiant} \\[0.5cm]
+    \includegraphics[width=1\textwidth]{images/use_case_global_student.png}
+    \caption{Diagramme de cas d'utilisation : Acteur Étudiant}
+    \label{fig:use_case_student}
+\end{figure}
+
 \subsection{Logique de Flux : Diagramme de Séquence (Focus IA)}
+Ce diagramme détaille l'interaction entre l'utilisateur, le serveur backend et l'instance Ollama lors de la génération d'un résumé ou d'un quiz.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/sequence_diagram_ai.png}
+    \caption{Diagramme de séquence : Interaction avec l'IA Ollama}
+    \label{fig:sequence_ia}
+\end{figure}
+
 
 
 % --- Section 4 : Stack Technique ---
 \section{Écosystème de Développement et Stack Technologique}
 
 \subsection{Environnement de Collaboration}
-% Contenu : Trello, Teams, GitHub.
+Le succès du développement d'EduGenius repose sur une orchestration rigoureuse des outils de collaboration, permettant une gestion fluide du code source et du suivi de projet :
+
+\begin{itemize}
+    \item \textbf{GitHub :} Plateforme de forge logicielle utilisant Git pour le versionnement du code, facilitant le suivi des modifications et la sécurité des sources. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/github_logo.png} \captionof{figure}{Logo GitHub} \end{center}
+    \item \textbf{Trello :} Outil de gestion de projet basé sur la méthode Kanban, utilisé ici pour piloter le Product Backlog et l'avancement des Sprints Scrum. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/trello_logo.png} \captionof{figure}{Logo Trello} \end{center}
+    \item \textbf{Microsoft Teams :} Hub collaboratif utilisé pour centraliser les échanges, la documentation technique et les réunions de cadrage. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/teams_logo.png} \captionof{figure}{Logo Microsoft Teams} \end{center}
+\end{itemize}
 
 \subsection{Stack Technologique : Le choix de la Performance}
-% Contenu : Next.js, Node/Express, MongoDB, AWS S3, Ollama, Daily.co.
+L'architecture d'EduGenius repose sur une stack moderne, choisie pour sa capacité à gérer l'asynchronisme, la scalabilité et l'intégration de services temps réel :
 
+\begin{itemize}
+    \item \textbf{Next.js :} Framework full-stack basé sur React, utilisé pour le rendu hybride (SSR/SSG) et ses capacités de \textit{Server Actions}, optimisant ainsi la vitesse et le référencement. \\ \begin{center} \includegraphics[width=3.5cm, height=2.5cm, keepaspectratio]{images/next_logo.png} \captionof{figure}{Logo Next.js} \end{center}
+    \item \textbf{Node.js \& Express :} Environnement d'exécution JavaScript côté serveur associé à un framework minimaliste pour la création d'API REST robustes et rapides. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/node_logo.png} \hspace{0.5cm} \includegraphics[width=3.5cm, height=1.2cm]{images/express_logo.png} \captionof{figure}{Logos Node.js et Express} \end{center}
+    \item \textbf{MongoDB :} Base de données NoSQL orientée documents, offrant une grande flexibilité pour modéliser des structures de données éducatives évolutives. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/mongodb_logo.png} \captionof{figure}{Logo MongoDB} \end{center}
+    \item \textbf{AWS S3 :} Service de stockage d'objects cloud hautement disponible, utilisé pour l'hébergement sécurisé des supports de cours et fichiers multimédias. % \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/logo_aws_s3.png} \captionof{figure}{Logo AWS S3} \end{center}
+    \item \textbf{Ollama :} Moteur d'inférence permettant l'exécution de modèles de langage (LLM) en local, garantissant la souveraineté et la confidentialité totale des données traitées. \\ \begin{center} \includegraphics[width=3.5cm, height=3cm, keepaspectratio]{images/ollama_logo.png} \captionof{figure}{Logo Ollama} \end{center}
+    \item \textbf{Daily.co :} API WebRTC spécialisée dans la vidéo haute définition, permettant l'intégration fluide des classes virtuelles directement dans l'interface. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/daily_logo.png} \captionof{figure}{Logo Daily.co} \end{center}
+    \item \textbf{Tailwind CSS :} Framework CSS utilitaire permettant une conception d'interface utilisateur rapide, moderne et entièrement responsive. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/tailwind_logo.png} \captionof{figure}{Logo Tailwind CSS} \end{center}
+\end{itemize}
 
 % --- Section 5 : Architecture ---
 \section{Architecture Logicielle et Topologie Système}
 
+L'architecture d'\textbf{EduGenius} a été conçue pour répondre à des impératifs de performance, de sécurité des données et de fluidité utilisateur. Elle repose sur une infrastructure hybride alliant services cloud et traitement local souverain.
+
 \subsection{Architecture Physique (Déploiement)}
+
+La topologie de déploiement s'articule autour d'un écosystème distribué garantissant la haute disponibilité des ressources et une latence minimale :
+
+\begin{itemize}
+    \item \textbf{Serveur d'Application :} Hébergement de la logique \textbf{Next.js} et de l'API \textbf{Express} sur une instance VPS (ou plateforme managée), gérant le routage et le rendu hybride.
+    \item \textbf{Services de Stockage (AWS S3) :} Externalisation des fichiers volumineux (PDF, vidéos) pour optimiser la charge serveur et garantir une distribution sécurisée.
+    \item \textbf{Base de Données :} Utilisation d'un cluster \textbf{MongoDB Atlas} assurant la persistance, la réplication et la scalabilité des données.
+    \item \textbf{Instance IA (Ollama) :} Moteur d'inférence dédié au traitement des modèles LLM en local, assurant que les données pédagogiques sensibles ne quittent pas l'infrastructure contrôlée.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/physical_architecture_diagram.png}
+    \caption{Architecture de déploiement et flux d'infrastructure}
+    \label{fig:deployment_arch}
+\end{figure}
 
 \subsection{Architecture Applicative : Modèle Multi-tiers}
 
+Le système adopte une architecture en couches (\textit{n-tier}), garantissant une séparation stricte des préoccupations (\textit{Separation of Concerns}) :
+
+\begin{enumerate}
+    \item \textbf{Couche de Présentation :} Développée avec \textbf{Next.js}, elle gère l'interface utilisateur, l'état applicatif et les interactions temps réel.
+    \item \textbf{Couche Métier (Logic) :} Le serveur \textbf{Node.js} centralise la logique décisionnelle : orchestration de l'IA, gestion des sessions \textbf{Daily.co} et sécurité (JWT).
+    \item \textbf{Couche d'Accès aux Données :} Interface avec \textbf{MongoDB} via l'ODM \textbf{Mongoose}, assurant la validation des schémas et l'intégrité des transactions.
+\end{enumerate}
+
 \subsection{Conception de la Couche de Données (Modélisation MongoDB)}
+
+Contrairement aux bases relationnelles classiques, nous utilisons une approche orientée documents pour gagner en flexibilité. Les relations sont gérées par références croisées pour maintenir une structure légère et évolutive :
+
+\begin{itemize}
+    \item \textbf{Users :} Profils, rôles (\textit{RBAC}) et authentification.
+    \item \textbf{Classes \& Courses :} Organisation hiérarchique des cursus et métadonnées des supports de cours (liens S3).
+    \item \textbf{Evaluations :} Structure des quiz (générés par IA ou manuels) et banques de questions.
+    \item \textbf{Analytics :} Suivi des scores, de l'assiduité et des logs de participation vidéo.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=30cm, keepaspectratio]{images/global_rs_enhanced.png}
+    \caption{Modélisation conceptuelle des données (NoSQL)}
+    \label{fig:mongodb_schema}
+\end{figure}
 
 
 % --- Conclusion du chapitre ---
 \section*{Conclusion}
-Ce chapitre a permis de définir le socle technique et organisationnel indispensable à la réalisation d'EduGenius. En alignant les besoins des acteurs sur une architecture moderne et une méthode de travail agile, nous disposons désormais d'une feuille de route claire. Le chapitre suivant sera consacré à la mise en œuvre technique et à la présentation des résultats obtenus.
+\addcontentsline{toc}{section}{Conclusion}
+
+La phase de conception et de modélisation du projet EduGenius a permis d'aligner les attentes fonctionnelles des différents utilisateurs avec les contraintes techniques inhérentes à une plateforme éducative moderne. Grâce à une modélisation rigoureuse du schéma de données NoSQL et à l'identification précise des interactions entre les modules académiques et ludiques, le projet dispose désormais d'un cadre robuste. Le choix d'une architecture orientée vers la performance et la scalabilité garantit que l'application pourra évoluer de manière fluide tout en maintenant une sécurité optimale des données et une maintenabilité simplifiée du code source.
+
+Cette étape de préparation approfondie constitue une étape clé qui a permis d'amorcer le développement sur des bases saines, tout en anticipant les défis liés à la gestion multi-rôles et à la synchronisation en temps réel. En structurant ainsi la logique métier et l'infrastructure technique, nous avons transformé la vision conceptuelle du projet en une feuille de route opérationnelle prête pour l'implémentation. Cette approche assure un pilotage réactif, favorisant la qualité logicielle et l'amélioration continue tout au long du cycle de développement.
+
+Le chapitre suivant sera consacré à la mise en œuvre technique et à la présentation des résultats obtenus lors du Sprint 1. Nous y détaillerons la concrétisation des premiers modules fonctionnels, en commençant par la mise en place de l'environnement de développement et l'intégration du système d'authentification. Ce passage à la réalisation marquera le début d'une phase itérative où les premières interfaces d'EduGenius prendront vie, validant ainsi les choix architecturaux établis précédemment.

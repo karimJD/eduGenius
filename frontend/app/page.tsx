@@ -41,12 +41,12 @@ export default function LandingPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-black text-white overflow-hidden">
+    <main className="min-h-screen bg-white dark:bg-zinc-950 font-sans overflow-hidden">
       <Navbar />
       <Hero />
       
       {/* Features Section */}
-      <section className="relative py-24 px-8">
+      <section className="relative py-24 px-8 bg-zinc-50/50 dark:bg-zinc-900/30 border-y border-zinc-100 dark:border-zinc-800">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -55,11 +55,11 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-zinc-900 dark:text-white">
               Supercharge Your Learning
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Everything you need to transform your study materials into an interactive learning experience
+            <p className="text-zinc-600 dark:text-zinc-400 text-lg max-w-2xl mx-auto">
+              Everything you need to transform your study materials into an interactive learning experience.
             </p>
           </motion.div>
 
@@ -71,15 +71,14 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative bg-gradient-to-br from-white/5 to-white/0 border border-white/10 rounded-2xl p-8 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-2"
+                className="group relative bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-600/5 transition-all duration-300 hover:-translate-y-2"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon className="w-7 h-7 text-blue-400" />
+                  <div className="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon className="w-7 h-7 text-blue-600" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-white">{feature.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+                  <h3 className="text-xl font-bold mb-3 text-zinc-900 dark:text-white">{feature.title}</h3>
+                  <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">{feature.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -95,24 +94,25 @@ export default function LandingPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-3xl p-12 text-center overflow-hidden"
+            className="relative bg-blue-600 rounded-[3rem] p-12 text-center overflow-hidden shadow-2xl shadow-blue-600/20"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 animate-pulse" />
-            <div className="relative">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                 style={{ backgroundImage: 'radial-gradient(white 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+            <div className="relative z-10">
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-white tracking-tight">
                 Ready to Transform Your Learning?
               </h2>
-              <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-                Join thousands of students who are already learning smarter with AI-powered education
+              <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">
+                Join thousands of students who are already learning smarter with AI-powered education.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/register">
-                  <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-500/25">
+                  <button className="h-14 px-8 bg-white text-blue-600 hover:bg-blue-50 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 shadow-xl w-full sm:w-auto">
                     Get Started Free
                   </button>
                 </Link>
                 <Link href="/login">
-                  <button className="px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105">
+                  <button className="h-14 px-8 bg-blue-700/50 hover:bg-blue-700 border border-blue-400/30 text-white rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 w-full sm:w-auto">
                     Sign In
                   </button>
                 </Link>
@@ -123,14 +123,16 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-8 px-8">
+      <footer className="border-t border-zinc-200 dark:border-zinc-800 py-10 px-8 bg-zinc-50 dark:bg-zinc-900/50">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-blue-400" />
-            <span className="font-bold text-xl">eduGenius</span>
+            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+              <BookOpen className="w-4 h-4" />
+            </div>
+            <span className="font-bold text-xl tracking-tight text-zinc-900 dark:text-white">EduGenius</span>
           </div>
-          <p className="text-gray-500 text-sm">
-            © 2024 eduGenius. AI-Powered Learning Platform.
+          <p className="text-zinc-500 dark:text-zinc-400 font-medium">
+            © 2026 EduGenius. All rights reserved.
           </p>
         </div>
       </footer>

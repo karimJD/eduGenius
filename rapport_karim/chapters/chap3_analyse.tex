@@ -1,152 +1,127 @@
-\chapter{Analyse et Spécification des Besoins}
+\chapter{Sprint 1 – Authentification et Sécurité}
 
-\section{Introduction}
-L'analyse des besoins constitue la fondation de notre projet. Elle permet de traduire les attentes des utilisateurs en spécifications techniques rigoureuses.
+\section*{Introduction}
+\ldots
 
-\section{Analyse Fonctionnelle Détaillée des Interfaces}
-eduGenius est structuré autour de trois espaces de travail distincts, chacun répondant à des besoins métiers spécifiques.
+\tableofcontents % optionnel, selon votre style
 
-\subsection{L'Espace Administrateur : Le Cerveau Académique}
-L'interface administrateur d'eduGenius a été conçue pour couvrir l'intégralité du cycle de gestion d'une université moderne.
-\begin{itemize}
-    \item \textbf{Gestion des Périodes Académiques} : Définition des années universitaires et des semestres avec leurs dates de début et de fin respectives.
-    \item \textbf{Module de Configuration LMD} : Gestion des programmes d'études (Licence, Master, Ingénierie) et des matières avec paramétrage fin des coefficients et crédits.
-    \item \textbf{Centre de Visioconférence (Live Monitoring)} : Surveillance en temps réel des sessions de cours actives, avec capacité de terminer une session à distance pour forcer le calcul de présence.
-    \item \textbf{Reporting d'Assiduité} : Génération de rapports statistiques sur le taux de présence moyen, avec filtres par période et export au format CSV pour les archives de Polytech-Intl.
-    \item \textbf{Module de Génération de PV} : Un outil critique permettant de générer les \textbf{Procès-Verbaux (PV)} officiels des examens, incluant les moyennes calculées, les mentions automatiques et les statistiques de réussite par session (Principale, Rattrapage).
-\end{itemize}
-
-\subsection{L'Espace Enseignant : L'Assistant Pédagogique IA}
-\begin{itemize}
-    \item \textbf{Gestion des Travaux et Rendus} : Organisation des supports par chapitres et création d'exercices avec dates limites. Suivi des fichiers déposés par les étudiants.
-    \item \textbf{Système de Correction Avancé} : Interface de notation par question avec ajout de feedbacks textuels spécifiques pour chaque erreur détectée.
-    \item \textbf{Studio de Quiz IA} : Création de quiz manuels ou assistés par l'IA (Gemini), avec gestion de la difficulté et du chronométrage.
-    \item \textbf{Lobby de Session Live} : Interface de préparation avant le lancement d'une salle Daily.co, affichant les détails de la matière et le lieu virtuel.
-\end{itemize}
-
-\subsection{L'Espace Étudiant : Gamification et Apprentissage}
-L'étudiant bénéficie d'une interface motivante intégrant des éléments de \textbf{Gamification}.
-\begin{itemize}
-    \item \textbf{Système d'Expérience (XP)} : Chaque quiz complété et chaque cours consulté rapporte des points d'expérience, permettant de suivre son engagement de manière ludique.
-    \item \textbf{Centre IA Personnel} : Accès direct aux générateurs de flashcards, résumés et quiz d'entraînement basés sur l'historique de performance.
-    \item \textbf{Dashboard de Performance} : Visualisation de la Moyenne Générale (GPA) estimée et des moyennes par matière avec indicateurs de tendance.
-    \item \textbf{Agenda Dynamique} : Vue calendrier hebdomadaire intégrant les cours en présentiel (numéros de salles) et les cours en ligne (liens de réunion).
-\end{itemize}
-
-\section{Spécification Détaillée des Cas d'Utilisation}
-...
-
-\subsection{Cas d'Utilisation : Gestion des Utilisateurs}
+\section{Backlog du Sprint 1}
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|p{10cm}|}
+\small
+\begin{tabular}{|c|l|l|}
 \hline
-\textbf{Nom du Cas} & \textbf{Gérer les Comptes Utilisateurs} \\ \hline
-\textbf{Acteur} & Administrateur \\ \hline
-\textbf{Pré-conditions} & L'administrateur est authentifié. \\ \hline
-\textbf{Scénario Nominal} & 
-1. L'admin accède à la liste des membres. \newline 
-2. Il choisit de créer, modifier ou supprimer un compte. \newline
-3. Le système valide les données (email unique, format du MDP). \newline
-4. La base de données MongoDB est mise à jour. \\ \hline
-\textbf{Post-conditions} & L'utilisateur reçoit ses identifiants par email (optionnel). \\ \hline
+\textbf{ID} & \textbf{Titre} & \textbf{Critères d’acceptation} \\
+\hline
+EG-1 & \ldots & \ldots \\
+EG-2 & \ldots & \ldots \\
+EG-3 & \ldots & \ldots \\
+EG-4 & \ldots & \ldots \\
+EG-39 & \ldots & \ldots \\
+EG-41 & \ldots & \ldots \\
+\hline
 \end{tabular}
+\caption{User Stories du Sprint 1}
+\label{tab:sprint1_backlog}
 \end{table}
 
-\subsection{Cas d'Utilisation : Publication d'Annonces}
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|p{10cm}|}
-\hline
-\textbf{Nom du Cas} & \textbf{Publier une Annonce de Classe} \\ \hline
-\textbf{Acteur} & Enseignant \\ \hline
-\textbf{Pré-conditions} & L'enseignant est assigné à la classe concernée. \\ \hline
-\textbf{Scénario Nominal} & 
-1. L'enseignant accède au module Annonces. \newline 
-2. Il rédige le contenu et choisit s'il doit être épinglé. \newline
-3. Le système enregistre l'annonce et émet un événement Socket.io. \newline
-4. L'annonce apparaît sur le dashboard des étudiants en temps réel. \\ \hline
-\textbf{Post-conditions} & L'annonce est persistée et visible par tous les membres de la classe. \\ \hline
-\end{tabular}
-\end{table}
+\section{Analyse}
+\subsection{Diagramme de cas d’utilisation du Sprint 1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{...}
+    \caption{Diagramme de cas d’utilisation – Authentification et sécurité}
+    \label{fig:usecase_sprint1}
+\end{figure}
 
-\subsection{Cas d'Utilisation : Génération de Résumé IA}
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|p{10cm}|}
-\hline
-\textbf{Nom du Cas} & \textbf{Générer un Résumé Automatique} \\ \hline
-\textbf{Acteur} & Enseignant \\ \hline
-\textbf{Pré-conditions} & Le document PDF est uploadé sur S3. \\ \hline
-\textbf{Scénario Nominal} & 
-1. L'enseignant sélectionne un cours. \newline 
-2. Il clique sur "Générer Résumé". \newline
-3. Le système extrait le texte du PDF. \newline
-4. L'IA Gemini traite le texte et renvoie le résumé. \newline
-5. Le résumé est affiché et enregistré. \\ \hline
-\textbf{Post-conditions} & Le résumé est accessible par tous les étudiants de la classe. \\ \hline
-\end{tabular}
-\end{table}
+\subsection{Description textuelle des cas d’utilisation}
+\subsubsection{Le cas d’utilisation « S’inscrire »}
+\ldots
 
-\subsection{Cas d'Utilisation : Session Live Vidéo}
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|p{10cm}|}
-\hline
-\textbf{Nom du Cas} & \textbf{Démarrer un cours en visioconférence} \\ \hline
-\textbf{Acteur} & Enseignant \\ \hline
-\textbf{Pré-conditions} & L'enseignant est connecté à son dashboard. \\ \hline
-\textbf{Scénario Nominal} & 
-1. L'enseignant choisit sa classe. \newline 
-2. Il clique sur "Démarrer Session Live". \newline
-3. Le backend demande un token à Daily.co. \newline
-4. La salle virtuelle s'ouvre dans l'interface. \newline
-5. Une notification est envoyée aux étudiants. \\ \hline
-\textbf{Post-conditions} & La présence des étudiants est enregistrée automatiquement. \\ \hline
-\end{tabular}
-\end{table}
+\subsubsection{Le cas d’utilisation « S’authentifier »}
+\ldots
 
-\section{Modélisation des Diagrammes de Séquences}
+\subsubsection{Le cas d’utilisation « Réinitialiser mot de passe »}
+\ldots
 
-\subsection{Diagramme de Séquence : Authentification JWT}
-Le processus d'authentification est vital pour la sécurité d'eduGenius. Il se déroule comme suit :
-\begin{enumerate}
-    \item L'utilisateur envoie ses identifiants (Email/Password) au serveur Express.
-    \item Le serveur vérifie le mot de passe via \texttt{bcrypt.compare()}.
-    \item Si valide, le serveur génère un \textbf{JSON Web Token} signé avec une clé secrète.
-    \item Le token est renvoyé au client qui le stocke en \textit{LocalStorage}.
-    \item Pour chaque requête ultérieure, le client inclut le token dans le header \texttt{Authorization}.
-\end{enumerate}
-\fbox{Placeholder: Diagramme de Séquence - Authentification JWT}
+\subsubsection{Le cas d’utilisation « Consulter / modifier profil »}
+\ldots
 
-\subsection{Diagramme de Séquence : Flux de Génération IA}
-Ce diagramme illustre la complexité de l'interaction avec les services tiers (AWS et Google) :
-\begin{enumerate}
-    \item L'utilisateur initie la demande depuis le Frontend.
-    \item Le Backend récupère l'URL du fichier sur AWS S3.
-    \item Le Backend extrait le texte brut via \texttt{pdf-parse}.
-    \item Le texte est envoyé à l'orchestrateur \texttt{AiService} qui communique avec l'API Gemini.
-    \item Le résultat JSON est parsé, validé, puis enregistré dans MongoDB.
-    \item Le résultat final est renvoyé au Frontend pour affichage.
-\end{enumerate}
-\fbox{Placeholder: Diagramme de Séquence - Génération IA}
+\section{Conception}
+\subsection{Diagramme de séquence du cas « S’authentifier »}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{...}
+    \caption{Diagramme de séquence de l’authentification JWT}
+    \label{fig:sequence_auth}
+\end{figure}
 
-\section{Besoins Non-Fonctionnels}
-Les besoins non-fonctionnels définissent les contraintes de qualité et les exigences de performance du système eduGenius.
+\subsection{Diagramme de séquence du cas « Consulter profil »}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{...}
+    \caption{Diagramme de séquence de la consultation du profil}
+    \label{fig:sequence_profil}
+\end{figure}
 
-\subsection{Performance et Scalabilité}
-L'API doit répondre en moins de 200ms pour les opérations standards. L'utilisation de \textbf{Mongoose virtuals} et d'indexations sur MongoDB garantit une recherche rapide même avec des milliers d'utilisateurs. Pour le frontend, l'utilisation de \textbf{SWR} pour le caching des données permet une navigation instantanée.
+\subsection{Diagramme de classes du Sprint 1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{...}
+    \caption{Diagramme de classes – Modèle utilisateur et authentification}
+    \label{fig:class_sprint1}
+\end{figure}
 
-\subsection{Disponibilité et Résilience (Le rôle d'Ollama)}
-La plateforme doit garantir un service minimum même en cas d'indisponibilité des services Cloud externes. L'intégration de \textbf{Ollama} avec le modèle \textbf{Gemma 3:4b} permet de traiter les demandes urgentes de résumé localement sur les serveurs de BES2I, assurant ainsi une résilience de 99.9\% face aux pannes internet.
+\subsection{Représentation graphique de la base de données}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{...}
+    \caption{Schéma des collections MongoDB pour le sprint 1}
+    \label{fig:mongodb_sprint1}
+\end{figure}
 
-\subsection{Sécurité et Confidentialité (RGPD)}
-Le respect de la vie privée des étudiants est primordial, conformément aux standards du RGPD. 
-\begin{itemize}
-    \item \textbf{Chiffrement} : Toutes les communications transitent par \textbf{HTTPS}. Les mots de passe sont hachés via \textbf{bcrypt}.
-    \item \textbf{Anonymisation} : Les données envoyées aux modèles Cloud (Gemini) sont débarrassées des informations personnellement identifiables.
-    \item \textbf{Droit à l'accès} : L'administrateur peut extraire ou supprimer définitivement toutes les traces d'un étudiant (notes, messages, logs) sur simple demande.
-\end{itemize}
+\section{Réalisation}
+\subsection{Interface d’inscription}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{...}
+    \caption{Formulaire d’inscription}
+    \label{fig:register_ui}
+\end{figure}
+
+\subsection{Interface de connexion}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{...}
+    \caption{Page de connexion}
+    \label{fig:login_ui}
+\end{figure}
+
+\subsection{Interface de réinitialisation de mot de passe}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{...}
+    \caption{Formulaire de réinitialisation}
+    \label{fig:reset_ui}
+\end{figure}
+
+\subsection{Interface profil utilisateur}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{...}
+    \caption{Page de profil}
+    \label{fig:profile_ui}
+\end{figure}
+
+\section{Tests}
+\subsection{Tests unitaires}
+\ldots
+
+\subsection{Tests d’intégration}
+\ldots
+
+\subsection{Tests fonctionnels}
+\ldots
 
 \section{Conclusion}
-L'analyse des cas d'utilisation a permis de valider la faisabilité des user stories définies dans le backlog. Nous passons maintenant à la conception de l'architecture permettant de supporter ces interactions.
+\ldots

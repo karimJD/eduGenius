@@ -2,21 +2,29 @@
 \babel@toc {french}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Diagramme de cas d'utilisation : Acteur Administrateur}}{18}{figure.caption.17}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Diagramme de cas d'utilisation : Acteur Enseignant}}{19}{figure.caption.18}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Diagramme de cas d'utilisation : Acteur Étudiant}}{20}{figure.caption.19}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Visualisation du Backlog produit sur Trello}}{28}{figure.caption.20}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Chronogramme de réalisation (Diagramme de Gantt)}}{25}{figure.caption.18}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Diagramme de cas d'utilisation : Acteur Administrateur}}{26}{figure.caption.19}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Diagramme de cas d'utilisation : Acteur Enseignant}}{27}{figure.caption.20}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Diagramme de cas d'utilisation : Acteur Étudiant}}{28}{figure.caption.21}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Diagramme de séquence : Interaction avec l'IA Ollama}}{29}{figure.caption.22}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Logo GitHub}}{30}{figure.2.6}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Logo Trello}}{30}{figure.2.7}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Logo Microsoft Teams}}{30}{figure.2.8}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Logo Next.js}}{30}{figure.2.9}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Logos Node.js et Express}}{31}{figure.2.10}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Logo MongoDB}}{31}{figure.2.11}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Logo Ollama}}{31}{figure.2.12}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Logo Daily.co}}{31}{figure.2.13}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Logo Tailwind CSS}}{31}{figure.2.14}%
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Architecture de déploiement et flux d'infrastructure}}{33}{figure.caption.23}%
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Modélisation conceptuelle des données (NoSQL)}}{34}{figure.caption.24}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Processus d'authentification JWT}}{31}{figure.caption.21}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Interface de connexion d'eduGenius}}{31}{figure.caption.22}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Gestion des classes et départements}}{34}{figure.caption.23}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Interactions entre les services backend}}{37}{figure.caption.24}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Interface de dépôt de documents}}{37}{figure.caption.25}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Architecture des données d'eduGenius}}{40}{figure.caption.26}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Interface de création d'évaluations}}{40}{figure.caption.27}%
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Tableau de bord intelligent de l'étudiant}}{43}{figure.caption.28}%
-\contentsline {figure}{\numberline {7.2}{\ignorespaces Module de visioconférence Daily.co}}{43}{figure.caption.29}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagramme de cas d’utilisation – Authentification et sécurité}}{37}{figure.caption.27}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagramme de séquence de l’authentification JWT}}{41}{figure.caption.34}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagramme de séquence de la consultation du profil}}{42}{figure.caption.35}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagramme de classes – Modèle utilisateur et authentification}}{42}{figure.caption.36}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Schéma des collections MongoDB pour le sprint 1}}{42}{figure.caption.37}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Formulaire d’inscription}}{42}{figure.caption.38}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Page de connexion}}{42}{figure.caption.39}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Formulaire de réinitialisation}}{42}{figure.caption.40}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Page de profil}}{42}{figure.caption.41}%
