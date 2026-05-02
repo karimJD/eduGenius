@@ -47,10 +47,10 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
           <GraduationCap className="w-8 h-8 text-blue-600 dark:text-blue-400 group-hover:rotate-12 transition-transform" />
         </div>
         <h2 className="text-3xl font-bold text-zinc-900 dark:text-white mb-2 tracking-tight">
-          {type === 'login' ? 'Welcome Back' : 'Join EduGenius'}
+          {type === 'login' ? 'Bon retour' : 'Rejoindre EduGenius'}
         </h2>
         <p className="text-zinc-500 dark:text-zinc-400 text-sm">
-          {type === 'login' ? 'Log in to your academic dashboard' : 'Create your account to start learning'}
+          {type === 'login' ? 'Connectez-vous à votre tableau de bord académique' : 'Créez votre compte pour commencer à apprendre'}
         </p>
       </div>
 
@@ -65,7 +65,7 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
             </svg>
           </div>
-          <span className="font-medium">{error}</span>
+          <span className="font-medium">{error === 'An error occurred' ? 'Une erreur est survenue' : error}</span>
         </motion.div>
       )}
 
@@ -73,28 +73,28 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
         {type === 'register' && (
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1">First Name</label>
+              <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1">Prénom</label>
               <div className="relative group">
                 <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-blue-500 transition-colors" />
                 <input
                   type="text"
                   required
                   className="w-full pl-11 pr-4 py-3 bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl text-zinc-900 dark:text-white placeholder-zinc-400 focus:bg-white dark:focus:bg-zinc-800 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-300"
-                  placeholder="John"
+                  placeholder="Jean"
                   value={formData.firstName}
                   onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1">Last Name</label>
+              <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1">Nom</label>
               <div className="relative group">
                 <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-blue-500 transition-colors" />
                 <input
                   type="text"
                   required
                   className="w-full pl-11 pr-4 py-3 bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl text-zinc-900 dark:text-white placeholder-zinc-400 focus:bg-white dark:focus:bg-zinc-800 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-300"
-                  placeholder="Doe"
+                  placeholder="Dupont"
                   value={formData.lastName}
                   onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 />
@@ -104,14 +104,14 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
         )}
 
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1">Email Address</label>
+          <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1">Adresse Email</label>
           <div className="relative group">
             <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-blue-500 transition-colors" />
             <input
               type="email"
               required
               className="w-full pl-11 pr-4 py-3 bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 rounded-2xl text-zinc-900 dark:text-white placeholder-zinc-400 focus:bg-white dark:focus:bg-zinc-800 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-300"
-              placeholder="name@school.edu"
+              placeholder="nom@ecole.edu"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
@@ -119,7 +119,14 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1">Password</label>
+          <div className="flex items-center justify-between ml-1">
+            <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">Mot de passe</label>
+            {type === 'login' && (
+              <Link href="/forgot-password" className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline transition-all">
+                Mot de passe oublié ?
+              </Link>
+            )}
+          </div>
           <div className="relative group">
             <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 group-focus-within:text-blue-500 transition-colors" />
             <input
@@ -135,7 +142,7 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
 
         {type === 'register' && (
           <div className="space-y-3">
-            <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1 text-center">I am joining as a...</label>
+            <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1 text-center">Je m'inscris en tant que...</label>
             <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
@@ -149,7 +156,7 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
                 <div className={`p-2 rounded-xl transition-colors ${formData.role === 'student' ? 'bg-white/20' : 'bg-zinc-200 dark:bg-zinc-700 group-hover:bg-blue-100 dark:group-hover:bg-blue-500/20 group-hover:text-blue-600'}`}>
                   <BookOpen className="w-6 h-6" />
                 </div>
-                <span className="font-bold tracking-tight">Student</span>
+                <span className="font-bold tracking-tight">Étudiant</span>
               </button>
               <button
                 type="button"
@@ -163,7 +170,7 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
                 <div className={`p-2 rounded-xl transition-colors ${formData.role === 'teacher' ? 'bg-white/20' : 'bg-zinc-200 dark:bg-zinc-700 group-hover:bg-blue-100 dark:group-hover:bg-blue-500/20 group-hover:text-blue-600'}`}>
                   <School className="w-6 h-6" />
                 </div>
-                <span className="font-bold tracking-tight">Teacher</span>
+                <span className="font-bold tracking-tight">Enseignant</span>
               </button>
             </div>
           </div>
@@ -178,7 +185,7 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
             <Loader2 className="w-5 h-5 animate-spin mx-auto" />
           ) : (
             <>
-              <span>{type === 'login' ? 'Sign In to EduGenius' : 'Create My Account'}</span>
+              <span>{type === 'login' ? 'Se connecter à EduGenius' : 'Créer mon compte'}</span>
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </>
           )}
@@ -188,16 +195,16 @@ export function AuthForm({ type, onSubmit }: AuthFormProps) {
       <div className="mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800 text-center text-sm text-zinc-500 dark:text-zinc-400">
         {type === 'login' ? (
           <>
-            New to EduGenius?{' '}
+            Nouveau sur EduGenius ?{' '}
             <Link href="/register" className="text-blue-600 dark:text-blue-400 hover:underline font-bold transition-all">
-              Join for free
+              Rejoindre gratuitement
             </Link>
           </>
         ) : (
           <>
-            Already have an account?{' '}
+            Vous avez déjà un compte ?{' '}
             <Link href="/login" className="text-blue-600 dark:text-blue-400 hover:underline font-bold transition-all">
-              Sign in here
+              Connectez-vous ici
             </Link>
           </>
         )}

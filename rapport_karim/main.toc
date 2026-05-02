@@ -4,7 +4,7 @@
 \contentsline {chapter}{Remerciements}{ii}{section*.4}%
 \contentsline {chapter}{Table des matières}{iii}{section*.5}%
 \contentsline {chapter}{Liste des figures}{vi}{section*.6}%
-\contentsline {chapter}{Liste des tableaux}{vii}{section*.7}%
+\contentsline {chapter}{Liste des tableaux}{viii}{section*.7}%
 \contentsline {chapter}{Introduction Générale}{1}{section*.9}%
 \contentsline {chapter}{\numberline {1}Contexte et Cadrage Stratégique}{3}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Immersion au sein de l’organisme d’accueil}{3}{section.1.1}%
@@ -42,7 +42,7 @@
 \contentsline {subsection}{\numberline {2.2.1}Organisation et Rôles Scrum}{16}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Gestion du Product Backlog}{17}{subsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.2.3}Planification et Orchestration des Sprints}{24}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Chronogramme de Réalisation (Diagramme de Gantt)}{24}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.4}Chronogramme de Réalisation (Diagramme de Gantt)}{25}{subsection.2.2.4}%
 \contentsline {section}{\numberline {2.3}Modélisation Sémantique et Comportementale}{25}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Diagramme de Cas d'Utilisation Global}{26}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Logique de Flux : Diagramme de Séquence (Focus IA)}{28}{subsection.2.3.2}%
@@ -68,18 +68,23 @@
 \contentsline {subsubsection}{Le cas d’utilisation « Créer et gérer les classes » (administrateur)}{40}{subsubsection*.33}%
 \contentsline {section}{\numberline {3.3}Conception}{41}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Diagramme de séquence du cas « S’authentifier »}{41}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Diagramme de séquence du cas « Consulter profil »}{42}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Diagramme de classes du Sprint 1}{42}{subsection.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Représentation graphique de la base de données}{42}{subsection.3.3.4}%
-\contentsline {section}{\numberline {3.4}Réalisation}{42}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Interface d’inscription}{42}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Interface de connexion}{42}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Interface de réinitialisation de mot de passe}{42}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}Interface profil utilisateur}{42}{subsection.3.4.4}%
-\contentsline {section}{\numberline {3.5}Tests}{42}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Tests unitaires}{42}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Tests d’intégration}{43}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Tests fonctionnels}{43}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Conclusion}{43}{section.3.6}%
-\contentsline {chapter}{Bibliographie}{44}{section*.42}%
-\contentsline {chapter}{Webographie}{45}{chapter*.44}%
+\contentsline {subsection}{\numberline {3.3.2}Diagramme de séquence du cas « Gérer son profil »}{44}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Diagramme de séquence du cas « Consulter le tableau de bord »}{44}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Diagrammes de séquence du cas « Gérer les utilisateurs »}{46}{subsection.3.3.4}%
+\contentsline {subsubsection}{Consultation des utilisateurs}{46}{subsubsection*.37}%
+\contentsline {subsubsection}{Création d'un utilisateur}{46}{subsubsection*.39}%
+\contentsline {subsubsection}{Modification d'un utilisateur}{47}{subsubsection*.41}%
+\contentsline {subsubsection}{Suppression d'un utilisateur}{48}{subsubsection*.43}%
+\contentsline {subsection}{\numberline {3.3.5}Diagramme de séquence du cas « Créer et gérer les classes »}{49}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.6}Diagramme de classes du Sprint 1}{51}{subsection.3.3.6}%
+\contentsline {subsection}{\numberline {3.3.7}Représentation graphique de la base de données}{51}{subsection.3.3.7}%
+\contentsline {section}{\numberline {3.4}Réalisation}{52}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Interface de connexion}{52}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Interface de réinitialisation de mot de passe}{53}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Interface profil utilisateur}{53}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Interface du tableau de bord}{54}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}Interface de gestion des utilisateurs}{55}{subsection.3.4.5}%
+\contentsline {subsection}{\numberline {3.4.6}Interface de gestion des classes}{56}{subsection.3.4.6}%
+\contentsline {section}{\numberline {3.5}Conclusion}{56}{section.3.5}%
+\contentsline {chapter}{Bibliographie}{58}{section*.55}%
+\contentsline {chapter}{Webographie}{59}{chapter*.57}%

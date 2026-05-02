@@ -30,18 +30,18 @@ export default function LoginPage() {
 
           <div className="max-w-lg">
             <h1 className="text-5xl font-extrabold text-zinc-900 dark:text-white leading-[1.1] mb-6 tracking-tight">
-              Empowering the next generation of <span className="text-blue-600">geniuses</span>.
+              Propulser la prochaine génération de <span className="text-blue-600">génies</span>.
             </h1>
             <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
-              Join thousands of students and teachers in the world's most advanced academic collaboration platform.
+              Rejoignez des milliers d'étudiants et d'enseignants sur la plateforme de collaboration académique la plus avancée au monde.
             </p>
             
             <div className="grid grid-cols-2 gap-6">
               {[
-                { icon: BookOpen, label: 'Quality Courses' },
-                { icon: Users, label: 'Expert Teachers' },
-                { icon: Star, label: 'Personalized AI' },
-                { icon: GraduationCap, label: 'Verified Degrees' },
+                { icon: BookOpen, label: 'Cours de Qualité' },
+                { icon: Users, label: 'Enseignants Experts' },
+                { icon: Star, label: 'IA Personnalisée' },
+                { icon: GraduationCap, label: 'Diplômes Vérifiés' },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white dark:bg-zinc-800 flex items-center justify-center shadow-sm text-blue-600">

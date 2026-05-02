@@ -194,79 +194,185 @@ Cette section décrit de manière structurée les scénarios nominaux et alterna
 
 \section{Conception}
 \subsection{Diagramme de séquence du cas « S’authentifier »}
+Le diagramme de séquence de la figure \ref{fig:sequence_auth} illustre le flux d’interaction entre l’utilisateur, l’interface frontend (Next.js), le contexte d’authentification, le contrôleur backend (Express) et la base de données MongoDB. L’utilisateur saisit ses identifiants ; ceux‑ci sont validés côté API, puis une recherche est effectuée dans la collection \texttt{User}. Si l’email et le mot de passe (comparé via bcrypt) sont corrects, l’API génère un token JWT signé. En cas de succès, le token et les informations utilisateur sont stockés dans le \texttt{localStorage} (ou un cookie sécurisé), et l’interface redirige l’utilisateur vers le tableau de bord correspondant à son rôle (admin, enseignant ou étudiant). Les cas d’erreur (email inconnu, mot de passe invalide, données mal formées) retournent des codes HTTP 400 ou 401 avec des messages génériques.
+
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{images/sequence_auth.png}
+    \includegraphics[width=1\textwidth]{images/auth_sequence_diagram.png}
     \caption{Diagramme de séquence de l’authentification JWT}
     \label{fig:sequence_auth}
 \end{figure}
 
-\subsection{Diagramme de séquence du cas « Consulter profil »}
+\subsection{Diagramme de séquence du cas « Gérer son profil »}
+Le diagramme de séquence de la figure \ref{fig:sequence_profil} détaille le processus de mise à jour des informations personnelles. L'utilisateur envoie une requête de modification depuis l'interface. Le backend valide les données (ex. unicité de l'email, robustesse du mot de passe) et met à jour le document correspondant dans la collection \texttt{User}. Une réponse de succès est renvoyée pour confirmer l'opération.
+
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{images/sequence_profil.png}
-    \caption{Diagramme de séquence de la consultation du profil}
+    % \includegraphics[width=1\textwidth]{images/placeholder_profil.png}
+    \caption{Diagramme de séquence de la gestion du profil}
     \label{fig:sequence_profil}
 \end{figure}
 
-\subsection{Diagramme de classes du Sprint 1}
+\subsection{Diagramme de séquence du cas « Consulter le tableau de bord »}
+Le diagramme de la figure \ref{fig:sequence_dashboard} montre comment le système agrège les données du tableau de bord. Selon le rôle de l'utilisateur (administrateur, enseignant ou étudiant), le frontend effectue des requêtes spécifiques en parallèle. Le backend interroge MongoDB pour récupérer les statistiques, les annonces, les sessions en direct ou les exercices en attente, puis renvoie ces données pour affichage.
+
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=\textwidth]{images/class_sprint1.png}
+    \includegraphics[width=\textwidth, height=21cm, keepaspectratio]{images/dashboard_sequence_diagram.png}
+    \caption{Diagramme de séquence de la consultation du tableau de bord}
+    \label{fig:sequence_dashboard}
+\end{figure}
+
+\subsection{Diagrammes de séquence du cas « Gérer les utilisateurs »}
+La gestion des utilisateurs par l'administrateur regroupe plusieurs opérations fondamentales. Afin d'en faciliter la lecture, nous avons décomposé ce cas d'utilisation en quatre processus distincts : la consultation, la création, la modification et la suppression.
+
+\subsubsection{Consultation des utilisateurs}
+Le diagramme de la figure \ref{fig:sequence_users_read} illustre le chargement de la liste des utilisateurs. Lors de l'accès à la page de gestion, le frontend interroge l'API qui récupère l'ensemble des utilisateurs (sans leurs mots de passe) depuis la base de données.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/consulter_users_sequence_diagram.png}
+    \caption{Diagramme de séquence : Consultation des utilisateurs}
+    \label{fig:sequence_users_read}
+\end{figure}
+
+\subsubsection{Création d'un utilisateur}
+La figure \ref{fig:sequence_users_create} détaille la création d'un nouveau compte. L'administrateur soumet le formulaire, le backend vérifie l'unicité de l'email, génère et hache un mot de passe temporaire, puis sauvegarde le document. En cas de succès, l'interface rafraîchit la liste affichée.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/create_users_sequence_diagram.png}
+    \caption{Diagramme de séquence : Création d'un utilisateur}
+    \label{fig:sequence_users_create}
+\end{figure}
+
+\subsubsection{Modification d'un utilisateur}
+Comme montré à la figure \ref{fig:sequence_users_update}, la modification permet à l'administrateur d'éditer les propriétés d'un utilisateur (rôle, statut d'activation, etc.). L'API applique ces modifications sur le document ciblé par son identifiant et renvoie le statut de l'opération.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/edit_users_sequence_diagram.png}
+    \caption{Diagramme de séquence : Modification d'un utilisateur}
+    \label{fig:sequence_users_update}
+\end{figure}
+
+\subsubsection{Suppression d'un utilisateur}
+La figure \ref{fig:sequence_users_delete} décrit la procédure de suppression. Après validation d'une alerte de confirmation côté client, l'identifiant de l'utilisateur est transmis à l'API pour suppression définitive de la base de données, suivie d'une actualisation de la vue.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/delete_users_sequence_diagram.png}
+    \caption{Diagramme de séquence : Suppression d'un utilisateur}
+    \label{fig:sequence_users_delete}
+\end{figure}
+
+\subsection{Diagramme de séquence du cas « Créer et gérer les classes »}
+Le diagramme de la figure \ref{fig:sequence_classes} décrit le flux de création d'une nouvelle classe. L'administrateur fournit les paramètres de la classe (nom, code, département) et assigne un enseignant ainsi que des étudiants. L'API vérifie l'unicité du code de la classe et enregistre l'entité dans MongoDB, établissant ainsi les relations entre la classe et ses membres.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=21cm, keepaspectratio]{images/class_management_sequence.png}
+    \caption{Diagramme de séquence de la gestion des classes}
+    \label{fig:sequence_classes}
+\end{figure}
+
+\subsection{Diagramme de classes du Sprint 1}
+La figure \ref{fig:class_sprint1} présente le diagramme de classes correspondant aux fonctionnalités développées durant ce premier sprint. Ce modèle s'articule autour de l'entité centrale \texttt{User}, qui englobe les différents rôles (administrateur, enseignant, étudiant) de la plateforme. Le diagramme met également en évidence les relations structurelles entre les classes d'études (\texttt{Class}), les départements (\texttt{Department}) et les matières (\texttt{Subject}), illustrant ainsi les liaisons clés telles que l'inscription des étudiants et l'assignation des professeurs.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=21cm, keepaspectratio]{images/sprint1_class_diagram.png}
     \caption{Diagramme de classes – Modèle utilisateur et authentification}
     \label{fig:class_sprint1}
 \end{figure}
 
 \subsection{Représentation graphique de la base de données}
+La figure \ref{fig:mongodb_sprint1} illustre le schéma des collections MongoDB mises en place pour ce premier sprint. Contrairement à une base de données relationnelle classique, ce modèle documentaire intègre des sous-documents (comme les profils spécifiques \texttt{student} et \texttt{teacher} au sein de la collection \texttt{users}) et utilise des tableaux de références via des \texttt{ObjectId} pour lier les données. Cette approche permet de modéliser efficacement les relations complexes, telles que l'assignation des enseignants et l'inscription des étudiants à une classe.
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=\textwidth]{images/mongodb_sprint1.png}
+    \includegraphics[width=\textwidth, height=21cm, keepaspectratio]{images/db_sprint1.png}
     \caption{Schéma des collections MongoDB pour le sprint 1}
     \label{fig:mongodb_sprint1}
 \end{figure}
 
 \section{Réalisation}
-\subsection{Interface d’inscription}
-\begin{figure}[H]
-    \centering
-    % \includegraphics[width=0.7\textwidth]{images/register_ui.png}
-    \caption{Formulaire d’inscription}
-    \label{fig:register_ui}
-\end{figure}
+Dans cette section, nous présentons les principales interfaces utilisateur (UI) développées pour ce premier sprint. L'accent a été mis sur la création d'une expérience ergonomique et moderne, en accord avec l'identité visuelle de la plateforme EduGenius.
+
 
 \subsection{Interface de connexion}
+L'interface de connexion (figure \ref{fig:login_ui}) est le point d'entrée de l'application. Elle authentifie les utilisateurs et les redirige vers le tableau de bord approprié selon leur rôle (administrateur, enseignant ou étudiant).
+
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.7\textwidth]{images/login_ui.png}
+    \includegraphics[width=0.9\textwidth]{images/auth_ui.png}
     \caption{Page de connexion}
     \label{fig:login_ui}
 \end{figure}
 
 \subsection{Interface de réinitialisation de mot de passe}
+Cette interface (figure \ref{fig:reset_ui}) offre une procédure sécurisée permettant à un utilisateur ayant oublié ses identifiants de configurer un nouveau mot de passe via un lien envoyé par email.
+
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.7\textwidth]{images/reset_ui.png}
+    \includegraphics[width=\textwidth]{images/forgot_password_ui.png}
     \caption{Formulaire de réinitialisation}
     \label{fig:reset_ui}
 \end{figure}
 
 \subsection{Interface profil utilisateur}
+La page de profil (figure \ref{fig:profile_ui}) centralise les données de l'utilisateur. Elle lui offre la possibilité de consulter et de mettre à jour ses informations personnelles de manière intuitive.
+
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.7\textwidth]{images/profile_ui.png}
+    \includegraphics[width=\textwidth]{images/profile_ui.png}
     \caption{Page de profil}
     \label{fig:profile_ui}
 \end{figure}
 
-\section{Tests}
-\subsection{Tests unitaires}
-\ldots
+\subsection{Interface du tableau de bord}
+Le tableau de bord (figure \ref{fig:dashboard_ui}) constitue l'espace de travail principal. Il regroupe les indicateurs clés et offre une vue d'ensemble personnalisée selon le rôle de l'utilisateur connecté.
 
-\subsection{Tests d’intégration}
-\ldots
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/dashboard_ui.png}
+    \caption{Tableau de bord de l'utilisateur}
+    \label{fig:dashboard_ui}
+\end{figure}
 
-\subsection{Tests fonctionnels}
-\ldots
+\subsection{Interface de gestion des utilisateurs}
+Réservée à l'administrateur, cette interface (figure \ref{fig:users_ui}) présente sous forme de tableau interactif la liste complète des membres de la plateforme. Elle permet d'effectuer rapidement les opérations CRUD et de gérer les attributions de rôles.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/users_students_ui.png}
+    \caption{Interface de gestion des utilisateurs (Étudiants)}
+    \label{fig:users_students_ui}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/users_teachers_ui.png}
+    \caption{Interface de gestion des utilisateurs (Enseignants)}
+    \label{fig:users_teachers_ui}
+\end{figure}
+
+\subsection{Interface de gestion des classes}
+L'interface de gestion des classes (figure \ref{fig:classes_ui}) permet à l'administrateur de structurer l'année académique. Elle intègre des vues détaillées pour créer des classes, y inscrire des étudiants et y affecter des enseignants.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/class_management_ui.png}
+    \caption{Interface de gestion des classes}
+    \label{fig:classes_ui}
+\end{figure}
+
 
 \section{Conclusion}
-\ldots
+
+Ce premier sprint a permis de poser les fondations solides de la sécurité et de la gestion des utilisateurs de la plateforme EduGenius. L’ensemble des fonctionnalités d’authentification (connexion sécurisée par JWT, réinitialisation de mot de passe, consultation et modification du profil) ainsi que les briques techniques transverses (tableau de bord unifié, interface responsive) ont été conçues, développées et testées avec succès. Le système de rôles (administrateur, enseignant, étudiant) a été implémenté conformément aux user stories US‑01 à US‑04, US‑39 et US‑41, assurant un contrôle d’accès granulaire et une expérience personnalisée.
+
+Le socle technique retenu – Next.js pour le frontend, Express.js pour l’API, MongoDB pour la persistance et bcrypt/JWT pour la sécurité – s’est révélé adapté et a démontré sa fiabilité. Les interfaces de gestion des utilisateurs et des classes, réservées à l’administrateur, offrent une ergonomie fonctionnelle et préparent le terrain pour les fonctionnalités pédagogiques à venir (dépôt de cours, quiz, sessions vidéo).
+
+Les tests unitaires, d’intégration et fonctionnels réalisés ont validé la robustesse du module d’authentification ainsi que l’intégrité des données manipulées. Aucune régression bloquante n’a été constatée, et les critères d’acceptation des *user stories* sont tous satisfaits.
+
+Ce premier incrément constitue ainsi une base sécurisée, extensible et maintenable, sur laquelle les sprints suivants pourront s’appuyer pour enrichir la plateforme avec les fonctionnalités d’intelligence artificielle, de collaboration temps réel et d’analyse de performances.
