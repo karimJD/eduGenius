@@ -3,16 +3,15 @@
 \section*{Introduction}
 \addcontentsline{toc}{section}{Introduction}
 
-Le premier sprint du projet EduGenius a été consacré à la mise en place du système d'authentification et des mécanismes de sécurité fondamentaux. Ces fonctionnalités constituent la pierre angulaire de la plateforme, visant à garantir la protection des données sensibles et à assurer un contrôle d'accès strict selon les rôles d'administrateur, d'enseignant et d'étudiant. Ce cycle de développement s'est structuré autour de plusieurs User Stories clés, couvrant notamment l'inscription des nouveaux membres, la connexion sécurisée via des protocoles modernes et la gestion de la récupération des comptes. 
+Le premier sprint du projet EduGenius a été consacré à la mise en place du système d'authentification et des mécanismes de sécurité fondamentaux. Ces fonctionnalités constituent la pierre angulaire de la plateforme, visant à garantir la protection des données sensibles et à assurer un contrôle d'accès strict selon les rôles d'administrateur, d'enseignant et d'étudiant. Ce cycle de développement s'est structuré autour de plusieurs User Stories clés, couvrant notamment la connexion sécurisée via des protocoles modernes et la gestion de la récupération des comptes. 
 
 Ce chapitre détaille l'ensemble des étapes ayant conduit à la concrétisation de ce premier incrément logiciel. Nous présenterons d'abord le backlog spécifique à ce sprint et l'analyse fonctionnelle des besoins identifiés. Ensuite, nous aborderons la conception technique et la réalisation des interfaces utilisateurs développées sous Next.js. Enfin, ce chapitre se conclura par une présentation des tests unitaires et d'intégration permettant de valider la robustesse et la fiabilité des fonctionnalités implémentées avant leur déploiement.
 
-
 \section{Backlog du Sprint 1}
 
-Le backlog du Sprint 1 présente les six User Stories (US) prioritaires liées à l'authentification, à la gestion des utilisateurs et aux fondations techniques (tableau de bord unifié et responsive). Ces US ont été sélectionnées pour leur impact métier et leur caractère transverse, structurant ainsi les développements clés de ce premier incrément.
+Le backlog du Sprint 1 présente les cinq User Stories (US) prioritaires liées à l'authentification, à la gestion des utilisateurs et aux fondations techniques (tableau de bord unifié et responsive). Ces US ont été sélectionnées pour leur impact métier et leur caractère transverse, structurant ainsi les développements clés de ce premier incrément.
 
-Le tableau \ref{tab:sprint1_backlog} détaille chaque US avec ses critères d'acceptation et sa priorité. Les US-01 (Connexion sécurisée), US-02 (Gestion des rôles), US-04 (Création des classes), US-39 (Dashboard unifié) et US-41 (Interface responsive) sont classées comme « Haute » priorité en raison de leur rôle central dans la plateforme. L'US-03 (Profil utilisateur) est priorisée « Moyenne », car dépendante des précédentes mais non bloquante pour le reste du sprint. Les tâches techniques sous‑jacentes (chiffrement des mots de passe, génération de token JWT, adaptation CSS responsive) répondent aux exigences de sécurité et d'expérience utilisateur.
+Le tableau \ref{tab:sprint1_backlog} détaille chaque US avec ses critères d'acceptation et sa priorité. Les US-01 (Connexion sécurisée), US-02 (Gestion des rôles), US-39 (Dashboard unifié) et US-41 (Interface responsive) sont classées comme « Haute » priorité en raison de leur rôle central dans la plateforme. L'US-03 (Profil utilisateur) est priorisée « Moyenne », car dépendante des précédentes mais non bloquante pour le reste du sprint. Les tâches techniques sous‑jacentes (chiffrement des mots de passe, génération de token JWT, adaptation CSS responsive) répondent aux exigences de sécurité et d'expérience utilisateur.
 
 \begin{table}[H]
 \centering
@@ -26,8 +25,6 @@ US-01 & Connexion sécurisée & L'utilisateur peut se connecter avec les identif
 US-02 & Gestion des rôles & L'administrateur peut attribuer les rôles (Admin, Enseignant, Étudiant) lors de la création ou modification d'un compte. & Haute \\
 \hline
 US-03 & Profil utilisateur & L'utilisateur peut consulter et modifier ses informations (nom, photo, mot de passe). & Moyenne \\
-\hline
-US-04 & Création et gestion des classes & L'administrateur peut créer, modifier ou supprimer une classe et y assigner des étudiants et un enseignant. & Haute \\
 \hline
 US-39 & Dashboard unifié & L'utilisateur dispose d'un tableau de bord personnalisé affichant son planning, les deadlines et les sessions à venir. & Haute \\
 \hline
@@ -152,43 +149,25 @@ Cette section décrit de manière structurée les scénarios nominaux et alterna
     \end{itemize}
 \end{itemize}
 
-\subsubsection{Le cas d’utilisation « Créer et gérer les classes » (administrateur)}
+\subsubsection{Le cas d’utilisation « Réinitialiser son mot de passe »}
 \begin{itemize}
-    \item \textbf{Acteur} : Administrateur.
-    \item \textbf{Préconditions} : L’administrateur est connecté. Les départements, programmes et années académiques existent.
-    \item \textbf{Postconditions} : Une classe est créée, modifiée ou supprimée, avec assignation d’un enseignant et d’étudiants.
+    \item \textbf{Acteur} : Utilisateur non authentifié.
+    \item \textbf{Préconditions} : L’utilisateur a oublié ses identifiants.
+    \item \textbf{Postconditions} : Un nouveau mot de passe est défini après validation du lien envoyé par email.
     \item \textbf{Scénario nominal} :
     \begin{enumerate}
-        \item L’administrateur remplit le formulaire de création (nom, code, département, programme, année).
-        \item Il sélectionne les étudiants inscrits et l’enseignant responsable.
-        \item Le système ajoute la classe dans MongoDB et met à jour les références.
+        \item L’utilisateur clique sur « Mot de passe oublié » sur la page de connexion.
+        \item Il saisit son adresse email.
+        \item Le système vérifie l’existence de l’email dans la base.
+        \item Un email contenant un lien de réinitialisation temporaire (contenant un token JWT à courte durée) est envoyé.
+        \item L’utilisateur clique sur le lien et accède à un formulaire de nouveau mot de passe.
+        \item Le système valide le token, hache le nouveau mot de passe et met à jour la base.
+        \item L’utilisateur est redirigé vers la page de connexion.
     \end{enumerate}
     \item \textbf{Alternatives / Erreurs} :
     \begin{itemize}
-        \item \textbf{Code de classe déjà existant} : message d’erreur demandant un autre code.
-        \item \textbf{Suppression d’une classe contenant des cours actifs} : confirmation requise.
-    \end{itemize}
-\end{itemize}
-\begin{itemize}
-    \item \textbf{Acteur} : Utilisateur authentifié (étudiant, enseignant ou admin).
-    \item \textbf{Préconditions} : L’utilisateur est connecté.
-    \item \textbf{Postconditions} : Les informations du profil sont mises à jour selon les modifications demandées.
-    \item \textbf{Scénario nominal (consultation)} :
-    \begin{enumerate}
-        \item L’utilisateur accède à son espace « Mon profil ».
-        \item Le système affiche les informations actuelles (nom, prénom, email, photo, etc.).
-    \end{enumerate}
-    \item \textbf{Scénario nominal (modification)} :
-    \begin{enumerate}
-        \item L’utilisateur modifie un ou plusieurs champs modifiables (nom, photo, mot de passe).
-        \item Le système valide les nouvelles données (format, unicité de l’email si modifié).
-        \item Le système enregistre les changements.
-        \item Un message de confirmation est affiché.
-    \end{enumerate}
-    \item \textbf{Alternatives / Erreurs} :
-    \begin{itemize}
-        \item \textbf{Nouvel email déjà utilisé} : erreur et refus de la modification.
-        \item \textbf{Nouveau mot de passe trop faible} : le système exige des critères de robustesse.
+        \item \textbf{Email inconnu} : message générique « Si l’email existe, un lien a été envoyé » (sécurité).
+        \item \textbf{Token expiré ou invalide} : message d’erreur et invitation à refaire la demande.
     \end{itemize}
 \end{itemize}
 
@@ -198,7 +177,7 @@ Le diagramme de séquence de la figure \ref{fig:sequence_auth} illustre le flux 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/auth_sequence_diagram.png}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/auth_sequence_diagram.png}
     \caption{Diagramme de séquence de l’authentification JWT}
     \label{fig:sequence_auth}
 \end{figure}
@@ -208,7 +187,7 @@ Le diagramme de séquence de la figure \ref{fig:sequence_profil} détaille le pr
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=1\textwidth]{images/placeholder_profil.png}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/gerer_profile_sequence_diagram.png}
     \caption{Diagramme de séquence de la gestion du profil}
     \label{fig:sequence_profil}
 \end{figure}
@@ -231,7 +210,7 @@ Le diagramme de la figure \ref{fig:sequence_users_read} illustre le chargement d
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/consulter_users_sequence_diagram.png}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/consulter_users_sequence_diagram.png}
     \caption{Diagramme de séquence : Consultation des utilisateurs}
     \label{fig:sequence_users_read}
 \end{figure}
@@ -241,7 +220,7 @@ La figure \ref{fig:sequence_users_create} détaille la création d'un nouveau co
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/create_users_sequence_diagram.png}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/create_users_sequence_diagram.png}
     \caption{Diagramme de séquence : Création d'un utilisateur}
     \label{fig:sequence_users_create}
 \end{figure}
@@ -251,7 +230,7 @@ Comme montré à la figure \ref{fig:sequence_users_update}, la modification perm
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/edit_users_sequence_diagram.png}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/edit_users_sequence_diagram.png}
     \caption{Diagramme de séquence : Modification d'un utilisateur}
     \label{fig:sequence_users_update}
 \end{figure}
@@ -261,43 +240,43 @@ La figure \ref{fig:sequence_users_delete} décrit la procédure de suppression. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/delete_users_sequence_diagram.png}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/delete_users_sequence_diagram.png}
     \caption{Diagramme de séquence : Suppression d'un utilisateur}
     \label{fig:sequence_users_delete}
 \end{figure}
 
-\subsection{Diagramme de séquence du cas « Créer et gérer les classes »}
-Le diagramme de la figure \ref{fig:sequence_classes} décrit le flux de création d'une nouvelle classe. L'administrateur fournit les paramètres de la classe (nom, code, département) et assigne un enseignant ainsi que des étudiants. L'API vérifie l'unicité du code de la classe et enregistre l'entité dans MongoDB, établissant ainsi les relations entre la classe et ses membres.
+\subsection{Diagramme de séquence du cas « Réinitialiser le mot de passe »}
+La figure \ref{fig:sequence_reset_password} présente le flux de réinitialisation. L'utilisateur demande un lien ; l’API génère un token JWT de courte durée, l’envoie par email, puis valide le token lors de la soumission du nouveau mot de passe avant de mettre à jour la base.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=21cm, keepaspectratio]{images/class_management_sequence.png}
-    \caption{Diagramme de séquence de la gestion des classes}
-    \label{fig:sequence_classes}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/reset_password_sequence_diagram.png}
+    \caption{Diagramme de séquence de la réinitialisation du mot de passe}
+    \label{fig:sequence_reset_password}
 \end{figure}
 
 \subsection{Diagramme de classes du Sprint 1}
-La figure \ref{fig:class_sprint1} présente le diagramme de classes correspondant aux fonctionnalités développées durant ce premier sprint. Ce modèle s'articule autour de l'entité centrale \texttt{User}, qui englobe les différents rôles (administrateur, enseignant, étudiant) de la plateforme. Le diagramme met également en évidence les relations structurelles entre les classes d'études (\texttt{Class}), les départements (\texttt{Department}) et les matières (\texttt{Subject}), illustrant ainsi les liaisons clés telles que l'inscription des étudiants et l'assignation des professeurs.
+La figure \ref{fig:class_sprint1} présente le diagramme de classes correspondant aux fonctionnalités développées durant ce premier sprint. Ce modèle se concentre sur l'entité centrale \texttt{User}, qui englobe les différents rôles (administrateur, enseignant, étudiant) de la plateforme. Les attributs incluent les informations d'authentification (email, mot de passe hashé, rôle) ainsi que les données de profil (nom, photo). Aucune entité pédagogique (classe, département, matière) n'est inclue dans ce sprint, car elles seront développées ultérieurement.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=21cm, keepaspectratio]{images/sprint1_class_diagram.png}
+    \includegraphics[width=\textwidth, height=15cm, keepaspectratio]{images/sprint1_class_diagram.png}
     \caption{Diagramme de classes – Modèle utilisateur et authentification}
     \label{fig:class_sprint1}
 \end{figure}
 
 \subsection{Représentation graphique de la base de données}
-La figure \ref{fig:mongodb_sprint1} illustre le schéma des collections MongoDB mises en place pour ce premier sprint. Contrairement à une base de données relationnelle classique, ce modèle documentaire intègre des sous-documents (comme les profils spécifiques \texttt{student} et \texttt{teacher} au sein de la collection \texttt{users}) et utilise des tableaux de références via des \texttt{ObjectId} pour lier les données. Cette approche permet de modéliser efficacement les relations complexes, telles que l'assignation des enseignants et l'inscription des étudiants à une classe.
+La figure \ref{fig:mongodb_sprint1} illustre le schéma de la collection MongoDB mise en place pour ce premier sprint. Une seule collection \texttt{users} contient tous les comptes, avec un champ \texttt{role} pour distinguer les droits et des sous-documents optionnels \texttt{studentProfile} ou \texttt{teacherProfile} qui seront enrichis dans les sprints suivants. Cette approche documentaire permet une évolution flexible.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=21cm, keepaspectratio]{images/db_sprint1.png}
-    \caption{Schéma des collections MongoDB pour le sprint 1}
+    \includegraphics[width=\textwidth, height=15cm, keepaspectratio]{images/db_sprint1.png}
+    \caption{Schéma de la collection MongoDB pour le sprint 1}
     \label{fig:mongodb_sprint1}
 \end{figure}
 
 \section{Réalisation}
 Dans cette section, nous présentons les principales interfaces utilisateur (UI) développées pour ce premier sprint. L'accent a été mis sur la création d'une expérience ergonomique et moderne, en accord avec l'identité visuelle de la plateforme EduGenius.
-
 
 \subsection{Interface de connexion}
 L'interface de connexion (figure \ref{fig:login_ui}) est le point d'entrée de l'application. Elle authentifie les utilisateurs et les redirige vers le tableau de bord approprié selon leur rôle (administrateur, enseignant ou étudiant).
@@ -356,22 +335,11 @@ Réservée à l'administrateur, cette interface (figure \ref{fig:users_ui}) pré
     \label{fig:users_teachers_ui}
 \end{figure}
 
-\subsection{Interface de gestion des classes}
-L'interface de gestion des classes (figure \ref{fig:classes_ui}) permet à l'administrateur de structurer l'année académique. Elle intègre des vues détaillées pour créer des classes, y inscrire des étudiants et y affecter des enseignants.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{images/class_management_ui.png}
-    \caption{Interface de gestion des classes}
-    \label{fig:classes_ui}
-\end{figure}
-
-
 \section{Conclusion}
 
-Ce premier sprint a permis de poser les fondations solides de la sécurité et de la gestion des utilisateurs de la plateforme EduGenius. L’ensemble des fonctionnalités d’authentification (connexion sécurisée par JWT, réinitialisation de mot de passe, consultation et modification du profil) ainsi que les briques techniques transverses (tableau de bord unifié, interface responsive) ont été conçues, développées et testées avec succès. Le système de rôles (administrateur, enseignant, étudiant) a été implémenté conformément aux user stories US‑01 à US‑04, US‑39 et US‑41, assurant un contrôle d’accès granulaire et une expérience personnalisée.
+Ce premier sprint a permis de poser les fondations solides de la sécurité et de la gestion des utilisateurs de la plateforme EduGenius. L’ensemble des fonctionnalités d’authentification (connexion sécurisée par JWT, réinitialisation de mot de passe, consultation et modification du profil) ainsi que les briques techniques transverses (tableau de bord unifié, interface responsive) ont été conçues, développées et testées avec succès. Le système de rôles (administrateur, enseignant, étudiant) a été implémenté conformément aux user stories US‑01, US‑02, US‑03, US‑39 et US‑41, assurant un contrôle d’accès granulaire et une expérience personnalisée.
 
-Le socle technique retenu – Next.js pour le frontend, Express.js pour l’API, MongoDB pour la persistance et bcrypt/JWT pour la sécurité – s’est révélé adapté et a démontré sa fiabilité. Les interfaces de gestion des utilisateurs et des classes, réservées à l’administrateur, offrent une ergonomie fonctionnelle et préparent le terrain pour les fonctionnalités pédagogiques à venir (dépôt de cours, quiz, sessions vidéo).
+Le socle technique retenu – Next.js pour le frontend, Express.js pour l’API, MongoDB pour la persistance et bcrypt/JWT pour la sécurité – s’est révélé adapté et a démontré sa fiabilité. L’interface de gestion des utilisateurs, réservée à l’administrateur, offre une ergonomie fonctionnelle et prépare le terrain pour les fonctionnalités pédagogiques à venir (dépôt de cours, quiz, sessions vidéo).
 
 Les tests unitaires, d’intégration et fonctionnels réalisés ont validé la robustesse du module d’authentification ainsi que l’intégrité des données manipulées. Aucune régression bloquante n’a été constatée, et les critères d’acceptation des *user stories* sont tous satisfaits.
 

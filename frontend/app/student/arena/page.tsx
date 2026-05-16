@@ -244,38 +244,37 @@ export default function ArenaPage() {
             {/* Weekly challenge card */}
             {challenge && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="relative rounded-[2rem] overflow-hidden border border-border/50 p-6"
-                style={{ background: 'linear-gradient(135deg, #1a0a2e 0%, #0f0518 50%, #1a0a0a 100%)' }}>
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(ellipse at 80% 20%, #f43f5e44 0%, transparent 60%)' }} />
+                className="relative rounded-[2rem] overflow-hidden border border-indigo-100 dark:border-white/5 p-6 bg-gradient-to-br from-indigo-50 to-rose-50 dark:from-[#1a0a2e] dark:via-[#0f0518] dark:to-[#1a0a0a] shadow-xl shadow-indigo-500/5 dark:shadow-none">
+                <div className="absolute inset-0 opacity-40 dark:opacity-20 bg-[radial-gradient(ellipse_at_80%_20%,#f43f5e44_0%,transparent_60%)]" />
                 <div className="relative flex flex-col sm:flex-row sm:items-center gap-6">
                   <div className="flex-1">
-                    <p className="text-xs font-black uppercase tracking-widest text-rose-400 mb-1">Défi de la semaine</p>
-                    <h2 className="text-xl font-black text-white mb-4">{challenge.title}</h2>
+                    <p className="text-xs font-black uppercase tracking-widest text-rose-500 dark:text-rose-400 mb-1">Défi de la semaine</p>
+                    <h2 className="text-xl sm:text-2xl font-black text-foreground dark:text-white mb-4">{challenge.title}</h2>
                     {/* Countdown */}
                     <div className="flex items-center gap-4">
-                      <Clock className="w-4 h-4 text-white/40" />
+                      <Clock className="w-4 h-4 text-muted-foreground dark:text-white/40" />
                       <div className="flex items-center gap-3">
                         <TimeUnit value={countdown.d} label="Jours" />
-                        <span className="text-white/30 font-bold text-xl">:</span>
+                        <span className="text-muted-foreground/30 dark:text-white/30 font-bold text-xl">:</span>
                         <TimeUnit value={countdown.h} label="Heures" />
-                        <span className="text-white/30 font-bold text-xl">:</span>
+                        <span className="text-muted-foreground/30 dark:text-white/30 font-bold text-xl">:</span>
                         <TimeUnit value={countdown.m} label="Min" />
-                        <span className="text-white/30 font-bold text-xl">:</span>
+                        <span className="text-muted-foreground/30 dark:text-white/30 font-bold text-xl">:</span>
                         <TimeUnit value={countdown.s} label="Sec" />
                       </div>
                     </div>
                   </div>
                   {/* Milestone progress */}
                   {nextMilestone && progress && (
-                    <div className="shrink-0 flex flex-col items-center gap-2 min-w-[140px]">
-                      <p className="text-xs text-white/40 font-bold uppercase tracking-wider">Prochain palier</p>
+                    <div className="shrink-0 flex flex-col items-center gap-2 min-w-[140px] p-4 bg-white/50 dark:bg-white/5 rounded-2xl border border-white/20 dark:border-white/10 backdrop-blur-sm">
+                      <p className="text-[10px] text-muted-foreground dark:text-white/40 font-bold uppercase tracking-wider">Prochain palier</p>
                       <div className="text-3xl">🎯</div>
-                      <p className="text-white font-black text-sm">{nextMilestone.label}</p>
-                      <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                      <p className="text-foreground dark:text-white font-black text-sm">{nextMilestone.label}</p>
+                      <div className="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
                         <motion.div className="h-full rounded-full" style={{ background: 'linear-gradient(90deg,#f43f5e,#a78bfa)' }}
                           initial={{ width: 0 }} animate={{ width: `${milestoneProgress}%` }} transition={{ duration: 1, delay: 0.5 }} />
                       </div>
-                      <p className="text-white/40 text-xs font-bold">{Math.max(0, xpToNext)} XP restants</p>
+                      <p className="text-muted-foreground dark:text-white/40 text-[10px] font-bold">{Math.max(0, xpToNext)} XP restants</p>
                     </div>
                   )}
                 </div>

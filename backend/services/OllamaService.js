@@ -86,7 +86,7 @@ class OllamaService {
       Génère un quiz de ${count} questions à choix multiples (QCM) basé sur le texte suivant.
       Chaque question doit avoir 4 options et une seule bonne réponse.
       Renvoie UNIQUEMENT un tableau JSON valide.
-      Format : [{"question": "...", "options": ["A", "B", "C", "D"], "correctAnswerIndex": 0}]
+      Format : [{"question": "...", "options": ["A", "B", "C", "D"], "correctAnswerIndex": 0, "explanation": "Explication pédagogique du pourquoi cette réponse est la bonne."}]
 
       Contenu :
       ${content}

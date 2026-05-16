@@ -3,23 +3,29 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Mail, ArrowLeft, Loader2, KeyRound, GraduationCap, CheckCircle2 } from 'lucide-react';
+import { Mail, ArrowLeft, Loader2, KeyRound, GraduationCap, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '../../components/ui/button';
+import { forgotPassword } from '../../services/auth';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
     
-    // Simulate API call for now (Frontend only as requested)
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await forgotPassword(email);
       setSubmitted(true);
-    }, 1500);
+    } catch (err: any) {
+      setError(err.message || 'Une erreur est survenue lors de l\'envoi de l\'e-mail.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -112,6 +118,17 @@ export default function ForgotPasswordPage() {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
+                {error && (
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="p-4 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-2xl flex items-center gap-3 text-red-600 dark:text-red-400 text-sm font-medium"
+                  >
+                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                    {error}
+                  </motion.div>
+                )}
+
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 ml-1">Adresse Email</label>
                   <div className="relative group">

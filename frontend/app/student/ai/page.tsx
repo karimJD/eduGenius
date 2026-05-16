@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import api from '../../../lib/axios';
 import {
@@ -45,7 +45,7 @@ export default function StudentAIPage() {
   const [summaries, setSummaries] = useState<any[]>([]);
   const [quizHistory, setQuizHistory] = useState<any[]>([]);
   const [classes, setClasses] = useState<any[]>([]);
-  const [selectedClassId, setSelectedClassId] = useState<string>('');
+  const [subjects, setSubjects] = useState<any[]>([]);
   const [flashcards, setFlashcards] = useState<any[]>([]);
 
   const [loading, setLoading] = useState(true);
@@ -58,6 +58,7 @@ export default function StudentAIPage() {
 
   // Viewer state
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
+  const [isReviewMode, setIsReviewMode] = useState(false);
   const [activeFlashcardDeck, setActiveFlashcardDeck] = useState<any | null>(
     null,
   );
@@ -98,9 +99,19 @@ export default function StudentAIPage() {
       if (historyRes.data.success) setQuizHistory(historyRes.data.data);
       if (aiCoursesRes.data.success) {
         setClasses(aiCoursesRes.data.data);
-        if (aiCoursesRes.data.data.length > 0) {
-          setSelectedClassId(aiCoursesRes.data.data[0]._id);
-        }
+        const flattenedSubjects: any[] = [];
+        aiCoursesRes.data.data.forEach((cls: any) => {
+          cls.assignedSubjects?.forEach((sub: any) => {
+            if (sub.subjectId) {
+              flattenedSubjects.push({
+                ...sub.subjectId,
+                classId: cls._id,
+                className: cls.name,
+              });
+            }
+          });
+        });
+        setSubjects(flattenedSubjects);
       }
     } catch (error) {
       console.error('Error fetching AI data:', error);
@@ -191,6 +202,7 @@ export default function StudentAIPage() {
     try {
       const res = await api.post('/student/ai/generate-practice-quiz', data);
       if (res.data.success) {
+        setIsReviewMode(false);
         setActiveQuizId(res.data.data._id);
         setActiveTab('quizzes');
       }
@@ -210,10 +222,9 @@ export default function StudentAIPage() {
 
   useEffect(() => {
     const fetchFlashcards = async () => {
-      if (!selectedClassId) return;
       try {
         setLoadingFlashcards(true);
-        const res = await api.get(`/student/ai/flashcards/${selectedClassId}`);
+        const res = await api.get('/student/ai/flashcards/all');
         if (res.data.success) {
           setFlashcards(res.data.data);
         }
@@ -224,10 +235,10 @@ export default function StudentAIPage() {
       }
     };
 
-    if (activeTab === 'flashcards' && selectedClassId) {
+    if (activeTab === 'flashcards') {
       fetchFlashcards();
     }
-  }, [selectedClassId, activeTab]);
+  }, [activeTab]);
 
   return (
     <div className='space-y-8'>
@@ -258,21 +269,21 @@ export default function StudentAIPage() {
       <GenerateSummaryModal
         open={summaryModalOpen}
         onOpenChange={setSummaryModalOpen}
-        classId={selectedClassId}
+        classId={classes[0]?._id || ''}
         classes={classes}
         onGenerate={handleGenerateSummary}
       />
       <GenerateFlashcardsModal
         open={flashcardsModalOpen}
         onOpenChange={setFlashcardsModalOpen}
-        classId={selectedClassId}
+        classId={classes[0]?._id || ''}
         classes={classes}
         onGenerate={handleGenerateFlashcards}
       />
       <GenerateQuizModal
         open={quizModalOpen}
         onOpenChange={setQuizModalOpen}
-        classId={selectedClassId}
+        classId={classes[0]?._id || ''}
         classes={classes}
         onGenerate={handleGenerateQuiz}
       />
@@ -345,8 +356,8 @@ export default function StudentAIPage() {
                       title: 'Générateur de Résumés',
                       desc: 'Condensez de longs chapitres en résumés clairs et concis. Idéal pour les révisions de dernière minute.',
                       icon: FileText,
-                      color: 'from-blue-500/20 to-indigo-500/20',
-                      iconColor: 'text-blue-400',
+                      color: 'from-blue-500/10 to-indigo-500/10 dark:from-blue-500/20 dark:to-indigo-500/20',
+                      iconColor: 'text-blue-600 dark:text-blue-400',
                       count: summaries.length,
                       action: () => setActiveTab('summaries'),
                     },
@@ -354,8 +365,8 @@ export default function StudentAIPage() {
                       title: 'Créateur de Flashcards',
                       desc: "Mémorisez plus vite. L'IA extrait les concepts clés et crée des cartes mémoires intelligentes.",
                       icon: Layers,
-                      color: 'from-purple-500/20 to-pink-500/20',
-                      iconColor: 'text-purple-400',
+                      color: 'from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20',
+                      iconColor: 'text-purple-600 dark:text-purple-400',
                       count: flashcards.length || 0,
                       action: () => setActiveTab('flashcards'),
                     },
@@ -363,8 +374,8 @@ export default function StudentAIPage() {
                       title: 'Test de Connaissances',
                       desc: "Évaluez votre niveau avec des quiz générés sur mesure sur n'importe quel sujet abordé en cours.",
                       icon: CheckCircle2,
-                      color: 'from-green-500/20 to-emerald-500/20',
-                      iconColor: 'text-green-400',
+                      color: 'from-green-500/10 to-emerald-500/10 dark:from-green-500/20 dark:to-emerald-500/20',
+                      iconColor: 'text-green-600 dark:text-green-400',
                       count: quizHistory.length,
                       action: () => setActiveTab('quizzes'),
                     },
@@ -394,7 +405,7 @@ export default function StudentAIPage() {
                         </span>
                         <button
                           onClick={tool.action}
-                          className='text-sm text-purple-400 hover:text-purple-300 font-medium flex items-center gap-1 group-hover:gap-2 transition-all'
+                          className='text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium flex items-center gap-1 group-hover:gap-2 transition-all'
                         >
                           Voir <ChevronRight className='w-4 h-4' />
                         </button>
@@ -426,7 +437,7 @@ export default function StudentAIPage() {
 
                     <Button
                       onClick={() => setSummaryModalOpen(true)}
-                      className='shrink-0 bg-white text-black hover:bg-gray-100 font-bold px-6 py-6 rounded-xl relative z-10'
+                      className='shrink-0 bg-purple-600 dark:bg-white text-white dark:text-black hover:bg-purple-700 dark:hover:bg-gray-100 font-bold px-6 py-6 rounded-xl relative z-10'
                     >
                       Générer Résumé Pédagogique
                     </Button>
@@ -450,20 +461,9 @@ export default function StudentAIPage() {
                         </h2>
 
                         <div className='flex items-center gap-3'>
-                          <select
-                            value={selectedClassId}
-                            onChange={(e) => setSelectedClassId(e.target.value)}
-                            className='bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#222222] text-foreground dark:text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-purple-500'
-                          >
-                            {classes.map((c) => (
-                              <option key={c._id} value={c._id}>
-                                {c.name}
-                              </option>
-                            ))}
-                          </select>
                           <Button
                             onClick={() => setSummaryModalOpen(true)}
-                            className='bg-blue-600 hover:bg-blue-700 text-foreground dark:text-white font-bold rounded-xl'
+                            className='bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl'
                           >
                             Nouveau Résumé
                           </Button>
@@ -474,7 +474,7 @@ export default function StudentAIPage() {
                         <EmptyState
                           icon={FileText}
                           title='Aucun résumé trouvé'
-                          description='Générez votre premier résumé IA pour gagner du temps dans vos révisions.'
+                          description='Générez votre premier résumé IA à partir de vos cours pour gagner du temps dans vos révisions.'
                         />
                       ) : (
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
@@ -569,20 +569,9 @@ export default function StudentAIPage() {
                         </h2>
 
                         <div className='flex items-center gap-3'>
-                          <select
-                            value={selectedClassId}
-                            onChange={(e) => setSelectedClassId(e.target.value)}
-                            className='bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#222222] text-foreground dark:text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-purple-500'
-                          >
-                            {classes.map((c) => (
-                              <option key={c._id} value={c._id}>
-                                {c.name}
-                              </option>
-                            ))}
-                          </select>
                           <Button
                             onClick={() => setFlashcardsModalOpen(true)}
-                            className='bg-indigo-600 hover:bg-indigo-700 text-foreground dark:text-white font-bold rounded-xl'
+                            className='bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl'
                           >
                             Nouveau Deck
                           </Button>
@@ -597,7 +586,7 @@ export default function StudentAIPage() {
                         <EmptyState
                           icon={Layers}
                           title='Aucun jeu de flashcards'
-                          description='Sélectionnez une autre classe ou générez de nouvelles flashcards.'
+                          description='Générez de nouvelles flashcards à partir de vos cours pour booster votre mémoire.'
                         />
                       ) : (
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
@@ -642,11 +631,16 @@ export default function StudentAIPage() {
                   {activeQuizId ? (
                     <QuizPlayer
                       quizId={activeQuizId}
+                      isReview={isReviewMode}
                       onComplete={() => {
                         setActiveQuizId(null);
+                        setIsReviewMode(false);
                         loadData(); // reload history
                       }}
-                      onCancel={() => setActiveQuizId(null)}
+                      onCancel={() => {
+                        setActiveQuizId(null);
+                        setIsReviewMode(false);
+                      }}
                     />
                   ) : (
                     <>
@@ -657,7 +651,7 @@ export default function StudentAIPage() {
 
                         <Button
                           onClick={() => setQuizModalOpen(true)}
-                          className='bg-green-600 hover:bg-green-700 text-foreground dark:text-white font-bold rounded-xl px-8'
+                          className='bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl px-8'
                         >
                           Nouvel Entraînement
                         </Button>
@@ -681,10 +675,10 @@ export default function StudentAIPage() {
                                   className={cn(
                                     'w-12 h-12 rounded-full flex items-center justify-center border-2 shrink-0',
                                     quiz.percentage >= 80
-                                      ? 'border-green-500 text-green-400 bg-green-500/10'
+                                      ? 'border-green-500 text-green-600 dark:text-green-400 bg-green-500/10'
                                       : quiz.percentage >= 50
-                                        ? 'border-yellow-500 text-yellow-400 bg-yellow-500/10'
-                                        : 'border-red-500 text-red-400 bg-red-500/10',
+                                        ? 'border-yellow-500 text-yellow-600 dark:text-yellow-400 bg-yellow-500/10'
+                                        : 'border-red-500 text-red-600 dark:text-red-400 bg-red-500/10',
                                   )}
                                 >
                                   <span className='font-bold text-sm'>
@@ -707,6 +701,10 @@ export default function StudentAIPage() {
                               <Button
                                 variant='outline'
                                 className='border-gray-300 dark:border-[#333333] bg-transparent hover:bg-gray-50 dark:hover:bg-[#222222] text-foreground dark:text-white w-full sm:w-auto'
+                                onClick={() => {
+                                  setIsReviewMode(true);
+                                  setActiveQuizId(quiz._id);
+                                }}
                               >
                                 Revoir les réponses
                               </Button>

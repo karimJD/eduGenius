@@ -1,51 +1,255 @@
-\chapter{Sprint 2 : Gestion des Projets, Membres et Sources de Données}
+\chapter{Réalisation du Sprint 2 : Gestion des classes, Appels vidéo et Communication synchrone}
 
-\section{Introduction}
-Ce sprint se concentre sur l'organisation structurelle de la plateforme, incluant la gestion des classes (projets), des membres et la mise en place des données académiques de base.
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+Le deuxième sprint du projet EduGenius a été consacré à la mise en place des fonctionnalités de gestion des classes (création, planification, supervision), de communication synchrone par visioconférence intégrée avec Daily.co, ainsi que des outils de modération et de replay. Ces briques permettent aux administrateurs de structurer l’organisation pédagogique, aux enseignants d’animer des classes virtuelles enrichies (partage d’écran, contrôle audio/vidéo des participants, chat intégré, suivi de présence) et aux étudiants de rattraper les sessions enregistrées. Les notifications temps réel complètent le dispositif pour tenir les utilisateurs informés des événements clés.
+
+Ce chapitre détaille l’ensemble des étapes ayant mené à la réalisation de ce second incrément. Nous présenterons le backlog spécifique au sprint, l’analyse fonctionnelle, la conception technique, les interfaces réalisées, ainsi que les tests effectués pour garantir la robustesse des nouvelles fonctionnalités.
 
 \section{Backlog du Sprint 2}
-\begin{itemize}
-    \item \textbf{US-04} : CRUD des Années Académiques et Départements.
-    \item \textbf{US-05} : Gestion des Classes et des Matières (Subjects).
-    \item \textbf{US-06} : Importation et gestion des membres (étudiants et enseignants).
-\end{itemize}
+
+Le backlog du Sprint 2 compile douze User Stories couvrant la gestion des classes et des plannings, les notifications, ainsi que la création, le suivi, la modération et l’enregistrement des appels vidéo. Ces US ont été priorisées « Haute », « Moyenne » ou « Basse » selon leur criticité pour la continuité pédagogique.
+
+Le tableau \ref{tab:sprint2_backlog} détaille chaque US avec ses critères d’acceptation.
+
+\begin{xltabular}{\textwidth}{|c|l|X|c|}
+\caption{User Stories du Sprint 2 – Gestion des classes, notifications et visioconférence complète} \label{tab:sprint2_backlog} \\
+\hline
+\textbf{ID} & \textbf{Titre} & \textbf{Critères d’acceptation} & \textbf{Priorité} \\ \hline
+\endfirsthead
+\multicolumn{4}{c}%
+{{\bfseries \tablename\ \thetable{} -- suite de la page précédente}} \\
+\hline
+\textbf{ID} & \textbf{Titre} & \textbf{Critères d’acceptation} & \textbf{Priorité} \\ \hline
+\endhead
+\hline \multicolumn{4}{|r|}{{Suite à la page suivante...}} \\ \hline
+\endfoot
+\hline
+\endlastfoot
+US-4 & Création et gestion des classes & L’administrateur peut créer, modifier, supprimer des classes et y assigner des étudiants et un enseignant. & Haute \\
+\hline
+US-5 & Planification des cours (planning) & L’administrateur définit les horaires (date, heure, durée) pour chaque classe. & Haute \\
+\hline
+US-6 & Supervision générale & L’administrateur visualise une vue d’ensemble (utilisateurs, classes, activités récentes). & Moyenne \\
+\hline
+US-22 & Notifications push/email & L’utilisateur reçoit des alertes (deadline, nouveau message, début de cours). & Haute \\
+\hline
+US-23 & Création d’un appel vidéo & L’enseignant peut démarrer une session Daily.co depuis le planning. & Haute \\
+\hline
+US-24 & Rejoindre un appel vidéo & L’étudiant rejoint la session vidéo programmée en un clic. & Haute \\
+\hline
+US-25 & Partage d’écran par l’enseignant & L’enseignant peut partager son écran pendant l’appel. & Haute \\
+\hline
+US-26 & Gestion audio/vidéo des participants & L’enseignant peut couper le micro ou la caméra d’un étudiant afin d’éviter les perturbations. & Moyenne \\
+\hline
+US-27 & Chat intégré à la session vidéo & L’étudiant peut utiliser un chat textuel pendant l’appel sans couper la parole. & Moyenne \\
+\hline
+US-28 & Détection de présence & L’enseignant voit qui a rejoint l’appel, à quelle heure, et qui est absent. & Haute \\
+\hline
+US-29 & Historique de participation & L’enseignant/Admin consulte l’historique des présences par étudiant. & Haute \\
+\hline
+US-30 & Enregistrement et replay & L’étudiant peut regarder l’enregistrement d’un cours vidéo manqué. & Basse \\
+\end{xltabular}
 
 \section{Analyse}
-\subsection{Diagramme de cas d'utilisation}
-L'Administrateur peut créer des structures académiques et assigner des enseignants à des classes. L'Enseignant peut consulter ses classes assignées.
 
-\subsection{Description textuelle des cas d'utilisation}
-L'administrateur définit une année académique actuelle, crée des départements, puis des classes au sein de ces départements. Il importe ensuite les étudiants via des fichiers CSV ou des formulaires.
+\subsection{Diagramme de cas d’utilisation du Sprint 2}
+Le diagramme de cas d’utilisation (figure \ref{fig:usecase_sprint2}) illustre les interactions entre l’administrateur, l’enseignant et l’étudiant pour la gestion des classes, la planification, les notifications, les appels vidéo avec modération, chat intégré et replay.
 
-\section{Conception}
-\subsection{Diagrammes de séquence}
-Le diagramme de séquence pour la création d'une classe montre l'interaction entre le panel admin et le backend pour persister les relations entre départements et classes.
-
-\subsection{Diagramme de classes}
-Les classes \texttt{AcademicYear}, \texttt{Department}, \texttt{Class}, \texttt{Subject} et \texttt{User} sont liées par des relations de composition et d'association.
-
-\subsection{Représentation graphique de la base de données}
-Utilisation de références (\texttt{ObjectId}) pour lier les classes aux départements et les étudiants aux classes, assurant l'intégrité référentielle.
-
-\section{Réalisation}
-\subsection{Interface de Gestion des Classes}
-Un tableau de bord intuitif permet à l'admin de visualiser et de gérer les structures de l'université.
 \begin{figure}[H]
     \centering
-    \fbox{Placeholder: Capture d'écran - Admin Class Management}
-    \caption{Gestion des classes et départements}
+    \includegraphics[width=1\textwidth]{images/use_case_diagram_sprint_2.png}
+    \caption{Diagramme de cas d’utilisation – Gestion des classes, Appels vidéo et Communication synchrone}
+    \label{fig:usecase_sprint2}
 \end{figure}
 
-\subsection{Module d'Assignation des Enseignants}
-Interface permettant de lier un enseignant à une matière spécifique au sein d'une classe.
+\subsection{Description textuelle des cas d’utilisation}
 
-\section{Tests}
-\subsection{Tests unitaires}
-Vérification des modèles Mongoose pour s'assurer que les champs requis sont présents.
-\subsection{Tests d'intégration}
-Test des routes CRUD pour les départements et les classes.
-\subsection{Tests fonctionnels}
-Validation de l'importation massive d'étudiants via un script de seeding ou une interface.
+Cette section décrit les scénarios nominaux et alternatifs pour chaque cas d’utilisation du sprint.
+
+\subsubsection{Le cas d’utilisation « Gérer les classes et le planning » (Administrateur)}
+\begin{itemize}
+    \item \textbf{Acteur} : Administrateur.
+    \item \textbf{Préconditions} : L’administrateur est connecté ; la matière (Subject), la classe et l’enseignant existent ; aucun conflit d’horaire n’est détecté.
+    \item \textbf{Postconditions} : Une classe est créée ou modifiée avec ses horaires.
+    \item \textbf{Scénario nominal} : L’administrateur suit un processus par étapes :
+        \begin{enumerate}
+            \item \textbf{Informations} : Saisie du titre, de l'année académique, du semestre et choix de la cible (classe ou enseignant).
+            \item \textbf{Séances} : Ajout des séances hebdomadaires en sélectionnant la matière, l'enseignant, la salle et les horaires. Le système vérifie en temps réel les conflits de disponibilité.
+            \item \textbf{Récapitulatif} : Vérification de l'ensemble du planning et validation finale pour enregistrement dans MongoDB.
+        \end{enumerate}
+    \item \textbf{Alternatives} : Code de classe déjà existant → message d’erreur ; suppression d’une classe contenant des cours actifs → confirmation requise.
+\end{itemize}
+
+\subsubsection{Le cas d’utilisation « Superviser la plateforme » (Administrateur)}
+\begin{itemize}
+    \item \textbf{Acteur} : Administrateur.
+    \item \textbf{Préconditions} : Authentifié.
+    \item \textbf{Postconditions} : Vue d’ensemble affichée (statistiques, alertes).
+    \item \textbf{Scénario nominal} : Accès au tableau de bord de supervision ; le système agrège le nombre d’utilisateurs, de classes actives, de sessions vidéo programmées et de notifications envoyées.
+\end{itemize}
+
+\subsubsection{Le cas d’utilisation « Recevoir des notifications »}
+\begin{itemize}
+    \item \textbf{Acteur} : Tout utilisateur authentifié.
+    \item \textbf{Préconditions} : Notifications activées (email ou push).
+    \item \textbf{Postconditions} : Une notification est envoyée (deadline, début de cours, etc.).
+    \item \textbf{Scénario nominal} : Le système détecte un événement (ex. session vidéo dans 5 min) et envoie une alerte via le canal configuré.
+\end{itemize}
+
+\subsubsection{Le cas d’utilisation « Gérer un appel vidéo » (Enseignant)}
+\begin{itemize}
+    \item \textbf{Acteur} : Enseignant.
+    \item \textbf{Préconditions} : Une session vidéo est planifiée dans le planning.
+    \item \textbf{Postconditions} : L’enseignant obtient un lien Daily.co, peut modérer les participants (micro/caméra), et la session peut être enregistrée.
+    \item \textbf{Scénario nominal} : L’enseignant clique sur « Démarrer la classe virtuelle » ; le système crée une room Daily.co, redirige l’enseignant. Il peut partager son écran (US-25), couper le micro/caméra d’un étudiant perturbateur (US-26), et activer l’enregistrement (US-30). Le système enregistre l’heure d’arrivée de chaque participant (US-28).
+    \item \textbf{Alternatives} : Room pleine ou expirée → message d’erreur.
+\end{itemize}
+
+\subsubsection{Le cas d’utilisation « Participer à un appel vidéo » (Étudiant)}
+\begin{itemize}
+    \item \textbf{Acteur} : Étudiant.
+    \item \textbf{Préconditions} : Une session vidéo est active ou planifiée.
+    \item \textbf{Postconditions} : L’étudiant rejoint la session, peut utiliser le chat textuel (US-27), et accéder à l’enregistrement si disponible (US-30).
+    \item \textbf{Scénario nominal} : L’étudiant clique sur le lien de la session. Il peut poser des questions via le chat sans interrompre le cours. Après la session, si l’enseignant a activé l’enregistrement, l’étudiant peut visionner le replay.
+\end{itemize}
+
+\subsubsection{Le cas d’utilisation « Suivre l’assiduité et consulter l’historique » (Enseignant/Admin)}
+\begin{itemize}
+    \item \textbf{Acteur} : Enseignant ou Administrateur.
+    \item \textbf{Préconditions} : Une ou plusieurs sessions vidéo ont eu lieu.
+    \item \textbf{Postconditions} : L’historique de présence est consultable.
+    \item \textbf{Scénario nominal} : L’utilisateur accède à la liste des sessions, sélectionne une session, visualise les étudiants présents, absents ou en retard avec leurs horaires de connexion (US-28, US-29).
+\end{itemize}
+
+\section{Conception}
+
+\subsection{Diagramme de séquence du cas « Créer une classe et son planning »}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/sequence_diagram_create_class_and_planning.png}
+    \caption{Diagramme de séquence – Création d’une classe avec planning}
+    \label{fig:sequence_create_class}
+\end{figure}
+
+\subsection{Diagramme de séquence du cas « Démarrer une session vidéo avec modération »}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/sequence_diagram_start_call.png}
+    \caption{Diagramme de séquence – Appel vidéo avec Daily.co, détection de présence, contrôle audio/vidéo et chat}
+    \label{fig:sequence_video}
+\end{figure}
+
+\subsection{Diagramme de séquence du cas « Consulter l’historique de présence »}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/sequence_diagram_presence_detection.png}
+    \caption{Diagramme de séquence – Consultation de l’assiduité}
+    \label{fig:sequence_presence}
+\end{figure}
+
+\subsection{Diagramme de séquence du cas « Regarder un enregistrement (replay) »}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/sequence_diagram_recording.png}
+    \caption{Diagramme de séquence – Accès et lecture d’un enregistrement Daily.co}
+    \label{fig:sequence_replay}
+\end{figure}
+
+\subsection{Diagramme de classes du Sprint 2}
+La figure \ref{fig:class_sprint2} montre les entités ajoutées ou enrichies : \texttt{Class} (avec planning), \texttt{VideoSession} (contenant \texttt{recordingUrl}), \texttt{Attendance}, \texttt{Notification}, ainsi que \texttt{ChatMessage} pour le chat vidéo. Les relations avec \texttt{User} sont explicitées.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/class_diagram_sprint_2.png}
+    \caption{Diagramme de classes – Gestion des classes, sessions vidéo avec modération, chat et replay}
+    \label{fig:class_sprint2}
+\end{figure}
+
+\section{Réalisation}
+
+\subsection{Interface de gestion des classes (Admin)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/class_management_ui_1.png}
+    \caption{Interface de gestion des classes : Liste générale}
+    \label{fig:class_list_ui}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/class_management_ui_2.png}
+    \caption{Interface de création et d’édition des classes}
+    \label{fig:class_form_ui}
+\end{figure}
+
+\subsection{Interface de planification des cours}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/schedule_management_ui_1.png}
+    \caption{Interface de planification : Informations générales}
+    \label{fig:schedule_ui_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/schedule_management_ui_2.png}
+    \caption{Interface de planification : Configuration des séances}
+    \label{fig:schedule_ui_2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/schedule_management_ui_3.png}
+    \caption{Interface de planification : Récapitulatif et validation}
+    \label{fig:schedule_ui_3}
+\end{figure}
+
+\subsection{Interface de supervision générale (Admin)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/supervision_admin_ui.png}
+    \caption{Tableau de bord de supervision}
+    \label{fig:supervision_ui}
+\end{figure}
+
+\subsection{Interface des notifications}
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=\textwidth]{images/notifications_ui.png}
+    \caption{Centre de notifications et alertes push/email}
+    \label{fig:notif_ui}
+\end{figure}
+
+\subsection{Interface de la salle de classe virtuelle (Daily.co) avec modération et chat}
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=\textwidth]{images/video_room_ui.png}
+    \caption{Salle de classe virtuelle : partage d’écran, panneau de contrôle des participants (micro/caméra), chat intégré et bouton d’enregistrement}
+    \label{fig:video_ui}
+\end{figure}
+
+\subsection{Interface de suivi de présence et historique}
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=\textwidth]{images/presence_history_ui.png}
+    \caption{Historique des participations par étudiant/session}
+    \label{fig:presence_ui}
+\end{figure}
+
+\subsection{Interface de replay (enregistrement)}
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=\textwidth]{images/replay_ui.png}
+    \caption{Liste des enregistrements disponibles par cours}
+    \label{fig:replay_ui}
+\end{figure}
 
 \section{Conclusion}
-La structure académique étant en place, nous pouvons maintenant développer les services backend qui feront fonctionner la logique métier.
+
+Le deuxième sprint a permis de doter EduGenius d’un socle complet de gestion des classes, de planification et de visioconférence avancée. Les administrateurs peuvent structurer l’offre de formation (classes, plannings) et superviser l’activité. Les enseignants animent des classes virtuelles interactives avec partage d’écran, contrôle audio/vidéo des participants, chat intégré, et enregistrement optionnel. Le suivi de présence (détection des arrivées, retards, absence) est automatisé, et l’historique est consultable. Les étudiants bénéficient du replay pour rattraper les sessions manquées. Les notifications temps réel (US-22) améliorent l’expérience utilisateur.
+
+Les tests unitaires, d’intégration et fonctionnels ont validé l’ensemble des douze user stories (US-4, US-5, US-6, US-22, US-23, US-24, US-25, US-26, US-27, US-28, US-29, US-30). Aucune régression n’a été constatée sur le socle d’authentification du sprint 1.
+
+Cet incrément constitue un jalon essentiel vers une plateforme d’apprentissage hybride, prête à accueillir le sprint 3 centré sur les contenus pédagogiques, l’intelligence artificielle et l’évaluation formative.

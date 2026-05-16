@@ -57,26 +57,26 @@
 \contentsline {chapter}{\numberline {3}Réalisation du Sprint 1 : Authentification et Gestion des Utilisateurs}{35}{chapter.3}%
 \contentsline {section}{Introduction}{35}{section*.25}%
 \contentsline {section}{\numberline {3.1}Backlog du Sprint 1}{35}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Analyse}{37}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Diagramme de cas d’utilisation du Sprint 1}{37}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.2}Analyse}{36}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Diagramme de cas d’utilisation du Sprint 1}{36}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Description textuelle des cas d’utilisation}{37}{subsection.3.2.2}%
 \contentsline {subsubsection}{Le cas d’utilisation « S’authentifier »}{37}{subsubsection*.28}%
 \contentsline {subsubsection}{Le cas d’utilisation « Gérer son profil »}{38}{subsubsection*.29}%
 \contentsline {subsubsection}{Le cas d’utilisation « Consulter le tableau de bord »}{39}{subsubsection*.30}%
 \contentsline {subsubsection}{Le cas d’utilisation « Utiliser l’interface responsive »}{39}{subsubsection*.31}%
 \contentsline {subsubsection}{Le cas d’utilisation « Gérer les utilisateurs » (administrateur)}{40}{subsubsection*.32}%
-\contentsline {subsubsection}{Le cas d’utilisation « Créer et gérer les classes » (administrateur)}{40}{subsubsection*.33}%
+\contentsline {subsubsection}{Le cas d’utilisation « Réinitialiser son mot de passe »}{40}{subsubsection*.33}%
 \contentsline {section}{\numberline {3.3}Conception}{41}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Diagramme de séquence du cas « S’authentifier »}{41}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Diagramme de séquence du cas « Gérer son profil »}{44}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.2}Diagramme de séquence du cas « Gérer son profil »}{42}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}Diagramme de séquence du cas « Consulter le tableau de bord »}{44}{subsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.3.4}Diagrammes de séquence du cas « Gérer les utilisateurs »}{46}{subsection.3.3.4}%
 \contentsline {subsubsection}{Consultation des utilisateurs}{46}{subsubsection*.37}%
 \contentsline {subsubsection}{Création d'un utilisateur}{46}{subsubsection*.39}%
 \contentsline {subsubsection}{Modification d'un utilisateur}{47}{subsubsection*.41}%
 \contentsline {subsubsection}{Suppression d'un utilisateur}{48}{subsubsection*.43}%
-\contentsline {subsection}{\numberline {3.3.5}Diagramme de séquence du cas « Créer et gérer les classes »}{49}{subsection.3.3.5}%
-\contentsline {subsection}{\numberline {3.3.6}Diagramme de classes du Sprint 1}{51}{subsection.3.3.6}%
+\contentsline {subsection}{\numberline {3.3.5}Diagramme de séquence du cas « Réinitialiser le mot de passe »}{49}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.6}Diagramme de classes du Sprint 1}{50}{subsection.3.3.6}%
 \contentsline {subsection}{\numberline {3.3.7}Représentation graphique de la base de données}{51}{subsection.3.3.7}%
 \contentsline {section}{\numberline {3.4}Réalisation}{52}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Interface de connexion}{52}{subsection.3.4.1}%
@@ -84,7 +84,33 @@
 \contentsline {subsection}{\numberline {3.4.3}Interface profil utilisateur}{53}{subsection.3.4.3}%
 \contentsline {subsection}{\numberline {3.4.4}Interface du tableau de bord}{54}{subsection.3.4.4}%
 \contentsline {subsection}{\numberline {3.4.5}Interface de gestion des utilisateurs}{55}{subsection.3.4.5}%
-\contentsline {subsection}{\numberline {3.4.6}Interface de gestion des classes}{56}{subsection.3.4.6}%
 \contentsline {section}{\numberline {3.5}Conclusion}{56}{section.3.5}%
-\contentsline {chapter}{Bibliographie}{58}{section*.55}%
-\contentsline {chapter}{Webographie}{59}{chapter*.57}%
+\contentsline {chapter}{\numberline {4}Réalisation du Sprint 2 : Gestion des classes, Appels vidéo et Communication synchrone}{57}{chapter.4}%
+\contentsline {section}{Introduction}{57}{section*.54}%
+\contentsline {section}{\numberline {4.1}Backlog du Sprint 2}{57}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Analyse}{59}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Diagramme de cas d’utilisation du Sprint 2}{59}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Description textuelle des cas d’utilisation}{60}{subsection.4.2.2}%
+\contentsline {subsubsection}{Le cas d’utilisation « Gérer les classes et le planning » (Administrateur)}{60}{subsubsection*.56}%
+\contentsline {subsubsection}{Le cas d’utilisation « Superviser la plateforme » (Administrateur)}{61}{subsubsection*.57}%
+\contentsline {subsubsection}{Le cas d’utilisation « Recevoir des notifications »}{61}{subsubsection*.58}%
+\contentsline {subsubsection}{Le cas d’utilisation « Gérer un appel vidéo » (Enseignant)}{61}{subsubsection*.59}%
+\contentsline {subsubsection}{Le cas d’utilisation « Participer à un appel vidéo » (Étudiant)}{62}{subsubsection*.60}%
+\contentsline {subsubsection}{Le cas d’utilisation « Suivre l’assiduité et consulter l’historique » (Enseignant/Admin)}{62}{subsubsection*.61}%
+\contentsline {section}{\numberline {4.3}Conception}{63}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Diagramme de séquence du cas « Créer une classe et son planning »}{63}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Diagramme de séquence du cas « Démarrer une session vidéo avec modération »}{64}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Diagramme de séquence du cas « Consulter l’historique de présence »}{65}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Diagramme de séquence du cas « Regarder un enregistrement (replay) »}{65}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Diagramme de classes du Sprint 2}{66}{subsection.4.3.5}%
+\contentsline {section}{\numberline {4.4}Réalisation}{67}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Interface de gestion des classes (Admin)}{67}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Interface de planification des cours}{68}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Interface de supervision générale (Admin)}{69}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Interface des notifications}{69}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Interface de la salle de classe virtuelle (Daily.co) avec modération et chat}{70}{subsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.4.6}Interface de suivi de présence et historique}{70}{subsection.4.4.6}%
+\contentsline {subsection}{\numberline {4.4.7}Interface de replay (enregistrement)}{70}{subsection.4.4.7}%
+\contentsline {section}{\numberline {4.5}Conclusion}{70}{section.4.5}%
+\contentsline {chapter}{Bibliographie}{71}{section*.77}%
+\contentsline {chapter}{Webographie}{72}{chapter*.79}%

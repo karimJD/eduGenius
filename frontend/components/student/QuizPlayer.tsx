@@ -26,11 +26,12 @@ interface Question {
 interface QuizPlayerProps {
   quizId?: string; // If loading an existing quiz
   courseId?: string; // If generating a new quiz
+  isReview?: boolean; // If true, show previous answers
   onComplete: () => void;
   onCancel: () => void;
 }
 
-export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlayerProps) {
+export function QuizPlayer({ quizId, courseId, isReview = false, onComplete, onCancel }: QuizPlayerProps) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -53,14 +54,35 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
           const res = await api.get(`/student/ai/practice-quiz/${quizId}`);
           if (res.data.success) {
             setQuizDetails({ _id: res.data.data._id, title: res.data.data.quizTitle });
-            setQuestions(res.data.data.questions);
+            
+            // Format questions and map correct answers
+            const formattedQuestions = res.data.data.questions.map((q: any) => ({
+              ...q,
+              questionText: q.question, // Map backend 'question' to frontend 'questionText'
+              correctAnswer: q.correctAnswer,
+              explanation: q.explanation || "Pas d'explication disponible."
+            }));
+            
+            setQuestions(formattedQuestions);
+            
+            if (isReview) {
+              // If review mode, initialize with first question's student answer
+              setSelectedOption(formattedQuestions[0].studentAnswer || null);
+              setShowExplanation(true);
+            }
           }
         } else if (courseId) {
-          // Generate new (legacy flow, keep as fallback)
+          // Generate new
           const res = await api.post('/student/ai/generate-practice-quiz', { courseId });
           if (res.data.success) {
              setQuizDetails({ _id: res.data.data._id, title: res.data.data.quizTitle });
-             setQuestions(res.data.data.questions);
+             const formattedQuestions = res.data.data.questions.map((q: any) => ({
+              ...q,
+              questionText: q.question,
+              correctAnswer: q.correctAnswer,
+              explanation: q.explanation || "Pas d'explication disponible."
+            }));
+             setQuestions(formattedQuestions);
           }
         }
       } catch (err) {
@@ -71,7 +93,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
       }
     };
     initQuiz();
-  }, [quizId, courseId]);
+  }, [quizId, courseId, isReview]);
 
   const handleSelect = (option: string) => {
     if (showExplanation) return; // Prevent changing answer
@@ -89,11 +111,21 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
 
   const handleNext = () => {
     if (currentIndex < questions.length - 1) {
-      setCurrentIndex(i => i + 1);
-      setSelectedOption(null);
-      setShowExplanation(false);
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      if (isReview) {
+        setSelectedOption(questions[nextIndex].studentAnswer || null);
+        setShowExplanation(true);
+      } else {
+        setSelectedOption(null);
+        setShowExplanation(false);
+      }
     } else {
-      finishQuiz();
+      if (isReview) {
+        setIsFinished(true);
+      } else {
+        finishQuiz();
+      }
     }
   };
 
@@ -113,7 +145,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 text-center bg-[#111111] rounded-3xl border border-[#222222]">
+      <div className="flex flex-col items-center justify-center p-12 text-center bg-white dark:bg-[#111111] rounded-3xl border border-gray-200 dark:border-[#222222] shadow-xl">
         <Loader2 className="w-12 h-12 text-purple-500 animate-spin mb-4" />
         <h3 className="text-xl font-bold text-foreground dark:text-white mb-2">Génération du Quiz</h3>
         <p className="text-muted-foreground dark:text-gray-400">L'IA analyse vos cours pour créer des questions pertinentes...</p>
@@ -123,9 +155,9 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
 
   if (error || questions.length === 0) {
     return (
-      <div className="p-12 text-center bg-[#111111] rounded-3xl border border-red-500/20">
-        <p className="text-red-400 mb-4">{error || "Aucune question trouvée."}</p>
-        <Button onClick={onCancel} variant="outline" className="text-foreground dark:text-white border-[#333333]">Retour</Button>
+      <div className="p-12 text-center bg-white dark:bg-[#111111] rounded-3xl border border-red-500/20 shadow-xl">
+        <p className="text-red-500 dark:text-red-400 mb-4">{error || "Aucune question trouvée."}</p>
+        <Button onClick={onCancel} variant="outline" className="text-foreground dark:text-white border-gray-200 dark:border-[#333333]">Retour</Button>
       </div>
     );
   }
@@ -136,7 +168,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-[#111111] border border-[#222222] rounded-3xl p-8 overflow-hidden relative text-center"
+        className="bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#222222] rounded-3xl p-8 overflow-hidden relative text-center shadow-2xl"
       >
         <div className="w-24 h-24 mx-auto bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full flex items-center justify-center mb-6 border border-green-500/30">
            <Trophy className="w-12 h-12 text-green-400" />
@@ -150,9 +182,9 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
               <div className="text-5xl font-black text-foreground dark:text-white mb-1">{score}<span className="text-2xl text-muted-foreground dark:text-gray-500">/{questions.length}</span></div>
               <div className="text-sm text-muted-foreground dark:text-gray-500 uppercase font-bold tracking-wider">Score</div>
            </div>
-           <div className="w-px bg-[#222222]" />
+           <div className="w-px bg-gray-100 dark:bg-[#222222]" />
            <div className="text-center">
-              <div className={cn("text-5xl font-black mb-1", percentage >= 80 ? "text-green-400" : percentage >= 50 ? "text-yellow-400" : "text-red-400")}>
+              <div className={cn("text-5xl font-black mb-1", percentage >= 80 ? "text-green-500 dark:text-green-400" : percentage >= 50 ? "text-yellow-500 dark:text-yellow-400" : "text-red-500 dark:text-red-400")}>
                 {percentage}%
               </div>
               <div className="text-sm text-muted-foreground dark:text-gray-500 uppercase font-bold tracking-wider">Précision</div>
@@ -160,7 +192,7 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-           <Button onClick={onCancel} className="bg-[#222222] text-foreground dark:text-white hover:bg-[#333333] border-0 h-12 px-8 rounded-xl font-bold">
+           <Button onClick={onCancel} className="bg-gray-100 dark:bg-[#222222] text-foreground dark:text-white hover:bg-gray-200 dark:hover:bg-[#333333] border-0 h-12 px-8 rounded-xl font-bold">
              Terminer
            </Button>
            <Button onClick={onComplete} className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-foreground dark:text-white h-12 px-8 border-0 shadow-lg rounded-xl font-bold">
@@ -177,9 +209,9 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
   const progress = ((currentIndex) / questions.length) * 100;
 
   return (
-    <div className="bg-[#111111] border border-[#222222] rounded-3xl overflow-hidden shadow-xl max-w-3xl mx-auto flex flex-col">
+    <div className="bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#222222] rounded-3xl overflow-hidden shadow-2xl max-w-3xl mx-auto flex flex-col">
       {/* Progress Bar */}
-      <div className="h-2 bg-[#222222] w-full">
+      <div className="h-2 bg-gray-100 dark:bg-[#222222] w-full">
         <motion.div 
           className="h-full bg-gradient-to-r from-purple-500 to-indigo-500"
           initial={{ width: `${((currentIndex) / questions.length) * 100}%` }}
@@ -214,15 +246,15 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
               const isSelected = selectedOption === opt;
               const isCorrect = opt === question.correctAnswer;
               
-              let stateClass = "bg-[#1a1a1a] border-[#333333] hover:border-purple-500/50 hover:bg-[#222222] text-gray-200";
+              let stateClass = "bg-gray-50 dark:bg-[#1a1a1a] border-gray-200 dark:border-[#333333] hover:border-purple-500/50 hover:bg-gray-100 dark:hover:bg-[#222222] text-foreground dark:text-gray-200";
               
               if (showExplanation) {
                 if (isCorrect) {
-                  stateClass = "bg-green-500/10 border-green-500 text-green-100";
-                } else if (isSelected && !isCorrect) {
-                  stateClass = "bg-red-500/10 border-red-500 text-red-100";
+                  stateClass = "bg-green-500/10 border-green-500 text-green-700 dark:text-green-100";
+                } else if (isSelected) {
+                  stateClass = "bg-red-500/10 border-red-500 text-red-700 dark:text-red-100";
                 } else {
-                  stateClass = "bg-[#1a1a1a] border-[#222222] text-muted-foreground dark:text-gray-500 opacity-50";
+                  stateClass = "bg-gray-50 dark:bg-[#1a1a1a] border-gray-100 dark:border-[#222222] text-muted-foreground dark:text-gray-500 opacity-50";
                 }
               } else if (isSelected) {
                 stateClass = "bg-purple-500/20 border-purple-500 text-foreground dark:text-white";
@@ -256,16 +288,16 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              className="mt-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-200 text-sm"
+              className="mt-6 p-4 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-500/20 text-blue-800 dark:text-blue-200 text-sm"
             >
-              <p className="font-bold mb-1 text-blue-400">Explication :</p>
+              <p className="font-bold mb-1 text-blue-600 dark:text-blue-400">Explication :</p>
               <p>{question.explanation}</p>
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Footer Actions */}
-        <div className="mt-8 pt-6 border-t border-[#222222] flex justify-between items-center">
+        <div className="mt-8 pt-6 border-t border-gray-100 dark:border-[#222222] flex justify-between items-center">
           <Button variant="ghost" className="text-muted-foreground dark:text-gray-500 hover:text-foreground dark:hover:text-white" onClick={onCancel}>
             Quitter
           </Button>
@@ -274,14 +306,14 @@ export function QuizPlayer({ quizId, courseId, onComplete, onCancel }: QuizPlaye
             <Button 
               onClick={handleCheck} 
               disabled={!selectedOption}
-              className="bg-purple-600 hover:bg-purple-700 text-foreground dark:text-white rounded-xl px-8 h-12 font-bold"
+              className="bg-purple-600 hover:bg-purple-700 text-white rounded-xl px-8 h-12 font-bold"
             >
               Valider
             </Button>
           ) : (
             <Button 
               onClick={handleNext}
-              className="bg-white text-black hover:bg-gray-200 rounded-xl px-8 h-12 font-bold"
+              className="bg-purple-600 dark:bg-white text-white dark:text-black hover:bg-purple-700 dark:hover:bg-gray-200 rounded-xl px-8 h-12 font-bold transition-all shadow-lg"
             >
               {currentIndex < questions.length - 1 ? 'Question Suivante' : 'Terminer le Quiz'}
               <ArrowRight className="w-4 h-4 ml-2" />

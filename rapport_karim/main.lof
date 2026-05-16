@@ -20,20 +20,36 @@
 \contentsline {figure}{\numberline {2.16}{\ignorespaces Modélisation conceptuelle des données (NoSQL)}}{34}{figure.caption.24}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Diagramme de cas d’utilisation – Authentification et sécurité}}{37}{figure.caption.27}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagramme de séquence de l’authentification JWT}}{43}{figure.caption.34}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagramme de séquence de la gestion du profil}}{44}{figure.caption.35}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagramme de séquence de l’authentification JWT}}{42}{figure.caption.34}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagramme de séquence de la gestion du profil}}{43}{figure.caption.35}%
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Diagramme de séquence de la consultation du tableau de bord}}{45}{figure.caption.36}%
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Diagramme de séquence : Consultation des utilisateurs}}{46}{figure.caption.38}%
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Diagramme de séquence : Création d'un utilisateur}}{47}{figure.caption.40}%
 \contentsline {figure}{\numberline {3.7}{\ignorespaces Diagramme de séquence : Modification d'un utilisateur}}{48}{figure.caption.42}%
 \contentsline {figure}{\numberline {3.8}{\ignorespaces Diagramme de séquence : Suppression d'un utilisateur}}{49}{figure.caption.44}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Diagramme de séquence de la gestion des classes}}{50}{figure.caption.45}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Diagramme de séquence de la réinitialisation du mot de passe}}{50}{figure.caption.45}%
 \contentsline {figure}{\numberline {3.10}{\ignorespaces Diagramme de classes – Modèle utilisateur et authentification}}{51}{figure.caption.46}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Schéma des collections MongoDB pour le sprint 1}}{52}{figure.caption.47}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Schéma de la collection MongoDB pour le sprint 1}}{52}{figure.caption.47}%
 \contentsline {figure}{\numberline {3.12}{\ignorespaces Page de connexion}}{53}{figure.caption.48}%
 \contentsline {figure}{\numberline {3.13}{\ignorespaces Formulaire de réinitialisation}}{53}{figure.caption.49}%
 \contentsline {figure}{\numberline {3.14}{\ignorespaces Page de profil}}{54}{figure.caption.50}%
 \contentsline {figure}{\numberline {3.15}{\ignorespaces Tableau de bord de l'utilisateur}}{54}{figure.caption.51}%
 \contentsline {figure}{\numberline {3.16}{\ignorespaces Interface de gestion des utilisateurs (Étudiants)}}{55}{figure.caption.52}%
 \contentsline {figure}{\numberline {3.17}{\ignorespaces Interface de gestion des utilisateurs (Enseignants)}}{55}{figure.caption.53}%
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Interface de gestion des classes}}{56}{figure.caption.54}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Diagramme de cas d’utilisation – Gestion des classes, Appels vidéo et Communication synchrone}}{60}{figure.caption.55}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagramme de séquence – Création d’une classe avec planning}}{63}{figure.caption.62}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Diagramme de séquence – Appel vidéo avec Daily.co, détection de présence, contrôle audio/vidéo et chat}}{64}{figure.caption.63}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Diagramme de séquence – Consultation de l’assiduité}}{65}{figure.caption.64}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Diagramme de séquence – Accès et lecture d’un enregistrement Daily.co}}{65}{figure.caption.65}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Diagramme de classes – Gestion des classes, sessions vidéo avec modération, chat et replay}}{66}{figure.caption.66}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Interface de gestion des classes : Liste générale}}{67}{figure.caption.67}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Interface de création et d’édition des classes}}{67}{figure.caption.68}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Interface de planification : Informations générales}}{68}{figure.caption.69}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Interface de planification : Configuration des séances}}{68}{figure.caption.70}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Interface de planification : Récapitulatif et validation}}{69}{figure.caption.71}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Tableau de bord de supervision}}{69}{figure.caption.72}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Centre de notifications et alertes push/email}}{69}{figure.caption.73}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Salle de classe virtuelle : partage d’écran, panneau de contrôle des participants (micro/caméra), chat intégré et bouton d’enregistrement}}{70}{figure.caption.74}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Historique des participations par étudiant/session}}{70}{figure.caption.75}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Liste des enregistrements disponibles par cours}}{70}{figure.caption.76}%

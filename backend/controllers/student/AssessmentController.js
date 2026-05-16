@@ -1,16 +1,94 @@
 const Quiz = require('../../models/Quiz');
 const Submission = require('../../models/Submission');
+const Course = require('../../models/Course');
+const WorkSubmission = require('../../models/WorkSubmission');
+const User = require('../../models/User');
+const mongoose = require('mongoose');
 
 const getAssignedAssessments = async (req, res) => {
   try {
-    const { classId, type } = req.query;
-    const filter = {};
-    if (classId) filter.classId = classId;
-    if (type) filter.type = type;
+    const studentId = req.user._id;
+    const { classId: queryClassId } = req.query;
     
-    const assessments = await Quiz.find(filter);
-    res.status(200).json({ success: true, data: assessments });
+    // Get student's classId if not provided in query
+    let classId = queryClassId;
+    if (!classId) {
+      const user = await req.user.populate('student.classId');
+      classId = user.student?.classId?._id || user.student?.classId;
+    }
+
+    if (!classId) {
+      return res.status(200).json({ success: true, data: [] });
+    }
+
+    // 1. Fetch Quizzes (traditional assessments)
+    const quizzes = await Quiz.find({ classId })
+      .populate('subjectId', 'name code')
+      .lean();
+
+    // 2. Fetch Exercises from Courses
+    const courses = await Course.find({ classId })
+      .populate('subjectId', 'name code')
+      .lean();
+
+    let exercises = [];
+    courses.forEach(course => {
+      course.chapters.forEach(chapter => {
+        if (chapter.isPublished && chapter.exercises && chapter.exercises.length > 0) {
+          chapter.exercises.forEach(ex => {
+            exercises.push({
+              _id: ex._id,
+              title: ex.name,
+              type: 'assignment',
+              courseId: course._id,
+              subjectId: course.subjectId,
+              chapterId: chapter._id,
+              dueDate: ex.dueDate,
+              questions: [], // No fixed questions for file assignments
+              duration: 0,
+              isExercise: true,
+              classId: course.classId
+            });
+          });
+        }
+      });
+    });
+
+    // 3. Get all submissions (Quizzes and Exercises)
+    const [quizSubmissions, workSubmissions] = await Promise.all([
+      Submission.find({ studentId, status: 'submitted' }).lean(),
+      WorkSubmission.find({ studentId }).lean()
+    ]);
+
+    const submittedQuizIds = new Set(quizSubmissions.map(s => s.quizId?.toString()));
+    const submittedWorkIds = new Set(workSubmissions.map(s => s.exerciseId?.toString()));
+
+    // 4. Merge and format
+    const allAssessments = [
+      ...quizzes.map(q => {
+        const sub = quizSubmissions.find(s => s.quizId?.toString() === q._id.toString());
+        return {
+          ...q,
+          type: 'quiz',
+          status: sub ? sub.status : 'assigned',
+          hasSubmitted: sub ? sub.status === 'submitted' : false,
+          score: sub ? (sub.percentage || sub.score) : null
+        };
+      }),
+      ...exercises.map(ex => {
+        const sub = workSubmissions.find(s => s.exerciseId?.toString() === ex._id.toString());
+        return {
+          ...ex,
+          status: sub ? 'submitted' : 'assigned',
+          hasSubmitted: !!sub,
+          score: sub ? sub.grade : null
+        };
+      })
+    ];
+
+    res.status(200).json({ success: true, data: allAssessments });
   } catch (error) {
+    console.error('Error fetching assessments:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -62,21 +140,27 @@ const submitAssessment = async (req, res) => {
     if (!submission) return res.status(404).json({ success: false, message: 'Submission not found' });
 
     let totalScore = 0;
+    let maxPoints = 0;
     const quiz = submission.quizId;
 
     submission.answers.forEach(answer => {
       const question = quiz.questions.id(answer.questionId);
-      if (question && ['mcq', 'true-false'].includes(question.type)) {
-        if (answer.answer === question.correctAnswer) {
-          answer.isCorrect = true;
-          totalScore += question.points || 1;
-        } else {
-          answer.isCorrect = false;
+      if (question) {
+        maxPoints += question.points || 1;
+        if (['mcq', 'true-false'].includes(question.type)) {
+          if (answer.answer === question.correctAnswer) {
+            answer.isCorrect = true;
+            totalScore += question.points || 1;
+          } else {
+            answer.isCorrect = false;
+          }
         }
       }
     });
 
     submission.score = totalScore;
+    submission.totalPoints = maxPoints;
+    submission.percentage = maxPoints > 0 ? (totalScore / maxPoints) * 100 : 0;
     submission.status = 'submitted';
     submission.submittedAt = new Date();
 

@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { StudentSidebar } from '../../components/student/StudentSidebar';
 import { useAuth } from '../../context/AuthContext';
 
+import { NotificationCenter } from '../../components/shared/NotificationCenter';
+
 export default function StudentLayout({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -26,9 +28,12 @@ export default function StudentLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-background dark:bg-black text-foreground dark:text-white flex selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-background dark:bg-black text-foreground dark:text-white flex selection:bg-indigo-500/30 relative">
       <StudentSidebar />
-      <main className="flex-1 lg:ml-64 p-4 md:p-8 overflow-y-auto h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-black dark:via-[#0a0a0a] dark:to-[#111111]">
+      <main className="flex-1 lg:ml-64 p-4 md:p-8 overflow-y-auto h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-black dark:via-[#0a0a0a] dark:to-[#111111] relative">
+        <div className="absolute top-4 md:top-8 right-4 md:right-8 z-50">
+          <NotificationCenter />
+        </div>
         <div className="mx-auto">
           {children}
         </div>

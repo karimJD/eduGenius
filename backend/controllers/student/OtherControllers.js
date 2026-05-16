@@ -92,7 +92,8 @@ const getAnnouncements = async (req, res) => {
 
     const announcements = await Announcement.find(query)
     .sort({ isPinned: -1, createdAt: -1 })
-    .populate('teacherId', 'firstName lastName avatar');
+    .populate('teacherId', 'firstName lastName avatar')
+    .populate('classId', 'name');
 
     res.status(200).json({ success: true, data: announcements });
   } catch (error) {

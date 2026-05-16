@@ -8,7 +8,7 @@ export const getMyClasses = async (params?: any) => {
 
 // Schedule
 export const getMySchedule = async (params?: any) => {
-  const response = await api.get('/student/schedule', { params });
+  const response = await api.get('/student/other/schedule', { params });
   return response.data;
 };
 

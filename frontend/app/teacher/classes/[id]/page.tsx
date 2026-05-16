@@ -784,7 +784,7 @@ export default function ClassDetailPage() {
                     <Play className="fill-white text-white w-7 h-7 ml-0.5" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-black text-white tracking-tighter uppercase italic">Lobby de Session</h2>
+                    <DialogTitle className="text-3xl font-black text-white tracking-tighter uppercase italic">Lobby de Session</DialogTitle>
                     <p className="text-white/60 text-sm font-medium uppercase tracking-widest">{selectedEvent.resource.subjectCode}</p>
                   </div>
                 </div>

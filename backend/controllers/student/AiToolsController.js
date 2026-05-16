@@ -209,7 +209,12 @@ const getSummaries = async (req, res) => {
     const summaries = await StudyMaterial.find({
       studentId,
       type: 'summary',
-    }).sort({ createdAt: -1 });
+    })
+    .populate({
+      path: 'courseId',
+      populate: { path: 'subjectId', select: 'name code' }
+    })
+    .sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: summaries });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -291,11 +296,19 @@ const getFlashcards = async (req, res) => {
   try {
     const { classId } = req.params;
     const studentId = new mongoose.Types.ObjectId(req.user._id.toString());
-    const mongooseClassId = new mongoose.Types.ObjectId(classId);
-    const materials = await StudyMaterial.find({
+    
+    const query = {
       studentId,
-      classId: mongooseClassId,
       type: 'flashcard',
+    };
+
+    if (classId && classId !== 'all') {
+      query.classId = new mongoose.Types.ObjectId(classId);
+    }
+
+    const materials = await StudyMaterial.find(query).populate({
+      path: 'courseId',
+      populate: { path: 'subjectId', select: 'name code' }
     });
     res.status(200).json({ success: true, data: materials });
   } catch (error) {
@@ -335,6 +348,7 @@ const generatePracticeQuiz = async (req, res) => {
       type: 'mcq',
       options: q.options,
       correctAnswer: q.options[q.correctAnswerIndex],
+      explanation: q.explanation || "Pas d'explication disponible.",
       points: 1,
     }));
 
@@ -393,7 +407,12 @@ const getPracticeHistory = async (req, res) => {
     const history = await StudentQuizAttempt.find({
       studentId,
       isPracticeQuiz: true,
-    }).sort({ createdAt: -1 });
+    })
+    .populate({
+      path: 'courseId',
+      populate: { path: 'subjectId', select: 'name code' }
+    })
+    .sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: history });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

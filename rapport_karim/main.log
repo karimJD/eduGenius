@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.20)  2 MAY 2026 16:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.20)  15 MAY 2026 15:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -338,7 +338,11 @@ Package: tabularx 2023/07/08 v2.11c `tabularx' package (DPC)
 \TX@delta=\dimen198
 \TX@cols=\count302
 \TX@ftn=\toks33
-)
+) (/usr/share/texlive/texmf-dist/tex/latex/xltabular/xltabular.sty
+Package: xltabular 2020/11/04 v0.2e `xltabular' package (hv,RN)
+ (/usr/share/texlive/texmf-dist/tex/latex/ltablex/ltablex.sty
+Package: ltablex 2014/08/13 v1.1 Modified tabularx
+))
 \chapnumwidth=\skip105
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
@@ -447,7 +451,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip106
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 68.
+Package hyperref Info: Option `colorlinks' set `true' on input line 69.
  (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count315
@@ -455,24 +459,24 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 114.
-LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -531,7 +535,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 114.
+Package hyperref Info: Link coloring ON on input line 115.
  (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
@@ -542,7 +546,7 @@ Package hyperref Info: Link coloring ON on input line 114.
 pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.122 \clearpage
+l.123 \clearpage
                  [1
 
 
@@ -556,17 +560,42 @@ Overfull \hbox (3.47643pt too wide) in paragraph at lines 9--10
 
 ] (./main.toc [3
 
-] [4])
+] [4]
+Overfull \hbox (7.427pt too wide) in paragraph at lines 103--103
+ [][] [][][]\T1/cmr/m/n/12 Diagramme de séquence du cas ^^S Consulter l'historique de présence 
+ []
+
+)
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
  [5] (./main.lof [6
 
-])
+]
+Overfull \hbox (10.25967pt too wide) in paragraph at lines 42--42
+ [][] [][][]\T1/cmr/m/n/12 Diagramme de séquence ^^U Appel vidéo avec Daily.co, détection de présence, 
+ []
+
+
+Overfull \hbox (12.46732pt too wide) in paragraph at lines 45--45
+ [][] [][][]\T1/cmr/m/n/12 Diagramme de classes ^^U Gestion des classes, sessions vidéo avec modération, 
+ []
+
+
+Overfull \hbox (24.4298pt too wide) in paragraph at lines 53--53
+ [][] [][][]\T1/cmr/m/n/12 Salle de classe virtuelle : partage d'écran, panneau de contrôle des participants 
+ []
+
+)
 \tf@lof=\write5
 \openout5 = `main.lof'.
 
- [7] (./main.lot)
+ [7] (./main.lot
+Overfull \hbox (18.30621pt too wide) in paragraph at lines 11--11
+ [][] [][][]\T1/cmr/m/n/12 User Stories du Sprint 2 ^^U Gestion des classes, notifications et visioconférence 
+ []
+
+)
 \tf@lot=\write6
 \openout6 = `main.lot'.
 
@@ -866,211 +895,201 @@ Overfull \hbox (28.25668pt too wide) in alignment at lines 93--157
  [] [] [] [] [] 
  []
 
-[17] [18] [19] [20] [21] [22] [23]
-Underfull \hbox (badness 10000) in paragraph at lines 174--174
-[]|\T1/cmr/m/n/10.95 Authentification &
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 174--174
-[]|\T1/cmr/m/n/10.95 Socle technique,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 175--175
-[]|\T1/cmr/m/n/10.95 Gestion CMS &
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 175--175
-[]|\T1/cmr/m/n/10.95 Gestion CMS et
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 175--175
-[]|\T1/cmr/m/n/10.95 EG-7, EG-14, EG-5,
- []
-
-
-Underfull \hbox (badness 5832) in paragraph at lines 176--176
-[]|\T1/cmr/m/n/10.95 Intelligence Artificielle
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
-[]|\T1/cmr/m/n/10.95 EG-8, EG-9, EG-15,
+[17
+pdfTeX warning (ext4): destination with the same identifier (name{table.2.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.157 \end{longtable}
+                     ] [18] [19] [20] [21] [22] [23]
+Underfull \hbox (badness 1629) in paragraph at lines 177--177
+[]|\T1/cmr/m/n/10.95 Gestion des classes & Appels
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 177--177
-[]|\T1/cmr/m/n/10.95 Collaboration &
+\T1/cmr/m/n/10.95 vidéo (avec chat, contrôles
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 177--177
-[]|\T1/cmr/m/n/10.95 Collaboration Temps
+[]|\T1/cmr/m/n/10.95 Gestion des contenus,
  []
 
 
-Overfull \hbox (26.07674pt too wide) in paragraph at lines 170--179
- [][] 
+Underfull \hbox (badness 10000) in paragraph at lines 177--177
+\T1/cmr/m/n/10.95 évaluations, chat textuel,
  []
 
 [24]
-<images/gantt_diagram_global.png, id=622, 1290.8225pt x 215.80624pt>
+<images/gantt_diagram_global.png, id=765, 1045.9075pt x 230.8625pt>
 File: images/gantt_diagram_global.png Graphic file (type png)
 <use images/gantt_diagram_global.png>
-Package pdftex.def Info: images/gantt_diagram_global.png  used on input line 188.
-(pdftex.def)             Requested size: 441.01773pt x 73.72878pt.
+Package pdftex.def Info: images/gantt_diagram_global.png  used on input line 187.
+(pdftex.def)             Requested size: 441.01773pt x 97.34555pt.
  [25 <./images/gantt_diagram_global.png>]
-Overfull \hbox (15.78302pt too wide) in paragraph at lines 205--206
+Overfull \hbox (15.78302pt too wide) in paragraph at lines 204--205
 []\T1/cmr/bx/n/12 Le périmètre étudiant : \T1/cmr/m/n/12 Ce diagramme (voir Figure [][]2.4[][]) se focalise sur l'expérience
  []
 
-<images/use_case_global_admin.png, id=634, 920.43875pt x 778.91pt>
+<images/use_case_global_admin.png, id=777, 920.43875pt x 778.91pt>
 File: images/use_case_global_admin.png Graphic file (type png)
 <use images/use_case_global_admin.png>
-Package pdftex.def Info: images/use_case_global_admin.png  used on input line 213.
+Package pdftex.def Info: images/use_case_global_admin.png  used on input line 212.
 (pdftex.def)             Requested size: 441.01773pt x 373.20699pt.
-<images/use_case_global_teacher.png, id=635, 732.7375pt x 734.745pt>
+<images/use_case_global_teacher.png, id=778, 732.7375pt x 734.745pt>
 File: images/use_case_global_teacher.png Graphic file (type png)
 <use images/use_case_global_teacher.png>
-Package pdftex.def Info: images/use_case_global_teacher.png  used on input line 221.
+Package pdftex.def Info: images/use_case_global_teacher.png  used on input line 220.
 (pdftex.def)             Requested size: 441.01773pt x 442.22939pt.
 [26 <./images/use_case_global_admin.png>]
-<images/use_case_global_student.png, id=641, 1006.76125pt x 702.625pt>
+<images/use_case_global_student.png, id=784, 1006.76125pt x 702.625pt>
 File: images/use_case_global_student.png Graphic file (type png)
 <use images/use_case_global_student.png>
-Package pdftex.def Info: images/use_case_global_student.png  used on input line 229.
+Package pdftex.def Info: images/use_case_global_student.png  used on input line 228.
 (pdftex.def)             Requested size: 441.01773pt x 307.78365pt.
  [27 <./images/use_case_global_teacher.png>]
-<images/sequence_diagram_ai.png, id=647, 1532.72626pt x 1551.7975pt>
+<images/sequence_diagram_ai.png, id=790, 1532.72626pt x 1551.7975pt>
 File: images/sequence_diagram_ai.png Graphic file (type png)
 <use images/sequence_diagram_ai.png>
-Package pdftex.def Info: images/sequence_diagram_ai.png  used on input line 239.
+Package pdftex.def Info: images/sequence_diagram_ai.png  used on input line 238.
 (pdftex.def)             Requested size: 441.01773pt x 446.50534pt.
  [28 <./images/use_case_global_student.png>]
-Overfull \hbox (36.36871pt too wide) in paragraph at lines 247--247
+Overfull \hbox (36.36871pt too wide) in paragraph at lines 246--246
 |[]\T1/cmr/bx/n/17.28 Écosystème de Développement et Stack Technologique| 
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 252--252
+
+ []
+
+<images/github_logo.png, id=797, 370.38374pt x 136.51pt>
+File: images/github_logo.png Graphic file (type png)
+<use images/github_logo.png>
+Package pdftex.def Info: images/github_logo.png  used on input line 252.
+(pdftex.def)             Requested size: 99.58107pt x 34.14198pt.
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 252.
+See the caption package documentation for explanation.
+
+[29 <./images/sequence_diagram_ai.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 253--253
 
  []
 
-<images/github_logo.png, id=654, 370.38374pt x 136.51pt>
-File: images/github_logo.png Graphic file (type png)
-<use images/github_logo.png>
-Package pdftex.def Info: images/github_logo.png  used on input line 253.
-(pdftex.def)             Requested size: 99.58107pt x 34.14198pt.
+<images/trello_logo.png, id=803, 3854.4pt x 1102.1175pt>
+File: images/trello_logo.png Graphic file (type png)
+<use images/trello_logo.png>
+Package pdftex.def Info: images/trello_logo.png  used on input line 253.
+(pdftex.def)             Requested size: 99.57097pt x 34.13838pt.
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 253.
 See the caption package documentation for explanation.
 
-[29 <./images/sequence_diagram_ai.png>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 254--254
 
  []
 
-<images/trello_logo.png, id=660, 3854.4pt x 1102.1175pt>
-File: images/trello_logo.png Graphic file (type png)
-<use images/trello_logo.png>
-Package pdftex.def Info: images/trello_logo.png  used on input line 254.
-(pdftex.def)             Requested size: 99.57097pt x 34.13838pt.
+<images/teams_logo.png, id=804, 394.47375pt x 128.48pt>
+File: images/teams_logo.png Graphic file (type png)
+<use images/teams_logo.png>
+Package pdftex.def Info: images/teams_logo.png  used on input line 254.
+(pdftex.def)             Requested size: 99.58125pt x 34.1431pt.
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 254.
 See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--255
+Underfull \hbox (badness 10000) in paragraph at lines 261--261
 
  []
 
-<images/teams_logo.png, id=661, 394.47375pt x 128.48pt>
-File: images/teams_logo.png Graphic file (type png)
-<use images/teams_logo.png>
-Package pdftex.def Info: images/teams_logo.png  used on input line 255.
-(pdftex.def)             Requested size: 99.58125pt x 34.1431pt.
+<images/next_logo.png, id=805, 869.2475pt x 652.4375pt>
+File: images/next_logo.png Graphic file (type png)
+<use images/next_logo.png>
+Package pdftex.def Info: images/next_logo.png  used on input line 261.
+(pdftex.def)             Requested size: 94.76865pt x 71.1312pt.
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 255.
+(caption)                particular \caption on input line 261.
 See the caption package documentation for explanation.
+
+
+Overfull \hbox (0.36734pt too wide) in paragraph at lines 262--262
+[]\T1/cmr/bx/n/12 Node.js & Express : \T1/cmr/m/n/12 Environnement d'exécution JavaScript côté serveur associé
+ []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 262--262
 
  []
 
-<images/next_logo.png, id=662, 869.2475pt x 652.4375pt>
-File: images/next_logo.png Graphic file (type png)
-<use images/next_logo.png>
-Package pdftex.def Info: images/next_logo.png  used on input line 262.
-(pdftex.def)             Requested size: 94.76865pt x 71.1312pt.
+<images/node_logo.png, id=806, 642.4pt x 321.2pt>
+File: images/node_logo.png Graphic file (type png)
+<use images/node_logo.png>
+Package pdftex.def Info: images/node_logo.png  used on input line 262.
+(pdftex.def)             Requested size: 99.58076pt x 34.14113pt.
+<images/express_logo.png, id=807, 829.59938pt x 376.40625pt>
+File: images/express_logo.png Graphic file (type png)
+<use images/express_logo.png>
+Package pdftex.def Info: images/express_logo.png  used on input line 262.
+(pdftex.def)             Requested size: 99.57294pt x 34.1393pt.
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 262.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (0.36734pt too wide) in paragraph at lines 263--263
-[]\T1/cmr/bx/n/12 Node.js & Express : \T1/cmr/m/n/12 Environnement d'exécution JavaScript côté serveur associé
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 263--263
 
  []
 
-<images/node_logo.png, id=663, 642.4pt x 321.2pt>
-File: images/node_logo.png Graphic file (type png)
-<use images/node_logo.png>
-Package pdftex.def Info: images/node_logo.png  used on input line 263.
-(pdftex.def)             Requested size: 99.58076pt x 34.14113pt.
-<images/express_logo.png, id=664, 829.59938pt x 376.40625pt>
-File: images/express_logo.png Graphic file (type png)
-<use images/express_logo.png>
-Package pdftex.def Info: images/express_logo.png  used on input line 263.
-(pdftex.def)             Requested size: 99.57294pt x 34.1393pt.
+[30 <./images/github_logo.png> <./images/trello_logo.png> <./images/teams_logo.png> <./images/next_logo.png (PNG copy)>]
+<images/mongodb_logo.png, id=815, 3854.4pt x 2168.1pt>
+File: images/mongodb_logo.png Graphic file (type png)
+<use images/mongodb_logo.png>
+Package pdftex.def Info: images/mongodb_logo.png  used on input line 263.
+(pdftex.def)             Requested size: 99.57097pt x 34.14113pt.
+
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 263.
 See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 264--264
-
- []
-
-[30 <./images/github_logo.png> <./images/trello_logo.png> <./images/teams_logo.png> <./images/next_logo.png (PNG copy)>]
-<images/mongodb_logo.png, id=672, 3854.4pt x 2168.1pt>
-File: images/mongodb_logo.png Graphic file (type png)
-<use images/mongodb_logo.png>
-Package pdftex.def Info: images/mongodb_logo.png  used on input line 264.
-(pdftex.def)             Requested size: 99.57097pt x 34.14113pt.
-
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 264.
-See the caption package documentation for explanation.
-
-
-Overfull \hbox (2.43375pt too wide) in paragraph at lines 266--266
+Overfull \hbox (2.43375pt too wide) in paragraph at lines 265--265
 \T1/cmr/m/n/12 (LLM) en local, garantissant la souveraineté et la confidentialité totale des données
  []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
+
+ []
+
+<images/ollama_logo.png, id=816, 1284.8pt x 1284.8pt>
+File: images/ollama_logo.png Graphic file (type png)
+<use images/ollama_logo.png>
+Package pdftex.def Info: images/ollama_logo.png  used on input line 265.
+(pdftex.def)             Requested size: 85.35774pt x 85.35774pt.
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 265.
+See the caption package documentation for explanation.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 266--266
 
  []
 
-<images/ollama_logo.png, id=673, 1284.8pt x 1284.8pt>
-File: images/ollama_logo.png Graphic file (type png)
-<use images/ollama_logo.png>
-Package pdftex.def Info: images/ollama_logo.png  used on input line 266.
-(pdftex.def)             Requested size: 85.35774pt x 85.35774pt.
+<images/daily_logo.png, id=817, 903.375pt x 501.875pt>
+File: images/daily_logo.png Graphic file (type png)
+<use images/daily_logo.png>
+Package pdftex.def Info: images/daily_logo.png  used on input line 266.
+(pdftex.def)             Requested size: 99.57832pt x 34.1393pt.
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 266.
@@ -1081,82 +1100,67 @@ Underfull \hbox (badness 10000) in paragraph at lines 267--267
 
  []
 
-<images/daily_logo.png, id=674, 903.375pt x 501.875pt>
-File: images/daily_logo.png Graphic file (type png)
-<use images/daily_logo.png>
-Package pdftex.def Info: images/daily_logo.png  used on input line 267.
-(pdftex.def)             Requested size: 99.57832pt x 34.1393pt.
+<images/tailwind_logo.png, id=818, 2208.25pt x 1104.125pt>
+File: images/tailwind_logo.png Graphic file (type png)
+<use images/tailwind_logo.png>
+Package pdftex.def Info: images/tailwind_logo.png  used on input line 267.
+(pdftex.def)             Requested size: 99.56912pt x 34.13316pt.
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 267.
 See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--268
-
- []
-
-<images/tailwind_logo.png, id=675, 2208.25pt x 1104.125pt>
-File: images/tailwind_logo.png Graphic file (type png)
-<use images/tailwind_logo.png>
-Package pdftex.def Info: images/tailwind_logo.png  used on input line 268.
-(pdftex.def)             Requested size: 99.56912pt x 34.13316pt.
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 268.
-See the caption package documentation for explanation.
-
-
-Overfull \hbox (10.6415pt too wide) in paragraph at lines 274--275
+Overfull \hbox (10.6415pt too wide) in paragraph at lines 273--274
 \T1/cmr/m/n/12 L'architecture d'\T1/cmr/bx/n/12 EduGenius \T1/cmr/m/n/12 a été conçue pour répondre à des impératifs de performance,
  []
 
 [31 <./images/node_logo.png> <./images/express_logo.png> <./images/mongodb_logo.png> <./images/ollama_logo.png> <./images/daily_logo.png> <./images/tailwind_logo.png>]
-Overfull \hbox (8.24481pt too wide) in paragraph at lines 281--282
+Overfull \hbox (8.24481pt too wide) in paragraph at lines 280--281
 []\T1/cmr/bx/n/12 Serveur d'Application : \T1/cmr/m/n/12 Hébergement de la logique \T1/cmr/bx/n/12 Next.js \T1/cmr/m/n/12 et de l'API \T1/cmr/bx/n/12 Express
  []
 
-<images/physical_architecture_diagram.png, id=684, 900.36375pt x 589.20125pt>
+<images/physical_architecture_diagram.png, id=827, 900.36375pt x 589.20125pt>
 File: images/physical_architecture_diagram.png Graphic file (type png)
 <use images/physical_architecture_diagram.png>
-Package pdftex.def Info: images/physical_architecture_diagram.png  used on input line 289.
+Package pdftex.def Info: images/physical_architecture_diagram.png  used on input line 288.
 (pdftex.def)             Requested size: 441.01773pt x 288.60324pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (20.14865pt too wide) in paragraph at lines 299--300
+Overfull \hbox (20.14865pt too wide) in paragraph at lines 298--299
 []\T1/cmr/bx/n/12 Couche de Présentation : \T1/cmr/m/n/12 Développée avec \T1/cmr/bx/n/12 Next.js\T1/cmr/m/n/12 , elle gère l'interface utilisateur,
  []
 
 
-Overfull \hbox (18.68939pt too wide) in paragraph at lines 301--302
+Overfull \hbox (18.68939pt too wide) in paragraph at lines 300--301
 []\T1/cmr/bx/n/12 Couche d'Accès aux Données : \T1/cmr/m/n/12 Interface avec \T1/cmr/bx/n/12 MongoDB \T1/cmr/m/n/12 via l'ODM \T1/cmr/bx/n/12 Mongoose\T1/cmr/m/n/12 ,
  []
 
 
-Overfull \hbox (36.72339pt too wide) in paragraph at lines 304--304
+Overfull \hbox (36.72339pt too wide) in paragraph at lines 303--303
 |[]\T1/cmr/bx/n/14.4 Conception de la Couche de Données (Modélisation MongoDB)| 
  []
 
 [32]
-<images/global_rs_enhanced.png, id=692, 1846.9pt x 552.0625pt>
+<images/global_rs_enhanced.png, id=835, 1846.9pt x 552.0625pt>
 File: images/global_rs_enhanced.png Graphic file (type png)
 <use images/global_rs_enhanced.png>
-Package pdftex.def Info: images/global_rs_enhanced.png  used on input line 317.
+Package pdftex.def Info: images/global_rs_enhanced.png  used on input line 316.
 (pdftex.def)             Requested size: 441.01054pt x 131.82379pt.
  [33 <./images/physical_architecture_diagram.png>]
-Overfull \hbox (8.44484pt too wide) in paragraph at lines 329--330
+Overfull \hbox (8.44484pt too wide) in paragraph at lines 328--329
 []\T1/cmr/m/n/12 Cette étape de préparation approfondie constitue une étape clé qui a permis d'amorcer
  []
 
 ) (./chapters/chap3_sprint1.tex
-Overfull \hbox (0.80493pt too wide) in paragraph at lines 331--1
+Overfull \hbox (0.80493pt too wide) in paragraph at lines 330--1
 \T1/cmr/m/n/12 développement et l'intégration du système d'authentification. Ce passage à la réalisation
  []
 
 
-Overfull \hbox (13.12012pt too wide) in paragraph at lines 331--1
+Overfull \hbox (13.12012pt too wide) in paragraph at lines 330--1
 \T1/cmr/m/n/12 marquera le début d'une phase itérative où les premières interfaces d'EduGenius prendront
  []
 
@@ -1172,277 +1176,515 @@ Overfull \hbox (3.48073pt too wide) in paragraph at lines 6--7
  []
 
 
-Overfull \hbox (2.82379pt too wide) in paragraph at lines 6--7
-\T1/cmr/m/n/12 User Stories clés, couvrant notamment l'inscription des nouveaux membres, la connexion
+Overfull \hbox (7.849pt too wide) in paragraph at lines 6--7
+\T1/cmr/m/n/12 User Stories clés, couvrant notamment la connexion sécurisée via des protocoles modernes
  []
 
 
-Overfull \hbox (22.9496pt too wide) in paragraph at lines 13--14
-\T1/cmr/m/n/12 Le backlog du Sprint 1 présente les six User Stories (US) prioritaires liées à l'authentification,
+Overfull \hbox (30.06314pt too wide) in paragraph at lines 12--13
+\T1/cmr/m/n/12 Le backlog du Sprint 1 présente les cinq User Stories (US) prioritaires liées à l'authentification,
  []
 
 [35
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
-[]|\T1/cmr/m/n/10.95 L'utilisateur peut se connecter
+Underfull \hbox (badness 10000) in paragraph at lines 33--33
+[]|\T1/cmr/m/n/10.95 L'utilisateur peut se connecter avec les
  []
 
 
-Underfull \hbox (badness 5519) in paragraph at lines 36--36
-\T1/cmr/m/n/10.95 avec les identifiants fournis par
+Underfull \hbox (badness 10000) in paragraph at lines 33--33
+[]|\T1/cmr/m/n/10.95 L'administrateur peut attribuer les rôles
  []
 
 
-Underfull \hbox (badness 1748) in paragraph at lines 36--36
-\T1/cmr/m/n/10.95 l'administrateur ; un token JWT
+Underfull \hbox (badness 3098) in paragraph at lines 33--33
+\T1/cmr/m/n/10.95 (Admin, Enseignant, Étudiant) lors de la
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
-[]|\T1/cmr/m/n/10.95 L'utilisateur peut consulter et
+Underfull \hbox (badness 1400) in paragraph at lines 33--33
+[]|\T1/cmr/m/n/10.95 L'utilisateur peut consulter et modifier ses
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
-\T1/cmr/m/n/10.95 modifier ses informations (nom,
+Underfull \hbox (badness 1931) in paragraph at lines 33--33
+[]|\T1/cmr/m/n/10.95 L'utilisateur dispose d'un tableau de bord
  []
 
 
-Underfull \hbox (badness 2393) in paragraph at lines 36--36
-[]|\T1/cmr/m/n/10.95 L'utilisateur dispose d'un tableau
+Underfull \hbox (badness 10000) in paragraph at lines 33--33
+\T1/cmr/m/n/10.95 personnalisé affichant son planning, les
  []
 
-
-Underfull \hbox (badness 5260) in paragraph at lines 36--36
-[]|\T1/cmr/m/n/10.95 La plateforme est utilisable sur
- []
-
-[36]
-<images/sprint_1_usecase_diagram.png, id=714, 932.48375pt x 566.115pt>
+<images/sprint_1_usecase_diagram.png, id=853, 932.48375pt x 566.115pt>
 File: images/sprint_1_usecase_diagram.png Graphic file (type png)
 <use images/sprint_1_usecase_diagram.png>
-Package pdftex.def Info: images/sprint_1_usecase_diagram.png  used on input line 48.
+Package pdftex.def Info: images/sprint_1_usecase_diagram.png  used on input line 45.
 (pdftex.def)             Requested size: 441.01773pt x 267.74126pt.
-
-Overfull \hbox (22.57455pt too wide) in paragraph at lines 60--61
+[36]
+Overfull \hbox (22.57455pt too wide) in paragraph at lines 57--58
 \T1/cmr/m/n/12 par l'administrateur ; le compte administrateur existe en base de données. L'utilisateur
  []
 
 [37 <./images/sprint_1_usecase_diagram.png>]
-Overfull \hbox (17.44287pt too wide) in paragraph at lines 73--74
+Overfull \hbox (17.44287pt too wide) in paragraph at lines 70--71
 []\T1/cmr/bx/n/12 Email inconnu ou mot de passe incorrect \T1/cmr/m/n/12 : message générique ^^S Identifiants
  []
 
 
-Overfull \hbox (19.64372pt too wide) in paragraph at lines 89--90
+Overfull \hbox (19.64372pt too wide) in paragraph at lines 86--87
 []\T1/cmr/m/n/12 Le système vérifie la validité des nouvelles données (unicité de l'email, complexité
  []
 
 
-Overfull \hbox (0.19579pt too wide) in paragraph at lines 90--91
+Overfull \hbox (0.19579pt too wide) in paragraph at lines 87--88
 []\T1/cmr/m/n/12 Le système enregistre les modifications et affiche un message de confirmation. 
  []
 
-[38]
-Overfull \hbox (17.30357pt too wide) in paragraph at lines 103--104
+
+Overfull \hbox (17.30357pt too wide) in paragraph at lines 100--101
 []\T1/cmr/bx/n/12 Postconditions \T1/cmr/m/n/12 : Le tableau de bord personnalisé est affiché (planning, notifications,
  []
 
-
-Overfull \hbox (1.30383pt too wide) in paragraph at lines 125--126
+[38]
+Overfull \hbox (1.30383pt too wide) in paragraph at lines 122--123
 []\T1/cmr/m/n/12 Les styles CSS réorganisent les éléments (menu en accordéon, polices lisibles). 
  []
 
 
-Overfull \hbox (2.44916pt too wide) in paragraph at lines 126--127
+Overfull \hbox (2.44916pt too wide) in paragraph at lines 123--124
 []\T1/cmr/m/n/12 Toutes les actions (connexion, consultation de cours, quiz) restent accessibles. 
  []
 
 [39]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 138.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 135.
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-Overfull \hbox (12.17857pt too wide) in paragraph at lines 138--139
+Overfull \hbox (12.17857pt too wide) in paragraph at lines 135--136
 []\T1/cmr/bx/n/12 Postconditions \T1/cmr/m/n/12 : Un compte enseignant ou étudiant est créé (ou modifié/supprimé)
  []
 
 [40]
-Overfull \hbox (12.66995pt too wide) in paragraph at lines 175--176
-[]\T1/cmr/bx/n/12 Postconditions \T1/cmr/m/n/12 : Les informations du profil sont mises à jour selon les modifications
- []
-
-
-Overfull \hbox (1.10934pt too wide) in paragraph at lines 184--185
-[]\T1/cmr/m/n/12 Le système valide les nouvelles données (format, unicité de l'email si modifié). 
- []
-
-
-Overfull \hbox (20.40982pt too wide) in paragraph at lines 197--198
+Overfull \hbox (20.40982pt too wide) in paragraph at lines 176--177
 \T1/cmr/m/n/12 l'interface frontend (Next.js), le contexte d'authentification, le contrôleur backend (Express)
  []
 
-[41]
-<images/auth_sequence_diagram.png, id=779, 903.375pt x 1294.8375pt>
+<images/auth_sequence_diagram.png, id=913, 903.375pt x 1294.8375pt>
 File: images/auth_sequence_diagram.png Graphic file (type png)
 <use images/auth_sequence_diagram.png>
-Package pdftex.def Info: images/auth_sequence_diagram.png  used on input line 201.
-(pdftex.def)             Requested size: 441.01773pt x 632.14453pt.
- [42]
-Overfull \hbox (23.80757pt too wide) in paragraph at lines 207--208
+Package pdftex.def Info: images/auth_sequence_diagram.png  used on input line 180.
+(pdftex.def)             Requested size: 392.24817pt x 562.22237pt.
+[41]
+Overfull \hbox (23.80757pt too wide) in paragraph at lines 186--187
 \T1/cmr/m/n/12 informations personnelles. L'utilisateur envoie une requête de modification depuis l'interface.
  []
 
-[43 <./images/auth_sequence_diagram.png (PNG copy)>]
-<images/dashboard_sequence_diagram.png, id=790, 893.3375pt x 1497.595pt>
+[42 <./images/auth_sequence_diagram.png (PNG copy)>]
+<images/gerer_profile_sequence_diagram.png, id=926, 944.52875pt x 1446.40375pt>
+File: images/gerer_profile_sequence_diagram.png Graphic file (type png)
+<use images/gerer_profile_sequence_diagram.png>
+Package pdftex.def Info: images/gerer_profile_sequence_diagram.png  used on input line 190.
+(pdftex.def)             Requested size: 367.13968pt x 562.21922pt.
+ [43 <./images/gerer_profile_sequence_diagram.png>]
+<images/dashboard_sequence_diagram.png, id=933, 893.3375pt x 1497.595pt>
 File: images/dashboard_sequence_diagram.png Graphic file (type png)
 <use images/dashboard_sequence_diagram.png>
-Package pdftex.def Info: images/dashboard_sequence_diagram.png  used on input line 221.
+Package pdftex.def Info: images/dashboard_sequence_diagram.png  used on input line 200.
 (pdftex.def)             Requested size: 356.429pt x 597.51921pt.
  [44]
-Overfull \hbox (23.74231pt too wide) in paragraph at lines 227--228
+Overfull \hbox (23.74231pt too wide) in paragraph at lines 206--207
 \T1/cmr/m/n/12 La gestion des utilisateurs par l'administrateur regroupe plusieurs opérations fondamentales.
  []
 
 [45 <./images/dashboard_sequence_diagram.png (PNG copy)>]
-<images/consulter_users_sequence_diagram.png, id=800, 663.47874pt x 539.01375pt>
+<images/consulter_users_sequence_diagram.png, id=943, 663.47874pt x 539.01375pt>
 File: images/consulter_users_sequence_diagram.png Graphic file (type png)
 <use images/consulter_users_sequence_diagram.png>
-Package pdftex.def Info: images/consulter_users_sequence_diagram.png  used on input line 234.
-(pdftex.def)             Requested size: 441.01773pt x 358.28337pt.
-<images/create_users_sequence_diagram.png, id=802, 642.4pt x 730.73pt>
+Package pdftex.def Info: images/consulter_users_sequence_diagram.png  used on input line 213.
+(pdftex.def)             Requested size: 441.01546pt x 358.28337pt.
+<images/create_users_sequence_diagram.png, id=945, 642.4pt x 730.73pt>
 File: images/create_users_sequence_diagram.png Graphic file (type png)
 <use images/create_users_sequence_diagram.png>
-Package pdftex.def Info: images/create_users_sequence_diagram.png  used on input line 244.
-(pdftex.def)             Requested size: 441.01773pt x 501.67319pt.
+Package pdftex.def Info: images/create_users_sequence_diagram.png  used on input line 223.
+(pdftex.def)             Requested size: 441.03137pt x 501.67319pt.
  [46 <./images/consulter_users_sequence_diagram.png (PNG copy)>]
-Overfull \hbox (16.78006pt too wide) in paragraph at lines 250--251
+Overfull \hbox (16.78006pt too wide) in paragraph at lines 229--230
 \T1/cmr/m/n/12 propriétés d'un utilisateur (rôle, statut d'activation, etc.). L'API applique ces modifications
  []
 
-<images/edit_users_sequence_diagram.png, id=811, 654.445pt x 730.73pt>
+<images/edit_users_sequence_diagram.png, id=954, 654.445pt x 730.73pt>
 File: images/edit_users_sequence_diagram.png Graphic file (type png)
 <use images/edit_users_sequence_diagram.png>
-Package pdftex.def Info: images/edit_users_sequence_diagram.png  used on input line 254.
-(pdftex.def)             Requested size: 441.01773pt x 492.41866pt.
+Package pdftex.def Info: images/edit_users_sequence_diagram.png  used on input line 233.
+(pdftex.def)             Requested size: 441.01233pt x 492.41866pt.
 [47 <./images/create_users_sequence_diagram.png (PNG copy)>]
-Overfull \hbox (7.93922pt too wide) in paragraph at lines 260--261
+Overfull \hbox (7.93922pt too wide) in paragraph at lines 239--240
 \T1/cmr/m/n/12 confirmation côté client, l'identifiant de l'utilisateur est transmis à l'API pour suppression
  []
 
-<images/delete_users_sequence_diagram.png, id=818, 682.55pt x 586.19pt>
+<images/delete_users_sequence_diagram.png, id=961, 682.55pt x 586.19pt>
 File: images/delete_users_sequence_diagram.png Graphic file (type png)
 <use images/delete_users_sequence_diagram.png>
-Package pdftex.def Info: images/delete_users_sequence_diagram.png  used on input line 264.
-(pdftex.def)             Requested size: 441.01773pt x 378.76497pt.
+Package pdftex.def Info: images/delete_users_sequence_diagram.png  used on input line 243.
+(pdftex.def)             Requested size: 441.0277pt x 378.76497pt.
 [48 <./images/edit_users_sequence_diagram.png (PNG copy)>]
-Overfull \hbox (27.75398pt too wide) in paragraph at lines 270--271
-\T1/cmr/m/n/12 Le diagramme de la figure [][]3.9[][] décrit le flux de création d'une nouvelle classe. L'administrateur
+<images/reset_password_sequence_diagram.png, id=968, 601.24625pt x 1078.0275pt>
+File: images/reset_password_sequence_diagram.png Graphic file (type png)
+<use images/reset_password_sequence_diagram.png>
+Package pdftex.def Info: images/reset_password_sequence_diagram.png  used on input line 253.
+(pdftex.def)             Requested size: 313.57645pt x 562.23892pt.
+ [49 <./images/delete_users_sequence_diagram.png (PNG copy)>]
+Overfull \hbox (26.3224pt too wide) in paragraph at lines 259--260
+\T1/cmr/m/n/12 département, matière) n'est inclue dans ce sprint, car elles seront développées ultérieurement. 
  []
 
-<images/class_management_sequence.png, id=825, 655.44875pt x 1160.335pt>
-File: images/class_management_sequence.png Graphic file (type png)
-<use images/class_management_sequence.png>
-Package pdftex.def Info: images/class_management_sequence.png  used on input line 274.
-(pdftex.def)             Requested size: 337.52487pt x 597.51724pt.
-[49 <./images/delete_users_sequence_diagram.png (PNG copy)>]
-Overfull \hbox (20.9306pt too wide) in paragraph at lines 280--281
-\T1/cmtt/m/n/12 User\T1/cmr/m/n/12 , qui englobe les différents rôles (administrateur, enseignant, étudiant) de la plateforme.
- []
-
-
-Overfull \hbox (0.15208pt too wide) in paragraph at lines 280--281
-\T1/cmr/m/n/12 ainsi les liaisons clés telles que l'inscription des étudiants et l'assignation des professeurs. 
- []
-
-[50 <./images/class_management_sequence.png (PNG copy)>]
-<images/sprint1_class_diagram.png, id=836, 645.41125pt x 626.34pt>
+[50 <./images/reset_password_sequence_diagram.png>]
+<images/sprint1_class_diagram.png, id=979, 645.41125pt x 626.34pt>
 File: images/sprint1_class_diagram.png Graphic file (type png)
 <use images/sprint1_class_diagram.png>
-Package pdftex.def Info: images/sprint1_class_diagram.png  used on input line 284.
-(pdftex.def)             Requested size: 441.01091pt x 427.97946pt.
-<images/db_sprint1.png, id=838, 1146.2825pt x 953.5625pt>
+Package pdftex.def Info: images/sprint1_class_diagram.png  used on input line 263.
+(pdftex.def)             Requested size: 439.79958pt x 426.80392pt.
+
+Overfull \hbox (16.62042pt too wide) in paragraph at lines 269--270
+\T1/cmtt/m/n/12 teacherProfile \T1/cmr/m/n/12 qui seront enrichis dans les sprints suivants. Cette approche documentaire
+ []
+
+<images/db_sprint1.png, id=981, 1146.2825pt x 953.5625pt>
 File: images/db_sprint1.png Graphic file (type png)
 <use images/db_sprint1.png>
-Package pdftex.def Info: images/db_sprint1.png  used on input line 293.
+Package pdftex.def Info: images/db_sprint1.png  used on input line 273.
 (pdftex.def)             Requested size: 441.01404pt x 366.86807pt.
- [51 <./images/sprint1_class_diagram.png (PNG copy)>]
-Overfull \hbox (3.24048pt too wide) in paragraph at lines 299--300
+[51 <./images/sprint1_class_diagram.png (PNG copy)>]
+Overfull \hbox (3.24048pt too wide) in paragraph at lines 279--280
 \T1/cmr/m/n/12 Dans cette section, nous présentons les principales interfaces utilisateur (UI) développées
  []
 
 
-Overfull \hbox (9.35013pt too wide) in paragraph at lines 303--304
+Overfull \hbox (9.35013pt too wide) in paragraph at lines 282--283
 \T1/cmr/m/n/12 L'interface de connexion (figure [][]3.12[][]) est le point d'entrée de l'application. Elle authentifie
  []
 
 
-Overfull \hbox (25.73502pt too wide) in paragraph at lines 303--304
+Overfull \hbox (25.73502pt too wide) in paragraph at lines 282--283
 \T1/cmr/m/n/12 les utilisateurs et les redirige vers le tableau de bord approprié selon leur rôle (administrateur,
  []
 
-<images/auth_ui.png, id=844, 1856.9375pt x 984.67876pt>
+<images/auth_ui.png, id=987, 1856.9375pt x 984.67876pt>
 File: images/auth_ui.png Graphic file (type png)
 <use images/auth_ui.png>
-Package pdftex.def Info: images/auth_ui.png  used on input line 307.
+Package pdftex.def Info: images/auth_ui.png  used on input line 286.
 (pdftex.def)             Requested size: 396.91325pt x 210.46976pt.
 [52 <./images/db_sprint1.png (PNG copy)>]
-<images/forgot_password_ui.png, id=851, 1856.9375pt x 984.67876pt>
+<images/forgot_password_ui.png, id=995, 1856.9375pt x 984.67876pt>
 File: images/forgot_password_ui.png Graphic file (type png)
 <use images/forgot_password_ui.png>
-Package pdftex.def Info: images/forgot_password_ui.png  used on input line 317.
+Package pdftex.def Info: images/forgot_password_ui.png  used on input line 296.
 (pdftex.def)             Requested size: 441.01773pt x 233.8486pt.
-<images/profile_ui.png, id=853, 1856.9375pt x 984.67876pt>
+<images/profile_ui.png, id=997, 1856.9375pt x 984.67876pt>
 File: images/profile_ui.png Graphic file (type png)
 <use images/profile_ui.png>
-Package pdftex.def Info: images/profile_ui.png  used on input line 327.
+Package pdftex.def Info: images/profile_ui.png  used on input line 306.
 (pdftex.def)             Requested size: 441.01773pt x 233.8486pt.
  [53 <./images/auth_ui.png> <./images/forgot_password_ui.png>]
-<images/dashboard_ui.png, id=861, 1856.9375pt x 984.67876pt>
+<images/dashboard_ui.png, id=1005, 1856.9375pt x 984.67876pt>
 File: images/dashboard_ui.png Graphic file (type png)
 <use images/dashboard_ui.png>
-Package pdftex.def Info: images/dashboard_ui.png  used on input line 337.
+Package pdftex.def Info: images/dashboard_ui.png  used on input line 316.
 (pdftex.def)             Requested size: 441.01773pt x 233.8486pt.
 
 
-LaTeX Warning: Reference `fig:users_ui' on page 54 undefined on input line 343.
+LaTeX Warning: Reference `fig:users_ui' on page 54 undefined on input line 322.
 
 [54 <./images/profile_ui.png> <./images/dashboard_ui.png>]
-<images/users_students_ui.png, id=868, 1856.9375pt x 984.67876pt>
+<images/users_students_ui.png, id=1012, 1856.9375pt x 984.67876pt>
 File: images/users_students_ui.png Graphic file (type png)
 <use images/users_students_ui.png>
-Package pdftex.def Info: images/users_students_ui.png  used on input line 347.
+Package pdftex.def Info: images/users_students_ui.png  used on input line 326.
 (pdftex.def)             Requested size: 441.01773pt x 233.8486pt.
-<images/users_teachers_ui.png, id=869, 1856.9375pt x 984.67876pt>
+<images/users_teachers_ui.png, id=1013, 1856.9375pt x 984.67876pt>
 File: images/users_teachers_ui.png Graphic file (type png)
 <use images/users_teachers_ui.png>
-Package pdftex.def Info: images/users_teachers_ui.png  used on input line 354.
-(pdftex.def)             Requested size: 441.01773pt x 233.8486pt.
- [55 <./images/users_students_ui.png> <./images/users_teachers_ui.png>]
-<images/class_management_ui.png, id=877, 1856.9375pt x 984.67876pt>
-File: images/class_management_ui.png Graphic file (type png)
-<use images/class_management_ui.png>
-Package pdftex.def Info: images/class_management_ui.png  used on input line 364.
+Package pdftex.def Info: images/users_teachers_ui.png  used on input line 333.
 (pdftex.def)             Requested size: 441.01773pt x 233.8486pt.
 
-Overfull \hbox (0.44398pt too wide) in paragraph at lines 372--373
+Overfull \hbox (0.44398pt too wide) in paragraph at lines 340--341
 \T1/cmr/m/n/12 avec succès. Le système de rôles (administrateur, enseignant, étudiant) a été implémenté
  []
 
-
-Overfull \hbox (5.18713pt too wide) in paragraph at lines 374--375
+[55 <./images/users_students_ui.png> <./images/users_teachers_ui.png>]
+Overfull \hbox (5.18713pt too wide) in paragraph at lines 342--343
 []\T1/cmr/m/n/12 Le socle technique retenu ^^U Next.js pour le frontend, Express.js pour l'API, MongoDB
  []
 
+) (./chapters/chap4_sprint2.tex [56]
+\bbl@ensure@french {Chapitre} 4.
 
-Overfull \hbox (31.24744pt too wide) in paragraph at lines 374--375
-\T1/cmr/m/n/12 sa fiabilité. Les interfaces de gestion des utilisateurs et des classes, réservées à l'administrateur,
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 4.
+
+
+Overfull \hbox (19.87263pt too wide) in paragraph at lines 6--7
+\T1/cmr/m/n/12 Le deuxième sprint du projet EduGenius a été consacré à la mise en place des fonctionnalités
  []
 
-[56 <./images/class_management_ui.png>]) [57] (./main.bbl) [58
 
-] [59
+Overfull \hbox (1.65314pt too wide) in paragraph at lines 6--7
+\T1/cmr/m/n/12 de gestion des classes (création, planification, supervision), de communication synchrone
+ []
+
+
+Overfull \hbox (25.66963pt too wide) in paragraph at lines 6--7
+\T1/cmr/m/n/12 replay. Ces briques permettent aux administrateurs de structurer l'organisation pédagogique,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/bx/n/12 Critères
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/bx/n/12 Critères
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/12 L'administrateur
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 peut créer, modifier,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 les horaires (date,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 heure, durée) pour
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/12 L'administrateur
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 visualise une vue
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 classes, activités
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/12 L'utilisateur reçoit
+ []
+
+
+Underfull \hbox (badness 7851) in paragraph at lines 53--53
+\T1/cmr/m/n/12 des alertes (deadline,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/12 L'enseignant peut
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 démarrer une session
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 Daily.co depuis le
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/12 L'étudiant rejoint
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 la session vidéo
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 programmée en un
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/12 L'enseignant peut
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 partager son écran
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/12 L'enseignant peut
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 couper le micro
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 ou la caméra d'un
+ []
+
+
+Underfull \hbox (badness 1215) in paragraph at lines 53--53
+\T1/cmr/m/n/12 l'appel sans couper la
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+[]|\T1/cmr/m/n/12 L'enseignant/Admin
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--53
+\T1/cmr/m/n/12 l'enregistrement d'un
+ []
+
+[57
+
+] [58
+pdfTeX warning (ext4): destination with the same identifier (name{table.4.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.53 \end{xltabular}
+                    ]
+Overfull \hbox (18.32558pt too wide) in paragraph at lines 58--59
+\T1/cmr/m/n/12 Le diagramme de cas d'utilisation (figure [][]4.1[][]) illustre les interactions entre l'administrateur,
+ []
+
+<images/use_case_diagram_sprint_2.png, id=1035, 1062.97125pt x 788.9475pt>
+File: images/use_case_diagram_sprint_2.png Graphic file (type png)
+<use images/use_case_diagram_sprint_2.png>
+Package pdftex.def Info: images/use_case_diagram_sprint_2.png  used on input line 62.
+(pdftex.def)             Requested size: 441.01773pt x 327.33487pt.
+[59] [60 <./images/use_case_diagram_sprint_2.png>]
+Overfull \hbox (19.68352pt too wide) in paragraph at lines 105--106
+[]\T1/cmr/bx/n/12 Postconditions \T1/cmr/m/n/12 : L'enseignant obtient un lien Daily.co, peut modérer les participants
+ []
+
+
+Overfull \hbox (22.11362pt too wide) in paragraph at lines 106--107
+\T1/cmr/m/n/12 l'enregistrement (US-30). Le système enregistre l'heure d'arrivée de chaque participant
+ []
+
+[61]
+Overfull \hbox (55.7122pt too wide) in paragraph at lines 118--118
+|\T1/cmr/bx/n/12 Le cas d'utilisation ^^S Suivre l'assiduité et consulter l'historique ^^T (Enseignant/Admin)| 
+ []
+
+<images/sequence_diagram_create_class_and_planning.png, id=1056, 1287.81125pt x 1228.59pt>
+File: images/sequence_diagram_create_class_and_planning.png Graphic file (type png)
+<use images/sequence_diagram_create_class_and_planning.png>
+Package pdftex.def Info: images/sequence_diagram_create_class_and_planning.png  used on input line 131.
+(pdftex.def)             Requested size: 441.01773pt x 420.7333pt.
+[62]
+<images/sequence_diagram_start_call.png, id=1063, 1802.735pt x 1275.76625pt>
+File: images/sequence_diagram_start_call.png Graphic file (type png)
+<use images/sequence_diagram_start_call.png>
+Package pdftex.def Info: images/sequence_diagram_start_call.png  used on input line 139.
+(pdftex.def)             Requested size: 441.01773pt x 312.08853pt.
+ [63 <./images/sequence_diagram_create_class_and_planning.png>]
+<images/sequence_diagram_presence_detection.png, id=1069, 1446.40375pt x 748.7975pt>
+File: images/sequence_diagram_presence_detection.png Graphic file (type png)
+<use images/sequence_diagram_presence_detection.png>
+Package pdftex.def Info: images/sequence_diagram_presence_detection.png  used on input line 147.
+(pdftex.def)             Requested size: 441.01773pt x 228.30864pt.
+ [64 <./images/sequence_diagram_start_call.png>]
+Overfull \hbox (24.41495pt too wide) in paragraph at lines 152--152
+|[]\T1/cmr/bx/n/14.4 Diagramme de séquence du cas ^^S Regarder un enregistrement
+ []
+
+<images/sequence_diagram_recording.png, id=1076, 1495.5875pt x 726.715pt>
+File: images/sequence_diagram_recording.png Graphic file (type png)
+<use images/sequence_diagram_recording.png>
+Package pdftex.def Info: images/sequence_diagram_recording.png  used on input line 155.
+(pdftex.def)             Requested size: 441.01773pt x 214.29034pt.
+
+Overfull \hbox (18.39935pt too wide) in paragraph at lines 161--162
+\T1/cmr/m/n/12 La figure [][]4.6[][] montre les entités ajoutées ou enrichies : \T1/cmtt/m/n/12 Class \T1/cmr/m/n/12 (avec planning), \T1/cmtt/m/n/12 VideoSession
+ []
+
+[65 <./images/sequence_diagram_presence_detection.png> <./images/sequence_diagram_recording.png>]
+<images/class_diagram_sprint_2.png, id=1084, 839.135pt x 652.4375pt>
+File: images/class_diagram_sprint_2.png Graphic file (type png)
+<use images/class_diagram_sprint_2.png>
+Package pdftex.def Info: images/class_diagram_sprint_2.png  used on input line 165.
+(pdftex.def)             Requested size: 441.01773pt x 342.8932pt.
+<images/class_management_ui_1.png, id=1085, 1858.945pt x 992.70876pt>
+File: images/class_management_ui_1.png Graphic file (type png)
+<use images/class_management_ui_1.png>
+Package pdftex.def Info: images/class_management_ui_1.png  used on input line 175.
+(pdftex.def)             Requested size: 441.01773pt x 235.49812pt.
+ [66 <./images/class_diagram_sprint_2.png>]
+<images/class_management_ui_2.png, id=1091, 1858.945pt x 992.70876pt>
+File: images/class_management_ui_2.png Graphic file (type png)
+<use images/class_management_ui_2.png>
+Package pdftex.def Info: images/class_management_ui_2.png  used on input line 182.
+(pdftex.def)             Requested size: 441.01773pt x 235.49812pt.
+<images/schedule_management_ui_1.png, id=1092, 1858.945pt x 992.70876pt>
+File: images/schedule_management_ui_1.png Graphic file (type png)
+<use images/schedule_management_ui_1.png>
+Package pdftex.def Info: images/schedule_management_ui_1.png  used on input line 190.
+(pdftex.def)             Requested size: 441.01773pt x 235.49812pt.
+ [67 <./images/class_management_ui_1.png> <./images/class_management_ui_2.png>]
+<images/schedule_management_ui_2.png, id=1100, 1858.945pt x 992.70876pt>
+File: images/schedule_management_ui_2.png Graphic file (type png)
+<use images/schedule_management_ui_2.png>
+Package pdftex.def Info: images/schedule_management_ui_2.png  used on input line 197.
+(pdftex.def)             Requested size: 441.01773pt x 235.49812pt.
+<images/schedule_management_ui_3.png, id=1101, 1858.945pt x 992.70876pt>
+File: images/schedule_management_ui_3.png Graphic file (type png)
+<use images/schedule_management_ui_3.png>
+Package pdftex.def Info: images/schedule_management_ui_3.png  used on input line 204.
+(pdftex.def)             Requested size: 441.01773pt x 235.49812pt.
+ [68 <./images/schedule_management_ui_1.png> <./images/schedule_management_ui_2.png>]
+<images/supervision_admin_ui.png, id=1108, 1858.945pt x 992.70876pt>
+File: images/supervision_admin_ui.png Graphic file (type png)
+<use images/supervision_admin_ui.png>
+Package pdftex.def Info: images/supervision_admin_ui.png  used on input line 212.
+(pdftex.def)             Requested size: 441.01773pt x 235.49812pt.
+ [69 <./images/schedule_management_ui_3.png> <./images/supervision_admin_ui.png>]
+Overfull \hbox (6.83943pt too wide) in paragraph at lines 251--252
+\T1/cmr/m/n/12 structurer l'offre de formation (classes, plannings) et superviser l'activité. Les enseignants
+ []
+
+
+Overfull \hbox (7.49226pt too wide) in paragraph at lines 251--252
+\T1/cmr/m/n/12 des participants, chat intégré, et enregistrement optionnel. Le suivi de présence (détection
+ []
+
+
+Overfull \hbox (10.16788pt too wide) in paragraph at lines 251--252
+\T1/cmr/m/n/12 des arrivées, retards, absence) est automatisé, et l'historique est consultable. Les étudiants
+ []
+
+) [70] (./main.bbl) [71
+
+] [72
 
 ] (./main.aux)
  ***********
@@ -1454,21 +1696,21 @@ L3 programming layer <2024-01-22>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: FB9DDA38E378BD706D2F317AF9BA2D59;17599.
+(rerunfilecheck)             Checksum: 916C54D3E2CF9F5758090F4571D91E3F;23292.
  ) 
 Here is how much of TeX's memory you used:
- 16145 strings out of 476182
- 259971 string characters out of 5795595
- 2006975 words of memory out of 5000000
- 37652 multiletter control sequences out of 15000+600000
+ 16406 strings out of 476182
+ 267120 string characters out of 5795595
+ 2007975 words of memory out of 5000000
+ 37846 multiletter control sequences out of 15000+600000
  575936 words of font info for 71 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,11n,79p,1036b,738s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx2074.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1440.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1440.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1440.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1728.600pk> </home/karim/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (68 pages, 2983583 bytes).
+Output written on main.pdf (81 pages, 3923371 bytes).
 PDF statistics:
- 1659 PDF objects out of 1728 (max. 8388607)
- 885 compressed objects within 9 object streams
- 258 named destinations out of 1000 (max. 500000)
- 747 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1902 PDF objects out of 2073 (max. 8388607)
+ 1089 compressed objects within 11 object streams
+ 314 named destinations out of 1000 (max. 500000)
+ 967 words of extra memory for PDF output out of 10000 (max. 10000000)
 

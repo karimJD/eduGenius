@@ -34,12 +34,12 @@ export function PageHeader({
         {(backHref || onBack) && (
           backHref ? (
             <Link href={backHref} 
-              className="p-3 bg-card dark:bg-[#111111] border border-border dark:border-[#222222] rounded-2xl hover:bg-muted dark:hover:bg-[#1a1a1a] text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white transition-all shadow-sm">
+              className="p-3 bg-card border border-border rounded-2xl hover:bg-muted text-muted-foreground hover:text-foreground transition-all shadow-sm">
               <ArrowLeft className="w-5 h-5" />
             </Link>
           ) : (
             <button onClick={onBack}
-              className="p-3 bg-card dark:bg-[#111111] border border-border dark:border-[#222222] rounded-2xl hover:bg-muted dark:hover:bg-[#1a1a1a] text-muted-foreground dark:text-gray-400 hover:text-foreground dark:hover:text-white transition-all shadow-sm">
+              className="p-3 bg-card border border-border rounded-2xl hover:bg-muted text-muted-foreground hover:text-foreground transition-all shadow-sm">
               <ArrowLeft className="w-5 h-5" />
             </button>
           )
