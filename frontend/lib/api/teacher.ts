@@ -80,3 +80,14 @@ export const endVideoSession = async (id: string) => {
   const response = await api.put(`/sessions/${id}/end`);
   return response.data;
 };
+
+// Attendance
+export const getAttendanceSessions = async () => {
+  const response = await api.get('/attendance/sessions');
+  return response.data;
+};
+
+export const getSessionAttendanceDetail = async (id: string) => {
+  const response = await api.get(`/attendance/sessions/${id}/details`);
+  return response.data;
+};

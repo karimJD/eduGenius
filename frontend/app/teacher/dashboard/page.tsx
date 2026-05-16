@@ -72,6 +72,7 @@ interface PendingWork {
   chapterId: string;
   exerciseId: string;
   exerciseName: string;
+  chapterName: string;
   fileName: string;
   submittedAt: string;
 }
@@ -371,6 +372,8 @@ export default function TeacherDashboard() {
                                    </div>
                                    <div className="flex items-center gap-2 mt-0.5">
                                       <p className="text-xs text-primary font-bold truncate">{work.exerciseName}</p>
+                                      <div className="w-1 h-1 rounded-full bg-border" />
+                                      <p className="text-[10px] text-muted-foreground font-medium truncate">{work.chapterName}</p>
                                       <div className="w-1 h-1 rounded-full bg-border" />
                                       <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-tight">{work.classId.name}</p>
                                    </div>

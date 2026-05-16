@@ -165,6 +165,7 @@ export default function VideoCallPage() {
           token={sessionData.token}
           isOwner={sessionData.isOwner}
           sessionTitle={sessionData.session.title}
+          sessionId={sessionData.session._id}
           onLeave={handleLeave}
         />
       </main>

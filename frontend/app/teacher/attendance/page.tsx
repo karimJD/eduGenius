@@ -1,190 +1,132 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Users, Check, X, Clock, PlusCircle, ChevronDown } from 'lucide-react';
-import api from '@/lib/axios';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import { getAttendanceSessions } from '@/lib/api/teacher';
+import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
+import { Loader2, Calendar, Clock, Users, ArrowRight, Search, Filter } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-interface Student { _id: string; firstName: string; lastName: string; email: string }
-interface Class { _id: string; name: string; code: string; studentIds: Student[] }
-interface Session {
+interface SessionInfo {
   _id: string;
   title: string;
-  scheduledStart: string;
-  attendance: { studentId: string; status: string }[];
-  statistics?: { attendanceRate?: number }
+  className: string;
+  classCode: string;
+  date: string;
+  duration: number;
+  participantsCount: number;
 }
 
-const STATUS_CONFIG: Record<string, { label: string; color: string; dot: string }> = {
-  present: { label: 'Present', color: 'bg-green-500/10 text-green-500 border-green-500/30', dot: 'bg-green-500' },
-  late:    { label: 'Late',    color: 'bg-amber-500/10 text-amber-500 border-amber-500/30', dot: 'bg-amber-500' },
-  absent:  { label: 'Absent', color: 'bg-red-500/10 text-red-500 border-red-500/30', dot: 'bg-red-500' },
-  excused: { label: 'Excused', color: 'bg-blue-500/10 text-blue-500 border-blue-500/30', dot: 'bg-blue-500' },
-};
-
-import { TeacherPageHeader } from '@/components/teacher/TeacherPageHeader';
-
-export default function AttendancePage() {
-  const [classes, setClasses] = useState<Class[]>([]);
-  const [selectedClass, setSelectedClass] = useState<Class | null>(null);
-  const [sessions, setSessions] = useState<Session[]>([]);
-  const [marking, setMarking] = useState(false);
-  const [records, setRecords] = useState<Record<string, string>>({});
+export default function AttendanceDashboardPage() {
+  const router = useRouter();
+  const [sessions, setSessions] = useState<SessionInfo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [loadingSessions, setLoadingSessions] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [classFilter, setClassFilter] = useState('all');
 
   useEffect(() => {
-    api.get('/teacher/classes').then(r => setClasses(r.data)).catch(console.error).finally(() => setLoading(false));
+    const fetchSessions = async () => {
+      try {
+        const data = await getAttendanceSessions();
+        setSessions(data);
+      } catch (error) {
+        console.error('Failed to fetch attendance sessions:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSessions();
   }, []);
 
-  const selectClass = async (cls: Class) => {
-    setSelectedClass(cls);
-    setLoadingSessions(true);
-    const init: Record<string, string> = {};
-    cls.studentIds.forEach(s => { init[s._id] = 'present'; });
-    setRecords(init);
-    try {
-      const r = await api.get(`/teacher/attendance/${cls._id}`);
-      setSessions(r.data);
-    } catch { setSessions([]); }
-    setLoadingSessions(false);
-    setMarking(false);
-  };
-
-  const save = async () => {
-    if (!selectedClass) return;
-    setSaving(true);
-    try {
-      await api.post(`/teacher/attendance/${selectedClass._id}`, {
-        records: Object.entries(records).map(([studentId, status]) => ({ studentId, status })),
-      });
-      await selectClass(selectedClass);
-      setMarking(false);
-    } catch (e) { console.error(e); }
-    setSaving(false);
-  };
+  const filteredSessions = sessions.filter(s => {
+    const matchesSearch = s.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          s.className.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          s.classCode.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesClass = classFilter === 'all' || s.className === classFilter;
+    return matchesSearch && matchesClass;
+  });
 
   return (
     <div className="space-y-6">
-      <TeacherPageHeader
-        title="Présences"
-        subtitle="Suivez et gérez l'assiduité des étudiants par session."
-        category="Gestion"
-        icon={Clock}
-        stats={[
-          { label: 'Mes Classes', value: classes.length }
-        ]}
+      <TeacherPageHeader 
+        title="Dashboard d'Assiduité" 
+        subtitle="Consultez l'historique des présences de vos classes virtuelles."
       />
 
-
-      {/* Class selector */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {loading ? [1, 2, 3].map(i => <div key={i} className="h-16 bg-card border border-border rounded-xl animate-pulse" />) :
-         classes.map(cls => (
-          <button key={cls._id} onClick={() => selectClass(cls)}
-            className={`flex items-center gap-3 p-4 bg-card border rounded-xl text-left transition-all ${
-              selectedClass?._id === cls._id ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'
-            }`}>
-            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xs font-bold shrink-0">
-              {cls.code?.slice(0, 2)}
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-foreground">{cls.name}</p>
-              <p className="text-xs text-muted-foreground">{cls.studentIds.length} students</p>
-            </div>
-          </button>
-        ))}
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input 
+            placeholder="Rechercher une session, une classe..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9 bg-card border-border"
+          />
+        </div>
+        <div className="w-full sm:w-[250px]">
+          <Select value={classFilter} onValueChange={setClassFilter}>
+            <SelectTrigger className="w-full bg-card border-border">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-muted-foreground" />
+                <SelectValue placeholder="Filtrer par classe" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Toutes les classes</SelectItem>
+              {Array.from(new Set(sessions.map(s => s.className))).map(className => (
+                <SelectItem key={className} value={className}>{className}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      {selectedClass && (
-        <div className="space-y-5">
-          {/* Action bar */}
-          <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-foreground">{selectedClass.name} — Attendance</h2>
-            {!marking ? (
-              <button onClick={() => setMarking(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:opacity-90">
-                <PlusCircle className="w-4 h-4" /> Mark Today
-              </button>
-            ) : (
-              <div className="flex gap-2">
-                <button onClick={() => setMarking(false)} className="px-4 py-2 bg-muted text-foreground rounded-xl text-sm font-medium hover:bg-accent">Cancel</button>
-                <button onClick={save} disabled={saving}
-                  className="px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:opacity-90 disabled:opacity-50">
-                  {saving ? 'Saving...' : 'Save'}
-                </button>
+      {loading ? (
+        <div className="flex items-center justify-center h-64">
+          <Loader2 className="w-8 h-8 animate-spin text-violet-500" />
+        </div>
+      ) : filteredSessions.length === 0 ? (
+        <div className="flex flex-col items-center justify-center h-64 bg-card border border-border rounded-2xl">
+          <p className="text-muted-foreground">Aucune session trouvée avec ces filtres.</p>
+        </div>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {filteredSessions.map((session) => (
+            <div 
+              key={session._id} 
+              className="bg-card border border-border p-5 rounded-2xl flex flex-col gap-4 hover:border-violet-500/50 transition-colors"
+            >
+              <div>
+                <h3 className="text-lg font-bold text-foreground mb-1">{session.title}</h3>
+                <p className="text-sm text-muted-foreground">{session.className} ({session.classCode})</p>
               </div>
-            )}
-          </div>
 
-          {/* Mark attendance form */}
-          <AnimatePresence>
-            {marking && (
-              <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                className="bg-card border border-border rounded-2xl overflow-hidden">
-                <div className="px-5 py-3 border-b border-border bg-primary/5">
-                  <p className="text-sm font-semibold text-foreground">
-                    Session: {new Date().toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' })}
-                  </p>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-violet-400"/> Date</span>
+                  <span>{new Date(session.date).toLocaleDateString('fr-FR')}</span>
                 </div>
-                <div className="divide-y divide-border">
-                  {selectedClass.studentIds.map(student => (
-                    <div key={student._id} className="flex items-center gap-4 px-5 py-3">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
-                        {student.firstName?.[0]}{student.lastName?.[0]}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-foreground truncate">{student.firstName} {student.lastName}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        {Object.entries(STATUS_CONFIG).map(([status, cfg]) => (
-                          <button key={status} onClick={() => setRecords(p => ({ ...p, [student._id]: status }))}
-                            className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all ${
-                              records[student._id] === status ? cfg.color + ' border' : 'border-border text-muted-foreground hover:bg-accent'
-                            }`}>
-                            {cfg.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-emerald-400"/> Durée</span>
+                  <span>{session.duration} min</span>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2"><Users className="w-4 h-4 text-blue-400"/> Participants</span>
+                  <span>{session.participantsCount}</span>
+                </div>
+              </div>
 
-          {/* Past sessions */}
-          {loadingSessions ? (
-            <div className="space-y-2">{[1, 2].map(i => <div key={i} className="h-14 bg-card border border-border rounded-xl animate-pulse" />)}</div>
-          ) : sessions.length === 0 ? (
-            <div className="py-10 text-center text-muted-foreground border border-dashed border-border rounded-2xl text-sm">
-              No attendance sessions recorded yet.
+              <Button 
+                onClick={() => router.push(`/teacher/attendance/${session._id}`)}
+                className="w-full mt-auto bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                Voir les détails
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             </div>
-          ) : (
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-muted-foreground">Past Sessions</h3>
-              {sessions.map(session => {
-                const rate = session.statistics?.attendanceRate ?? 0;
-                return (
-                  <div key={session._id} className="flex items-center gap-4 p-4 bg-card border border-border rounded-xl">
-                    <div className="w-2 h-2 rounded-full shrink-0" style={{ background: rate >= 70 ? '#22c55e' : rate >= 50 ? '#f59e0b' : '#ef4444' }} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">{session.title}</p>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {new Date(session.scheduledStart).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-foreground">{rate}%</p>
-                      <p className="text-xs text-muted-foreground">attendance rate</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+          ))}
         </div>
       )}
     </div>

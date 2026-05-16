@@ -38,9 +38,10 @@ router.get('/pending-work', async (req, res, next) => {
       const subObj = sub.toObject();
       const course = myCourses.find(c => c.chapters.some(ch => ch._id.toString() === sub.chapterId.toString()));
       if (course) {
-        const chapter = course.chapters.id(sub.chapterId);
-        const exercise = chapter?.exercises.id(sub.exerciseId);
+        const chapter = course.chapters.find(ch => ch._id.toString() === sub.chapterId?.toString());
+        const exercise = chapter?.exercises?.find(ex => ex._id.toString() === sub.exerciseId?.toString());
         subObj.exerciseName = exercise?.name || 'Exercice inconnu';
+        subObj.chapterName = chapter?.title || 'Dossier inconnu';
       }
       return subObj;
     });

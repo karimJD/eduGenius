@@ -11,10 +11,11 @@ interface DailyVideoRoomProps {
   token: string;
   isOwner: boolean;
   sessionTitle: string;
+  sessionId?: string; // Optional so it doesn't break existing uses
   onLeave?: () => void;
 }
 
-export function DailyVideoRoom({ roomUrl, token, isOwner, sessionTitle, onLeave }: DailyVideoRoomProps) {
+export function DailyVideoRoom({ roomUrl, token, isOwner, sessionTitle, sessionId, onLeave }: DailyVideoRoomProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,6 +48,9 @@ export function DailyVideoRoom({ roomUrl, token, isOwner, sessionTitle, onLeave 
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, [onLeave]);
+
+  // We now use Daily.co built-in API for attendance tracking on the backend, 
+  // so no frontend ping interval is needed.
 
   if (error) {
     return (

@@ -17,7 +17,7 @@ const WorkSubmissionSchema = new mongoose.Schema(
     },
     subjectId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Matiere',
+      ref: 'Subject',
       required: true,
     },
     studentId: {
