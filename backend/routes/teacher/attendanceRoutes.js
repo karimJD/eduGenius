@@ -9,10 +9,73 @@ async function verifyOwnership(classId, teacherId) {
   return cls;
 }
 
-/**
- * Attendance is stored inside VideoSession.attendance array.
- * Teachers mark attendance per session.
- */
+// GET /api/teacher/attendance/report — Comprehensive attendance report & filters
+router.get('/report', async (req, res, next) => {
+  try {
+    const teacherId = req.user._id;
+    const { classId, subjectId } = req.query;
+
+    // 1. Fetch available classes & subjects from teacher's courses
+    const Course = require('../../models/Course');
+    const courses = await Course.find({ teacherId })
+      .populate('classId', 'name code')
+      .populate('subjectId', 'name code');
+
+    // 2. Fetch sessions based on filters
+    let sessionQuery = { teacherId, status: { $in: ['live', 'ended'] } };
+    if (classId) sessionQuery.classId = classId;
+    if (subjectId) sessionQuery.subjectId = subjectId;
+
+    const sessions = await VideoSession.find(sessionQuery)
+      .populate('classId', 'name code')
+      .populate('subjectId', 'name')
+      .sort({ scheduledStart: -1 });
+
+    // 3. If classId is provided, calculate student stats
+    let studentStats = [];
+    if (classId) {
+      const cls = await Class.findById(classId).populate('students.studentId', 'firstName lastName email profileImage');
+      if (cls) {
+        studentStats = cls.students.map(st => {
+          const student = st.studentId;
+          const stats = {
+            studentId: student._id,
+            firstName: student.firstName,
+            lastName: student.lastName,
+            email: student.email,
+            profileImage: student.profileImage,
+            present: 0,
+            late: 0,
+            absent: 0,
+            totalSessions: sessions.length
+          };
+
+          sessions.forEach(sess => {
+            const record = sess.attendance.find(a => a.studentId.toString() === student._id.toString());
+            if (record) {
+              if (record.status === 'present') stats.present++;
+              else if (record.status === 'late') stats.late++;
+              else stats.absent++;
+            } else {
+              stats.absent++;
+            }
+          });
+
+          stats.attendanceRate = sessions.length > 0 ? Math.round(((stats.present + stats.late) / sessions.length) * 100) : 0;
+          return stats;
+        });
+      }
+    }
+
+    res.json({
+      courses,
+      sessions,
+      studentStats
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 
 // GET /api/teacher/attendance/:classId — list sessions with attendance for a class
 router.get('/:classId', async (req, res, next) => {

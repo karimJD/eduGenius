@@ -1,0 +1,129 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam class {
+    BackgroundColor White
+    ArrowColor #263238
+    BorderColor #263238
+}
+
+' --- Énumérations ---
+enum SessionStatus <<enumeration>> {
+    scheduled
+    live
+    ended
+    cancelled
+}
+
+enum AttendanceStatus <<enumeration>> {
+    present
+    late
+    absent
+    excused
+}
+
+' --- Modèles du Sprint 2 ---
+
+class User <<model>> {
+    + _id: ObjectId
+    + firstName: String
+    + lastName: String
+    + cin: String
+    + role: String
+    + matchPassword(password): Boolean
+}
+
+class TeacherProfile <<subDocument>> {
+    + academicRank: String
+    + specializations: String[]
+    + departmentId: ObjectId
+}
+
+class StudentProfile <<subDocument>> {
+    + matricule: String
+    + departmentId: ObjectId
+    + classId: ObjectId
+    + level: String
+}
+
+class Class <<model>> {
+    + _id: ObjectId
+    + name: String
+    + code: String {unique}
+    + level: String
+    + createClass(): void
+    + updateClass(): void
+    + deleteClass(): void
+    + joinClass(code): void
+    + getClasses(): void
+}
+
+class Schedule <<model>> {
+    + _id: ObjectId
+    + title: String
+    + semester: Number
+    + isPublished: Boolean
+}
+
+class ScheduleEntry <<subDocument>> {
+    + dayOfWeek: Number
+    + startTime: String
+    + endTime: String
+    + subjectId: ObjectId
+}
+
+class VideoSession <<model>> {
+    + _id: ObjectId
+    + title: String
+    + meetingId: String
+    + status: SessionStatus
+    + attendanceThreshold: Number
+    + gracePeriod: Number
+    + createSession(): void
+    + startSession(): void
+    + endSession(): void
+    + getMeetingToken(): String
+}
+
+class Attendance <<model>> {
+    + _id: ObjectId
+    + sessionDate: Date
+    + totalDuration: Number
+    + getAttendanceSessions(): void
+    + getSessionAttendanceDetail(): void
+    + markAttendance(): void
+}
+
+class AttendanceRecord <<subDocument>> {
+    + joinTime: Date
+    + leaveTime: Date
+    + duration: Number
+    + attendancePercentage: Number
+}
+
+' --- Relations ---
+
+' Profils imbriqués dans User
+User "1" *-- "0..1" TeacherProfile : teacher
+User "1" *-- "0..1" StudentProfile : student
+
+' Typage par composition
+SessionStatus "1" *--left- "1" VideoSession : status
+AttendanceRecord "1" *-- "1" AttendanceStatus : status
+
+' Planning
+Schedule "1" *-- "*" ScheduleEntry : entries
+ScheduleEntry "*" o-- "1" Class : concerne
+ScheduleEntry "*" o-- "1" TeacherProfile : assigne
+
+' Live & Presence
+VideoSession "0..*" o-- "1" Class : concerne
+VideoSession "0..*" o-- "1" TeacherProfile : animé par
+VideoSession "1" -- "1" Attendance : génère
+
+' Détails assiduité
+Attendance "1" *-- "0..*" AttendanceRecord : records
+AttendanceRecord "*" o-- "1" StudentProfile : évalue
+
+@enduml

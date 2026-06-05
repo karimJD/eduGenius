@@ -1,30 +1,33 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const User = require('./models/User');
 
-async function checkDatabase() {
+async function checkUsers() {
   try {
-    console.log(`Connecting to: ${process.env.MONGODB_URI}`);
-    await mongoose.connect(process.env.MONGODB_URI);
-    
-    const count = await User.countDocuments();
-    console.log(`Total users in DB: ${count}`);
-    
-    if (count > 0) {
-        const users = await User.find({}, 'email role firstName lastName password').lean();
-        console.log('--- Users in Database ---');
-        users.forEach(u => {
-          console.log(`${u.email} (${u.role}): ${u.firstName} ${u.lastName} [Hash: ${u.password}]`);
-        });
-    } else {
-        console.log('No users found in database.');
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+        console.error('MONGODB_URI not found in .env');
+        process.exit(1);
     }
-    
+    console.log('Connecting to:', uri);
+    await mongoose.connect(uri);
+    console.log('Connected to MongoDB');
+
+    const users = await User.find({}, 'email role firstName lastName').lean();
+    console.log('Users in database:', JSON.stringify(users, null, 2));
+
+    const admin = await User.findOne({ email: 'admin@edugenius.com' });
+    if (admin) {
+      console.log('Admin found. Role:', admin.role);
+    } else {
+      console.log('Admin NOT found in database.');
+    }
+
     await mongoose.connection.close();
   } catch (err) {
     console.error('Error:', err);
-    process.exit(1);
   }
 }
 
-checkDatabase();
+checkUsers();

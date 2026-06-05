@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{daily_co}
 Daily.co.
@@ -8,6 +8,11 @@ Daily.co.
 Google DeepMind.
 \newblock Gemini: A family of highly capable multimodal models, 2023.
 
+\bibitem{gamification_learning}
+Sebastian Deterding, Dan Dixon, Rilla Khaled, and Lennart Nacke.
+\newblock From game design elements to gamefulness: Defining "gamification".
+\newblock {\em Proceedings of the 15th International Academic MindTrek Conference}, 2011.
+
 \bibitem{mongodb_manual}
 MongoDB Inc.
 \newblock The mongodb manual, 2024.
@@ -15,6 +20,21 @@ MongoDB Inc.
 \bibitem{mern_stack}
 MongoDB Inc.
 \newblock What is the mern stack?, 2024.
+
+\bibitem{webrtc_standard}
+Alan~B. Johnston and Daniel~C. Burnett.
+\newblock {\em WebRTC: APIs and RTCWEB Protocols of the HTML5 Real-Time Web}.
+\newblock Digital PPT, 2014.
+
+\bibitem{generative_ai_survey}
+Jelena Jovanovic, Shane Dawson, and Abelardo Pardo.
+\newblock Generative ai in higher education: A comprehensive review.
+\newblock {\em Journal of Educational Technology \& Society}, 2024.
+
+\bibitem{clean_architecture}
+Robert~C. Martin.
+\newblock {\em Clean Architecture: A Craftsman's Guide to Software Structure and Design}.
+\newblock Prentice Hall, 2017.
 
 \bibitem{scrum_guide}
 Ken Schwaber and Jeff Sutherland.
@@ -29,8 +49,18 @@ Socket.io.
 UNESCO.
 \newblock Artificial intelligence in education, 2023.
 
+\bibitem{attention_is_all_you_need}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan~N Gomez, Lukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock {\em Advances in Neural Information Processing Systems}, 30, 2017.
+
 \bibitem{nextjs_docs}
 Vercel.
 \newblock Next.js documentation, 2025.
+
+\bibitem{learning_node}
+Marc Wandschneider.
+\newblock {\em Learning Node.js: A Hands-On Guide to Building Web Applications in JavaScript}.
+\newblock Addison-Wesley, 2016.
 
 \end{thebibliography}

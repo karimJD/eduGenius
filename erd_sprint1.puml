@@ -1,0 +1,76 @@
+@startuml
+left to right direction
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam class {
+    BackgroundColor White
+    ArrowColor #263238
+    BorderColor #263238
+}
+
+entity "users" as User {
+  * **_id** : ObjectId <<PK>>
+  --
+  firstName : String
+  lastName : String
+  cin : String {unique}
+  email : String {unique}
+  password : String
+  role : String
+  profileImage : String
+  phoneNumber : String
+  parentPhoneNumber : String
+  isActive : Boolean
+  isEmailVerified : Boolean
+  dateOfBirth : Date
+  placeOfBirth : String
+  governorateOfBirth : String
+  nationality : String
+  gender : String
+  -- address (embedded) --
+  address_street : String
+  address_postalCode : String
+  address_city : String
+  address_governorate : String
+  -- student (embedded) --
+  student_fileNumber : String
+  student_enrollmentDate : Date
+  **student_departmentId** : ObjectId <<FK>>
+  student_programId : ObjectId <<FK>>
+  student_classId : ObjectId <<FK>>
+  student_level : String
+  student_academicYear : String
+  student_hasScholarship : Boolean
+  student_scholarshipType : String
+  -- teacher (embedded) --
+  teacher_employeeId : String
+  teacher_academicRank : String
+  **teacher_departmentId** : ObjectId <<FK>>
+  teacher_specializations : Array<String>
+  teacher_hireDate : Date
+  teacher_teachingHoursPerWeek : Number
+  -- auth --
+  refreshToken : String
+  resetPasswordToken : String
+  resetPasswordExpires : Date
+}
+
+entity "departments" as Dept {
+  * **_id** : ObjectId <<PK>>
+  --
+  name : String
+  code : String {unique}
+  description : String
+  **headOfDepartmentId** : ObjectId <<FK>>
+  headOfDepartmentName : String
+  teachers : Array<ObjectId> <<FK>>
+  statistics : Object
+  isActive : Boolean
+}
+
+' Relationships with UML multiplicity
+User "0..*" -- "1" Dept : rattaché à
+Dept "1" -- "0..1" User : dirigé par
+
+@enduml

@@ -9,7 +9,9 @@ import {
   AlertCircle, 
   ArrowLeft, 
   Clock, 
-  Users 
+  Users,
+  Maximize2,
+  Minimize2 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -22,6 +24,25 @@ export default function StudentVideoCallPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sessionData, setSessionData] = useState<any>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
 
   useEffect(() => {
     const initCall = async () => {
@@ -117,7 +138,14 @@ export default function StudentVideoCallPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+          <Button
+            onClick={toggleFullscreen}
+            variant="ghost"
+            className="rounded-xl h-11 bg-white/5 hover:bg-white/10 text-white px-4 border border-white/10 flex items-center gap-2 font-bold uppercase tracking-widest text-[10px]"
+          >
+            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            {isFullscreen ? 'Quitter Plein Écran' : 'Plein Écran'}
+          </Button>
           <Button 
             onClick={handleLeave}
             variant="ghost"

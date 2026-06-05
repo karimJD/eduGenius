@@ -16,7 +16,8 @@ import {
   Download,
   ExternalLink,
   MessageSquare,
-  AlertCircle
+  AlertCircle,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -61,6 +62,26 @@ interface Course {
   teacherId?: { firstName: string; lastName: string; profileImage?: string };
 }
 
+const resolveMediaUrl = (url: string) => {
+  if (!url) return '';
+  if (url.includes('.amazonaws.com/')) {
+    try {
+      const parsedUrl = new URL(url);
+      const key = parsedUrl.pathname.substring(1); // Remove leading slash
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+      return `${backendUrl}/admin/announcements/image-proxy?key=${encodeURIComponent(key)}`;
+    } catch (e) {
+      return url;
+    }
+  }
+  if (url.startsWith('/uploads')) {
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+    const serverUrl = backendUrl.replace('/api', '');
+    return `${serverUrl}${url}`;
+  }
+  return url;
+};
+
 export default function StudentCourseViewer() {
   const { id: classId, subjectId } = useParams<{ id: string, subjectId: string }>();
   const [course, setCourse] = useState<Course | null>(null);
@@ -68,6 +89,9 @@ export default function StudentCourseViewer() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  // State for previewing files (PDF/Video) in a premium immersive modal
+  const [previewItem, setPreviewItem] = useState<{ _id: string; name: string; url: string; type: string } | null>(null);
 
   useEffect(() => {
     const fetchCourseData = async () => {
@@ -225,7 +249,8 @@ export default function StudentCourseViewer() {
                     {chapter.materials?.map((material) => (
                       <div 
                         key={material._id}
-                        className="group relative bg-muted/40 dark:bg-[#1a1a1a]/40 backdrop-blur-xl border border-border dark:border-white/5 p-6 rounded-[2rem] hover:border-blue-500/30 hover:bg-muted/60 dark:hover:bg-white/[0.04] hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 flex flex-col justify-between overflow-hidden"
+                        onClick={() => setPreviewItem({ _id: material._id, name: material.name || material.title || 'Document', url: material.url, type: material.type === 'video' ? 'video' : material.url.toLowerCase().endsWith('.pdf') ? 'pdf' : 'other' })}
+                        className="group relative bg-muted/40 dark:bg-[#1a1a1a]/40 backdrop-blur-xl border border-border dark:border-white/5 p-6 rounded-[2rem] hover:border-blue-500/30 hover:bg-muted/60 dark:hover:bg-white/[0.04] hover:shadow-2xl hover:shadow-blue-500/10 cursor-pointer transition-all duration-500 flex flex-col justify-between overflow-hidden"
                       >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-[50px] -mr-16 -mt-16 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="relative z-10 flex items-start gap-4 mb-4">
@@ -242,19 +267,17 @@ export default function StudentCourseViewer() {
                           </div>
                         </div>
 
-                        <div className="relative z-10 flex items-center justify-between pt-4 border-t border-border dark:border-white/5 mt-auto">
+                        <div className="relative z-10 flex items-center justify-between pt-4 border-t border-border dark:border-white/5 mt-auto" onClick={e => e.stopPropagation()}>
                            <span className="text-[10px] font-black text-muted-foreground dark:text-gray-500 tracking-widest uppercase truncate max-w-[120px]">
                              {material.description || 'Ressource pédagogique'}
                            </span>
-                           <a 
-                             href={material.url} 
-                             target="_blank" 
-                             rel="noopener noreferrer"
+                           <button 
+                             onClick={() => setPreviewItem({ _id: material._id, name: material.name || material.title || 'Document', url: material.url, type: material.type === 'video' ? 'video' : material.url.toLowerCase().endsWith('.pdf') ? 'pdf' : 'other' })}
                              className="flex items-center gap-2 px-5 py-2 bg-muted dark:bg-white/5 border border-border dark:border-white/10 rounded-full text-xs font-bold text-foreground dark:text-white hover:bg-blue-600 hover:text-white hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
                            >
-                             {material.type === 'video' ? 'Regarder' : 'Ouvrir'}
+                             {material.type === 'video' ? 'Regarder' : 'Visualiser'}
                              <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                           </a>
+                           </button>
                         </div>
                       </div>
                     ))}
@@ -325,7 +348,91 @@ export default function StudentCourseViewer() {
             ))}
           </div>
         )}
-      </div>
+      {/* Modal Visualisation Premium */}
+      <AnimatePresence>
+        {previewItem && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-background/80 backdrop-blur-md">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-6xl h-[90vh] bg-card border border-border dark:border-white/5 rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden"
+            >
+              {/* Header glassmorphism */}
+              <div className="p-6 md:p-8 border-b border-border/60 dark:border-white/5 bg-background/50 backdrop-blur-md flex items-center justify-between z-10 shrink-0">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${
+                    previewItem.type === 'pdf' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 
+                    previewItem.type === 'video' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 
+                    'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
+                  }`}>
+                    {previewItem.type === 'pdf' ? <FileText className="w-6 h-6" /> : 
+                     previewItem.type === 'video' ? <Video className="w-6 h-6" /> : 
+                     <File className="w-6 h-6" />}
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 block mb-0.5">Visualisation en Direct</span>
+                    <h3 className="text-lg font-black text-foreground dark:text-white tracking-tight leading-tight truncate max-w-md md:max-w-xl">
+                      {previewItem.name}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <a 
+                    href={resolveMediaUrl(previewItem.url)} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="flex items-center gap-2 px-4 py-2.5 bg-accent hover:bg-accent/80 border border-border dark:border-white/10 text-foreground dark:text-white text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer"
+                  >
+                    Ouvrir Original
+                  </a>
+                  <button 
+                    onClick={() => setPreviewItem(null)} 
+                    className="p-2.5 bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground dark:hover:bg-white/10 dark:border-white/10 rounded-xl transition-all"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Viewer body */}
+              <div className="flex-1 bg-zinc-950/40 p-4 md:p-6 flex items-center justify-center overflow-hidden">
+                {previewItem.type === 'pdf' ? (
+                  <iframe 
+                    src={`${resolveMediaUrl(previewItem.url)}#toolbar=1`} 
+                    className="w-full h-full rounded-2xl border border-border/60 bg-white"
+                    title={previewItem.name}
+                  />
+                ) : previewItem.type === 'video' || previewItem.url.toLowerCase().match(/\.(mp4|webm|ogg|mov)$/i) || previewItem.url.includes('recordings') ? (
+                  <div className="w-full h-full flex items-center justify-center bg-black rounded-2xl overflow-hidden relative">
+                    <video 
+                      src={resolveMediaUrl(previewItem.url)} 
+                      controls 
+                      autoPlay
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div className="text-center py-12 px-6 max-w-sm bg-card border border-border dark:border-white/10 rounded-3xl p-8 shadow-sm">
+                    <File className="w-16 h-16 text-muted-foreground/40 mx-auto mb-4" />
+                    <h4 className="text-base font-black text-foreground dark:text-white mb-2">Format non supporté pour la prévisualisation directe</h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-6">Ce type de fichier ne peut pas être prévisualisé directement dans le navigateur. Vous pouvez l'ouvrir ou le télécharger.</p>
+                    <a 
+                      href={resolveMediaUrl(previewItem.url)} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-blue-600/25 hover:bg-blue-500 cursor-pointer"
+                    >
+                      Ouvrir le fichier
+                    </a>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

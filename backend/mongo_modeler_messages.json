@@ -1,0 +1,24 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb32"
+  },
+  "senderId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "receiverId": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "classId": null,
+  "content": "Bonjour professeur, j'ai une question sur le cours.",
+  "isRead": false,
+  "readAt": null,
+  "messageType": "private",
+  "isDeleted": false,
+  "attachments": [],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.822Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.822Z"
+  }
+}

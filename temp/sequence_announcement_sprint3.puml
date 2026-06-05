@@ -1,0 +1,64 @@
+@startuml
+skinparam maxMessageSize 160
+skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam sequence {
+    ArrowColor #263238
+    LifeLineBorderColor #263238
+    ParticipantBorderColor #263238
+    ParticipantBackgroundColor White
+}
+
+
+actor "Enseignant" as Teacher
+participant "Interface\n(AnnoncesPage)" as UI
+participant "Middleware\nAuth" as Auth
+participant "Middleware\nMulter" as Multer
+participant "AnnouncementController" as Ctrl
+participant "AWS S3" as S3
+database "MongoDB" as DB
+
+Teacher -> UI : Saisit le titre, contenu\net joint une image
+activate UI
+
+UI -> Auth : POST /api/teacher/announcements/:classId\n(FormData)
+activate Auth
+Auth -> Auth : jwt.verify()
+Auth -> DB : User.findById()
+activate DB
+DB --> Auth : user document
+deactivate DB
+Auth -> Multer : next()
+deactivate Auth
+
+activate Multer
+Multer -> Multer : Intercepte le fichier image
+Multer -> Ctrl : next(req.file)
+deactivate Multer
+
+activate Ctrl
+Ctrl -> DB : verifyOwnership(classId, teacherId)
+activate DB
+note right : Vérifie dans Class et Schedule
+DB --> Ctrl : isOwner (true)
+deactivate DB
+
+opt Si req.file existe
+    Ctrl -> S3 : uploadToS3(file)
+    activate S3
+    S3 --> Ctrl : imageUrl
+    deactivate S3
+end
+
+Ctrl -> DB : Announcement.create({...})
+activate DB
+DB --> Ctrl : announcement document
+deactivate DB
+
+Ctrl --> UI : 201 Created
+deactivate Ctrl
+
+UI --> Teacher : Notification "Annonce publiée"
+deactivate UI
+
+@enduml

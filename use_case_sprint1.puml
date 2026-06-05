@@ -1,0 +1,70 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam usecase {
+    BackgroundColor White
+    BorderColor #263238
+    ArrowColor #263238
+}
+skinparam actor {
+    BackgroundColor White
+    BorderColor #263238
+}
+
+' --- Acteurs avec héritage ---
+actor "Utilisateur"    as User
+actor "Administrateur" as Admin
+actor "Enseignant"     as Teacher
+actor "Etudiant"       as Student
+
+Admin   -|> User
+Teacher -|> User
+Student -|> User
+
+' --- Système : Focus Sprint 1 ---
+rectangle "EduGenius - Sprint 1 : Authentification & Gestion" {
+
+  package "Sécurité & Accès" {
+    usecase "S'authentifier (JWT)" as UC_Login
+    usecase "Se déconnecter" as UC_Logout
+    usecase "Réinitialiser son mot de passe" as UC_Forgot
+  }
+
+  package "Espace Personnel" {
+    usecase "Consulter son tableau de bord" as UC_Dash
+    usecase "Gérer son profil" as UC_Profile
+    usecase "Modifier ses informations" as UC_Edit
+    usecase "Changer sa photo" as UC_Photo
+  }
+
+  package "Administration" {
+    usecase "Gérer les utilisateurs" as UC_Users
+    usecase "Attribuer des rôles" as UC_Roles
+    usecase "Créer/Modifier un compte" as UC_CRUD
+  }
+
+  ' --- Relations d'inclusion ---
+  UC_Dash    ..> UC_Login : <<include>>
+  UC_Profile ..> UC_Login : <<include>>
+  UC_Users   ..> UC_Login : <<include>>
+  UC_Logout  ..> UC_Login : <<include>>
+
+  ' --- Relations d'extension ---
+  UC_Edit  ..> UC_Profile : <<extend>>
+  UC_Photo ..> UC_Profile : <<extend>>
+  
+  UC_Roles ..> UC_Users : <<include>>
+  UC_CRUD  ..> UC_Users : <<include>>
+}
+
+' --- Associations Acteurs ---
+User --> UC_Login
+User --> UC_Forgot
+User --> UC_Dash
+User --> UC_Profile
+User --> UC_Logout
+
+Admin --> UC_Users
+
+@enduml

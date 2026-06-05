@@ -1,0 +1,130 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam class {
+    BackgroundColor White
+    ArrowColor #263238
+    BorderColor #263238
+}
+
+enum Role <<enumeration>> {
+    super_admin
+    admin
+    department_head
+    program_coordinator
+    teacher
+    student
+    staff
+}
+
+enum Gender <<enumeration>> {
+    male
+    female
+}
+
+enum AcademicRank <<enumeration>> {
+    Assistant
+    Maître Assistant
+    Maître de Conférences A
+    Maître de Conférences B
+    Professeur de l'Enseignement Supérieur
+    Professeur
+}
+
+class User <<model>> {
+    + _id: ObjectId
+    + firstName: String
+    + lastName: String
+    + cin: String {unique}
+    + email: String {unique}
+    - password: String {hashed}
+    + role: Role
+    + profileImage: String
+    + phoneNumber: String
+    + parentPhoneNumber: String
+    + isActive: Boolean
+    + isEmailVerified: Boolean
+    + dateOfBirth: Date
+    + placeOfBirth: String
+    + governorateOfBirth: String
+    + nationality: String
+    + gender: Gender
+    + refreshToken: String
+    + resetPasswordToken: String
+    + resetPasswordExpires: Date
+    + name: String {readonly}
+    + matchPassword(enteredPassword: String): Boolean
+    + getName(): String
+    + login(creds: Object): AuthResponse
+    + forgotPassword(email: String): void
+    + resetPassword(token: String, pass: String): void
+    + updateProfile(data: Object): User
+    + getUsers(role: Role): User[]
+    + deleteUser(id: ObjectId): void
+    - pre_save(): void {hashPassword}
+}
+
+class Department <<model>> {
+    + _id: ObjectId
+    + name: String
+    + code: String {unique}
+    + description: String
+    + headOfDepartmentId: ObjectId
+    + headOfDepartmentName: String
+    + teachers: ObjectId[]
+    + statistics: Object
+    + isActive: Boolean
+    + getDepartments(): Department[]
+    + createDepartment(data: Object): Department
+    + updateDepartment(id: ObjectId, data: Object): Department
+    + deleteDepartment(id: ObjectId): void
+}
+
+class Address <<subDocument>> {
+    + street: String
+    + postalCode: String
+    + city: String
+    + governorate: String
+}
+
+class StudentProfile <<subDocument>> {
+    + fileNumber: String
+    + enrollmentDate: Date
+    + departmentId: ObjectId
+    + programId: ObjectId
+    + classId: ObjectId
+    + level: String
+    + academicYear: String
+    + hasScholarship: Boolean
+    + scholarshipType: String
+}
+
+class TeacherProfile <<subDocument>> {
+    + employeeId: String
+    + academicRank: AcademicRank
+    + departmentId: ObjectId
+    + hireDate: Date
+    + teachingHoursPerWeek: Number
+    + specializations: String[]
+}
+
+' Relationships
+User "1" *-- "1" Role : a pour rôle
+User "1" *-- "1" Gender : genre
+User "1" *-- "0..1" Address : réside à
+
+StudentProfile --|> User
+TeacherProfile --|> User
+
+TeacherProfile "1" *-- "1" AcademicRank : rang académique
+
+Department "1" o-- "0..1" User : dirigé par
+
+note bottom of User
+  L'entité **User** centralise la sécurité (bcrypt, JWT) 
+  et expose les méthodes de gestion (CRUD) 
+  utilisées par les interfaces Admin et Profil.
+end note
+
+@enduml

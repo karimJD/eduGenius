@@ -11,42 +11,57 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-
-const dummyNotifications = [
-  {
-    id: 1,
-    title: 'Nouvelle évaluation',
-    description: 'Le Quiz sur le Chapitre 2 est disponible.',
-    time: 'Il y a 5 min',
-    unread: true,
-    type: 'quiz'
-  },
-  {
-    id: 2,
-    title: 'Message de l\'enseignant',
-    description: 'M. Karim a répondu à votre question.',
-    time: 'Il y a 1h',
-    unread: true,
-    type: 'message'
-  },
-  {
-    id: 3,
-    title: 'Session vidéo',
-    description: 'La séance de révision commence dans 15 min.',
-    time: 'Il y a 2h',
-    unread: false,
-    type: 'video'
-  }
-];
+import { useRouter } from 'next/navigation';
+import api from '@/lib/axios';
 
 export function NotificationCenter() {
-  const [notifications, setNotifications] = useState(dummyNotifications);
-  const unreadCount = notifications.filter(n => n.unread).length;
+  const router = useRouter();
+  const [notifications, setNotifications] = useState<any[]>([]);
 
-  const markAllAsRead = () => {
-    setNotifications(notifications.map(n => ({ ...n, unread: false })));
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const res = await api.get('/notifications');
+        setNotifications(res.data);
+      } catch (err) {
+        console.error('Failed to load notifications:', err);
+      }
+    };
+    fetchNotifications();
+  }, []);
+
+  const unreadCount = notifications.filter(n => !n.isRead).length;
+
+  const markAllAsRead = async () => {
+    try {
+      await Promise.all(
+        notifications.filter(n => !n.isRead).map(n => api.put(`/notifications/${n._id}/read`))
+      );
+      setNotifications(notifications.map(n => ({ ...n, isRead: true })));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleNotificationClick = async (notif: any) => {
+    if (!notif.isRead) {
+      try {
+        await api.put(`/notifications/${notif._id}/read`);
+        setNotifications(notifications.map(n => n._id === notif._id ? { ...n, isRead: true } : n));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (notif.link) {
+      router.push(notif.link);
+    }
+  };
+
+  const formatTime = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
   };
 
   return (
@@ -89,18 +104,19 @@ export function NotificationCenter() {
           ) : (
             notifications.map((notif) => (
               <DropdownMenuItem 
-                key={notif.id}
+                key={notif._id}
+                onClick={() => handleNotificationClick(notif)}
                 className={cn(
                   "flex flex-col items-start gap-1 p-3 rounded-xl cursor-pointer transition-colors focus:bg-accent",
-                  notif.unread && "bg-primary/5 border-l-2 border-primary"
+                  !notif.isRead && "bg-primary/5 border-l-2 border-primary"
                 )}
               >
                 <div className="flex items-center justify-between w-full">
                   <span className="font-bold text-sm text-foreground">{notif.title}</span>
-                  <span className="text-[10px] text-muted-foreground">{notif.time}</span>
+                  <span className="text-[10px] text-muted-foreground">{formatTime(notif.createdAt)}</span>
                 </div>
                 <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-                  {notif.description}
+                  {notif.message}
                 </p>
               </DropdownMenuItem>
             ))

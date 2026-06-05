@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getSessionToken, endVideoSession, startVideoSession } from '@/lib/api/teacher';
+import { getSessionToken, endVideoSession, startVideoSession, saveRecording } from '@/lib/api/teacher';
 import { DailyVideoRoom } from '@/components/video/DailyVideoRoom';
 import { 
   Loader2, 
@@ -11,7 +11,12 @@ import {
   PhoneOff, 
   Shield, 
   Clock, 
-  Users 
+  Users,
+  Video,
+  VideoOff,
+  Upload,
+  Maximize2,
+  Minimize2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -24,6 +29,36 @@ export default function VideoCallPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sessionData, setSessionData] = useState<any>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
+  // --- Recording state ---
+  const [isRecording, setIsRecording] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [recordingDuration, setRecordingDuration] = useState(0);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  // Use a ref so uploadRecording always has the latest sessionData (avoids stale closure)
+  const sessionDataRef = useRef<any>(null);
 
   useEffect(() => {
     const initCall = async () => {
@@ -34,6 +69,7 @@ export default function VideoCallPage() {
         // 1. Get meeting token and room info
         const data = await getSessionToken(sessionId);
         setSessionData(data);
+        sessionDataRef.current = data;
         
         // 2. If user is owner, mark session as 'live' automatically
         if (data.isOwner && data.session.status !== 'live') {
@@ -54,12 +90,121 @@ export default function VideoCallPage() {
   }, [params.id]);
 
   const handleLeave = () => {
+    // Stop recording if active before leaving
+    if (isRecording) handleStopRecording(false);
     router.push('/teacher/schedule');
+  };
+
+  const handleStartRecording = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: { frameRate: 30 },
+        audio: true,
+        // @ts-ignore — Chrome-specific hint to prefer current tab
+        preferCurrentTab: true,
+      });
+      streamRef.current = stream;
+      recordedChunksRef.current = [];
+
+      const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')
+        ? 'video/webm;codecs=vp9,opus'
+        : 'video/webm';
+
+      const recorder = new MediaRecorder(stream, { mimeType });
+      mediaRecorderRef.current = recorder;
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) recordedChunksRef.current.push(e.data);
+      };
+
+      recorder.onstop = async () => {
+        streamRef.current?.getTracks().forEach(t => t.stop());
+        if (recordedChunksRef.current.length === 0) return;
+        const blob = new Blob(recordedChunksRef.current, { type: mimeType });
+        await uploadRecording(blob);
+      };
+
+      recorder.start(1000); // collect data every second
+      setIsRecording(true);
+      setRecordingDuration(0);
+      timerRef.current = setInterval(() => setRecordingDuration(d => d + 1), 1000);
+      toast.success('Enregistrement démarré');
+
+      // Auto-stop if user closes the screen share dialog
+      stream.getVideoTracks()[0].onended = () => {
+        if (mediaRecorderRef.current?.state === 'recording') {
+          mediaRecorderRef.current.stop();
+          setIsRecording(false);
+          if (timerRef.current) clearInterval(timerRef.current);
+        }
+      };
+    } catch (err: any) {
+      if (err.name !== 'NotAllowedError') {
+        toast.error("Impossible de démarrer l'enregistrement");
+      }
+    }
+  }, []);
+
+  const handleStopRecording = useCallback((showToast = true) => {
+    if (mediaRecorderRef.current?.state === 'recording') {
+      mediaRecorderRef.current.stop();
+    }
+    streamRef.current?.getTracks().forEach(t => t.stop());
+    setIsRecording(false);
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (showToast) toast.info("Traitement de l'enregistrement...");
+  }, []);
+
+  const uploadRecording = useCallback(async (blob: Blob) => {
+    const currentSession = sessionDataRef.current;
+    if (!currentSession?.session?._id) {
+      console.error('uploadRecording: sessionData not available');
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const result = await saveRecording(currentSession.session._id, blob);
+      toast.success(`Enregistrement sauvegardé dans "${result.chapterTitle}"`);
+    } catch (err) {
+      toast.error("Erreur lors de la sauvegarde de l'enregistrement");
+      console.error(err);
+    } finally {
+      setIsSaving(false);
+    }
+  }, []); // no deps — uses ref instead
+
+  const formatDuration = (secs: number) => {
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = (secs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   };
 
   const handleEndSession = async () => {
     if (!confirm('Êtes-vous sûr de vouloir terminer cette session pour tous les participants ?')) return;
     
+    // If recording is active, stop it — upload will happen via recorder.onstop before redirect
+    if (isRecording && mediaRecorderRef.current?.state === 'recording') {
+      toast.info("Arrêt de l'enregistrement avant de terminer la session...");
+      // Stop recording; onstop will call uploadRecording, then we navigate after
+      mediaRecorderRef.current.onstop = async () => {
+        streamRef.current?.getTracks().forEach(t => t.stop());
+        if (recordedChunksRef.current.length > 0) {
+          const mimeType = mediaRecorderRef.current?.mimeType || 'video/webm';
+          const blob = new Blob(recordedChunksRef.current, { type: mimeType });
+          await uploadRecording(blob);
+        }
+        try {
+          await endVideoSession(params.id as string);
+        } catch {}
+        router.push('/teacher/schedule');
+      };
+      mediaRecorderRef.current.stop();
+      streamRef.current?.getTracks().forEach(t => t.stop());
+      setIsRecording(false);
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+
     try {
       await endVideoSession(params.id as string);
       toast.success('Session terminée');
@@ -139,15 +284,45 @@ export default function VideoCallPage() {
 
         <div className="flex items-center gap-3">
           {sessionData.isOwner && (
-            <Button 
-              onClick={handleEndSession}
-              variant="destructive"
-              className="rounded-xl h-11 bg-red-500 hover:bg-red-600 border-none px-6 font-semibold"
-            >
-              <PhoneOff className="w-4 h-4 mr-2" />
-              Terminer la session
-            </Button>
+            <>
+              {/* Recording button */}
+              {isRecording ? (
+                <Button
+                  onClick={() => handleStopRecording()}
+                  className="rounded-xl h-11 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 text-red-400 px-4 font-semibold flex items-center gap-2"
+                >
+                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                  REC {formatDuration(recordingDuration)}
+                  <VideoOff className="w-4 h-4" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleStartRecording}
+                  disabled={isSaving}
+                  className="rounded-xl h-11 bg-white/5 hover:bg-violet-600/20 border border-white/10 hover:border-violet-500/50 text-zinc-300 hover:text-violet-300 px-4 font-semibold flex items-center gap-2"
+                >
+                  <Video className="w-4 h-4" />
+                  Enregistrer
+                </Button>
+              )}
+              <Button 
+                onClick={handleEndSession}
+                variant="destructive"
+                className="rounded-xl h-11 bg-red-500 hover:bg-red-600 border-none px-6 font-semibold"
+              >
+                <PhoneOff className="w-4 h-4 mr-2" />
+                Terminer la session
+              </Button>
+            </>
           )}
+          <Button
+            onClick={toggleFullscreen}
+            variant="ghost"
+            className="rounded-xl h-11 bg-white/5 hover:bg-white/10 text-white px-4 border border-white/10 flex items-center gap-2 font-semibold"
+          >
+            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            {isFullscreen ? 'Quitter Plein Écran' : 'Plein Écran'}
+          </Button>
           <Button 
             onClick={handleLeave}
             variant="ghost"
@@ -169,6 +344,22 @@ export default function VideoCallPage() {
           onLeave={handleLeave}
         />
       </main>
+
+      {/* Upload overlay */}
+      {isSaving && (
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center z-50 gap-4">
+          <div className="bg-zinc-900 border border-white/10 rounded-3xl p-8 flex flex-col items-center gap-4 shadow-2xl max-w-sm w-full mx-4">
+            <div className="w-16 h-16 rounded-2xl bg-violet-500/10 flex items-center justify-center">
+              <Upload className="w-8 h-8 text-violet-400 animate-bounce" />
+            </div>
+            <div className="text-center">
+              <p className="font-bold text-white text-lg">Sauvegarde en cours...</p>
+              <p className="text-zinc-400 text-sm mt-1">L'enregistrement est uploadé vers le serveur</p>
+            </div>
+            <Loader2 className="w-5 h-5 animate-spin text-violet-400" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

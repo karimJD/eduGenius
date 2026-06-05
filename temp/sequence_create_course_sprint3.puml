@@ -1,0 +1,52 @@
+@startuml
+skinparam maxMessageSize 160
+skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam sequence {
+    ArrowColor #263238
+    LifeLineBorderColor #263238
+    ParticipantBorderColor #263238
+    ParticipantBackgroundColor White
+}
+skinparam databaseBackgroundColor #E3F2FD
+skinparam noteBackgroundColor #FFF9C4
+
+actor "Enseignant" as Teacher
+participant "Interface\n(CreateCoursePage)" as UI
+participant "Middleware\nAuth & Multer" as Middleware
+participant "CourseController" as Ctrl
+participant "AWS S3" as S3
+database "MongoDB\n(Course)" as DB
+
+Teacher -> UI : Sélectionne un fichier PDF\net valide le formulaire
+activate UI
+
+UI -> Middleware : POST /api/courses\n(Multipart/FormData)
+activate Middleware
+note right : Authentification et extraction\ndu fichier par Multer
+Middleware -> Ctrl : next(req.file)
+deactivate Middleware
+
+activate Ctrl
+group Traitement du fichier PDF
+    Ctrl -> Ctrl : pdf-parse(req.file.buffer)
+    note right : Extraction du texte pour indexation
+    
+    Ctrl -> S3 : uploadToS3(file.buffer)
+    activate S3
+    S3 --> Ctrl : fileUrl (https://s3...)
+    deactivate S3
+end
+
+Ctrl -> DB : Course.create({\n  title, content, materials: [\n    { name, url: fileUrl, type: 'pdf' }\n  ],\n  teacherId: req.user._id\n})
+activate DB
+DB --> Ctrl : course document
+deactivate DB
+
+Ctrl --> UI : 201 Created (course)
+deactivate Ctrl
+
+UI --> Teacher : Notification "Cours créé avec succès"
+deactivate UI
+
+@enduml

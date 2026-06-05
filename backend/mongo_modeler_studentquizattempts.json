@@ -1,0 +1,52 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb46"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "courseId": {
+    "$oid": "6a185ad6754c94b99c29eb25"
+  },
+  "quizTitle": "Quiz entraînement IA",
+  "isPracticeQuiz": true,
+  "questions": [
+    {
+      "question": "Quel hook React pour l'état ?",
+      "type": "mcq",
+      "options": [
+        "useState",
+        "useEffect",
+        "useRef",
+        "useMemo"
+      ],
+      "correctAnswer": "useState",
+      "points": 1,
+      "pointsEarned": 0,
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb47"
+      }
+    }
+  ],
+  "score": 1,
+  "totalPoints": 1,
+  "percentage": 100,
+  "timeSpent": 0,
+  "aiGenerationParams": {
+    "numberOfQuestions": 5,
+    "difficulty": "medium",
+    "topics": [
+      "React"
+    ]
+  },
+  "reviewed": false,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.866Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.866Z"
+  }
+}

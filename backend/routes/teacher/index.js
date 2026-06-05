@@ -22,5 +22,6 @@ router.use('/grading', require('./gradingRoutes'));
 router.use('/attendance', require('./attendanceRoutes'));
 router.use('/announcements', require('./announcementRoutes'));
 router.use('/schedule', require('./scheduleRoutes'));
+router.use('/recordings', require('./recordingRoutes'));
 
 module.exports = router;

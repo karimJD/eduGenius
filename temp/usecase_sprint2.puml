@@ -1,0 +1,52 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+' --- Acteurs ---
+actor "Utilisateur"    as User
+actor "Administrateur" as Admin
+actor "Enseignant"     as Teacher
+actor "Etudiant"       as Student
+actor "Système"        as Sys << (S, #FF7700) >>
+
+Admin   -|> User
+Teacher -|> User
+Student -|> User
+
+' --- Système ---
+rectangle "EduGenius – Sprint 2 : Classes & Visioconférence" {
+
+  usecase "S'authentifier" as UC_Auth
+
+  ' Administration
+  usecase "Gérer les classes(CRUD)" as UC_Class
+  usecase "Gérer les plannings (CRUD)" as UC_Sched
+
+  usecase "Communiquer par Chat" as UC_Chat
+
+  ' Suivi & Replay
+  usecase "Gérer l'assiduité" as UC_Presence
+  usecase "Consulter les Replays" as UC_Replay
+
+  ' Relations d'inclusion obligatoires vers Auth
+  UC_Class    ..> UC_Auth : <<include>>
+  UC_Sched    ..> UC_Auth : <<include>>
+  UC_Presence ..> UC_Auth : <<include>>
+  UC_Replay   ..> UC_Auth : <<include>>
+
+}
+
+' --- Connexions ---
+User --> UC_Auth
+
+Admin --> UC_Class
+Admin --> UC_Sched
+
+Teacher --> UC_Replay
+
+Student --> UC_Replay
+
+' Seul le système gère l'assiduité automatiquement
+Sys --> UC_Presence
+@enduml

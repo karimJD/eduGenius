@@ -1,0 +1,105 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb2d"
+  },
+  "title": "Introduction à Next.js - Live",
+  "description": "Session live sur Next.js",
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "subjectId": {
+    "$oid": "6a185ad6754c94b99c29eb18"
+  },
+  "teacherId": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "scheduleId": {
+    "$oid": "6a185ad6754c94b99c29eb29"
+  },
+  "scheduledStart": {
+    "$date": "2025-01-10T07:00:00Z"
+  },
+  "scheduledEnd": {
+    "$date": "2025-01-10T09:00:00Z"
+  },
+  "actualStart": {
+    "$date": "2025-01-10T07:05:00Z"
+  },
+  "actualEnd": {
+    "$date": "2025-01-10T08:55:00Z"
+  },
+  "meetingUrl": "https://edugenius.daily.co/demo-session",
+  "meetingId": "demo-session",
+  "attendanceThreshold": 70,
+  "gracePeriod": 15,
+  "participants": [
+    {
+      "userId": {
+        "$oid": "6a185ad6754c94b99c29eb1c"
+      },
+      "userName": "Ahmed Teacher",
+      "role": "teacher",
+      "joinedAt": {
+        "$date": "2025-01-10T07:00:00Z"
+      },
+      "leftAt": {
+        "$date": "2025-01-10T09:00:00Z"
+      },
+      "duration": 120,
+      "connectionLogs": [
+        {
+          "action": "join",
+          "timestamp": {
+            "$date": "2025-01-10T07:00:00Z"
+          },
+          "_id": {
+            "$oid": "6a185ad6754c94b99c29eb2f"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb2e"
+      }
+    }
+  ],
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "6a185ad6754c94b99c29eb1f"
+      },
+      "status": "present",
+      "joinTime": {
+        "$date": "2025-01-10T07:05:00Z"
+      },
+      "leaveTime": {
+        "$date": "2025-01-10T08:55:00Z"
+      },
+      "duration": 110,
+      "attendancePercentage": 91.7,
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb30"
+      }
+    }
+  ],
+  "statistics": {
+    "totalParticipants": 1,
+    "maxConcurrent": 1,
+    "averageDuration": 110,
+    "attendanceRate": 100,
+    "lateCount": 0,
+    "absentCount": 0
+  },
+  "recording": {
+    "isRecorded": true,
+    "recordingFile": "https://s3.amazonaws.com/recordings/demo.webm",
+    "recordingSize": 50000000,
+    "recordingDuration": 3600
+  },
+  "status": "ended",
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.818Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.818Z"
+  }
+}

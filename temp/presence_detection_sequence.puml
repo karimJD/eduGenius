@@ -1,0 +1,74 @@
+@startuml
+skinparam maxMessageSize 150
+skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam sequence {
+    ArrowColor #263238
+    LifeLineBorderColor #263238
+    ParticipantBorderColor #263238
+    ParticipantBackgroundColor White
+}
+skinparam databaseBackgroundColor #E3F2FD
+
+actor "Utilisateur\n(Enseignant/Étudiant)" as User
+participant "Planning\n(SchedulePage)" as UI_Sched
+participant "Lobby\n(Dialog)" as UI_Lobby
+participant "Page d'Appel\n(VideoCallPage)" as UI_Call
+participant "API Backend\n(VideoSessionController)" as API
+participant "Daily SDK\n(WebRTC)" as Daily
+participant "Serveur Sockets\n(videoHandlers.js)" as SocketServer
+database "Base de données\n(MongoDB)" as DB
+
+User -> UI_Sched : Clique sur une séance
+activate UI_Sched
+UI_Sched -> UI_Lobby : openLobby()
+activate UI_Lobby
+
+User -> UI_Lobby : Clique sur "REJOINDRE LA CLASSE"
+UI_Lobby -> UI_Call : router.push(/call/:id)
+deactivate UI_Lobby
+deactivate UI_Sched
+
+activate UI_Call
+UI_Call -> UI_Call : initCall()
+
+UI_Call -> API : getSessionToken(sessionId)
+activate API
+
+alt Erreur Token / Droits
+    API --> UI_Call : 403 Forbidden / 404 Not Found
+    UI_Call --> User : Affiche écran d'erreur (AlertCircle)
+else Succès Authentification
+    API --> UI_Call : { token, roomUrl, isOwner }
+    deactivate API
+
+    opt Si Utilisateur est Organisateur et statut != 'live'
+        UI_Call -> API : startVideoSession(id)
+        API -> DB : Update status: 'live'
+    end
+
+    UI_Call -> Daily : joinRoom(roomUrl, token)
+    activate Daily
+    Daily --> User : Affiche le flux média
+    deactivate Daily
+
+    ' --- Tracking Presence ---
+    UI_Call -> SocketServer : emit('join-session', { userId, sessionId... })
+    activate SocketServer
+
+    SocketServer -> SocketServer : Met à jour 'activeSessions' (Mémoire)
+    
+    SocketServer -> DB : $push dans participants (joinedAt: Date.now)
+    activate DB
+    DB --> SocketServer : OK
+    deactivate DB
+
+    SocketServer -> SocketServer : broadcast('attendance-update')
+    note right: Notifie l'enseignant en direct
+
+    SocketServer --> UI_Call : Join Confirmed
+    deactivate SocketServer
+end
+
+deactivate UI_Call
+@enduml

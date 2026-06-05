@@ -2,54 +2,68 @@
 \babel@toc {french}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Chronogramme de réalisation (Diagramme de Gantt)}}{25}{figure.caption.18}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Diagramme de cas d'utilisation : Acteur Administrateur}}{26}{figure.caption.19}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Diagramme de cas d'utilisation : Acteur Enseignant}}{27}{figure.caption.20}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Diagramme de cas d'utilisation : Acteur Étudiant}}{28}{figure.caption.21}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Diagramme de séquence : Interaction avec l'IA Ollama}}{29}{figure.caption.22}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Logo GitHub}}{30}{figure.2.6}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Logo Trello}}{30}{figure.2.7}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Logo Microsoft Teams}}{30}{figure.2.8}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Logo Next.js}}{30}{figure.2.9}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Logos Node.js et Express}}{31}{figure.2.10}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Logo MongoDB}}{31}{figure.2.11}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Logo Ollama}}{31}{figure.2.12}%
-\contentsline {figure}{\numberline {2.13}{\ignorespaces Logo Daily.co}}{31}{figure.2.13}%
-\contentsline {figure}{\numberline {2.14}{\ignorespaces Logo Tailwind CSS}}{31}{figure.2.14}%
-\contentsline {figure}{\numberline {2.15}{\ignorespaces Architecture de déploiement et flux d'infrastructure}}{33}{figure.caption.23}%
-\contentsline {figure}{\numberline {2.16}{\ignorespaces Modélisation conceptuelle des données (NoSQL)}}{34}{figure.caption.24}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Chronogramme de réalisation (Diagramme de Gantt)}}{25}{figure.caption.21}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Diagramme de cas d'utilisation global d'EduGenius}}{26}{figure.caption.22}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Logo GitHub}}{27}{figure.2.3}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Logo Trello}}{27}{figure.2.4}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Logo Microsoft Teams}}{27}{figure.2.5}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Logo Next.js}}{27}{figure.2.6}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Logos Node.js et Express}}{28}{figure.2.7}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Logo MongoDB}}{28}{figure.2.8}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Logo AWS S3}}{28}{figure.2.9}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Logo Ollama}}{28}{figure.2.10}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Logo Daily.co}}{29}{figure.2.11}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Logo Tailwind CSS}}{29}{figure.2.12}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Logo Jest}}{29}{figure.2.13}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Logo Postman}}{29}{figure.2.14}%
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Logo Artillery}}{29}{figure.2.15}%
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Architecture de déploiement et flux d'infrastructure (physique)}}{31}{figure.caption.23}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagramme de cas d’utilisation – Authentification et sécurité}}{37}{figure.caption.27}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagramme de séquence de l’authentification JWT}}{42}{figure.caption.34}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagramme de séquence de la gestion du profil}}{43}{figure.caption.35}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagramme de séquence de la consultation du tableau de bord}}{45}{figure.caption.36}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagramme de séquence : Consultation des utilisateurs}}{46}{figure.caption.38}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagramme de séquence : Création d'un utilisateur}}{47}{figure.caption.40}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Diagramme de séquence : Modification d'un utilisateur}}{48}{figure.caption.42}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Diagramme de séquence : Suppression d'un utilisateur}}{49}{figure.caption.44}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Diagramme de séquence de la réinitialisation du mot de passe}}{50}{figure.caption.45}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagramme de classes – Modèle utilisateur et authentification}}{51}{figure.caption.46}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Schéma de la collection MongoDB pour le sprint 1}}{52}{figure.caption.47}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Page de connexion}}{53}{figure.caption.48}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Formulaire de réinitialisation}}{53}{figure.caption.49}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Page de profil}}{54}{figure.caption.50}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Tableau de bord de l'utilisateur}}{54}{figure.caption.51}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Interface de gestion des utilisateurs (Étudiants)}}{55}{figure.caption.52}%
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Interface de gestion des utilisateurs (Enseignants)}}{55}{figure.caption.53}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Diagramme de cas d’utilisation – Authentification et sécurité}}{34}{figure.caption.26}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagramme de séquence – Processus d'authentification sécurisée}}{38}{figure.caption.33}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagramme de séquence – Création d'un compte étudiant (Admin)}}{39}{figure.caption.34}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagramme de classes – Modèle utilisateur et authentification}}{40}{figure.caption.35}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Schéma de la collection MongoDB pour le sprint 1}}{41}{figure.caption.36}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Page de connexion}}{42}{figure.caption.37}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Formulaire de réinitialisation}}{43}{figure.caption.38}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Page de profil - Gestion des informations personnelles}}{43}{figure.caption.39}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Tableau de bord unifié - Vue personnalisée par rôle}}{44}{figure.caption.40}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Interface de gestion des utilisateurs (Vue Étudiants)}}{45}{figure.caption.42}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Interface de gestion des utilisateurs (Vue Enseignants)}}{45}{figure.caption.44}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Extrait du code source du test unitaire (Jest)}}{47}{figure.caption.45}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Sortie du terminal après exécution des tests unitaires}}{48}{figure.caption.46}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Validation du point d'entrée Login via Postman}}{49}{figure.caption.47}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Étape 1 : Saisie des accès sur l'interface de connexion}}{49}{figure.caption.48}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Étape 2 : Accès au tableau de bord après authentification réussie}}{50}{figure.caption.49}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Diagramme de cas d’utilisation – Gestion des classes, Appels vidéo et Communication synchrone}}{60}{figure.caption.55}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagramme de séquence – Création d’une classe avec planning}}{63}{figure.caption.62}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Diagramme de séquence – Appel vidéo avec Daily.co, détection de présence, contrôle audio/vidéo et chat}}{64}{figure.caption.63}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Diagramme de séquence – Consultation de l’assiduité}}{65}{figure.caption.64}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Diagramme de séquence – Accès et lecture d’un enregistrement Daily.co}}{65}{figure.caption.65}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Diagramme de classes – Gestion des classes, sessions vidéo avec modération, chat et replay}}{66}{figure.caption.66}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Interface de gestion des classes : Liste générale}}{67}{figure.caption.67}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Interface de création et d’édition des classes}}{67}{figure.caption.68}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Interface de planification : Informations générales}}{68}{figure.caption.69}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Interface de planification : Configuration des séances}}{68}{figure.caption.70}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Interface de planification : Récapitulatif et validation}}{69}{figure.caption.71}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Tableau de bord de supervision}}{69}{figure.caption.72}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Centre de notifications et alertes push/email}}{69}{figure.caption.73}%
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Salle de classe virtuelle : partage d’écran, panneau de contrôle des participants (micro/caméra), chat intégré et bouton d’enregistrement}}{70}{figure.caption.74}%
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Historique des participations par étudiant/session}}{70}{figure.caption.75}%
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Liste des enregistrements disponibles par cours}}{70}{figure.caption.76}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Diagramme de cas d’utilisation – Gestion des classes et visioconférence}}{53}{figure.caption.51}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagramme de séquence – Création et configuration d'une classe (Admin)}}{57}{figure.caption.56}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Diagramme de séquence – Accès à la visioconférence et suivi de présence automatique}}{58}{figure.caption.57}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Diagramme de classes – Gestion des classes, sessions vidéo et suivi d'assiduité}}{59}{figure.caption.58}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Schéma des collections MongoDB pour le sprint 2}}{60}{figure.caption.59}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Interface de gestion des classes : Liste générale}}{61}{figure.caption.60}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Interface de création et d'édition des classes}}{61}{figure.caption.61}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Interface de planification : Informations générales}}{62}{figure.caption.62}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Interface de planification : Configuration des séances}}{62}{figure.caption.63}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Interface de planification : Récapitulatif et validation}}{63}{figure.caption.64}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Tableau de bord de supervision}}{63}{figure.caption.65}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Historique des participations par étudiant/session}}{64}{figure.caption.66}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Interface de replay : Dossier des enregistrements disponibles par classe et matière}}{65}{figure.caption.67}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Extrait du code source du test unitaire (Jest)}}{66}{figure.caption.68}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Validation du point d'entrée POST /api/admin/schedules via Postman}}{67}{figure.caption.69}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Parcours fonctionnel de création et configuration d'une classe}}{67}{figure.caption.70}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Diagramme de cas d'utilisation – Contenus, évaluations, communication, analytics et IA}}{72}{figure.caption.72}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Diagramme de séquence – Création d'un cours}}{76}{figure.caption.82}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Diagramme de séquence – Diffusion d'une annonce de classe}}{77}{figure.caption.84}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Diagramme de classes – Modèle de données complet (Sprint 3)}}{78}{figure.caption.85}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Schéma exhaustif des collections MongoDB (ERD Sprint 3)}}{79}{figure.caption.86}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Interface de gestion des cours avec fonctions d'IA générative}}{79}{figure.caption.87}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Interface de restitution des résultats avec feedback IA}}{80}{figure.caption.88}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Interface de gamification et tableau de bord de progression}}{80}{figure.caption.89}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Interface de chat temps réel (canaux de classe et messages privés)}}{81}{figure.caption.90}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Extrait du code source du test unitaire de l'Arène (Jest)}}{82}{figure.caption.91}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Résultat de l'exécution du test unitaire dans la console}}{83}{figure.caption.92}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Validation de la création d'une annonce via Postman (Requête et Réponse)}}{83}{figure.caption.93}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Configuration du scenario de test de charge Artillery (YAML)}}{84}{figure.caption.94}%
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Résultat du test de charge (Summary report) montrant la stabilité du système}}{85}{figure.caption.95}%

@@ -1,0 +1,69 @@
+@startuml
+skinparam maxMessageSize 150
+skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam sequence {
+    ArrowColor #263238
+    LifeLineBorderColor #263238
+    ParticipantBorderColor #263238
+    ParticipantBackgroundColor White
+}
+skinparam databaseBackgroundColor #E3F2FD
+
+actor "Administrateur" as Admin
+participant "Interface\n(AdminClassesPage)" as UI
+participant "API Client\n(admin.ts)" as API
+participant "Routeur Admin\n(classes.js)" as Route
+participant "Modèle\n(Class Model)" as Model
+database "Base de données\n(MongoDB)" as DB
+
+Admin -> UI : Saisit les infos et valide
+activate UI
+
+UI -> API : createClass(payload)
+activate API
+
+API -> Route : HTTP POST /api/admin/classes
+activate Route
+
+group Middleware: authenticate & adminAuth
+    Route -> Route : Vérifie le Token JWT
+    alt Token manquant ou invalide
+        Route --> API : 401 Unauthorized
+        API --> UI : Error: Login requis
+        UI --> Admin : Redirection vers Login
+    else Rôle insuffisant (ex: Enseignant)
+        Route --> API : 403 Forbidden
+        API --> UI : Error: Accès refusé
+        UI --> Admin : Alerte "Droits insuffisants"
+    end
+end
+
+Route -> Model : new Class(data).save()
+activate Model
+
+alt Erreur de Validation / Doublon (Code unique)
+    Model -> DB : INSERT (Échec contrainte unique)
+    activate DB
+    DB --> Model : Error Code 11000
+    deactivate DB
+    Model --> Route : ValidationError
+    Route --> API : 400 Bad Request
+    API --> UI : Error Detail (ex: "Code existe déjà")
+    UI --> Admin : Affiche l'erreur sur le champ
+else Succès
+    Model -> DB : INSERT document
+    activate DB
+    DB --> Model : Document créé
+    deactivate DB
+    Model --> Route : Instance Class
+    deactivate Model
+    Route --> API : 201 Created
+    deactivate Route
+    API --> UI : Success Data
+    deactivate API
+    UI --> Admin : Notification "Classe créée avec succès"
+end
+
+deactivate UI
+@enduml

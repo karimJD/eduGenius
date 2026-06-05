@@ -1,0 +1,51 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb44"
+  },
+  "quizId": {
+    "$oid": "6a185ad6754c94b99c29eb3c"
+  },
+  "examId": null,
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "answers": [
+    {
+      "questionId": {
+        "$oid": "6a185ad6754c94b99c29eb3d"
+      },
+      "answer": "Un framework React",
+      "isCorrect": true,
+      "pointsEarned": 2,
+      "feedback": ""
+    },
+    {
+      "questionId": {
+        "$oid": "6a185ad6754c94b99c29eb3e"
+      },
+      "answer": "Vrai",
+      "isCorrect": true,
+      "pointsEarned": 1,
+      "feedback": ""
+    }
+  ],
+  "score": 3,
+  "totalPoints": 3,
+  "percentage": 100,
+  "attemptNumber": 1,
+  "startedAt": {
+    "$date": "2025-01-15T09:00:00Z"
+  },
+  "submittedAt": {
+    "$date": "2025-01-15T09:25:00Z"
+  },
+  "timeSpent": 25,
+  "status": "graded",
+  "mistakeExplanation": null,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.859Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.859Z"
+  }
+}

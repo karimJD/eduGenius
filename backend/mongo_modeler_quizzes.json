@@ -1,0 +1,67 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb3c"
+  },
+  "title": "Quiz Introduction à Next.js",
+  "description": "Testez vos connaissances sur Next.js",
+  "courseId": {
+    "$oid": "6a185ad6754c94b99c29eb25"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "teacherId": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "questions": [
+    {
+      "question": "Qu'est-ce que Next.js ?",
+      "type": "mcq",
+      "options": [
+        "Un framework React",
+        "Une base de données",
+        "Un serveur web",
+        "Un langage"
+      ],
+      "correctAnswer": "Un framework React",
+      "points": 2,
+      "explanation": "",
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb3d"
+      }
+    },
+    {
+      "question": "Next.js utilise-t-il le SSR ?",
+      "type": "true-false",
+      "options": [
+        "Vrai",
+        "Faux"
+      ],
+      "correctAnswer": "Vrai",
+      "points": 1,
+      "explanation": "",
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb3e"
+      }
+    }
+  ],
+  "settings": {
+    "duration": 30,
+    "attempts": 2,
+    "startDate": null,
+    "endDate": null,
+    "shuffleQuestions": true,
+    "showResults": true,
+    "showCorrectAnswers": true
+  },
+  "isAIGenerated": false,
+  "generatedFrom": null,
+  "isPublished": true,
+  "difficulty": "medium",
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.843Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.843Z"
+  }
+}

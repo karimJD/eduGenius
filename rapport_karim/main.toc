@@ -3,114 +3,139 @@
 \contentsline {chapter}{Dédicaces}{i}{section*.2}%
 \contentsline {chapter}{Remerciements}{ii}{section*.4}%
 \contentsline {chapter}{Table des matières}{iii}{section*.5}%
-\contentsline {chapter}{Liste des figures}{vi}{section*.6}%
-\contentsline {chapter}{Liste des tableaux}{viii}{section*.7}%
+\contentsline {chapter}{Liste des figures}{vii}{section*.6}%
+\contentsline {chapter}{Liste des tableaux}{ix}{section*.7}%
 \contentsline {chapter}{Introduction Générale}{1}{section*.9}%
 \contentsline {chapter}{\numberline {1}Contexte et Cadrage Stratégique}{3}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Immersion au sein de l’organisme d’accueil}{3}{section.1.1}%
 \contentsline {subsection}{\numberline {1.1.1}Vision et Stratégie de l'entreprise : L'Esprit BES2I}{3}{subsection.1.1.1}%
 \contentsline {subsection}{\numberline {1.1.2}Écosystème de compétences}{4}{subsection.1.1.2}%
-\contentsline {subsubsection}{Pôle Ingénierie \& Développement Cloud}{4}{subsubsection*.10}%
-\contentsline {subsubsection}{Division IA \& Intelligence Cognitive}{4}{subsubsection*.11}%
-\contentsline {subsection}{\numberline {1.1.3}Rayonnement et enjeux concurrentiels}{4}{subsection.1.1.3}%
+\contentsline {subsubsection}{Pôle Digital et Ingénierie Bureau d’Études}{4}{subsubsection*.10}%
+\contentsline {subsubsection}{Division IA, Data et Pilotage Intelligent}{4}{subsubsection*.11}%
+\contentsline {subsection}{\numberline {1.1.3}Valeurs et Engagement RSE}{4}{subsection.1.1.3}%
 \contentsline {section}{\numberline {1.2}Genèse et Enjeux du Projet}{5}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Contexte du Projet EduGenius}{5}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.1}Problématique du Projet EduGenius}{5}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}Diagnostic de la Problématique}{5}{subsection.1.2.2}%
-\contentsline {subsection}{\numberline {1.2.3}Vision Cible et Objectifs SMART}{6}{subsection.1.2.3}%
-\contentsline {section}{\numberline {1.3}État de l’Art et Analyse Critique}{7}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Étude de l’existant}{7}{subsection.1.3.1}%
-\contentsline {subsection}{\numberline {1.3.2}Benchmark des solutions du marché}{7}{subsection.1.3.2}%
-\contentsline {subsubsection}{Analyse des LMS Traditionnels (Moodle, Canvas, KEDUX)}{7}{subsubsection*.13}%
-\contentsline {subsubsection}{Analyse des outils "Engage-Tech" (Kahoot, Duolingo)}{8}{subsubsection*.14}%
-\contentsline {subsection}{\numberline {1.3.3}Identification du Gap Technologique}{8}{subsection.1.3.3}%
-\contentsline {subsection}{\numberline {1.3.4}Synthèse et Proposition de Valeur}{9}{subsection.1.3.4}%
-\contentsline {section}{\numberline {1.4}Ingénierie du Périmètre et Acteurs}{9}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}Cartographie Fonctionnelle (The 6 Pillars)}{9}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Gouvernance du Projet}{10}{subsection.1.4.2}%
-\contentsline {subsubsection}{Typologie des Parties Prenantes}{10}{subsubsection*.15}%
-\contentsline {subsubsection}{Matrice de Responsabilités (RACI)}{11}{subsubsection*.16}%
-\contentsline {section}{\numberline {1.5}Cadre Méthodologique et Écosystème Technique}{11}{section.1.5}%
-\contentsline {subsection}{\numberline {1.5.1}Choix de la démarche Agile (Scrum)}{11}{subsection.1.5.1}%
-\contentsline {subsection}{\numberline {1.5.2}Paradigme de Modélisation (UML 2.5 \& User Stories)}{12}{subsection.1.5.2}%
-\contentsline {subsection}{\numberline {1.5.3}Écosystème d'Outils et de Collaboration}{12}{subsection.1.5.3}%
+\contentsline {subsection}{\numberline {1.2.3}Vision Cible}{6}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}Analyse de l'existant}{7}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Étude de l'existant}{7}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Analyse détaillée des solutions}{7}{subsection.1.3.2}%
+\contentsline {subsubsection}{Analyse des LMS Traditionnels (Moodle, Canvas, KEDUX)}{7}{subsubsection*.12}%
+\contentsline {subsubsection}{Analyse des outils "Engage-Tech" (Kahoot, Duolingo)}{8}{subsubsection*.13}%
+\contentsline {subsubsection}{Analyse des outils collaboratifs (Microsoft Teams, Google Meet)}{8}{subsubsection*.14}%
+\contentsline {subsection}{\numberline {1.3.3}Tableau comparatif}{8}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Critique de l'existant}{9}{subsection.1.3.4}%
+\contentsline {subsection}{\numberline {1.3.5}Solution proposée : EduGenius}{9}{subsection.1.3.5}%
+\contentsline {section}{\numberline {1.4}Ingénierie du Périmètre et Acteurs}{10}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Cartographie Fonctionnelle (The 6 Pillars)}{10}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Gouvernance du Projet}{11}{subsection.1.4.2}%
+\contentsline {subsubsection}{Typologie des Parties Prenantes}{11}{subsubsection*.16}%
+\contentsline {subsubsection}{Matrice de Responsabilités (RACI)}{11}{subsubsection*.17}%
+\contentsline {section}{\numberline {1.5}Cadre Méthodologique et Écosystème Technique}{12}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Choix du framework du projet}{12}{subsection.1.5.1}%
+\contentsline {subsubsection}{Justification du choix de Scrum}{12}{subsubsection*.18}%
+\contentsline {subsubsection}{Présentation de Scrum}{12}{subsubsection*.19}%
+\contentsline {subsection}{\numberline {1.5.2}Paradigme de Modélisation (UML 2.5 \& User Stories)}{13}{subsection.1.5.2}%
 \contentsline {chapter}{\numberline {2}Préparation du projet : Ingénierie et Architecture}{14}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Analyse Dimensionnelle des Besoins}{14}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Écosystème des Acteurs et Matrice d'Accès}{14}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Ingénierie des Exigences Fonctionnelles (User Stories)}{15}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Attributs Qualitatifs et Contraintes de Design}{16}{subsection.2.1.3}%
-\contentsline {section}{\numberline {2.2}Pilotage du Projet via la Méthodologie Scrum}{16}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Organisation et Rôles Scrum}{16}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Gestion du Product Backlog}{17}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Planification et Orchestration des Sprints}{24}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Chronogramme de Réalisation (Diagramme de Gantt)}{25}{subsection.2.2.4}%
-\contentsline {section}{\numberline {2.3}Modélisation Sémantique et Comportementale}{25}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Diagramme de Cas d'Utilisation Global}{26}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Logique de Flux : Diagramme de Séquence (Focus IA)}{28}{subsection.2.3.2}%
-\contentsline {section}{\numberline {2.4}Écosystème de Développement et Stack Technologique}{29}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Environnement de Collaboration}{29}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Stack Technologique : Le choix de la Performance}{30}{subsection.2.4.2}%
-\contentsline {section}{\numberline {2.5}Architecture Logicielle et Topologie Système}{32}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Architecture Physique (Déploiement)}{32}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Architecture Applicative : Modèle Multi-tiers}{32}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Conception de la Couche de Données (Modélisation MongoDB)}{33}{subsection.2.5.3}%
-\contentsline {section}{Conclusion}{34}{figure.caption.24}%
-\contentsline {chapter}{\numberline {3}Réalisation du Sprint 1 : Authentification et Gestion des Utilisateurs}{35}{chapter.3}%
-\contentsline {section}{Introduction}{35}{section*.25}%
-\contentsline {section}{\numberline {3.1}Backlog du Sprint 1}{35}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Analyse}{36}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Diagramme de cas d’utilisation du Sprint 1}{36}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Description textuelle des cas d’utilisation}{37}{subsection.3.2.2}%
-\contentsline {subsubsection}{Le cas d’utilisation « S’authentifier »}{37}{subsubsection*.28}%
-\contentsline {subsubsection}{Le cas d’utilisation « Gérer son profil »}{38}{subsubsection*.29}%
-\contentsline {subsubsection}{Le cas d’utilisation « Consulter le tableau de bord »}{39}{subsubsection*.30}%
-\contentsline {subsubsection}{Le cas d’utilisation « Utiliser l’interface responsive »}{39}{subsubsection*.31}%
-\contentsline {subsubsection}{Le cas d’utilisation « Gérer les utilisateurs » (administrateur)}{40}{subsubsection*.32}%
-\contentsline {subsubsection}{Le cas d’utilisation « Réinitialiser son mot de passe »}{40}{subsubsection*.33}%
-\contentsline {section}{\numberline {3.3}Conception}{41}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Diagramme de séquence du cas « S’authentifier »}{41}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Diagramme de séquence du cas « Gérer son profil »}{42}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Diagramme de séquence du cas « Consulter le tableau de bord »}{44}{subsection.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Diagrammes de séquence du cas « Gérer les utilisateurs »}{46}{subsection.3.3.4}%
-\contentsline {subsubsection}{Consultation des utilisateurs}{46}{subsubsection*.37}%
-\contentsline {subsubsection}{Création d'un utilisateur}{46}{subsubsection*.39}%
-\contentsline {subsubsection}{Modification d'un utilisateur}{47}{subsubsection*.41}%
-\contentsline {subsubsection}{Suppression d'un utilisateur}{48}{subsubsection*.43}%
-\contentsline {subsection}{\numberline {3.3.5}Diagramme de séquence du cas « Réinitialiser le mot de passe »}{49}{subsection.3.3.5}%
-\contentsline {subsection}{\numberline {3.3.6}Diagramme de classes du Sprint 1}{50}{subsection.3.3.6}%
-\contentsline {subsection}{\numberline {3.3.7}Représentation graphique de la base de données}{51}{subsection.3.3.7}%
-\contentsline {section}{\numberline {3.4}Réalisation}{52}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Interface de connexion}{52}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Interface de réinitialisation de mot de passe}{53}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Interface profil utilisateur}{53}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}Interface du tableau de bord}{54}{subsection.3.4.4}%
-\contentsline {subsection}{\numberline {3.4.5}Interface de gestion des utilisateurs}{55}{subsection.3.4.5}%
-\contentsline {section}{\numberline {3.5}Conclusion}{56}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Réalisation du Sprint 2 : Gestion des classes, Appels vidéo et Communication synchrone}{57}{chapter.4}%
-\contentsline {section}{Introduction}{57}{section*.54}%
-\contentsline {section}{\numberline {4.1}Backlog du Sprint 2}{57}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Analyse}{59}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Diagramme de cas d’utilisation du Sprint 2}{59}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Description textuelle des cas d’utilisation}{60}{subsection.4.2.2}%
-\contentsline {subsubsection}{Le cas d’utilisation « Gérer les classes et le planning » (Administrateur)}{60}{subsubsection*.56}%
-\contentsline {subsubsection}{Le cas d’utilisation « Superviser la plateforme » (Administrateur)}{61}{subsubsection*.57}%
-\contentsline {subsubsection}{Le cas d’utilisation « Recevoir des notifications »}{61}{subsubsection*.58}%
-\contentsline {subsubsection}{Le cas d’utilisation « Gérer un appel vidéo » (Enseignant)}{61}{subsubsection*.59}%
-\contentsline {subsubsection}{Le cas d’utilisation « Participer à un appel vidéo » (Étudiant)}{62}{subsubsection*.60}%
-\contentsline {subsubsection}{Le cas d’utilisation « Suivre l’assiduité et consulter l’historique » (Enseignant/Admin)}{62}{subsubsection*.61}%
-\contentsline {section}{\numberline {4.3}Conception}{63}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Diagramme de séquence du cas « Créer une classe et son planning »}{63}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Diagramme de séquence du cas « Démarrer une session vidéo avec modération »}{64}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Diagramme de séquence du cas « Consulter l’historique de présence »}{65}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Diagramme de séquence du cas « Regarder un enregistrement (replay) »}{65}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}Diagramme de classes du Sprint 2}{66}{subsection.4.3.5}%
-\contentsline {section}{\numberline {4.4}Réalisation}{67}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Interface de gestion des classes (Admin)}{67}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Interface de planification des cours}{68}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Interface de supervision générale (Admin)}{69}{subsection.4.4.3}%
-\contentsline {subsection}{\numberline {4.4.4}Interface des notifications}{69}{subsection.4.4.4}%
-\contentsline {subsection}{\numberline {4.4.5}Interface de la salle de classe virtuelle (Daily.co) avec modération et chat}{70}{subsection.4.4.5}%
-\contentsline {subsection}{\numberline {4.4.6}Interface de suivi de présence et historique}{70}{subsection.4.4.6}%
-\contentsline {subsection}{\numberline {4.4.7}Interface de replay (enregistrement)}{70}{subsection.4.4.7}%
-\contentsline {section}{\numberline {4.5}Conclusion}{70}{section.4.5}%
-\contentsline {chapter}{Bibliographie}{71}{section*.77}%
-\contentsline {chapter}{Webographie}{72}{chapter*.79}%
+\contentsline {section}{\numberline {2.1}Identification des Acteurs}{14}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Identification des besoins fonctionnels}{15}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Identification des besoins non fonctionnels}{15}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Pilotage du Projet via la Méthodologie Scrum}{16}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Organisation et Rôles Scrum}{16}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Gestion du Product Backlog}{17}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Planification et Orchestration des Sprints}{24}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Chronogramme de Réalisation (Diagramme de Gantt)}{24}{subsection.2.4.4}%
+\contentsline {section}{\numberline {2.5}Modélisation Sémantique et Comportementale}{25}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Diagramme de Cas d'Utilisation Global}{25}{subsection.2.5.1}%
+\contentsline {section}{\numberline {2.6}Écosystème de Développement et Stack Technologique}{26}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Environnement de Collaboration}{26}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Stack Technologique : Le choix de la Performance}{27}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Architecture Logicielle et Topologie Système}{30}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Architecture applicative (logique) : Modèle multi-tiers}{30}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Architecture physique (déploiement)}{30}{subsection.2.7.2}%
+\contentsline {section}{Conclusion}{31}{figure.caption.23}%
+\contentsline {chapter}{\numberline {3}Réalisation du Sprint 1 : Authentification et Gestion des Utilisateurs}{32}{chapter.3}%
+\contentsline {section}{Introduction}{32}{section*.24}%
+\contentsline {section}{\numberline {3.1}Backlog du Sprint 1}{32}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Analyse}{33}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Diagramme de cas d’utilisation du Sprint 1}{33}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Description textuelle des cas d’utilisation}{34}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Cas d'utilisation : S'authentifier}{34}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Cas d'utilisation : Se déconnecter}{35}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Cas d'utilisation : Réinitialiser le mot de passe}{35}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Cas d'utilisation : Consulter le dashboard}{36}{subsection.3.2.6}%
+\contentsline {subsection}{\numberline {3.2.7}Cas d'utilisation : Gérer son profil}{36}{subsection.3.2.7}%
+\contentsline {subsection}{\numberline {3.2.8}Cas d'utilisation : Gérer les utilisateurs}{37}{subsection.3.2.8}%
+\contentsline {section}{\numberline {3.3}Conception}{37}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Diagramme de séquence du cas : Authentification}{37}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Diagramme de séquence du cas : Créer un utilisateur}{38}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Diagramme de classes du Sprint 1}{39}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Représentation graphique de la base de données}{40}{subsection.3.3.4}%
+\contentsline {section}{\numberline {3.4}Réalisation}{42}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Interface de connexion}{42}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Interface de réinitialisation de mot de passe}{42}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Interface profil utilisateur}{43}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Interface du tableau de bord}{44}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}Interface de gestion des utilisateurs}{44}{subsection.3.4.5}%
+\contentsline {paragraph}{Gestion des étudiants}{44}{paragraph*.41}%
+\contentsline {paragraph}{Gestion des enseignants}{45}{paragraph*.43}%
+\contentsline {section}{\numberline {3.5}Tests}{46}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Tests unitaires}{46}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Tests d’intégration}{48}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Tests fonctionnels}{49}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Conclusion}{50}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Réalisation du Sprint 2 : Gestion des classes et visio-conférence}{51}{chapter.4}%
+\contentsline {section}{Introduction}{51}{section*.50}%
+\contentsline {section}{\numberline {4.1}Backlog du Sprint 2}{51}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Analyse}{53}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Diagramme de cas d’utilisation du Sprint 2}{53}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Description textuelle des cas d’utilisation}{54}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Cas d'utilisation : Créer une classe}{54}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Cas d'utilisation : Créer un emploi du temps}{54}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Cas d'utilisation : Gérer l'assiduité}{55}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Cas d'utilisation : Consulter les Replays}{55}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}Conception}{56}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Diagramme de séquence du cas : Créer une classe}{56}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Diagramme de séquence du cas : Rejoindre une séance et détection de présence}{57}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Diagramme de classes du Sprint 2}{58}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Représentation graphique de la base de données}{59}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}Réalisation}{60}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Interface de gestion des classes (Admin)}{60}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Interface de planification des cours}{61}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Interface de supervision générale (Admin)}{63}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Interface de suivi de présence et historique}{64}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Interface de replay (enregistrement)}{64}{subsection.4.4.5}%
+\contentsline {section}{\numberline {4.5}Tests}{65}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Tests unitaires}{65}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Tests d’intégration}{66}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Tests fonctionnels}{67}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}Conclusion}{68}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Réalisation du Sprint 3 : Gestion des contenus et IA}{69}{chapter.5}%
+\contentsline {section}{Introduction}{69}{section*.71}%
+\contentsline {section}{\numberline {5.1}Backlog du Sprint 3}{69}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Analyse}{72}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Diagramme de cas d’utilisation du Sprint 3}{72}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Description textuelle des cas d’utilisation}{72}{subsection.5.2.2}%
+\contentsline {subsubsection}{Cas d'utilisation : Créer un cours}{72}{subsubsection*.73}%
+\contentsline {subsubsection}{Cas d'utilisation : Évaluer un rendu}{73}{subsubsection*.75}%
+\contentsline {subsubsection}{Cas d'utilisation : Diffuser une annonce de classe}{74}{subsubsection*.77}%
+\contentsline {subsubsection}{Cas d'utilisation : Échanger des messages en temps réel}{75}{subsubsection*.79}%
+\contentsline {section}{\numberline {5.3}Conception}{75}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Diagrammes de séquence}{75}{subsection.5.3.1}%
+\contentsline {subsubsection}{Création d'un cours}{75}{subsubsection*.81}%
+\contentsline {subsubsection}{Diffusion d'une annonce}{76}{subsubsection*.83}%
+\contentsline {subsection}{\numberline {5.3.2}Diagramme de classes du Sprint 3}{77}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Représentation graphique de la base de données}{78}{subsection.5.3.3}%
+\contentsline {section}{\numberline {5.4}Réalisation}{79}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Interface pour la gestion des cours}{79}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Interface d'évaluation et feedback}{80}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Interface des challenges}{80}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Interface de messagerie instantanée}{81}{subsection.5.4.4}%
+\contentsline {section}{\numberline {5.5}Tests}{81}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Tests unitaires}{81}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Tests d’intégration}{83}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Tests de charge}{84}{subsection.5.5.3}%
+\contentsline {section}{\numberline {5.6}Conclusion}{85}{section.5.6}%
+\contentsline {chapter}{Conclusion Générale}{86}{section*.97}%
+\contentsline {chapter}{Bibliographie}{87}{section*.98}%
+\contentsline {chapter}{Webographie}{88}{chapter*.100}%

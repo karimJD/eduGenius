@@ -1,0 +1,53 @@
+@startuml
+skinparam shadowing false
+skinparam sequence {
+    ArrowColor #263238
+    LifeLineBorderColor #263238
+    ParticipantBorderColor #263238
+    ParticipantBackgroundColor White
+}
+
+actor "Utilisateur" as User
+participant "Interface Login (Next.js)" as UI
+participant "AuthController (Express)" as API
+participant "User Model (Mongoose)" as Model
+database "MongoDB" as DB
+participant "JWT Service" as JWT
+
+User -> UI : Saisit email et mot de passe
+UI -> API : POST /api/auth/login {email, password}
+activate API
+
+API -> Model : findOne({ email })
+activate Model
+Model -> DB : Query user by email
+DB --> Model : User Data (hashed password)
+Model --> API : user Object
+deactivate Model
+
+alt Utilisateur non trouvé
+    API --> UI : 401 Unauthorized { message: "Identifiants invalides" }
+    UI --> User : Affiche message d'erreur
+else Utilisateur trouvé
+    API -> Model : matchPassword(password)
+    activate Model
+    Model --> API : true / false
+    deactivate Model
+    
+    alt Mot de passe incorrect
+        API --> UI : 401 Unauthorized
+    else Mot de passe correct
+        API -> JWT : signToken(userId, role)
+        activate JWT
+        JWT --> API : token (JWT)
+        deactivate JWT
+        
+        API --> UI : 200 OK { token, userProfile }
+        deactivate API
+        
+        UI -> UI : Stockage du token (localStorage/Cookie)
+        UI --> User : Redirection vers le Dashboard
+    end
+end
+
+@enduml

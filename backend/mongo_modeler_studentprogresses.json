@@ -1,0 +1,61 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb58"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "courseId": {
+    "$oid": "6a185ad6754c94b99c29eb25"
+  },
+  "subjectId": {
+    "$oid": "6a185ad6754c94b99c29eb18"
+  },
+  "chaptersProgress": [
+    {
+      "chapterId": {
+        "$oid": "6a185ad6754c94b99c29eb26"
+      },
+      "status": "completed",
+      "startedAt": {
+        "$date": "2025-01-05T00:00:00Z"
+      },
+      "completedAt": {
+        "$date": "2025-01-08T00:00:00Z"
+      },
+      "timeSpent": 180,
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb59"
+      },
+      "materials": []
+    },
+    {
+      "chapterId": {
+        "$oid": "6a185ad6754c94b99c29eb27"
+      },
+      "status": "in-progress",
+      "startedAt": {
+        "$date": "2025-01-09T00:00:00Z"
+      },
+      "timeSpent": 60,
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb5a"
+      },
+      "materials": []
+    }
+  ],
+  "overallProgress": 50,
+  "totalTimeSpent": 240,
+  "lastAccessedAt": {
+    "$date": "2026-05-28T15:10:14.931Z"
+  },
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.935Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.935Z"
+  }
+}

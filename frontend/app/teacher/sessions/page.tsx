@@ -37,10 +37,10 @@ import { Button } from '@/components/ui/button';
 export default function TeacherSessionsPage() {
   const router = useRouter();
   const [sessions, setSessions] = useState<Session[]>([]);
-  const [classes, setClasses] = useState<Class[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ title: '', description: '', classId: '', scheduledStart: '' });
+  const [form, setForm] = useState({ title: '', description: '', classId: '', subjectId: '', scheduledStart: '' });
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
@@ -48,10 +48,10 @@ export default function TeacherSessionsPage() {
     try {
       const [sRes, cRes] = await Promise.all([
         api.get('/sessions'),
-        api.get('/teacher/classes'),
+        api.get('/teacher/courses'),
       ]);
       setSessions(sRes.data);
-      setClasses(cRes.data);
+      setCourses(cRes.data);
     } catch (e) { console.error(e); }
     setLoading(false);
   };
@@ -64,11 +64,29 @@ export default function TeacherSessionsPage() {
     try {
       await api.post('/sessions', form);
       setOpen(false);
-      setForm({ title: '', description: '', classId: '', scheduledStart: '' });
+      setForm({ title: '', description: '', classId: '', subjectId: '', scheduledStart: '' });
       load();
     } catch (e) { console.error(e); }
     setSaving(false);
   };
+
+  const uniqueClasses = Array.from(
+    new Map(
+      courses
+        .filter(c => c.classId && c.classId._id)
+        .map(c => [c.classId._id, c.classId])
+    ).values()
+  );
+
+  const availableSubjects = form.classId 
+    ? Array.from(
+        new Map(
+          courses
+            .filter(c => c.classId && c.classId._id === form.classId && c.subjectId && c.subjectId._id)
+            .map(c => [c.subjectId._id, c.subjectId])
+        ).values()
+      )
+    : [];
 
   return (
     <div className="space-y-6">
@@ -106,10 +124,19 @@ export default function TeacherSessionsPage() {
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Classe</label>
-                  <select required value={form.classId} onChange={e => setForm(p => ({ ...p, classId: e.target.value }))}
+                  <select required value={form.classId} onChange={e => setForm(p => ({ ...p, classId: e.target.value, subjectId: '' }))}
                     className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
                     <option value="">Sélectionner une classe</option>
-                    {classes.map(c => <option key={c._id} value={c._id}>{c.name} ({c.code})</option>)}
+                    {uniqueClasses.map(c => <option key={c._id} value={c._id}>{c.name} ({c.code})</option>)}
+                  </select>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Matière</label>
+                  <select required value={form.subjectId} onChange={e => setForm(p => ({ ...p, subjectId: e.target.value }))}
+                    disabled={!form.classId}
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+                    <option value="">Sélectionner une matière</option>
+                    {availableSubjects.map(s => <option key={s._id} value={s._id}>{s.name}</option>)}
                   </select>
                 </div>
                 <div className="space-y-1.5">

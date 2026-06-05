@@ -1,56 +1,352 @@
-\chapter{Sprint 3 : Gestion des Microservices}
+\chapter{Réalisation du Sprint 3 : Gestion des contenus et IA}
 
-\section{Introduction}
-Le Sprint 3 est dédié à l'implémentation des services transverses qui apportent de l'intelligence et des capacités de stockage à la plateforme. Bien que l'architecture soit monolithique, ces services sont conçus de manière modulaire, simulant une architecture de microservices.
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
 
+Le troisième sprint d'EduGenius finalise la plateforme en intégrant les fonctionnalités pédagogiques avancées : gestion enrichie des contenus, évaluations mixtes, communication asynchrone et tableaux de bord analytiques. L'innovation majeure de cette phase réside dans l'apport de l'intelligence artificielle (résumés, quiz adaptatifs) et de la gamification, visant une expérience d'apprentissage personnalisée et engageante.
+
+Ce chapitre expose le cycle de réalisation de ce dernier incrément, de la planification au backlog jusqu'aux phases cruciales de tests de charge et de validation.
+
+% --- Section 1 : Backlog ---
 \section{Backlog du Sprint 3}
-\begin{itemize}
-    \item \textbf{US-07} : Intégration du service de stockage AWS S3.
-    \item \textbf{US-08} : Mise en place du service d'IA (Gemini/Ollama).
-    \item \textbf{US-09} : Développement du service de communication temps réel (Socket.io).
-\end{itemize}
+
+Le backlog du Sprint 3 compile les vingt-cinq User Stories suivantes, couvrant les épics de gestion pédagogique, d'IA et de gamification. Le tableau \ref{tab:sprint3_backlog} détaille chaque US avec ses critères d’acceptation.
+
+\begin{xltabular}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4cm}|X|c|}
+\hline
+\textbf{ID} & \textbf{Titre} & \textbf{Critères d’acceptation} & \textbf{Priorité} \\
+\hline
+\endfirsthead
+
+\multicolumn{4}{c}{{\bfseries \tablename\ \thetable{} -- suite de la page précédente}} \\
+\hline
+\textbf{ID} & \textbf{Titre} & \textbf{Critères d’acceptation} & \textbf{Priorité} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{4}{|r|}{\textit{Suite sur page suivante}} \\
+\endfoot
+
+\hline
+\caption{User Stories du Sprint 3 – Contenus, évaluations, communication, analytics et IA} \label{tab:sprint3_backlog}
+\endlastfoot
+
+US-07 & Dépôt et organisation des cours & L'enseignant peut uploader des fichiers (PDF, vidéo, etc.) et les organiser par chapitre. & Haute \\
+\hline
+US-08 & Génération automatique de résumé (IA) & L'enseignant peut générer un résumé IA d'un cours (chapitre ou complet). & Moyenne \\
+\hline
+US-09 & Génération de quiz par IA & L'enseignant peut générer un quiz automatiquement à partir d'un cours. & Haute \\
+\hline
+US-10 & Création manuelle de quiz/examens & L'enseignant peut créer des questions (QCM, ouvertes) et les organiser en quiz. & Haute \\
+\hline
+US-11 & Planification des évaluations & L'enseignant peut fixer date, heure, durée et tentatives. & Haute \\
+\hline
+US-12 & Correction automatique & Les questions fermées sont corrigées automatiquement par le système. & Haute \\
+\hline
+US-13 & Correction manuelle & L'enseignant peut noter manuellement les réponses ouvertes. & Moyenne \\
+\hline
+US-14 & Consultation des cours & L'étudiant peut voir la liste des chapitres et télécharger les fichiers. & Haute \\
+\hline
+US-15 & Résumé personnel IA & L'étudiant peut générer un résumé IA ajustable pour un chapitre. & Moyenne \\
+\hline
+US-16 & Auto-évaluation & L'étudiant peut générer un quiz d'entraînement depuis un cours (sans note). & Haute \\
+\hline
+US-17 & Participation aux évaluations & L'étudiant répond aux évaluations pendant la fenêtre prévue (timer). & Haute \\
+\hline
+US-18 & Résultats et feedback & L'étudiant voit son score et des indications IA sur ses erreurs. & Haute \\
+\hline
+US-19 & Chat privé & Échange de messages privés entre étudiant et enseignant. & Haute \\
+\hline
+US-20 & Chat de classe & Les étudiants d'une classe peuvent poster des messages collectifs. & Haute \\
+\hline
+US-21 & Annonces enseignant & L'enseignant envoie des annonces avec notification push. & Moyenne \\
+\hline
+US-31 & Dashboard enseignant & Visualisation des scores, progression et assiduité par étudiant. & Haute \\
+\hline
+US-32 & Dashboard étudiant & Résultats, taux de présence et recommandations IA de révision. & Haute \\
+\hline
+US-33 & Analytics admin & Graphiques agrégés par classe (taux de réussite, participation). & Moyenne \\
+\hline
+US-34 & Export des données & Export des résultats et présences au format CSV/PDF. & Moyenne \\
+\hline
+US-35 & Quiz adaptatif IA & L'IA génère un quiz de difficulté progressive basé sur les scores passés. & Haute \\
+\hline
+US-36 & Recommandations IA & L'IA suggère quels chapitres réviser en priorité. & Haute \\
+\hline
+US-37 & Hints IA & L'étudiant peut demander un indice contextuel pendant un quiz. & Basse \\
+\hline
+US-38 & Flashcards IA & L'IA génère des flashcards de mémorisation à partir d'un cours. & Basse \\
+\hline
+US-40 & Gamification & Gain de XP, badges et mise à jour du leaderboard. & Basse \\
+\hline
+US-42 & Tests de charge & Le système supporte 100+ utilisateurs simultanés. & Haute \\
+\hline
+\end{xltabular}
 
 \section{Analyse}
-\subsection{Diagramme de cas d'utilisation}
-L'Enseignant upload des fichiers PDF qui sont stockés sur le cloud. Le système traite ces fichiers pour générer des services à valeur ajoutée (Résumés).
 
-\subsection{Description textuelle des cas d'utilisation}
-L'utilisateur envoie un fichier. Le service S3 gère l'upload et renvoie une URL. Le service IA récupère le contenu pour analyse. Le service Socket notifie les utilisateurs des nouveaux contenus disponibles.
+\subsection{Diagramme de cas d’utilisation du Sprint 3}
+Le diagramme de cas d’utilisation (figure \ref{fig:usecase_sprint3}) illustre la richesse fonctionnelle du dernier sprint, intégrant la gestion des contenus, le moteur d'évaluation, les outils d'IA générative et les modules de communication.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/use_case_diagram_sprint_3.png}
+    \caption{Diagramme de cas d'utilisation – Contenus, évaluations, communication, analytics et IA}
+    \label{fig:usecase_sprint3}
+\end{figure}
+
+\subsection{Description textuelle des cas d’utilisation}
+Cette section détaille les scénarios nominaux pour les fonctionnalités critiques du sprint final, extraits des parcours utilisateurs réels de la plateforme.
+
+\subsubsection{Cas d'utilisation : Créer un cours}
+Ce cas permet à l'enseignant de concevoir un cours structuré, d'y organiser des chapitres et d'y attacher des ressources pédagogiques variées (PDF, vidéos, documents). Le cours devient ensuite consultable par les étudiants inscrits à la classe.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Enseignant \\ \hline
+\textbf{Pré-conditions} & L'enseignant est authentifié et une classe lui est assignée. \\ \hline
+\textbf{Post-conditions} & Le cours est créé avec ses chapitres et fichiers, accessible par les étudiants. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'enseignant crée un nouveau cours avec un titre, une description et une image de couverture. \newline
+2. Il ajoute des chapitres et, pour chaque chapitre, téléverse des fichiers (PDF, vidéo). \newline
+3. Le système héberge les fichiers sur AWS S3 et associe les métadonnées dans MongoDB. \newline
+4. Le cours est publié et visible par les étudiants de la classe cible. \\ \hline
+\textbf{Scénario alternatif} & 
+1.a. Format de fichier non supporté $\rightarrow$ message d'erreur avec liste des formats acceptés. \newline
+1.b. Fichier trop volumineux $\rightarrow$ refus et suggestion de compression. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Créer un cours}
+\end{table}
+
+\subsubsection{Cas d'utilisation : Évaluer un rendu}
+Ce cas permet à l'enseignant de corriger manuellement les réponses aux questions ouvertes soumises par les étudiants, d'attribuer une note et de fournir un feedback personnalisé.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Enseignant \\ \hline
+\textbf{Pré-conditions} & Un étudiant a soumis une réponse à une question ouverte dans le cadre d'une évaluation. \\ \hline
+\textbf{Post-conditions} & La note est enregistrée, le feedback est visible par l'étudiant et le dashboard est mis à jour. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'enseignant accède à la liste des rendus en attente de correction. \newline
+2. Il ouvre le rendu d'un étudiant dans le viewer intégré. \newline
+3. Il saisit la note sur 20 et rédige un commentaire de correction détaillé. \newline
+4. La note est répercutée dans le dashboard de l'étudiant et une notification est envoyée. \\ \hline
+\textbf{Scénario alternatif} & 
+1.a. Note hors barème $\rightarrow$ validation avec avertissement avant enregistrement. \newline
+1.b. Rendue manquant $\rightarrow$ l'étudiant est marqué comme non soumis. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Évaluer un rendu}
+\end{table}
+
+\subsubsection{Cas d'utilisation : Diffuser une annonce de classe}
+Ce cas permet à l'enseignant de communiquer de manière prioritaire avec l'ensemble des étudiants d'une classe via des annonces ciblées avec notification push.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Enseignant \\ \hline
+\textbf{Pré-conditions} & L'enseignant est rattaché à une ou plusieurs classes actives. \\ \hline
+\textbf{Post-conditions} & L'annonce est persistée, visible par tous les étudiants de la classe cible et une notification push est déclenchée. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'enseignant rédige une annonce avec un titre et un contenu textuel. \newline
+2. Il sélectionne la classe cible et, optionnellement, joint un fichier. \newline
+3. Il définit la priorité (Urgente ou Normale). \newline
+4. L'annonce est épinglée en haut du flux étudiant avec notification push. \\ \hline
+\textbf{Scénario alternatif} & 
+1.a. Pièce jointe trop volumineuse $\rightarrow$ refus avec message d'erreur. \newline
+1.b. Notification push échouée $\rightarrow$ l'annonce reste visible dans le flux. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Diffuser une annonce}
+\end{table}
+
+\subsubsection{Cas d'utilisation : Échanger des messages en temps réel}
+Ce cas permet aux enseignants, étudiants et administrateurs de communiquer de manière instantanée via des conversations privées ou des salons de classe, avec support des notifications et des accusés de lecture.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Enseignant, Étudiant, Administrateur \\ \hline
+\textbf{Pré-conditions} & Les utilisateurs sont authentifiés et disposent d'une connexion réseau active. \\ \hline
+\textbf{Post-conditions} & Le message est persisté en base de données et une notification est délivrée au destinataire. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'utilisateur sélectionne un canal de discussion (salon de classe) ou ouvre une conversation privée. \newline
+2. Il compose et envoie un message (texte, fichier) via WebSockets (Socket.io). \newline
+3. Le message est persisté dans MongoDB et diffusé en temps réel aux participants connectés. \newline
+4. Le destinataire reçoit une notification visuelle et l'indicateur de lecture est mis à jour. \\ \hline
+\textbf{Scénario alternatif} & 
+1.a. Destinataire hors ligne $\rightarrow$ notification push différée (email ou push mobile). \newline
+1.b. Fichier trop volumineux $\rightarrow$ refus avec message d'erreur. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Messagerie temps réel}
+\end{table}
 
 \section{Conception}
+
 \subsection{Diagrammes de séquence}
-Le diagramme de séquence montre l'orchestration entre le \texttt{CourseController}, le \texttt{S3Service} et le \texttt{AiService}.
+Cette section présente l'orchestration technique des processus critiques identifiés lors de l'analyse. Ces diagrammes illustrent les interactions entre les acteurs, les composants du frontend, le serveur backend et les services de stockage ou de messagerie.
+
+\subsubsection{Création d'un cours}
+Le diagramme de séquence de la figure \ref{fig:sequence_create_course} détaille le processus de création d'un cours. Il met en évidence le téléversement des ressources pédagogiques vers AWS S3 et la synchronisation des métadonnées au sein de MongoDB.
+
 \begin{figure}[H]
     \centering
-    \fbox{Placeholder: Diagramme de Séquence - Flux de Services}
-    \caption{Interactions entre les services backend}
+    \includegraphics[width=1\textwidth]{images/sequence_diagram_create_course.png}
+    \caption{Diagramme de séquence – Création d'un cours}
+    \label{fig:sequence_create_course}
 \end{figure}
 
-\subsection{Diagramme de classes}
-Les classes \texttt{S3Utils}, \texttt{AiService} et \texttt{SocketHandler} encapsulent la logique de communication avec les APIs tierces.
+\subsubsection{Diffusion d'une annonce}
+La figure \ref{fig:sequence_broadcast_announcement} détaille le processus de diffusion d'une annonce par un enseignant. Ce flux met en évidence la validation des droits d'accès à la classe, la gestion des pièces jointes multimédias via AWS S3 et la persistance de l'annonce dans MongoDB pour une diffusion asynchrone aux étudiants.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/sequence_diagram_announcements.png}
+    \caption{Diagramme de séquence – Diffusion d'une annonce de classe}
+    \label{fig:sequence_broadcast_announcement}
+\end{figure}
+
+\subsection{Diagramme de classes du Sprint 3}
+La figure \ref{fig:class_sprint3} présente l'architecture globale finale. Elle intègre les modèles \texttt{Submission}, \texttt{Quiz}, \texttt{Exam}, ainsi que le module de gamification (\texttt{ArenaChallenge}) et la spécialisation des questions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/class_diagram_sprint_3.png}
+    \caption{Diagramme de classes – Modèle de données complet (Sprint 3)}
+    \label{fig:class_sprint3}
+\end{figure}
 
 \subsection{Représentation graphique de la base de données}
-Mise à jour des schémas \texttt{Course} et \texttt{StudyMaterial} pour inclure les URLs S3 et les résultats des traitements IA.
+Le schéma MongoDB final (figure \ref{fig:mongodb_sprint3}) illustre une modélisation hybride optimisée. Les collections \texttt{messages} et \texttt{notifications} utilisent des index chronologiques, tandis que \texttt{courses} adopte l'embedding pour les chapitres.
 
-\section{Réalisation}
-\subsection{Interface d'Upload vers AWS S3}
-Une barre de progression indique l'état de l'upload vers le cloud Amazon.
 \begin{figure}[H]
     \centering
-    \fbox{Placeholder: Capture d'écran - File Upload}
-    \caption{Interface de dépôt de documents}
+    \includegraphics[width=\textwidth]{images/erd_sprint_3.png}
+    \caption{Schéma exhaustif des collections MongoDB (ERD Sprint 3)}
+    \label{fig:mongodb_sprint3}
 \end{figure}
 
-\subsection{Module de Communication Temps Réel}
-Implémentation de Socket.io pour la messagerie instantanée au sein des classes.
+\section{Réalisation}
+Cette section expose les interfaces phares du sprint final, illustrant la convergence entre pédagogie et IA.
+
+\subsection{Interface pour la gestion des cours}
+L'espace enseignant (figure \ref{fig:course_ui}) permet une structuration par chapitres et l'accès au panneau de contrôle IA pour générer résumés et flashcards.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/interface_gestion_cours.png}
+    \caption{Interface de gestion des cours avec fonctions d'IA générative}
+    \label{fig:course_ui}
+\end{figure}
+
+\subsection{Interface d'évaluation et feedback}
+L'étudiant dispose d'un environnement de quiz immersif (figure \ref{fig:quiz_ui}) avec un feedback intelligent expliquant les erreurs via l'IA.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/interface_evaluation.png}
+    \caption{Interface de restitution des résultats avec feedback IA} \label{fig:quiz_ui}
+\end{figure}
+
+\subsection{Interface des challenges}
+L'Arène (figure \ref{fig:arena_ui}) propose un classement dynamique, des quêtes quotidiennes et des badges de maîtrise basés sur l'assiduité et les performances.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/interface_arena.png}
+    \caption{Interface de gamification et tableau de bord de progression}
+    \label{fig:arena_ui}
+\end{figure}
+
+\subsection{Interface de messagerie instantanée}
+Le module de communication (figure \ref{fig:chat_ui}) permet des échanges fluides via des canaux de classe et des discussions privées, avec support des notifications en temps réel.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/interface_chat.png}
+    \caption{Interface de chat temps réel (canaux de classe et messages privés)}
+    \label{fig:chat_ui}
+\end{figure}
 
 \section{Tests}
+La phase de validation du Sprint 3 a couvert les algorithmes d'IA, les flux temps réel et la scalabilité.
+
 \subsection{Tests unitaires}
-Validation des fonctions d'extraction de texte PDF.
-\subsection{Tests d'intégration}
-Vérification de la connectivité avec les buckets AWS S3 et l'API Gemini.
-\subsection{Tests fonctionnels}
-Test de réception des notifications en temps réel sur plusieurs clients simultanés.
+Nous avons mis en place des tests automatisés avec \textbf{Jest} pour valider la logique métier critique, notamment le moteur de calcul d'XP et la validation des flux IA. Un test unitaire spécifique a été implémenté pour l'Arène afin de garantir l'équité du système de progression.
+
+Les tests vérifient trois scénarios clés :
+\begin{itemize}
+    \item \textbf{Moteur de gain d'XP} : Attribution correcte des points de base (10 XP/réponse), du bonus de complétion (+20 XP) et du bonus de perfection (+30 XP pour un sans-faute).
+    \item \textbf{Série de victoires (Streak)} : Application du multiplicateur (x1.5) lors de participations consécutives pour encourager l'engagement quotidien.
+    \item \textbf{Stabilité du Parsing IA} : Validation du format JSON des quiz générés par Ollama avant leur injection dans l'interface utilisateur.
+\end{itemize}
+
+La figure \ref{fig:unit_test_code_s3} présente un extrait du code source du test unitaire, montrant la structure des assertions Jest utilisées pour valider le calcul des récompenses et des bonus.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/unit_test_sprint_3_code.png}
+    \caption{Extrait du code source du test unitaire de l'Arène (Jest)}
+    \label{fig:unit_test_code_s3}
+\end{figure}
+
+L'exécution de ces tests (figure \ref{fig:unit_test_output_s3}) confirme que l'intégralité des scénarios de test passe avec succès dans l'environnement de développement, garantissant la robustesse du moteur de gamification.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/unit_test_sprint_3.png}
+    \caption{Résultat de l'exécution du test unitaire dans la console}
+    \label{fig:unit_test_output_s3}
+\end{figure}
+
+\subsection{Tests d’intégration}
+Les tests d'intégration valident la communication entre les services du backend, notamment l'authentification, la validation des droits d'accès et la persistance des données. Le test principal a porté sur la diffusion d'une annonce par un enseignant.
+
+À l'aide de \textbf{Postman}, nous avons simulé une requête \texttt{POST} sur l'endpoint \texttt{/api/teacher/announcements/:classId}. La figure \ref{fig:integration_test_s3} illustre à la fois la configuration de la requête JSON (en haut) et la validation de la réponse système (en bas).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/integration_test_sprint_3.png}
+    \caption{Validation de la création d'une annonce via Postman (Requête et Réponse)}
+    \label{fig:integration_test_s3}
+\end{figure}
+
+Le serveur valide l'identité de l'enseignant via son token JWT et vérifie son affiliation à la classe cible avant de persister l'annonce. Comme illustré par le code \texttt{201 Created}, l'annonce est correctement enregistrée dans MongoDB avec ses métadonnées de priorité et de ciblage, déclenchant ainsi la notification automatique pour les étudiants concernés.
+
+\subsection{Tests de charge}
+Pour garantir la scalabilité du module de communication temps réel, nous avons simulé une charge intensive à l'aide de l'outil \textbf{Artillery}. Cette phase est cruciale pour valider que le serveur peut gérer des centaines de messages simultanés sans latence perceptible.
+
+La figure \ref{fig:load_test_code_s3} présente la configuration du scénario de test. Le flux simule un comportement utilisateur complet : récupération de la liste des conversations, envoi d'un message privé et marquage des messages comme lus.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/load_test_sprint_3.png}
+    \caption{Configuration du scenario de test de charge Artillery (YAML)}
+    \label{fig:load_test_code_s3}
+\end{figure}
+
+L'exécution du test (figure \ref{fig:load_test_output_s3}) confirme la robustesse du backend. Sur un total de 4050 requêtes envoyées lors d'un pic de 60 requêtes par seconde, le système affiche un taux de réussite de 100\% (aucune erreur HTTP). Le temps de réponse médian de 10,1 ms témoigne d'une optimisation efficace des index MongoDB et de la gestion des processus Express.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/load_test_results.png}
+    \caption{Résultat du test de charge (Summary report) montrant la stabilité du système}
+    \label{fig:load_test_output_s3}
+\end{figure}
 
 \section{Conclusion}
-Les services de base étant opérationnels, le sprint suivant se focalisera sur l'exposition de ces services via des endpoints REST et la modélisation fine des données.
+Ce dernier sprint a concrétisé la vision d'EduGenius en intégrant l'intelligence artificielle et la gamification au cœur de l'expérience pédagogique. L'implémentation réussie des outils de génération automatique, couplée à un système de communication robuste et scalable, achève la construction d'un écosystème complet. Les tests de charge et les validations unitaires confirment que la plateforme est désormais prête pour un déploiement réel, offrant un environnement d'apprentissage moderne, interactif et performant.

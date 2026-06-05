@@ -1,0 +1,3274 @@
+[
+  {
+    "id": "1",
+    "name": "bookmarks",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "resourceType",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "resourceId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "note",
+        "type": "String"
+      },
+      {
+        "id": "f7",
+        "name": "tags",
+        "type": "[String]"
+      },
+      {
+        "id": "f8",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f9",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "arenaquests",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "challengeId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "subjectId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "courseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "subjectName",
+        "type": "String"
+      },
+      {
+        "id": "f8",
+        "name": "quizAttemptId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f9",
+        "name": "date",
+        "type": "Date"
+      },
+      {
+        "id": "f10",
+        "name": "questIndex",
+        "type": "Number"
+      },
+      {
+        "id": "f11",
+        "name": "status",
+        "type": "String"
+      },
+      {
+        "id": "f12",
+        "name": "xpEarned",
+        "type": "Number"
+      },
+      {
+        "id": "f13",
+        "name": "score",
+        "type": "Number"
+      },
+      {
+        "id": "f14",
+        "name": "totalQuestions",
+        "type": "Number"
+      },
+      {
+        "id": "f15",
+        "name": "timeTaken",
+        "type": "Number"
+      },
+      {
+        "id": "f16",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f17",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "exams",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "courseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "teacherId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "questions",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f8",
+            "name": "question",
+            "type": "String"
+          },
+          {
+            "id": "f9",
+            "name": "type",
+            "type": "String"
+          },
+          {
+            "id": "f10",
+            "name": "options",
+            "type": "Array"
+          },
+          {
+            "id": "f11",
+            "name": "correctAnswer",
+            "type": "String"
+          },
+          {
+            "id": "f12",
+            "name": "points",
+            "type": "Number"
+          },
+          {
+            "id": "f13",
+            "name": "explanation",
+            "type": "String"
+          },
+          {
+            "id": "f14",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f15",
+        "name": "settings",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f16",
+            "name": "duration",
+            "type": "Number"
+          },
+          {
+            "id": "f17",
+            "name": "attempts",
+            "type": "Number"
+          },
+          {
+            "id": "f18",
+            "name": "startDate",
+            "type": "Date"
+          },
+          {
+            "id": "f19",
+            "name": "endDate",
+            "type": "Date"
+          },
+          {
+            "id": "f20",
+            "name": "shuffleQuestions",
+            "type": "Boolean"
+          },
+          {
+            "id": "f21",
+            "name": "showResults",
+            "type": "Boolean"
+          },
+          {
+            "id": "f22",
+            "name": "showCorrectAnswers",
+            "type": "Boolean"
+          }
+        ]
+      },
+      {
+        "id": "f23",
+        "name": "passingScore",
+        "type": "Number"
+      },
+      {
+        "id": "f24",
+        "name": "proctoring",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f25",
+            "name": "enabled",
+            "type": "Boolean"
+          },
+          {
+            "id": "f26",
+            "name": "webcam",
+            "type": "Boolean"
+          },
+          {
+            "id": "f27",
+            "name": "fullscreen",
+            "type": "Boolean"
+          }
+        ]
+      },
+      {
+        "id": "f28",
+        "name": "isPublished",
+        "type": "Boolean"
+      },
+      {
+        "id": "f29",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f30",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "subjects",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "code",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "id": "f5",
+        "name": "teachingUnitId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "semester",
+        "type": "Number"
+      },
+      {
+        "id": "f7",
+        "name": "credits",
+        "type": "Number"
+      },
+      {
+        "id": "f8",
+        "name": "coefficient",
+        "type": "Number"
+      },
+      {
+        "id": "f9",
+        "name": "hoursDistribution",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f10",
+            "name": "lecture",
+            "type": "Number"
+          },
+          {
+            "id": "f11",
+            "name": "tutorial",
+            "type": "Number"
+          },
+          {
+            "id": "f12",
+            "name": "practical",
+            "type": "Number"
+          },
+          {
+            "id": "f13",
+            "name": "total",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f14",
+        "name": "evaluation",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f15",
+            "name": "examWeight",
+            "type": "Number"
+          },
+          {
+            "id": "f16",
+            "name": "continuousWeight",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f17",
+        "name": "isActive",
+        "type": "Boolean"
+      },
+      {
+        "id": "f18",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f19",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "name": "arenaprogresses",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "challengeId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "totalXP",
+        "type": "Number"
+      },
+      {
+        "id": "f6",
+        "name": "completedQuestsCount",
+        "type": "Number"
+      },
+      {
+        "id": "f7",
+        "name": "currentStreak",
+        "type": "Number"
+      },
+      {
+        "id": "f8",
+        "name": "longestStreak",
+        "type": "Number"
+      },
+      {
+        "id": "f9",
+        "name": "lastActiveDate",
+        "type": "Date"
+      },
+      {
+        "id": "f10",
+        "name": "milestonesReached",
+        "type": "Array"
+      },
+      {
+        "id": "f11",
+        "name": "dailyActivity",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f12",
+            "name": "date",
+            "type": "Date"
+          },
+          {
+            "id": "f13",
+            "name": "xpEarned",
+            "type": "Number"
+          },
+          {
+            "id": "f14",
+            "name": "questsCompleted",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f15",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f16",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "name": "submissions",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "quizId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "examId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "answers",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f6",
+            "name": "questionId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f7",
+            "name": "answer",
+            "type": "String"
+          },
+          {
+            "id": "f8",
+            "name": "isCorrect",
+            "type": "Boolean"
+          },
+          {
+            "id": "f9",
+            "name": "pointsEarned",
+            "type": "Number"
+          },
+          {
+            "id": "f10",
+            "name": "feedback",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "id": "f11",
+        "name": "score",
+        "type": "Number"
+      },
+      {
+        "id": "f12",
+        "name": "totalPoints",
+        "type": "Number"
+      },
+      {
+        "id": "f13",
+        "name": "percentage",
+        "type": "Number"
+      },
+      {
+        "id": "f14",
+        "name": "attemptNumber",
+        "type": "Number"
+      },
+      {
+        "id": "f15",
+        "name": "startedAt",
+        "type": "Date"
+      },
+      {
+        "id": "f16",
+        "name": "submittedAt",
+        "type": "Date"
+      },
+      {
+        "id": "f17",
+        "name": "timeSpent",
+        "type": "Number"
+      },
+      {
+        "id": "f18",
+        "name": "status",
+        "type": "String"
+      },
+      {
+        "id": "f19",
+        "name": "mistakeExplanation",
+        "type": "String"
+      },
+      {
+        "id": "f20",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f21",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "name": "aisummaries",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "courseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "chapterId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "content",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "summaryType",
+        "type": "String"
+      },
+      {
+        "id": "f7",
+        "name": "generatedAt",
+        "type": "Date"
+      },
+      {
+        "id": "f8",
+        "name": "customizations",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f9",
+            "name": "style",
+            "type": "String"
+          },
+          {
+            "id": "f10",
+            "name": "language",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "id": "f11",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f12",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "name": "systemsettings",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "institutionName",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "academicSettings",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f4",
+            "name": "currentAcademicYearId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f5",
+            "name": "currentSemester",
+            "type": "Number"
+          },
+          {
+            "id": "f6",
+            "name": "gradingScale",
+            "type": "Number"
+          },
+          {
+            "id": "f7",
+            "name": "passingGrade",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f8",
+        "name": "authSettings",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f9",
+            "name": "passwordMinLength",
+            "type": "Number"
+          },
+          {
+            "id": "f10",
+            "name": "sessionTimeout",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f11",
+        "name": "aiSettings",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f12",
+            "name": "quizGenerationEnabled",
+            "type": "Boolean"
+          },
+          {
+            "id": "f13",
+            "name": "summaryGenerationEnabled",
+            "type": "Boolean"
+          }
+        ]
+      },
+      {
+        "id": "f14",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f15",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "name": "teachingunits",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "code",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "id": "f5",
+        "name": "departmentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "programIds",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "unitType",
+        "type": "String"
+      },
+      {
+        "id": "f8",
+        "name": "totalCredits",
+        "type": "Number"
+      },
+      {
+        "id": "f9",
+        "name": "totalCoefficient",
+        "type": "Number"
+      },
+      {
+        "id": "f10",
+        "name": "isActive",
+        "type": "Boolean"
+      },
+      {
+        "id": "f11",
+        "name": "subjects",
+        "type": "Array"
+      },
+      {
+        "id": "f12",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f13",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "name": "courses",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "content",
+        "type": "String"
+      },
+      {
+        "id": "f5",
+        "name": "summary",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "teacherId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f8",
+        "name": "subjectId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f9",
+        "name": "chapters",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f10",
+            "name": "title",
+            "type": "String"
+          },
+          {
+            "id": "f11",
+            "name": "order",
+            "type": "Number"
+          },
+          {
+            "id": "f12",
+            "name": "isPublished",
+            "type": "Boolean"
+          },
+          {
+            "id": "f13",
+            "name": "materials",
+            "type": "Array"
+          },
+          {
+            "id": "f14",
+            "name": "exercises",
+            "type": "Array"
+          },
+          {
+            "id": "f15",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f16",
+        "name": "isPublished",
+        "type": "Boolean"
+      },
+      {
+        "id": "f17",
+        "name": "quiz",
+        "type": "Array"
+      },
+      {
+        "id": "f18",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f19",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "name": "announcements",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "content",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "teacherId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "targetType",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "targetClasses",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f7",
+            "name": "buffer",
+            "type": "Object",
+            "fields": [
+              {
+                "id": "f8",
+                "name": "0",
+                "type": "Number"
+              },
+              {
+                "id": "f9",
+                "name": "1",
+                "type": "Number"
+              },
+              {
+                "id": "f10",
+                "name": "2",
+                "type": "Number"
+              },
+              {
+                "id": "f11",
+                "name": "3",
+                "type": "Number"
+              },
+              {
+                "id": "f12",
+                "name": "4",
+                "type": "Number"
+              },
+              {
+                "id": "f13",
+                "name": "5",
+                "type": "Number"
+              },
+              {
+                "id": "f14",
+                "name": "6",
+                "type": "Number"
+              },
+              {
+                "id": "f15",
+                "name": "7",
+                "type": "Number"
+              },
+              {
+                "id": "f16",
+                "name": "8",
+                "type": "Number"
+              },
+              {
+                "id": "f17",
+                "name": "9",
+                "type": "Number"
+              },
+              {
+                "id": "f18",
+                "name": "10",
+                "type": "Number"
+              },
+              {
+                "id": "f19",
+                "name": "11",
+                "type": "Number"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "f20",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f21",
+        "name": "priority",
+        "type": "String"
+      },
+      {
+        "id": "f22",
+        "name": "type",
+        "type": "String"
+      },
+      {
+        "id": "f23",
+        "name": "isPinned",
+        "type": "Boolean"
+      },
+      {
+        "id": "f24",
+        "name": "isPublished",
+        "type": "Boolean"
+      },
+      {
+        "id": "f25",
+        "name": "imageUrl",
+        "type": "String"
+      },
+      {
+        "id": "f26",
+        "name": "publishAt",
+        "type": "String"
+      },
+      {
+        "id": "f27",
+        "name": "expiresAt",
+        "type": "String"
+      },
+      {
+        "id": "f28",
+        "name": "readBy",
+        "type": "Array"
+      },
+      {
+        "id": "f29",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f30",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "name": "grades",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "studentName",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "subjectId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "subjectName",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "academicYearId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f8",
+        "name": "examSession",
+        "type": "String"
+      },
+      {
+        "id": "f9",
+        "name": "examDate",
+        "type": "Date"
+      },
+      {
+        "id": "f10",
+        "name": "continuousAssessment",
+        "type": "Number"
+      },
+      {
+        "id": "f11",
+        "name": "examGrade",
+        "type": "Number"
+      },
+      {
+        "id": "f12",
+        "name": "totalGrade",
+        "type": "Number"
+      },
+      {
+        "id": "f13",
+        "name": "isAbsent",
+        "type": "Boolean"
+      },
+      {
+        "id": "f14",
+        "name": "isPassed",
+        "type": "Boolean"
+      },
+      {
+        "id": "f15",
+        "name": "mention",
+        "type": "String"
+      },
+      {
+        "id": "f16",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f17",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "name": "departments",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "code",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "id": "f5",
+        "name": "teachers",
+        "type": "Array"
+      },
+      {
+        "id": "f6",
+        "name": "statistics",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f7",
+            "name": "totalTeachers",
+            "type": "Number"
+          },
+          {
+            "id": "f8",
+            "name": "totalStudents",
+            "type": "Number"
+          },
+          {
+            "id": "f9",
+            "name": "totalPrograms",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f10",
+        "name": "isActive",
+        "type": "Boolean"
+      },
+      {
+        "id": "f11",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f12",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "name": "selfquizzes",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "courseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "questions",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f5",
+            "name": "question",
+            "type": "String"
+          },
+          {
+            "id": "f6",
+            "name": "options",
+            "type": "[String]"
+          },
+          {
+            "id": "f7",
+            "name": "correctAnswerIndex",
+            "type": "Number"
+          },
+          {
+            "id": "f8",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f9",
+        "name": "score",
+        "type": "Number"
+      },
+      {
+        "id": "f10",
+        "name": "completed",
+        "type": "Boolean"
+      },
+      {
+        "id": "f11",
+        "name": "quizType",
+        "type": "String"
+      },
+      {
+        "id": "f12",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f13",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "name": "quizzes",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "courseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "teacherId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "questions",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f8",
+            "name": "question",
+            "type": "String"
+          },
+          {
+            "id": "f9",
+            "name": "type",
+            "type": "String"
+          },
+          {
+            "id": "f10",
+            "name": "options",
+            "type": "[String]"
+          },
+          {
+            "id": "f11",
+            "name": "correctAnswer",
+            "type": "String"
+          },
+          {
+            "id": "f12",
+            "name": "points",
+            "type": "Number"
+          },
+          {
+            "id": "f13",
+            "name": "explanation",
+            "type": "String"
+          },
+          {
+            "id": "f14",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f15",
+        "name": "settings",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f16",
+            "name": "duration",
+            "type": "Number"
+          },
+          {
+            "id": "f17",
+            "name": "attempts",
+            "type": "Number"
+          },
+          {
+            "id": "f18",
+            "name": "startDate",
+            "type": "String"
+          },
+          {
+            "id": "f19",
+            "name": "endDate",
+            "type": "String"
+          },
+          {
+            "id": "f20",
+            "name": "shuffleQuestions",
+            "type": "Boolean"
+          },
+          {
+            "id": "f21",
+            "name": "showResults",
+            "type": "Boolean"
+          },
+          {
+            "id": "f22",
+            "name": "showCorrectAnswers",
+            "type": "Boolean"
+          }
+        ]
+      },
+      {
+        "id": "f23",
+        "name": "isAIGenerated",
+        "type": "Boolean"
+      },
+      {
+        "id": "f24",
+        "name": "generatedFrom",
+        "type": "String"
+      },
+      {
+        "id": "f25",
+        "name": "isPublished",
+        "type": "Boolean"
+      },
+      {
+        "id": "f26",
+        "name": "difficulty",
+        "type": "String"
+      },
+      {
+        "id": "f27",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f28",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "name": "attendances",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "videoSessionId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "scheduleId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "sessionDate",
+        "type": "Date"
+      },
+      {
+        "id": "f5",
+        "name": "subjectId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "subjectName",
+        "type": "String"
+      },
+      {
+        "id": "f7",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f8",
+        "name": "className",
+        "type": "String"
+      },
+      {
+        "id": "f9",
+        "name": "teacherId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f10",
+        "name": "teacherName",
+        "type": "String"
+      },
+      {
+        "id": "f11",
+        "name": "scheduledStart",
+        "type": "Date"
+      },
+      {
+        "id": "f12",
+        "name": "scheduledEnd",
+        "type": "Date"
+      },
+      {
+        "id": "f13",
+        "name": "actualStart",
+        "type": "Date"
+      },
+      {
+        "id": "f14",
+        "name": "actualEnd",
+        "type": "Date"
+      },
+      {
+        "id": "f15",
+        "name": "totalDuration",
+        "type": "Number"
+      },
+      {
+        "id": "f16",
+        "name": "records",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f17",
+            "name": "studentId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f18",
+            "name": "studentName",
+            "type": "String"
+          },
+          {
+            "id": "f19",
+            "name": "status",
+            "type": "String"
+          },
+          {
+            "id": "f20",
+            "name": "joinTime",
+            "type": "Date"
+          },
+          {
+            "id": "f21",
+            "name": "leaveTime",
+            "type": "Date"
+          },
+          {
+            "id": "f22",
+            "name": "duration",
+            "type": "Number"
+          },
+          {
+            "id": "f23",
+            "name": "attendancePercentage",
+            "type": "Number"
+          },
+          {
+            "id": "f24",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f25",
+        "name": "statistics",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f26",
+            "name": "totalStudents",
+            "type": "Number"
+          },
+          {
+            "id": "f27",
+            "name": "present",
+            "type": "Number"
+          },
+          {
+            "id": "f28",
+            "name": "late",
+            "type": "Number"
+          },
+          {
+            "id": "f29",
+            "name": "absent",
+            "type": "Number"
+          },
+          {
+            "id": "f30",
+            "name": "excused",
+            "type": "Number"
+          },
+          {
+            "id": "f31",
+            "name": "attendanceRate",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f32",
+        "name": "generatedAt",
+        "type": "Date"
+      },
+      {
+        "id": "f33",
+        "name": "generatedBy",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f34",
+            "name": "buffer",
+            "type": "Object",
+            "fields": [
+              {
+                "id": "f35",
+                "name": "0",
+                "type": "Number"
+              },
+              {
+                "id": "f36",
+                "name": "1",
+                "type": "Number"
+              },
+              {
+                "id": "f37",
+                "name": "2",
+                "type": "Number"
+              },
+              {
+                "id": "f38",
+                "name": "3",
+                "type": "Number"
+              },
+              {
+                "id": "f39",
+                "name": "4",
+                "type": "Number"
+              },
+              {
+                "id": "f40",
+                "name": "5",
+                "type": "Number"
+              },
+              {
+                "id": "f41",
+                "name": "6",
+                "type": "Number"
+              },
+              {
+                "id": "f42",
+                "name": "7",
+                "type": "Number"
+              },
+              {
+                "id": "f43",
+                "name": "8",
+                "type": "Number"
+              },
+              {
+                "id": "f44",
+                "name": "9",
+                "type": "Number"
+              },
+              {
+                "id": "f45",
+                "name": "10",
+                "type": "Number"
+              },
+              {
+                "id": "f46",
+                "name": "11",
+                "type": "Number"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "f47",
+        "name": "adjustments",
+        "type": "Array"
+      },
+      {
+        "id": "f48",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f49",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "name": "arenachallenges",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "weekStart",
+        "type": "Date"
+      },
+      {
+        "id": "f5",
+        "name": "weekEnd",
+        "type": "Date"
+      },
+      {
+        "id": "f6",
+        "name": "status",
+        "type": "String"
+      },
+      {
+        "id": "f7",
+        "name": "questsConfig",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f8",
+            "name": "questsPerDay",
+            "type": "Number"
+          },
+          {
+            "id": "f9",
+            "name": "questionsPerQuest",
+            "type": "Number"
+          },
+          {
+            "id": "f10",
+            "name": "xpPerCorrectAnswer",
+            "type": "Number"
+          },
+          {
+            "id": "f11",
+            "name": "xpBonusCompletion",
+            "type": "Number"
+          },
+          {
+            "id": "f12",
+            "name": "xpBonus100Percent",
+            "type": "Number"
+          },
+          {
+            "id": "f13",
+            "name": "streakBonusMultiplier",
+            "type": "Number"
+          },
+          {
+            "id": "f14",
+            "name": "secondsPerQuestion",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f15",
+        "name": "milestones",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f16",
+            "name": "xp",
+            "type": "Number"
+          },
+          {
+            "id": "f17",
+            "name": "label",
+            "type": "String"
+          },
+          {
+            "id": "f18",
+            "name": "icon",
+            "type": "String"
+          },
+          {
+            "id": "f19",
+            "name": "reward",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "id": "f20",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f21",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "name": "messages",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "senderId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "receiverId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "content",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "isRead",
+        "type": "Boolean"
+      },
+      {
+        "id": "f7",
+        "name": "readAt",
+        "type": "String"
+      },
+      {
+        "id": "f8",
+        "name": "messageType",
+        "type": "String"
+      },
+      {
+        "id": "f9",
+        "name": "isDeleted",
+        "type": "Boolean"
+      },
+      {
+        "id": "f10",
+        "name": "attachments",
+        "type": "Array"
+      },
+      {
+        "id": "f11",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f12",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "name": "studentprogresses",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "courseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "subjectId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "chaptersProgress",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f7",
+            "name": "chapterId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f8",
+            "name": "status",
+            "type": "String"
+          },
+          {
+            "id": "f9",
+            "name": "startedAt",
+            "type": "Date"
+          },
+          {
+            "id": "f10",
+            "name": "completedAt",
+            "type": "Date"
+          },
+          {
+            "id": "f11",
+            "name": "timeSpent",
+            "type": "Number"
+          },
+          {
+            "id": "f12",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          },
+          {
+            "id": "f13",
+            "name": "materials",
+            "type": "Array"
+          }
+        ]
+      },
+      {
+        "id": "f14",
+        "name": "overallProgress",
+        "type": "Number"
+      },
+      {
+        "id": "f15",
+        "name": "totalTimeSpent",
+        "type": "Number"
+      },
+      {
+        "id": "f16",
+        "name": "lastAccessedAt",
+        "type": "Date"
+      },
+      {
+        "id": "f17",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f18",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "name": "studentquizattempts",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "courseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "quizTitle",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "isPracticeQuiz",
+        "type": "Boolean"
+      },
+      {
+        "id": "f7",
+        "name": "questions",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f8",
+            "name": "question",
+            "type": "String"
+          },
+          {
+            "id": "f9",
+            "name": "type",
+            "type": "String"
+          },
+          {
+            "id": "f10",
+            "name": "options",
+            "type": "[String]"
+          },
+          {
+            "id": "f11",
+            "name": "correctAnswer",
+            "type": "String"
+          },
+          {
+            "id": "f12",
+            "name": "points",
+            "type": "Number"
+          },
+          {
+            "id": "f13",
+            "name": "pointsEarned",
+            "type": "Number"
+          },
+          {
+            "id": "f14",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f15",
+        "name": "score",
+        "type": "Number"
+      },
+      {
+        "id": "f16",
+        "name": "totalPoints",
+        "type": "Number"
+      },
+      {
+        "id": "f17",
+        "name": "percentage",
+        "type": "Number"
+      },
+      {
+        "id": "f18",
+        "name": "timeSpent",
+        "type": "Number"
+      },
+      {
+        "id": "f19",
+        "name": "aiGenerationParams",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f20",
+            "name": "numberOfQuestions",
+            "type": "Number"
+          },
+          {
+            "id": "f21",
+            "name": "difficulty",
+            "type": "String"
+          },
+          {
+            "id": "f22",
+            "name": "topics",
+            "type": "[String]"
+          }
+        ]
+      },
+      {
+        "id": "f23",
+        "name": "reviewed",
+        "type": "Boolean"
+      },
+      {
+        "id": "f24",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f25",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "21",
+    "name": "videosessions",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "subjectId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "teacherId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "scheduleId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f8",
+        "name": "scheduledStart",
+        "type": "Date"
+      },
+      {
+        "id": "f9",
+        "name": "scheduledEnd",
+        "type": "Date"
+      },
+      {
+        "id": "f10",
+        "name": "actualStart",
+        "type": "Date"
+      },
+      {
+        "id": "f11",
+        "name": "actualEnd",
+        "type": "Date"
+      },
+      {
+        "id": "f12",
+        "name": "meetingUrl",
+        "type": "String"
+      },
+      {
+        "id": "f13",
+        "name": "meetingId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f14",
+        "name": "attendanceThreshold",
+        "type": "Number"
+      },
+      {
+        "id": "f15",
+        "name": "gracePeriod",
+        "type": "Number"
+      },
+      {
+        "id": "f16",
+        "name": "participants",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f17",
+            "name": "userId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f18",
+            "name": "userName",
+            "type": "String"
+          },
+          {
+            "id": "f19",
+            "name": "role",
+            "type": "String"
+          },
+          {
+            "id": "f20",
+            "name": "joinedAt",
+            "type": "Date"
+          },
+          {
+            "id": "f21",
+            "name": "leftAt",
+            "type": "Date"
+          },
+          {
+            "id": "f22",
+            "name": "duration",
+            "type": "Number"
+          },
+          {
+            "id": "f23",
+            "name": "connectionLogs",
+            "type": "Array",
+            "fields": [
+              {
+                "id": "f24",
+                "name": "action",
+                "type": "String"
+              },
+              {
+                "id": "f25",
+                "name": "timestamp",
+                "type": "Date"
+              },
+              {
+                "id": "f26",
+                "name": "_id",
+                "type": "ObjectId",
+                "isPK": true
+              }
+            ]
+          },
+          {
+            "id": "f27",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f28",
+        "name": "attendance",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f29",
+            "name": "studentId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f30",
+            "name": "status",
+            "type": "String"
+          },
+          {
+            "id": "f31",
+            "name": "joinTime",
+            "type": "Date"
+          },
+          {
+            "id": "f32",
+            "name": "leaveTime",
+            "type": "Date"
+          },
+          {
+            "id": "f33",
+            "name": "duration",
+            "type": "Number"
+          },
+          {
+            "id": "f34",
+            "name": "attendancePercentage",
+            "type": "Number"
+          },
+          {
+            "id": "f35",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f36",
+        "name": "statistics",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f37",
+            "name": "totalParticipants",
+            "type": "Number"
+          },
+          {
+            "id": "f38",
+            "name": "maxConcurrent",
+            "type": "Number"
+          },
+          {
+            "id": "f39",
+            "name": "averageDuration",
+            "type": "Number"
+          },
+          {
+            "id": "f40",
+            "name": "attendanceRate",
+            "type": "Number"
+          },
+          {
+            "id": "f41",
+            "name": "lateCount",
+            "type": "Number"
+          },
+          {
+            "id": "f42",
+            "name": "absentCount",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f43",
+        "name": "recording",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f44",
+            "name": "isRecorded",
+            "type": "Boolean"
+          },
+          {
+            "id": "f45",
+            "name": "recordingFile",
+            "type": "String"
+          },
+          {
+            "id": "f46",
+            "name": "recordingSize",
+            "type": "Number"
+          },
+          {
+            "id": "f47",
+            "name": "recordingDuration",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f48",
+        "name": "status",
+        "type": "String"
+      },
+      {
+        "id": "f49",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f50",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "22",
+    "name": "studymaterials",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "courseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "type",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f7",
+        "name": "content",
+        "type": "String"
+      },
+      {
+        "id": "f8",
+        "name": "isAIGenerated",
+        "type": "Boolean"
+      },
+      {
+        "id": "f9",
+        "name": "aiGenerationParams",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f10",
+            "name": "summaryLength",
+            "type": "String"
+          },
+          {
+            "id": "f11",
+            "name": "difficulty",
+            "type": "String"
+          },
+          {
+            "id": "f12",
+            "name": "topics",
+            "type": "[String]"
+          },
+          {
+            "id": "f13",
+            "name": "generatedAt",
+            "type": "Date"
+          }
+        ]
+      },
+      {
+        "id": "f14",
+        "name": "isBookmarked",
+        "type": "Boolean"
+      },
+      {
+        "id": "f15",
+        "name": "isFavorite",
+        "type": "Boolean"
+      },
+      {
+        "id": "f16",
+        "name": "flashcards",
+        "type": "Array"
+      },
+      {
+        "id": "f17",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f18",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "23",
+    "name": "academicyears",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "year",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "startDate",
+        "type": "Date"
+      },
+      {
+        "id": "f4",
+        "name": "endDate",
+        "type": "Date"
+      },
+      {
+        "id": "f5",
+        "name": "semesters",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f6",
+            "name": "number",
+            "type": "Number"
+          },
+          {
+            "id": "f7",
+            "name": "name",
+            "type": "String"
+          },
+          {
+            "id": "f8",
+            "name": "startDate",
+            "type": "Date"
+          },
+          {
+            "id": "f9",
+            "name": "endDate",
+            "type": "Date"
+          },
+          {
+            "id": "f10",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f11",
+        "name": "isCurrent",
+        "type": "Boolean"
+      },
+      {
+        "id": "f12",
+        "name": "status",
+        "type": "String"
+      },
+      {
+        "id": "f13",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f14",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "24",
+    "name": "schedules",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "academicYearId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "semester",
+        "type": "Number"
+      },
+      {
+        "id": "f5",
+        "name": "targetType",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "targetId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "entries",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f8",
+            "name": "dayOfWeek",
+            "type": "Number"
+          },
+          {
+            "id": "f9",
+            "name": "startTime",
+            "type": "String"
+          },
+          {
+            "id": "f10",
+            "name": "endTime",
+            "type": "String"
+          },
+          {
+            "id": "f11",
+            "name": "subjectId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f12",
+            "name": "teacherId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f13",
+            "name": "sessionType",
+            "type": "String"
+          },
+          {
+            "id": "f14",
+            "name": "meetingProvider",
+            "type": "String"
+          },
+          {
+            "id": "f15",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f16",
+        "name": "isPublished",
+        "type": "Boolean"
+      },
+      {
+        "id": "f17",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f18",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "25",
+    "name": "notifications",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "userId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "type",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "id": "f5",
+        "name": "message",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "isRead",
+        "type": "Boolean"
+      },
+      {
+        "id": "f7",
+        "name": "readAt",
+        "type": "String"
+      },
+      {
+        "id": "f8",
+        "name": "link",
+        "type": "String"
+      },
+      {
+        "id": "f9",
+        "name": "priority",
+        "type": "String"
+      },
+      {
+        "id": "f10",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f11",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f12",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "26",
+    "name": "studyprograms",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "code",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "id": "f5",
+        "name": "departmentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "programType",
+        "type": "String"
+      },
+      {
+        "id": "f7",
+        "name": "duration",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f8",
+            "name": "years",
+            "type": "Number"
+          },
+          {
+            "id": "f9",
+            "name": "semesters",
+            "type": "Number"
+          }
+        ]
+      },
+      {
+        "id": "f10",
+        "name": "level",
+        "type": "String"
+      },
+      {
+        "id": "f11",
+        "name": "isActive",
+        "type": "Boolean"
+      },
+      {
+        "id": "f12",
+        "name": "teachingUnits",
+        "type": "Array"
+      },
+      {
+        "id": "f13",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f14",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "27",
+    "name": "worksubmissions",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "chapterId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f3",
+        "name": "exerciseId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f4",
+        "name": "classId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "subjectId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "studentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "fileUrl",
+        "type": "String"
+      },
+      {
+        "id": "f8",
+        "name": "fileName",
+        "type": "String"
+      },
+      {
+        "id": "f9",
+        "name": "fileSize",
+        "type": "Number"
+      },
+      {
+        "id": "f10",
+        "name": "submittedAt",
+        "type": "Date"
+      },
+      {
+        "id": "f11",
+        "name": "feedback",
+        "type": "String"
+      },
+      {
+        "id": "f12",
+        "name": "grade",
+        "type": "Number"
+      },
+      {
+        "id": "f13",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f14",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "28",
+    "name": "users",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "firstName",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "lastName",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "cin",
+        "type": "String"
+      },
+      {
+        "id": "f5",
+        "name": "email",
+        "type": "String"
+      },
+      {
+        "id": "f6",
+        "name": "password",
+        "type": "String"
+      },
+      {
+        "id": "f7",
+        "name": "role",
+        "type": "String"
+      },
+      {
+        "id": "f8",
+        "name": "profileImage",
+        "type": "String"
+      },
+      {
+        "id": "f9",
+        "name": "isActive",
+        "type": "Boolean"
+      },
+      {
+        "id": "f10",
+        "name": "isEmailVerified",
+        "type": "Boolean"
+      },
+      {
+        "id": "f11",
+        "name": "nationality",
+        "type": "String"
+      },
+      {
+        "id": "f12",
+        "name": "teacher",
+        "type": "Object",
+        "fields": [
+          {
+            "id": "f13",
+            "name": "specializations",
+            "type": "Array"
+          },
+          {
+            "id": "f14",
+            "name": "diplomas",
+            "type": "Array"
+          }
+        ]
+      },
+      {
+        "id": "f15",
+        "name": "refreshToken",
+        "type": "String"
+      },
+      {
+        "id": "f16",
+        "name": "resetPasswordToken",
+        "type": "String"
+      },
+      {
+        "id": "f17",
+        "name": "resetPasswordExpires",
+        "type": "String"
+      },
+      {
+        "id": "f18",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f19",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  },
+  {
+    "id": "29",
+    "name": "classes",
+    "fields": [
+      {
+        "id": "f1",
+        "name": "_id",
+        "type": "ObjectId",
+        "isPK": true
+      },
+      {
+        "id": "f2",
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "id": "f3",
+        "name": "code",
+        "type": "String"
+      },
+      {
+        "id": "f4",
+        "name": "departmentId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f5",
+        "name": "programId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f6",
+        "name": "academicYearId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f7",
+        "name": "level",
+        "type": "String"
+      },
+      {
+        "id": "f8",
+        "name": "groupNumber",
+        "type": "Number"
+      },
+      {
+        "id": "f9",
+        "name": "teachers",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f10",
+            "name": "subjectId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f11",
+            "name": "teacherId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f12",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f13",
+        "name": "students",
+        "type": "Array",
+        "fields": [
+          {
+            "id": "f14",
+            "name": "studentId",
+            "type": "ObjectId",
+            "isFK": true
+          },
+          {
+            "id": "f15",
+            "name": "enrollmentDate",
+            "type": "Date"
+          },
+          {
+            "id": "f16",
+            "name": "status",
+            "type": "String"
+          },
+          {
+            "id": "f17",
+            "name": "_id",
+            "type": "ObjectId",
+            "isPK": true
+          }
+        ]
+      },
+      {
+        "id": "f18",
+        "name": "capacity",
+        "type": "Number"
+      },
+      {
+        "id": "f19",
+        "name": "currentEnrollment",
+        "type": "Number"
+      },
+      {
+        "id": "f20",
+        "name": "academicAdvisorId",
+        "type": "ObjectId",
+        "isFK": true
+      },
+      {
+        "id": "f21",
+        "name": "isActive",
+        "type": "Boolean"
+      },
+      {
+        "id": "f22",
+        "name": "createdAt",
+        "type": "Date"
+      },
+      {
+        "id": "f23",
+        "name": "updatedAt",
+        "type": "Date"
+      }
+    ]
+  }
+]

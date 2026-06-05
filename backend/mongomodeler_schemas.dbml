@@ -1,0 +1,670 @@
+// Generated from EduGenius MongoDB Schemas
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table bookmarks {
+  _id varchar [primary key]
+  studentId varchar
+  resourceType varchar
+  resourceId varchar
+  classId varchar
+  note varchar
+  tags varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table arenaquests {
+  _id varchar [primary key]
+  challengeId varchar
+  studentId varchar
+  classId varchar
+  subjectId varchar
+  courseId varchar
+  subjectName varchar
+  quizAttemptId varchar
+  date timestamp
+  questIndex integer
+  status varchar // enum
+  xpEarned integer
+  score integer
+  totalQuestions integer
+  timeTaken integer
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table exams {
+  _id varchar [primary key]
+  title varchar
+  description varchar
+  courseId varchar
+  classId varchar
+  teacherId varchar
+  questions varchar
+  settings varchar
+  passingScore integer
+  proctoring varchar
+  isPublished boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table subjects {
+  _id varchar [primary key]
+  name varchar
+  code varchar
+  description varchar
+  teachingUnitId varchar
+  semester integer
+  credits integer
+  coefficient integer
+  hoursDistribution varchar
+  evaluation varchar
+  isActive boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table arenaprogresses {
+  _id varchar [primary key]
+  challengeId varchar
+  studentId varchar
+  classId varchar
+  totalXP integer
+  completedQuestsCount integer
+  currentStreak integer
+  longestStreak integer
+  lastActiveDate timestamp
+  milestonesReached varchar
+  dailyActivity varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table submissions {
+  _id varchar [primary key]
+  quizId varchar
+  examId varchar
+  studentId varchar
+  answers varchar
+  score integer
+  totalPoints integer
+  percentage integer
+  attemptNumber integer
+  startedAt timestamp
+  submittedAt timestamp
+  timeSpent integer
+  status varchar // enum
+  mistakeExplanation varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table aisummaries {
+  _id varchar [primary key]
+  courseId varchar
+  chapterId varchar
+  studentId varchar
+  content varchar
+  summaryType varchar
+  generatedAt timestamp
+  customizations varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table systemsettings {
+  _id varchar [primary key]
+  institutionName varchar
+  academicSettings varchar
+  authSettings varchar
+  aiSettings varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table teachingunits {
+  _id varchar [primary key]
+  name varchar
+  code varchar
+  description varchar
+  departmentId varchar
+  programIds varchar
+  unitType varchar
+  totalCredits integer
+  totalCoefficient integer
+  isActive boolean
+  subjects varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table courses {
+  _id varchar [primary key]
+  title varchar
+  description varchar
+  content varchar
+  summary varchar
+  classId varchar
+  teacherId varchar
+  subjectId varchar
+  chapters varchar
+  isPublished boolean
+  quiz varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table announcements {
+  _id varchar [primary key]
+  title varchar
+  content varchar
+  teacherId varchar
+  targetType varchar
+  targetClasses varchar
+  classId varchar
+  priority varchar
+  type varchar // enum
+  isPinned boolean
+  isPublished boolean
+  imageUrl varchar
+  publishAt varchar
+  expiresAt varchar
+  readBy varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table grades {
+  _id varchar [primary key]
+  studentId varchar
+  studentName varchar
+  subjectId varchar
+  subjectName varchar
+  classId varchar
+  academicYearId varchar
+  examSession varchar
+  examDate timestamp
+  continuousAssessment integer
+  examGrade integer
+  totalGrade decimal
+  isAbsent boolean
+  isPassed boolean
+  mention varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table departments {
+  _id varchar [primary key]
+  name varchar
+  code varchar
+  description varchar
+  teachers varchar
+  statistics varchar
+  isActive boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table selfquizzes {
+  _id varchar [primary key]
+  courseId varchar
+  studentId varchar
+  questions varchar
+  score integer
+  completed boolean
+  quizType varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table quizzes {
+  _id varchar [primary key]
+  title varchar
+  description varchar
+  courseId varchar
+  classId varchar
+  teacherId varchar
+  questions varchar
+  settings varchar
+  isAIGenerated boolean
+  generatedFrom varchar
+  isPublished boolean
+  difficulty varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table attendances {
+  _id varchar [primary key]
+  videoSessionId varchar
+  scheduleId varchar
+  sessionDate timestamp
+  subjectId varchar
+  subjectName varchar
+  classId varchar
+  className varchar
+  teacherId varchar
+  teacherName varchar
+  scheduledStart timestamp
+  scheduledEnd timestamp
+  actualStart timestamp
+  actualEnd timestamp
+  totalDuration integer
+  records varchar
+  statistics varchar
+  generatedAt timestamp
+  generatedBy varchar
+  adjustments varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table arenachallenges {
+  _id varchar [primary key]
+  classId varchar
+  title varchar
+  weekStart timestamp
+  weekEnd timestamp
+  status varchar // enum
+  questsConfig varchar
+  milestones varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table messages {
+  _id varchar [primary key]
+  senderId varchar
+  receiverId varchar
+  classId varchar
+  content varchar
+  isRead boolean
+  readAt varchar
+  messageType varchar // enum
+  isDeleted boolean
+  attachments varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table studentprogresses {
+  _id varchar [primary key]
+  studentId varchar
+  classId varchar
+  courseId varchar
+  subjectId varchar
+  chaptersProgress varchar
+  overallProgress integer
+  totalTimeSpent integer
+  lastAccessedAt timestamp
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table studentquizattempts {
+  _id varchar [primary key]
+  studentId varchar
+  classId varchar
+  courseId varchar
+  quizTitle varchar
+  isPracticeQuiz boolean
+  questions varchar
+  score integer
+  totalPoints integer
+  percentage integer
+  timeSpent integer
+  aiGenerationParams varchar
+  reviewed boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table videosessions {
+  _id varchar [primary key]
+  title varchar
+  description varchar
+  classId varchar
+  subjectId varchar
+  teacherId varchar
+  scheduleId varchar
+  scheduledStart timestamp
+  scheduledEnd timestamp
+  actualStart timestamp
+  actualEnd timestamp
+  meetingUrl varchar
+  meetingId varchar
+  attendanceThreshold integer
+  gracePeriod integer
+  participants varchar
+  attendance varchar
+  statistics varchar
+  recording varchar
+  status varchar // enum
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table studymaterials {
+  _id varchar [primary key]
+  studentId varchar
+  classId varchar
+  courseId varchar
+  type varchar // enum
+  title varchar
+  content varchar
+  isAIGenerated boolean
+  aiGenerationParams varchar
+  isBookmarked boolean
+  isFavorite boolean
+  flashcards varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table academicyears {
+  _id varchar [primary key]
+  year varchar
+  startDate timestamp
+  endDate timestamp
+  semesters varchar
+  isCurrent boolean
+  status varchar // enum
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table schedules {
+  _id varchar [primary key]
+  title varchar
+  academicYearId varchar
+  semester integer
+  targetType varchar
+  targetId varchar
+  entries varchar
+  isPublished boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table notifications {
+  _id varchar [primary key]
+  userId varchar
+  type varchar // enum
+  title varchar
+  message varchar
+  isRead boolean
+  readAt varchar
+  link varchar
+  priority varchar
+  classId varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table studyprograms {
+  _id varchar [primary key]
+  name varchar
+  code varchar
+  description varchar
+  departmentId varchar
+  programType varchar
+  duration varchar
+  level varchar
+  isActive boolean
+  teachingUnits varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table worksubmissions {
+  _id varchar [primary key]
+  chapterId varchar
+  exerciseId varchar
+  classId varchar
+  subjectId varchar
+  studentId varchar
+  fileUrl varchar
+  fileName varchar
+  fileSize integer
+  submittedAt timestamp
+  feedback varchar
+  grade integer
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table users {
+  _id varchar [primary key]
+  firstName varchar
+  lastName varchar
+  cin varchar [unique]
+  email varchar [unique]
+  password varchar
+  role varchar // enum
+  profileImage varchar
+  isActive boolean
+  isEmailVerified boolean
+  nationality varchar
+  teacher varchar
+  refreshToken varchar
+  resetPasswordToken varchar
+  resetPasswordExpires varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table classes {
+  _id varchar [primary key]
+  name varchar
+  code varchar
+  departmentId varchar
+  programId varchar
+  academicYearId varchar
+  level varchar
+  groupNumber integer
+  teachers varchar
+  students varchar
+  capacity integer
+  currentEnrollment integer
+  academicAdvisorId varchar
+  isActive boolean
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// === Relationships ===
+
+Ref: users._id < bookmarks.studentId // bookmarks belongs to users
+Ref: bookmarks._id < bookmarks.resourceId // bookmarks belongs to bookmarks
+Ref: classes._id < bookmarks.classId // bookmarks belongs to classes
+Ref: arenachallenges._id < arenaquests.challengeId // arenaquests belongs to arenachallenges
+Ref: users._id < arenaquests.studentId // arenaquests belongs to users
+Ref: classes._id < arenaquests.classId // arenaquests belongs to classes
+Ref: subjects._id < arenaquests.subjectId // arenaquests belongs to subjects
+Ref: courses._id < arenaquests.courseId // arenaquests belongs to courses
+Ref: studentquizattempts._id < arenaquests.quizAttemptId // arenaquests belongs to studentquizattempts
+Ref: courses._id < exams.courseId // exams belongs to courses
+Ref: classes._id < exams.classId // exams belongs to classes
+Ref: users._id < exams.teacherId // exams belongs to users
+Ref: teachingunits._id < subjects.teachingUnitId // subjects belongs to teachingunits
+Ref: arenachallenges._id < arenaprogresses.challengeId // arenaprogresses belongs to arenachallenges
+Ref: users._id < arenaprogresses.studentId // arenaprogresses belongs to users
+Ref: classes._id < arenaprogresses.classId // arenaprogresses belongs to classes
+Ref: quizzes._id < submissions.quizId // submissions belongs to quizzes
+Ref: exams._id < submissions.examId // submissions belongs to exams
+Ref: users._id < submissions.studentId // submissions belongs to users
+Ref: courses._id < aisummaries.courseId // aisummaries belongs to courses
+Ref: courses._id < aisummaries.chapterId // aisummaries belongs to courses
+Ref: users._id < aisummaries.studentId // aisummaries belongs to users
+Ref: departments._id < teachingunits.departmentId // teachingunits belongs to departments
+Ref: classes._id < courses.classId // courses belongs to classes
+Ref: users._id < courses.teacherId // courses belongs to users
+Ref: subjects._id < courses.subjectId // courses belongs to subjects
+Ref: users._id < announcements.teacherId // announcements belongs to users
+Ref: classes._id < announcements.classId // announcements belongs to classes
+Ref: users._id < grades.studentId // grades belongs to users
+Ref: subjects._id < grades.subjectId // grades belongs to subjects
+Ref: classes._id < grades.classId // grades belongs to classes
+Ref: academicyears._id < grades.academicYearId // grades belongs to academicyears
+Ref: courses._id < selfquizzes.courseId // selfquizzes belongs to courses
+Ref: users._id < selfquizzes.studentId // selfquizzes belongs to users
+Ref: courses._id < quizzes.courseId // quizzes belongs to courses
+Ref: classes._id < quizzes.classId // quizzes belongs to classes
+Ref: users._id < quizzes.teacherId // quizzes belongs to users
+Ref: videosessions._id < attendances.videoSessionId // attendances belongs to videosessions
+Ref: schedules._id < attendances.scheduleId // attendances belongs to schedules
+Ref: subjects._id < attendances.subjectId // attendances belongs to subjects
+Ref: classes._id < attendances.classId // attendances belongs to classes
+Ref: users._id < attendances.teacherId // attendances belongs to users
+Ref: users._id < attendances.generatedBy // attendances belongs to users
+Ref: classes._id < arenachallenges.classId // arenachallenges belongs to classes
+Ref: users._id < messages.senderId // messages belongs to users
+Ref: users._id < messages.receiverId // messages belongs to users
+Ref: classes._id < messages.classId // messages belongs to classes
+Ref: users._id < studentprogresses.studentId // studentprogresses belongs to users
+Ref: classes._id < studentprogresses.classId // studentprogresses belongs to classes
+Ref: courses._id < studentprogresses.courseId // studentprogresses belongs to courses
+Ref: subjects._id < studentprogresses.subjectId // studentprogresses belongs to subjects
+Ref: users._id < studentquizattempts.studentId // studentquizattempts belongs to users
+Ref: classes._id < studentquizattempts.classId // studentquizattempts belongs to classes
+Ref: courses._id < studentquizattempts.courseId // studentquizattempts belongs to courses
+Ref: classes._id < videosessions.classId // videosessions belongs to classes
+Ref: subjects._id < videosessions.subjectId // videosessions belongs to subjects
+Ref: users._id < videosessions.teacherId // videosessions belongs to users
+Ref: schedules._id < videosessions.scheduleId // videosessions belongs to schedules
+Ref: users._id < studymaterials.studentId // studymaterials belongs to users
+Ref: classes._id < studymaterials.classId // studymaterials belongs to classes
+Ref: courses._id < studymaterials.courseId // studymaterials belongs to courses
+Ref: academicyears._id < schedules.academicYearId // schedules belongs to academicyears
+Ref: users._id < notifications.userId // notifications belongs to users
+Ref: classes._id < notifications.classId // notifications belongs to classes
+Ref: departments._id < studyprograms.departmentId // studyprograms belongs to departments
+Ref: courses._id < worksubmissions.chapterId // worksubmissions belongs to courses
+Ref: worksubmissions._id < worksubmissions.exerciseId // worksubmissions belongs to worksubmissions
+Ref: classes._id < worksubmissions.classId // worksubmissions belongs to classes
+Ref: subjects._id < worksubmissions.subjectId // worksubmissions belongs to subjects
+Ref: users._id < worksubmissions.studentId // worksubmissions belongs to users
+Ref: departments._id < classes.departmentId // classes belongs to departments
+Ref: studyprograms._id < classes.programId // classes belongs to studyprograms
+Ref: academicyears._id < classes.academicYearId // classes belongs to academicyears
+Ref: users._id < classes.academicAdvisorId // classes belongs to users
+
+// === Sample Records ===
+
+Records bookmarks(_id, studentId, resourceType, resourceId, classId, note, tags, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb5c', '6a185ad6754c94b99c29eb1f', 'material', '6a185ad6754c94b99c29eb26', '6a185ad6754c94b99c29eb21', 'Important à réviser', '[object]', '2026-05-28T15:10:14.946Z', '2026-05-28T15:10:14.946Z'
+}
+
+Records arenaquests(_id, challengeId, studentId, classId, subjectId, courseId, subjectName, quizAttemptId, date, questIndex, status, xpEarned, score, totalQuestions, timeTaken, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb4d', '6a185ad6754c94b99c29eb4b', '6a185ad6754c94b99c29eb1f', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb18', '6a185ad6754c94b99c29eb25', 'Développement Full-Stack', null, '2025-01-07T00:00:00.000Z', 1, 'completed', 50, 5, 5, 30, '2026-05-28T15:10:14.891Z', '2026-05-28T15:10:14.891Z'
+}
+
+Records exams(_id, title, description, courseId, classId, teacherId, questions, settings, passingScore, proctoring, isPublished, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb40', 'Examen Full-Stack - Session 1', 'Examen de fin de semestre', '6a185ad6754c94b99c29eb25', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb1c', '[object]', '[object]', 50, '[object]', true, '2026-05-28T15:10:14.850Z', '2026-05-28T15:10:14.850Z'
+}
+
+Records subjects(_id, name, code, description, teachingUnitId, semester, credits, coefficient, hoursDistribution, evaluation, isActive, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb18', 'Développement Full-Stack', 'DFS', 'Développement d\'applications web modernes', '6a185ad6754c94b99c29eb16', 1, 5, 3, '[object]', '[object]', true, '2026-05-28T15:10:14.357Z', '2026-05-28T15:10:14.357Z'
+}
+
+Records arenaprogresses(_id, challengeId, studentId, classId, totalXP, completedQuestsCount, currentStreak, longestStreak, lastActiveDate, milestonesReached, dailyActivity, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb4f', '6a185ad6754c94b99c29eb4b', '6a185ad6754c94b99c29eb1f', '6a185ad6754c94b99c29eb21', 50, 1, 1, 1, '2025-01-07T00:00:00.000Z', '[object]', '[object]', '2026-05-28T15:10:14.897Z', '2026-05-28T15:10:14.897Z'
+}
+
+Records submissions(_id, quizId, examId, studentId, answers, score, totalPoints, percentage, attemptNumber, startedAt, submittedAt, timeSpent, status, mistakeExplanation, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb44', '6a185ad6754c94b99c29eb3c', null, '6a185ad6754c94b99c29eb1f', '[object]', 3, 3, 100, 1, '2025-01-15T09:00:00.000Z', '2025-01-15T09:25:00.000Z', 25, 'graded', null, '2026-05-28T15:10:14.859Z', '2026-05-28T15:10:14.859Z'
+}
+
+Records aisummaries(_id, courseId, chapterId, studentId, content, summaryType, generatedAt, customizations, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb5e', '6a185ad6754c94b99c29eb25', '6a185ad6754c94b99c29eb26', '6a185ad6754c94b99c29eb1f', 'Résumé généré par IA du chapitre sur Next.js.', 'chapter', '2026-05-28T15:10:14.949Z', '[object]', '2026-05-28T15:10:14.950Z', '2026-05-28T15:10:14.950Z'
+}
+
+Records systemsettings(_id, institutionName, academicSettings, authSettings, aiSettings, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb65', 'Université Tunisienne', '[object]', '[object]', '[object]', '2026-05-28T15:10:14.973Z', '2026-05-28T15:10:14.984Z'
+}
+
+Records teachingunits(_id, name, code, description, departmentId, programIds, unitType, totalCredits, totalCoefficient, isActive, subjects, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb16', 'Génie Logiciel Avancé', 'GLA', 'Unités avancées du génie logiciel', '6a185ad6754c94b99c29eb12', '[object]', 'fundamental', 10, 5, true, '[object]', '2026-05-28T15:10:14.351Z', '2026-05-28T15:10:14.351Z'
+}
+
+Records courses(_id, title, description, content, summary, classId, teacherId, subjectId, chapters, isPublished, quiz, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb25', 'Développement Full-Stack - Cours', 'Cours sur le développement Full-Stack', '', '', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb1c', '6a185ad6754c94b99c29eb18', '[object]', true, '[object]', '2026-05-28T15:10:14.805Z', '2026-05-28T15:10:14.805Z'
+}
+
+Records announcements(_id, title, content, teacherId, targetType, targetClasses, classId, priority, type, isPinned, isPublished, imageUrl, publishAt, expiresAt, readBy, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb49', 'Rendu des exercices', 'Les exercices du chapitre 1 sont à rendre avant vendredi.', '6a185ad6754c94b99c29eb1c', 'specific_classes', '[object]', '6a185ad6754c94b99c29eb21', 'high', 'assignment', true, true, null, null, null, '[object]', '2026-05-28T15:10:14.872Z', '2026-05-28T15:10:14.872Z'
+}
+
+Records grades(_id, studentId, studentName, subjectId, subjectName, classId, academicYearId, examSession, examDate, continuousAssessment, examGrade, totalGrade, isAbsent, isPassed, mention, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb54', '6a185ad6754c94b99c29eb1f', 'Karim Student', '6a185ad6754c94b99c29eb18', 'Développement Full-Stack', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb0e', 'main', '2025-06-01T00:00:00.000Z', 15, 14, 14.3, false, true, 'Bien', '2026-05-28T15:10:14.914Z', '2026-05-28T15:10:14.914Z'
+}
+
+Records departments(_id, name, code, description, teachers, statistics, isActive, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb12', 'Génie Logiciel', 'GL', 'Département de Génie Logiciel', '[object]', '[object]', true, '2026-05-28T15:10:14.336Z', '2026-05-28T15:10:14.336Z'
+}
+
+Records selfquizzes(_id, courseId, studentId, questions, score, completed, quizType, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb60', '6a185ad6754c94b99c29eb25', '6a185ad6754c94b99c29eb1f', '[object]', 1, true, 'quick', '2026-05-28T15:10:14.957Z', '2026-05-28T15:10:14.957Z'
+}
+
+Records quizzes(_id, title, description, courseId, classId, teacherId, questions, settings, isAIGenerated, generatedFrom, isPublished, difficulty, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb3c', 'Quiz Introduction à Next.js', 'Testez vos connaissances sur Next.js', '6a185ad6754c94b99c29eb25', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb1c', '[object]', '[object]', false, null, true, 'medium', '2026-05-28T15:10:14.843Z', '2026-05-28T15:10:14.843Z'
+}
+
+Records attendances(_id, videoSessionId, scheduleId, sessionDate, subjectId, subjectName, classId, className, teacherId, teacherName, scheduledStart, scheduledEnd, actualStart, actualEnd, totalDuration, records, statistics, generatedAt, generatedBy, adjustments, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb51', '6a185ad6754c94b99c29eb2d', '6a185ad6754c94b99c29eb29', '2025-01-10T00:00:00.000Z', '6a185ad6754c94b99c29eb18', 'Développement Full-Stack', '6a185ad6754c94b99c29eb21', 'MPGL2', '6a185ad6754c94b99c29eb1c', 'Ahmed Teacher', '2025-01-10T07:00:00.000Z', '2025-01-10T09:00:00.000Z', '2025-01-10T07:05:00.000Z', '2025-01-10T08:55:00.000Z', 110, '[object]', '[object]', '2026-05-28T15:10:14.901Z', '6a185ad6754c94b99c29eb1c', '[object]', '2026-05-28T15:10:14.905Z', '2026-05-28T15:10:14.905Z'
+}
+
+Records arenachallenges(_id, classId, title, weekStart, weekEnd, status, questsConfig, milestones, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb4b', '6a185ad6754c94b99c29eb21', 'Défi Arène — Semaine 1', '2025-01-06T00:00:00.000Z', '2025-01-12T00:00:00.000Z', 'active', '[object]', '[object]', '2026-05-28T15:10:14.883Z', '2026-05-28T15:10:14.883Z'
+}
+
+Records messages(_id, senderId, receiverId, classId, content, isRead, readAt, messageType, isDeleted, attachments, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb32', '6a185ad6754c94b99c29eb1f', '6a185ad6754c94b99c29eb1c', null, 'Bonjour professeur, j\'ai une question sur le cours.', false, null, 'private', false, '[object]', '2026-05-28T15:10:14.822Z', '2026-05-28T15:10:14.822Z'
+}
+
+Records studentprogresses(_id, studentId, classId, courseId, subjectId, chaptersProgress, overallProgress, totalTimeSpent, lastAccessedAt, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb58', '6a185ad6754c94b99c29eb1f', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb25', '6a185ad6754c94b99c29eb18', '[object]', 50, 240, '2026-05-28T15:10:14.931Z', '2026-05-28T15:10:14.935Z', '2026-05-28T15:10:14.935Z'
+}
+
+Records studentquizattempts(_id, studentId, classId, courseId, quizTitle, isPracticeQuiz, questions, score, totalPoints, percentage, timeSpent, aiGenerationParams, reviewed, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb46', '6a185ad6754c94b99c29eb1f', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb25', 'Quiz entraînement IA', true, '[object]', 1, 1, 100, 0, '[object]', false, '2026-05-28T15:10:14.866Z', '2026-05-28T15:10:14.866Z'
+}
+
+Records videosessions(_id, title, description, classId, subjectId, teacherId, scheduleId, scheduledStart, scheduledEnd, actualStart, actualEnd, meetingUrl, meetingId, attendanceThreshold, gracePeriod, participants, attendance, statistics, recording, status, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb2d', 'Introduction à Next.js - Live', 'Session live sur Next.js', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb18', '6a185ad6754c94b99c29eb1c', '6a185ad6754c94b99c29eb29', '2025-01-10T07:00:00.000Z', '2025-01-10T09:00:00.000Z', '2025-01-10T07:05:00.000Z', '2025-01-10T08:55:00.000Z', 'https://edugenius.daily.co/demo-session', 'demo-session', 70, 15, '[object]', '[object]', '[object]', '[object]', 'ended', '2026-05-28T15:10:14.818Z', '2026-05-28T15:10:14.818Z'
+}
+
+Records studymaterials(_id, studentId, classId, courseId, type, title, content, isAIGenerated, aiGenerationParams, isBookmarked, isFavorite, flashcards, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb56', '6a185ad6754c94b99c29eb1f', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb25', 'summary', 'Résumé - Introduction à Next.js', 'Next.js est un framework React qui permet le rendu hybride (SSR/SSG).', true, '[object]', false, true, '[object]', '2026-05-28T15:10:14.926Z', '2026-05-28T15:10:14.926Z'
+}
+
+Records academicyears(_id, year, startDate, endDate, semesters, isCurrent, status, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb0e', '2024-2025', '2024-09-01T00:00:00.000Z', '2025-06-30T00:00:00.000Z', '[object]', true, 'active', '2026-05-28T15:10:14.324Z', '2026-05-28T15:10:14.324Z'
+}
+
+Records schedules(_id, title, academicYearId, semester, targetType, targetId, entries, isPublished, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb29', 'Emploi du temps MPGL2', '2024-2025', 1, 'class', '6a185ad6754c94b99c29eb21', '[object]', true, '2026-05-28T15:10:14.811Z', '2026-05-28T15:10:14.811Z'
+}
+
+Records notifications(_id, userId, type, title, message, isRead, readAt, link, priority, classId, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb38', '6a185ad6754c94b99c29eb1f', 'video_session_starting', 'Session live dans 10 min', 'La session "Introduction à Next.js" commence dans 10 minutes.', false, null, null, 'high', '6a185ad6754c94b99c29eb21', '2026-05-28T15:10:14.830Z', '2026-05-28T15:10:14.830Z'
+}
+
+Records studyprograms(_id, name, code, description, departmentId, programType, duration, level, isActive, teachingUnits, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb14', 'Master Professionnel en Génie Logiciel', 'MPGL', 'Formation en génie logiciel', '6a185ad6754c94b99c29eb12', 'master', '[object]', 'Master', true, '[object]', '2026-05-28T15:10:14.345Z', '2026-05-28T15:10:14.345Z'
+}
+
+Records worksubmissions(_id, chapterId, exerciseId, classId, subjectId, studentId, fileUrl, fileName, fileSize, submittedAt, feedback, grade, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb63', '6a185ad6754c94b99c29eb26', '6a185ad6754c94b99c29eb26', '6a185ad6754c94b99c29eb21', '6a185ad6754c94b99c29eb18', '6a185ad6754c94b99c29eb1f', 'https://s3.amazonaws.com/submissions/exercice1.pdf', 'exercice1.pdf', 204800, '2026-05-28T15:10:14.965Z', 'Bon travail !', 16, '2026-05-28T15:10:14.967Z', '2026-05-28T15:10:14.967Z'
+}
+
+Records users(_id, firstName, lastName, cin, email, password, role, profileImage, isActive, isEmailVerified, nationality, teacher, refreshToken, resetPasswordToken, resetPasswordExpires, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb1a', 'System', 'Admin', '11111111', 'admin@edugenius.com', '$2b$10$Dnw/wrSieM/LEZfePxeCheJsZsKeGTW5XzkfViUpOXE0ElkMnp2BO', 'admin', null, true, false, 'Tunisian', '[object]', null, null, null, '2026-05-28T15:10:14.363Z', '2026-05-28T15:10:14.363Z'
+}
+
+Records classes(_id, name, code, departmentId, programId, academicYearId, level, groupNumber, teachers, students, capacity, currentEnrollment, academicAdvisorId, isActive, createdAt, updatedAt) {
+  '6a185ad6754c94b99c29eb21', 'MPGL2', 'MPGL2', '6a185ad6754c94b99c29eb12', '6a185ad6754c94b99c29eb14', '6a185ad6754c94b99c29eb0e', 'M1', 1, '[object]', '[object]', 30, 1, '6a185ad6754c94b99c29eb1c', true, '2026-05-28T15:10:14.799Z', '2026-05-28T15:10:14.799Z'
+}

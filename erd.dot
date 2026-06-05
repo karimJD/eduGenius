@@ -1,0 +1,1532 @@
+digraph {
+	graph [bb="0,0,3192.4,7035.8",
+		esep=1,
+		margin=0,
+		nodesep=1,
+		overlap=false,
+		pad=2,
+		rankdir=LR,
+		ranksep=1,
+		splines=true
+	];
+	node [fontsize=9,
+		label="\N",
+		shape=record
+	];
+	edge [style=dashed];
+	aisummaries	 [height=3.5833,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> aisummaries </B></i></td></tr>
+      <tr><td port="0" align="left" >courseId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >chapterId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >content: String</td></tr>
+	<tr><td port="4" align="left" >summaryType: String</td></tr>
+	<tr><td port="5" align="left" >generatedAt: Date</td></tr>
+	<tr><td port="6" align="left" >customizations.style: String</td></tr>
+	<tr><td port="7" align="left" >customizations.language: String</td></tr>
+	<tr><td port="8" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="9" align="left" >createdAt: Date</td></tr>
+	<tr><td port="10" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="11" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2734.5,1408",
+		shape=none,
+		width=1.7361];
+	academicyears	 [height=3.0278,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> academicyears </B></i></td></tr>
+      <tr><td port="0" align="left" >year: String</td></tr>
+	<tr><td port="1" align="left" >startDate: Date</td></tr>
+	<tr><td port="2" align="left" >endDate: Date</td></tr>
+	<tr><td port="3" align="left" >semesters: Array</td></tr>
+	<tr><td port="4" align="left" >isCurrent: Boolean</td></tr>
+	<tr><td port="5" align="left" >status: String</td></tr>
+	<tr><td port="6" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="7" align="left" >createdAt: Date</td></tr>
+	<tr><td port="8" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="9" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="39,2391",
+		shape=none,
+		width=1.0833];
+	classes	 [height=4.9722,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> classes </B></i></td></tr>
+      <tr><td port="0" align="left" >name: String</td></tr>
+	<tr><td port="1" align="left" >code: String</td></tr>
+	<tr><td port="2" align="left" >departmentId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >programId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >academicYearId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >level: String</td></tr>
+	<tr><td port="6" align="left" >groupNumber: Number</td></tr>
+	<tr><td port="7" align="left" >teachers: Array</td></tr>
+	<tr><td port="8" align="left" >students: Array</td></tr>
+	<tr><td port="9" align="left" >capacity: Number</td></tr>
+	<tr><td port="10" align="left" >currentEnrollment: Number</td></tr>
+	<tr><td port="11" align="left" >academicAdvisorId: ObjectId</td></tr>
+	<tr><td port="12" align="left" >isActive: Boolean</td></tr>
+	<tr><td port="13" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="14" align="left" >createdAt: Date</td></tr>
+	<tr><td port="15" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="16" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="417.71,2281",
+		shape=none,
+		width=1.6111];
+	academicyears:6 -> classes:4	 [arrowhead=none,
+		head_lp="354.66,2343.6",
+		headlabel=N,
+		label="academicyears-classes",
+		lp="198.35,2360.4",
+		pos="78,2352 203.2,2352 234.51,2352 359.71,2352",
+		shape=none,
+		tail_lp="81.5,2343.6",
+		taillabel=1];
+	grades	 [height=6.3611,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> grades </B></i></td></tr>
+      <tr><td port="0" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >studentName: String</td></tr>
+	<tr><td port="2" align="left" >subjectId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >subjectName: String</td></tr>
+	<tr><td port="4" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >academicYearId: ObjectId</td></tr>
+	<tr><td port="6" align="left" >examSession: String</td></tr>
+	<tr><td port="7" align="left" >examDate: Date</td></tr>
+	<tr><td port="8" align="left" >continuousAssessment: Number</td></tr>
+	<tr><td port="9" align="left" >practicalWork: Number</td></tr>
+	<tr><td port="10" align="left" >examGrade: Number</td></tr>
+	<tr><td port="11" align="left" >totalGrade: Number</td></tr>
+	<tr><td port="12" align="left" >isAbsent: Boolean</td></tr>
+	<tr><td port="13" align="left" >isPassed: Boolean</td></tr>
+	<tr><td port="14" align="left" >mention: String</td></tr>
+	<tr><td port="15" align="left" >validatedBy: ObjectId</td></tr>
+	<tr><td port="16" align="left" >validatedAt: Date</td></tr>
+	<tr><td port="17" align="left" >pvNumber: String</td></tr>
+	<tr><td port="18" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="19" align="left" >createdAt: Date</td></tr>
+	<tr><td port="20" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="21" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2333.2,3483",
+		shape=none,
+		width=1.75];
+	academicyears:6 -> grades:5	 [arrowhead=none,
+		head_lp="2265.2,3575.6",
+		headlabel=N,
+		label="academicyears-grades",
+		lp="1215.1,6679.4",
+		pos="78,2352 320.24,2352 175.47,6699 417.71,6699 417.71,6699 417.71,6699 1023.3,6699 1187,6699 1579.1,6474.5 1662.9,6334 1707.1,6259.8 \
+1676.1,4862.4 1698.9,4779 1733.7,4651.3 1783.5,4636.6 1844.3,4519 2024.1,4170.6 2074.3,4085 2222.6,3722 2247.1,3661.9 2205.4,3584 \
+2270.2,3584",
+		shape=none,
+		tail_lp="81.5,2360.4",
+		taillabel=1];
+	systemsettings	 [height=4.4167,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> systemsettings </B></i></td></tr>
+      <tr><td port="0" align="left" >institutionName: String</td></tr>
+	<tr><td port="1" align="left" >institutionNameArabic: String</td></tr>
+	<tr><td port="2" align="left" >institutionLogo: String</td></tr>
+	<tr><td port="3" align="left" >academicSettings.currentAcademicYearId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >academicSettings.currentSemester: Number</td></tr>
+	<tr><td port="5" align="left" >academicSettings.gradingScale: Number</td></tr>
+	<tr><td port="6" align="left" >academicSettings.passingGrade: Number</td></tr>
+	<tr><td port="7" align="left" >authSettings.passwordMinLength: Number</td></tr>
+	<tr><td port="8" align="left" >authSettings.sessionTimeout: Number</td></tr>
+	<tr><td port="9" align="left" >aiSettings.quizGenerationEnabled: Boolean</td></tr>
+	<tr><td port="10" align="left" >aiSettings.summaryGenerationEnabled: Boolean</td></tr>
+	<tr><td port="11" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="12" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="13" align="left" >createdAt: Date</td></tr>
+	<tr><td port="14" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="417.71,1871",
+		shape=none,
+		width=2.75];
+	academicyears:6 -> systemsettings:3	 [arrowhead=none,
+		head_lp="313.66,1933.6",
+		headlabel=N,
+		label="academicyears-systemsettings",
+		lp="198.35,2317.4",
+		pos="78,2352 130.83,2352 265.88,1942 318.71,1942",
+		shape=none,
+		tail_lp="74.5,2360.4",
+		taillabel=1];
+	announcements	 [height=5.25,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> announcements </B></i></td></tr>
+      <tr><td port="0" align="left" >title: String</td></tr>
+	<tr><td port="1" align="left" >content: String</td></tr>
+	<tr><td port="2" align="left" >teacherId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >targetType: String</td></tr>
+	<tr><td port="4" align="left" >targetClasses: Array</td></tr>
+	<tr><td port="5" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="6" align="left" >priority: String</td></tr>
+	<tr><td port="7" align="left" >type: String</td></tr>
+	<tr><td port="8" align="left" >isPinned: Boolean</td></tr>
+	<tr><td port="9" align="left" >isPublished: Boolean</td></tr>
+	<tr><td port="10" align="left" >imageUrl: String</td></tr>
+	<tr><td port="11" align="left" >publishAt: Date</td></tr>
+	<tr><td port="12" align="left" >expiresAt: Date</td></tr>
+	<tr><td port="13" align="left" >readBy: Array</td></tr>
+	<tr><td port="14" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="15" align="left" >createdAt: Date</td></tr>
+	<tr><td port="16" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="17" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1215.1,2022",
+		shape=none,
+		width=1.1944];
+	arenachallenges	 [height=4.9722,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> arenachallenges </B></i></td></tr>
+      <tr><td port="0" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >title: String</td></tr>
+	<tr><td port="2" align="left" >weekStart: Date</td></tr>
+	<tr><td port="3" align="left" >weekEnd: Date</td></tr>
+	<tr><td port="4" align="left" >status: String</td></tr>
+	<tr><td port="5" align="left" >milestones: Array</td></tr>
+	<tr><td port="6" align="left" >questsConfig.questsPerDay: Number</td></tr>
+	<tr><td port="7" align="left" >questsConfig.questionsPerQuest: Number</td></tr>
+	<tr><td port="8" align="left" >questsConfig.xpPerCorrectAnswer: Number</td></tr>
+	<tr><td port="9" align="left" >questsConfig.xpBonusCompletion: Number</td></tr>
+	<tr><td port="10" align="left" >questsConfig.xpBonus100Percent: Number</td></tr>
+	<tr><td port="11" align="left" >questsConfig.streakBonusMultiplier: Number</td></tr>
+	<tr><td port="12" align="left" >questsConfig.secondsPerQuestion: Number</td></tr>
+	<tr><td port="13" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="14" align="left" >createdAt: Date</td></tr>
+	<tr><td port="15" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="16" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="808.63,761",
+		shape=none,
+		width=2.4167];
+	arenaprogresses	 [height=4.1389,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> arenaprogresses </B></i></td></tr>
+      <tr><td port="0" align="left" >challengeId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >totalXP: Number</td></tr>
+	<tr><td port="4" align="left" >completedQuestsCount: Number</td></tr>
+	<tr><td port="5" align="left" >currentStreak: Number</td></tr>
+	<tr><td port="6" align="left" >longestStreak: Number</td></tr>
+	<tr><td port="7" align="left" >lastActiveDate: Date</td></tr>
+	<tr><td port="8" align="left" >milestonesReached: Array</td></tr>
+	<tr><td port="9" align="left" >dailyActivity: Array</td></tr>
+	<tr><td port="10" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="11" align="left" >createdAt: Date</td></tr>
+	<tr><td port="12" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="13" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1215.1,1028",
+		shape=none,
+		width=1.7778];
+	arenachallenges:13 -> arenaprogresses:0	 [arrowhead=none,
+		head_lp="1146,1140.6",
+		headlabel=N,
+		label="arenachallenges-arenaprogresses",
+		lp="1023.3,1154.4",
+		pos="895.63,652 966.78,652 903.96,742.44 931.63,808 1001.7,974.05 970.84,1149 1151.1,1149",
+		shape=none,
+		tail_lp="899.13,643.6",
+		taillabel=1];
+	arenaquests	 [height=5.25,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> arenaquests </B></i></td></tr>
+      <tr><td port="0" align="left" >challengeId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >subjectId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >courseId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >subjectName: String</td></tr>
+	<tr><td port="6" align="left" >quizAttemptId: ObjectId</td></tr>
+	<tr><td port="7" align="left" >date: Date</td></tr>
+	<tr><td port="8" align="left" >questIndex: Number</td></tr>
+	<tr><td port="9" align="left" >status: String</td></tr>
+	<tr><td port="10" align="left" >xpEarned: Number</td></tr>
+	<tr><td port="11" align="left" >score: Number</td></tr>
+	<tr><td port="12" align="left" >totalQuestions: Number</td></tr>
+	<tr><td port="13" align="left" >timeTaken: Number</td></tr>
+	<tr><td port="14" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="15" align="left" >createdAt: Date</td></tr>
+	<tr><td port="16" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="17" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="3138.4,1243",
+		shape=none,
+		width=1.3611];
+	arenachallenges:13 -> arenaquests:0	 [arrowhead=none,
+		head_lp="3084.4,1395.6",
+		headlabel=N,
+		label="arenachallenges-arenaquests",
+		lp="1959.9,574.4",
+		pos="895.63,652 1101.6,652 1114.5,501.94 1315.1,455 1465.6,419.77 1514.2,408.69 1662.9,451 2359.5,649.24 2575.3,760.6 3048.4,1309 3078.5,\
+1343.8 3043.5,1404 3089.4,1404",
+		shape=none,
+		tail_lp="899.13,660.4",
+		taillabel=1];
+	attendances	 [height=8.3056,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> attendances </B></i></td></tr>
+      <tr><td port="0" align="left" >videoSessionId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >scheduleId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >sessionDate: Date</td></tr>
+	<tr><td port="3" align="left" >subjectId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >subjectName: String</td></tr>
+	<tr><td port="5" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="6" align="left" >className: String</td></tr>
+	<tr><td port="7" align="left" >teacherId: ObjectId</td></tr>
+	<tr><td port="8" align="left" >teacherName: String</td></tr>
+	<tr><td port="9" align="left" >scheduledStart: Date</td></tr>
+	<tr><td port="10" align="left" >scheduledEnd: Date</td></tr>
+	<tr><td port="11" align="left" >actualStart: Date</td></tr>
+	<tr><td port="12" align="left" >actualEnd: Date</td></tr>
+	<tr><td port="13" align="left" >totalDuration: Number</td></tr>
+	<tr><td port="14" align="left" >records: Array</td></tr>
+	<tr><td port="15" align="left" >statistics.totalStudents: Number</td></tr>
+	<tr><td port="16" align="left" >statistics.present: Number</td></tr>
+	<tr><td port="17" align="left" >statistics.late: Number</td></tr>
+	<tr><td port="18" align="left" >statistics.absent: Number</td></tr>
+	<tr><td port="19" align="left" >statistics.excused: Number</td></tr>
+	<tr><td port="20" align="left" >statistics.attendanceRate: Number</td></tr>
+	<tr><td port="21" align="left" >statistics.lateRate: Number</td></tr>
+	<tr><td port="22" align="left" >adjustments: Array</td></tr>
+	<tr><td port="23" align="left" >generatedAt: Date</td></tr>
+	<tr><td port="24" align="left" >generatedBy: ObjectId</td></tr>
+	<tr><td port="25" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="26" align="left" >createdAt: Date</td></tr>
+	<tr><td port="27" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="28" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2734.5,5885",
+		shape=none,
+		width=1.8333];
+	bookmarks	 [height=3.0278,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> bookmarks </B></i></td></tr>
+      <tr><td port="0" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >resourceType: String</td></tr>
+	<tr><td port="2" align="left" >resourceId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >note: String</td></tr>
+	<tr><td port="5" align="left" >tags: Array</td></tr>
+	<tr><td port="6" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="7" align="left" >createdAt: Date</td></tr>
+	<tr><td port="8" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="9" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1215.1,2392",
+		shape=none,
+		width=1.1806];
+	classes:13 -> announcements:5	 [arrowhead=none,
+		head_lp="1167,2074.6",
+		headlabel=N,
+		label="classes-announcements",
+		lp="808.63,2134.4",
+		pos="475.71,2172 510.66,2172 518.21,2161.6 552.71,2156 826.3,2111.5 894.89,2083 1172.1,2083",
+		shape=none,
+		tail_lp="479.21,2163.6",
+		taillabel=1];
+	classes:13 -> arenachallenges:0	 [arrowhead=none,
+		head_lp="716.57,903.6",
+		headlabel=N,
+		label="classes-arenachallenges",
+		lp="619.17,986.4",
+		pos="475.71,2172 608.74,2172 475.66,1085.6 552.71,977.2 599.32,911.6 641.15,912 721.63,912",
+		shape=none,
+		tail_lp="479.21,2180.4",
+		taillabel=1];
+	classes:13 -> arenaprogresses:2	 [arrowhead=none,
+		head_lp="1146,1100.6",
+		headlabel=N,
+		label="classes-arenaprogresses",
+		lp="808.63,1158.4",
+		pos="475.71,2172 572.87,2172 493.63,1378.1 552.71,1301 722.55,1079.3 871.77,1109 1151.1,1109",
+		shape=none,
+		tail_lp="472.21,2180.4",
+		taillabel=1];
+	classes:13 -> arenaquests:2	 [arrowhead=none,
+		head_lp="3084.4,1355.6",
+		headlabel=N,
+		label="classes-arenaquests",
+		lp="1771.6,8.4",
+		pos="475.71,2172 526.22,2172 506.96,2115.6 516.71,2066 536.69,1964.4 506.77,295.77 552.71,203 617.13,72.896 663.45,0 808.63,0 808.63,\
+0 808.63,0 2734.5,0 2891.9,0 2964.6,30.773 3048.4,164 3084,220.45 3022.7,1364 3089.4,1364",
+		shape=none,
+		tail_lp="479.21,2180.4",
+		taillabel=1];
+	classes:13 -> attendances:5	 [arrowhead=none,
+		head_lp="2663.4,6047.6",
+		headlabel=N,
+		label="classes-attendances",
+		lp="1585.1,7027.4",
+		pos="475.71,2172 573.04,2172 535.87,5579.1 552.71,5675 635.87,6148.4 603.62,6336.6 931.63,6688 1273.6,7054.4 1583.2,7105 2039.6,6898 \
+2152,6847 2160.6,6795.8 2222.6,6689 2247.2,6646.7 2229.9,6624.6 2258.6,6585 2307.5,6517.3 2351.6,6532.7 2407.9,6471 2554.7,6310.1 \
+2450.7,6056 2668.5,6056",
+		shape=none,
+		tail_lp="472.21,2163.6",
+		taillabel=1];
+	classes:13 -> bookmarks:3	 [arrowhead=none,
+		head_lp="1168,2404.6",
+		headlabel=N,
+		label="classes-bookmarks",
+		lp="808.63,2274.4",
+		pos="475.71,2172 773.98,2172 844.99,2249.4 1115.1,2376 1142.8,2389 1142.5,2413 1173.1,2413",
+		shape=none,
+		tail_lp="479.21,2163.6",
+		taillabel=1];
+	courses	 [height=4.1389,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> courses </B></i></td></tr>
+      <tr><td port="0" align="left" >title: String</td></tr>
+	<tr><td port="1" align="left" >description: String</td></tr>
+	<tr><td port="2" align="left" >content: String</td></tr>
+	<tr><td port="3" align="left" >summary: String</td></tr>
+	<tr><td port="4" align="left" >quiz: Array</td></tr>
+	<tr><td port="5" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="6" align="left" >teacherId: ObjectId</td></tr>
+	<tr><td port="7" align="left" >subjectId: ObjectId</td></tr>
+	<tr><td port="8" align="left" >chapters: Array</td></tr>
+	<tr><td port="9" align="left" >isPublished: Boolean</td></tr>
+	<tr><td port="10" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="11" align="left" >createdAt: Date</td></tr>
+	<tr><td port="12" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="13" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2333.2,2205",
+		shape=none,
+		width=1.1944];
+	classes:13 -> courses:5	 [arrowhead=none,
+		head_lp="2285.2,2217.6",
+		headlabel=N,
+		label="classes-courses",
+		lp="1393.2,992.4",
+		pos="475.71,2172 526.22,2172 506.68,2115.5 516.71,2066 568.41,1810.8 490.64,1147.8 552.71,895 593.8,727.65 575.63,637.54 721.63,546 992.3,\
+376.3 1668.2,1177.4 1844.3,1444 1899.4,1527.5 2190.2,2226 2290.2,2226",
+		shape=none,
+		tail_lp="472.21,2180.4",
+		taillabel=1];
+	exams	 [height=6.3611,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> exams </B></i></td></tr>
+      <tr><td port="0" align="left" >title: String</td></tr>
+	<tr><td port="1" align="left" >description: String</td></tr>
+	<tr><td port="2" align="left" >courseId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >teacherId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >questions: Array</td></tr>
+	<tr><td port="6" align="left" >settings.duration: Number</td></tr>
+	<tr><td port="7" align="left" >settings.attempts: Number</td></tr>
+	<tr><td port="8" align="left" >settings.startDate: Date</td></tr>
+	<tr><td port="9" align="left" >settings.endDate: Date</td></tr>
+	<tr><td port="10" align="left" >settings.shuffleQuestions: Boolean</td></tr>
+	<tr><td port="11" align="left" >settings.showResults: Boolean</td></tr>
+	<tr><td port="12" align="left" >settings.showCorrectAnswers: Boolean</td></tr>
+	<tr><td port="13" align="left" >passingScore: Number</td></tr>
+	<tr><td port="14" align="left" >proctoring.enabled: Boolean</td></tr>
+	<tr><td port="15" align="left" >proctoring.webcam: Boolean</td></tr>
+	<tr><td port="16" align="left" >proctoring.fullscreen: Boolean</td></tr>
+	<tr><td port="17" align="left" >isPublished: Boolean</td></tr>
+	<tr><td port="18" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="19" align="left" >createdAt: Date</td></tr>
+	<tr><td port="20" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="21" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2734.5,2734",
+		shape=none,
+		width=2.0972];
+	classes:13 -> exams:3	 [arrowhead=none,
+		head_lp="2654.4,2883.4",
+		headlabel=N,
+		label="classes-exams",
+		lp="1585.1,1582.4",
+		pos="475.71,2172 634.19,2172 455.14,1587.9 552.71,1463 857.99,1072.2 1225.8,1340 1662.9,1574.2 1755.3,1623.7 1776.7,1644.9 1844.3,1725 \
+1884.6,1772.8 2385.2,2641.7 2407.9,2700 2434.6,2768.7 2387.8,2814.1 2443.9,2862 2516.9,2924.3 2563.5,2875 2659.5,2875",
+		shape=none,
+		tail_lp="479.21,2180.4",
+		taillabel=1];
+	classes:13 -> grades:4	 [arrowhead=none,
+		head_lp="2265.2,3595.6",
+		headlabel=N,
+		label="classes-grades",
+		lp="1393.2,2065.4",
+		pos="475.71,2172 555.34,2172 859.6,1653 931.63,1619 1005.4,1584.2 1040.4,1586.3 1115.1,1619 1213.6,1662.2 1215.4,1710.3 1279.1,1797 1577.1,\
+2202.9 1672.3,2305.7 1844.3,2779 1875.7,2865.5 1839.9,2900.3 1880.3,2983 1980,3187.3 2120.8,3159.7 2222.6,3363 2247,3411.8 2215.6,\
+3604 2270.2,3604",
+		shape=none,
+		tail_lp="472.21,2163.6",
+		taillabel=1];
+	messages	 [height=3.8611,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> messages </B></i></td></tr>
+      <tr><td port="0" align="left" >senderId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >receiverId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >content: String</td></tr>
+	<tr><td port="4" align="left" >attachments: Array</td></tr>
+	<tr><td port="5" align="left" >isRead: Boolean</td></tr>
+	<tr><td port="6" align="left" >readAt: Date</td></tr>
+	<tr><td port="7" align="left" >messageType: String</td></tr>
+	<tr><td port="8" align="left" >isDeleted: Boolean</td></tr>
+	<tr><td port="9" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="10" align="left" >createdAt: Date</td></tr>
+	<tr><td port="11" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="12" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1215.1,3734",
+		shape=none,
+		width=1.1806];
+	classes:13 -> messages:2	 [arrowhead=none,
+		head_lp="1168,3796.6",
+		headlabel=N,
+		label="classes-messages",
+		lp="808.63,2379.4",
+		pos="475.71,2172 520.21,2172 514.67,2212.9 552.71,2236 581.68,2253.6 1095.7,2444.2 1115.1,2472 1157.4,2532.8 1098.9,3805 1173.1,3805",
+		shape=none,
+		tail_lp="479.21,2163.6",
+		taillabel=1];
+	notifications	 [height=5.5278,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> notifications </B></i></td></tr>
+      <tr><td port="0" align="left" >userId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >type: String</td></tr>
+	<tr><td port="2" align="left" >title: String</td></tr>
+	<tr><td port="3" align="left" >message: String</td></tr>
+	<tr><td port="4" align="left" >isRead: Boolean</td></tr>
+	<tr><td port="5" align="left" >readAt: Date</td></tr>
+	<tr><td port="6" align="left" >link: String</td></tr>
+	<tr><td port="7" align="left" >metadata: Mixed</td></tr>
+	<tr><td port="8" align="left" >actionUrl: String</td></tr>
+	<tr><td port="9" align="left" >actionText: String</td></tr>
+	<tr><td port="10" align="left" >priority: String</td></tr>
+	<tr><td port="11" align="left" >relatedType: String</td></tr>
+	<tr><td port="12" align="left" >relatedId: ObjectId</td></tr>
+	<tr><td port="13" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="14" align="left" >expiresAt: Date</td></tr>
+	<tr><td port="15" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="16" align="left" >createdAt: Date</td></tr>
+	<tr><td port="17" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="18" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1215.1,5634",
+		shape=none,
+		width=1.0972];
+	classes:13 -> notifications:13	 [arrowhead=none,
+		head_lp="1171,5536.6",
+		headlabel=N,
+		label="classes-notifications",
+		lp="808.63,5550.4",
+		pos="475.71,2172 574.64,2172 541.54,3852.7 552.71,3951 636.28,4686.1 338.81,5129.3 931.63,5572 996.95,5620.8 1035.3,5588.9 1115.1,5572 \
+1144.1,5565.9 1146.4,5545 1176.1,5545",
+		shape=none,
+		tail_lp="472.21,2180.4",
+		taillabel=1];
+	quizzes	 [height=4.4167,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> quizzes </B></i></td></tr>
+      <tr><td port="0" align="left" >title: String</td></tr>
+	<tr><td port="1" align="left" >description: String</td></tr>
+	<tr><td port="2" align="left" >courseId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >teacherId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >questions: Array</td></tr>
+	<tr><td port="6" align="left" >settings: Embedded</td></tr>
+	<tr><td port="7" align="left" >isAIGenerated: Boolean</td></tr>
+	<tr><td port="8" align="left" >generatedFrom: String</td></tr>
+	<tr><td port="9" align="left" >isPublished: Boolean</td></tr>
+	<tr><td port="10" align="left" >difficulty: String</td></tr>
+	<tr><td port="11" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="12" align="left" >createdAt: Date</td></tr>
+	<tr><td port="13" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="14" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2734.5,2274",
+		shape=none,
+		width=1.3472];
+	classes:13 -> quizzes:3	 [arrowhead=none,
+		head_lp="2681.4,2353.4",
+		headlabel=N,
+		label="classes-quizzes",
+		lp="1585.1,995.4",
+		pos="475.71,2172 588.7,2172 492.41,1253.6 552.71,1158 555.22,1154 1146.6,844.52 1151.1,843 1221.1,819.03 1241.3,820.47 1315.1,814 1384.3,\
+807.93 1406.8,788.4 1471.4,814 1555.5,847.36 2383.3,1748.5 2602.5,2124 2655.5,2214.7 2581.4,2345 2686.5,2345",
+		shape=none,
+		tail_lp="479.21,2180.4",
+		taillabel=1];
+	studentprogresses	 [height=3.5833,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> studentprogresses </B></i></td></tr>
+      <tr><td port="0" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >courseId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >subjectId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >chaptersProgress: Array</td></tr>
+	<tr><td port="5" align="left" >overallProgress: Number</td></tr>
+	<tr><td port="6" align="left" >totalTimeSpent: Number</td></tr>
+	<tr><td port="7" align="left" >lastAccessedAt: Date</td></tr>
+	<tr><td port="8" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="9" align="left" >createdAt: Date</td></tr>
+	<tr><td port="10" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="11" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2734.5,1751",
+		shape=none,
+		width=1.3889];
+	classes:13 -> studentprogresses:1	 [arrowhead=none,
+		head_lp="2679.4,1823.6",
+		headlabel=N,
+		label="classes-studentprogresses",
+		lp="1585.1,814.4",
+		pos="475.71,2172 655.58,2172 443.37,697.82 552.71,555 600.31,492.83 644.14,516.23 721.63,505 1156.2,442.04 1288.6,575.59 1662.9,805.2 \
+2139.5,1097.6 2275.2,1188.6 2602.5,1642 2656.3,1716.6 2592.5,1832 2684.5,1832",
+		shape=none,
+		tail_lp="472.21,2163.6",
+		taillabel=1];
+	studentquizattempts	 [height=6.6389,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> studentquizattempts </B></i></td></tr>
+      <tr><td port="0" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >courseId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >chapterId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >quizTitle: String</td></tr>
+	<tr><td port="5" align="left" >isPracticeQuiz: Boolean</td></tr>
+	<tr><td port="6" align="left" >questions: Array</td></tr>
+	<tr><td port="7" align="left" >score: Number</td></tr>
+	<tr><td port="8" align="left" >totalPoints: Number</td></tr>
+	<tr><td port="9" align="left" >percentage: Number</td></tr>
+	<tr><td port="10" align="left" >startedAt: Date</td></tr>
+	<tr><td port="11" align="left" >completedAt: Date</td></tr>
+	<tr><td port="12" align="left" >timeSpent: Number</td></tr>
+	<tr><td port="13" align="left" >aiGenerationParams.numberOfQuestions: Number</td></tr>
+	<tr><td port="14" align="left" >aiGenerationParams.difficulty: String</td></tr>
+	<tr><td port="15" align="left" >aiGenerationParams.topics: Array</td></tr>
+	<tr><td port="16" align="left" >aiGenerationParams.generatedAt: Date</td></tr>
+	<tr><td port="17" align="left" >reviewed: Boolean</td></tr>
+	<tr><td port="18" align="left" >reviewedAt: Date</td></tr>
+	<tr><td port="19" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="20" align="left" >createdAt: Date</td></tr>
+	<tr><td port="21" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="22" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2734.5,348",
+		shape=none,
+		width=2.6667];
+	classes:13 -> studentquizattempts:1	 [arrowhead=none,
+		head_lp="2633.4,530.6",
+		headlabel=N,
+		label="classes-studentquizattempts",
+		lp="1585.1,189.4",
+		pos="475.71,2172 526.22,2172 506.87,2115.5 516.71,2066 550.79,1894.3 491.62,655.04 552.71,491 615.06,323.57 629.97,181 808.63,181 808.63,\
+181 808.63,181 2333.2,181 2346.3,181 2625.4,539 2638.5,539",
+		shape=none,
+		tail_lp="479.21,2163.6",
+		taillabel=1];
+	studymaterials	 [height=5.8056,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> studymaterials </B></i></td></tr>
+      <tr><td port="0" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >courseId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >chapterId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >type: String</td></tr>
+	<tr><td port="5" align="left" >title: String</td></tr>
+	<tr><td port="6" align="left" >content: String</td></tr>
+	<tr><td port="7" align="left" >flashcards: Array</td></tr>
+	<tr><td port="8" align="left" >isAIGenerated: Boolean</td></tr>
+	<tr><td port="9" align="left" >aiGenerationParams.sourceChapterId: ObjectId</td></tr>
+	<tr><td port="10" align="left" >aiGenerationParams.summaryLength: String</td></tr>
+	<tr><td port="11" align="left" >aiGenerationParams.difficulty: String</td></tr>
+	<tr><td port="12" align="left" >aiGenerationParams.topics: Array</td></tr>
+	<tr><td port="13" align="left" >aiGenerationParams.generatedAt: Date</td></tr>
+	<tr><td port="14" align="left" >isBookmarked: Boolean</td></tr>
+	<tr><td port="15" align="left" >isFavorite: Boolean</td></tr>
+	<tr><td port="16" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="17" align="left" >createdAt: Date</td></tr>
+	<tr><td port="18" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="19" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2734.5,4385",
+		shape=none,
+		width=2.5];
+	classes:13 -> studymaterials:1	 [arrowhead=none,
+		head_lp="2639.4,4537.6",
+		headlabel=N,
+		label="classes-studymaterials",
+		lp="1585.1,6206.4",
+		pos="475.71,2172 545.69,2172 545.07,4620.4 552.71,4690 596.52,5088.9 595.26,5196.1 721.63,5577 839.19,5931.4 816.77,6132.7 1151.1,6299 \
+1367,6406.4 1649.2,6061 1662.9,6045 1950.6,5707.8 1820.5,5499.6 2075.6,5137 2194.1,4968.6 2262.8,4960.1 2407.9,4814 2496,4725.3 \
+2525,4709 2602.5,4611 2623.8,4584 2610.1,4546 2644.5,4546",
+		shape=none,
+		tail_lp="472.21,2180.4",
+		taillabel=1];
+	users	 [height=13.583,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> users </B></i></td></tr>
+      <tr><td port="0" align="left" >firstName: String</td></tr>
+	<tr><td port="1" align="left" >lastName: String</td></tr>
+	<tr><td port="2" align="left" >cin: String</td></tr>
+	<tr><td port="3" align="left" >email: String</td></tr>
+	<tr><td port="4" align="left" >password: String</td></tr>
+	<tr><td port="5" align="left" >role: String</td></tr>
+	<tr><td port="6" align="left" >firstNameArabic: String</td></tr>
+	<tr><td port="7" align="left" >lastNameArabic: String</td></tr>
+	<tr><td port="8" align="left" >studentId: String</td></tr>
+	<tr><td port="9" align="left" >employeeId: String</td></tr>
+	<tr><td port="10" align="left" >phoneNumber: String</td></tr>
+	<tr><td port="11" align="left" >parentPhoneNumber: String</td></tr>
+	<tr><td port="12" align="left" >profileImage: String</td></tr>
+	<tr><td port="13" align="left" >isActive: Boolean</td></tr>
+	<tr><td port="14" align="left" >isEmailVerified: Boolean</td></tr>
+	<tr><td port="15" align="left" >dateOfBirth: Date</td></tr>
+	<tr><td port="16" align="left" >placeOfBirth: String</td></tr>
+	<tr><td port="17" align="left" >governorateOfBirth: String</td></tr>
+	<tr><td port="18" align="left" >nationality: String</td></tr>
+	<tr><td port="19" align="left" >gender: String</td></tr>
+	<tr><td port="20" align="left" >address.street: String</td></tr>
+	<tr><td port="21" align="left" >address.postalCode: String</td></tr>
+	<tr><td port="22" align="left" >address.city: String</td></tr>
+	<tr><td port="23" align="left" >address.governorate: String</td></tr>
+	<tr><td port="24" align="left" >student.fileNumber: String</td></tr>
+	<tr><td port="25" align="left" >student.enrollmentDate: Date</td></tr>
+	<tr><td port="26" align="left" >student.departmentId: ObjectId</td></tr>
+	<tr><td port="27" align="left" >student.programId: ObjectId</td></tr>
+	<tr><td port="28" align="left" >student.level: String</td></tr>
+	<tr><td port="29" align="left" >student.classId: ObjectId</td></tr>
+	<tr><td port="30" align="left" >student.hasScholarship: Boolean</td></tr>
+	<tr><td port="31" align="left" >student.scholarshipType: String</td></tr>
+	<tr><td port="32" align="left" >student.hasHousing: Boolean</td></tr>
+	<tr><td port="33" align="left" >student.academicYear: String</td></tr>
+	<tr><td port="34" align="left" >teacher.employeeId: String</td></tr>
+	<tr><td port="35" align="left" >teacher.academicRank: String</td></tr>
+	<tr><td port="36" align="left" >teacher.departmentId: ObjectId</td></tr>
+	<tr><td port="37" align="left" >teacher.specializations: Array</td></tr>
+	<tr><td port="38" align="left" >teacher.diplomas: Array</td></tr>
+	<tr><td port="39" align="left" >teacher.teachingHoursPerWeek: Number</td></tr>
+	<tr><td port="40" align="left" >teacher.hireDate: Date</td></tr>
+	<tr><td port="41" align="left" >refreshToken: String</td></tr>
+	<tr><td port="42" align="left" >resetPasswordToken: String</td></tr>
+	<tr><td port="43" align="left" >resetPasswordExpires: Date</td></tr>
+	<tr><td port="44" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="45" align="left" >createdAt: Date</td></tr>
+	<tr><td port="46" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="47" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="808.63,4338",
+		shape=none,
+		width=2.1806];
+	classes:13 -> users:29	 [arrowhead=none,
+		head_lp="725.57,4227.4",
+		headlabel=N,
+		label="classes-users",
+		lp="619.17,2878.4",
+		pos="475.71,2172 547.55,2172 532.39,2417.1 552.71,2486 603.82,2659.3 652.71,2692.5 685.63,2870.2 692.46,2907.1 693.14,4219 730.63,4219",
+		shape=none,
+		tail_lp="479.21,2180.4",
+		taillabel=1];
+	videosessions	 [height=9.1389,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> videosessions </B></i></td></tr>
+      <tr><td port="0" align="left" >title: String</td></tr>
+	<tr><td port="1" align="left" >description: String</td></tr>
+	<tr><td port="2" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >subjectId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >teacherId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >scheduleId: ObjectId</td></tr>
+	<tr><td port="6" align="left" >scheduledStart: Date</td></tr>
+	<tr><td port="7" align="left" >scheduledEnd: Date</td></tr>
+	<tr><td port="8" align="left" >actualStart: Date</td></tr>
+	<tr><td port="9" align="left" >actualEnd: Date</td></tr>
+	<tr><td port="10" align="left" >meetingUrl: String</td></tr>
+	<tr><td port="11" align="left" >meetingId: String</td></tr>
+	<tr><td port="12" align="left" >recordingUrl: String</td></tr>
+	<tr><td port="13" align="left" >attendanceThreshold: Number</td></tr>
+	<tr><td port="14" align="left" >gracePeriod: Number</td></tr>
+	<tr><td port="15" align="left" >participants: Array</td></tr>
+	<tr><td port="16" align="left" >attendance: Array</td></tr>
+	<tr><td port="17" align="left" >statistics.totalParticipants: Number</td></tr>
+	<tr><td port="18" align="left" >statistics.maxConcurrent: Number</td></tr>
+	<tr><td port="19" align="left" >statistics.averageDuration: Number</td></tr>
+	<tr><td port="20" align="left" >statistics.attendanceRate: Number</td></tr>
+	<tr><td port="21" align="left" >statistics.lateCount: Number</td></tr>
+	<tr><td port="22" align="left" >statistics.absentCount: Number</td></tr>
+	<tr><td port="23" align="left" >recording.isRecorded: Boolean</td></tr>
+	<tr><td port="24" align="left" >recording.recordingFile: String</td></tr>
+	<tr><td port="25" align="left" >recording.recordingSize: Number</td></tr>
+	<tr><td port="26" align="left" >recording.recordingDuration: Number</td></tr>
+	<tr><td port="27" align="left" >status: String</td></tr>
+	<tr><td port="28" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="29" align="left" >createdAt: Date</td></tr>
+	<tr><td port="30" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="31" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2333.2,6106",
+		shape=none,
+		width=2.0417];
+	classes:13 -> videosessions:2	 [arrowhead=none,
+		head_lp="2255.2,6358.6",
+		headlabel=N,
+		label="classes-videosessions",
+		lp="1393.2,6728.4",
+		pos="475.71,2172 562.35,2172 541.7,5204.1 552.71,5290 594.53,5616.5 602.69,5704.1 721.63,6011 856.69,6359.5 823.7,6553.7 1151.1,6734 \
+1200.9,6761.4 1223.1,6744.1 1279.1,6734 1286.2,6732.7 2253,6367 2260.2,6367",
+		shape=none,
+		tail_lp="472.21,2163.6",
+		taillabel=1];
+	worksubmissions	 [height=4.4167,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> worksubmissions </B></i></td></tr>
+      <tr><td port="0" align="left" >chapterId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >exerciseId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >classId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >subjectId: ObjectId</td></tr>
+	<tr><td port="4" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >fileUrl: String</td></tr>
+	<tr><td port="6" align="left" >fileName: String</td></tr>
+	<tr><td port="7" align="left" >fileSize: Number</td></tr>
+	<tr><td port="8" align="left" >submittedAt: Date</td></tr>
+	<tr><td port="9" align="left" >feedback: String</td></tr>
+	<tr><td port="10" align="left" >grade: Number</td></tr>
+	<tr><td port="11" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="12" align="left" >createdAt: Date</td></tr>
+	<tr><td port="13" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="14" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2333.2,3023",
+		shape=none,
+		width=1.1528];
+	classes:13 -> worksubmissions:2	 [arrowhead=none,
+		head_lp="2287.2,3105.6",
+		headlabel=N,
+		label="classes-worksubmissions",
+		lp="1393.2,1601.4",
+		pos="475.71,2172 605.51,2172 465.95,1689.5 552.71,1593 769.48,1351.8 971.8,1419.2 1279.1,1523 1578.4,1624.1 1695.4,1675.4 1844.3,1954 \
+1904.7,2067.1 1836.4,2409.5 1880.3,2530 1967.9,2770.8 2082,2779.7 2222.6,2994 2256.4,3045.6 2230.6,3114 2292.2,3114",
+		shape=none,
+		tail_lp="479.21,2163.6",
+		taillabel=1];
+	courses:10 -> aisummaries:0	 [arrowhead=none,
+		head_lp="2667.4,1517.4",
+		headlabel=N,
+		label="courses-aisummaries",
+		lp="2523.2,1796.4",
+		pos="2376.2,2126 2452.8,2126 2411.1,1857.4 2443.9,1788.2 2512.5,1643.2 2512.1,1509 2672.5,1509",
+		shape=none,
+		tail_lp="2379.7,2117.6",
+		taillabel=1];
+	courses:10 -> arenaquests:4	 [arrowhead=none,
+		head_lp="3084.4,1315.6",
+		headlabel=N,
+		label="courses-arenaquests",
+		lp="2734.5,2047.4",
+		pos="2376.2,2126 2487.5,2126 2752.7,1995.4 2830.5,1916 3031.5,1710.8 2802.3,1324 3089.4,1324",
+		shape=none,
+		tail_lp="2379.7,2134.4",
+		taillabel=1];
+	courses:10 -> exams:2	 [arrowhead=none,
+		head_lp="2654.4,2903.4",
+		headlabel=N,
+		label="courses-exams",
+		lp="2523.2,2578.4",
+		pos="2376.2,2126 2488.8,2126 2392.9,2269.7 2443.9,2370 2495.3,2471.2 2556,2466.6 2602.5,2570.2 2632.5,2637.1 2586.2,2895 2659.5,2895",
+		shape=none,
+		tail_lp="2372.7,2134.4",
+		taillabel=1];
+	courses:10 -> quizzes:2	 [arrowhead=none,
+		head_lp="2681.4,2373.4",
+		headlabel=N,
+		label="courses-quizzes",
+		lp="2523.2,2343.4",
+		pos="2376.2,2126 2550.3,2126 2512.4,2365 2686.5,2365",
+		shape=none,
+		tail_lp="2379.7,2134.4",
+		taillabel=1];
+	selfquizzes	 [height=3.0278,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> selfquizzes </B></i></td></tr>
+      <tr><td port="0" align="left" >courseId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >questions: Array</td></tr>
+	<tr><td port="3" align="left" >score: Number</td></tr>
+	<tr><td port="4" align="left" >completed: Boolean</td></tr>
+	<tr><td port="5" align="left" >quizType: String</td></tr>
+	<tr><td port="6" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="7" align="left" >createdAt: Date</td></tr>
+	<tr><td port="8" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="9" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="2734.5,3144",
+		shape=none,
+		width=1.1389];
+	courses:10 -> selfquizzes:0	 [arrowhead=none,
+		head_lp="2688.4,3216.6",
+		headlabel=N,
+		label="courses-selfquizzes",
+		lp="2523.2,2745.4",
+		pos="2376.2,2126 2481.5,2126 2394.2,2502.2 2443.9,2595 2488.6,2678.5 2558.1,2653.6 2602.5,2737.2 2657.6,2840.9 2616.6,2883.6 2638.5,2999 \
+2657.8,3100.6 2590.1,3225 2693.5,3225",
+		shape=none,
+		tail_lp="2372.7,2117.6",
+		taillabel=1];
+	courses:10 -> studentprogresses:2	 [arrowhead=none,
+		head_lp="2679.4,1803.6",
+		headlabel=N,
+		label="courses-studentprogresses",
+		lp="2523.2,1962.4",
+		pos="2376.2,2126 2458.3,2126 2390.6,2016.6 2443.9,1954.2 2524.5,1859.7 2560.3,1812 2684.5,1812",
+		shape=none,
+		tail_lp="2379.7,2117.6",
+		taillabel=1];
+	courses:10 -> studentquizattempts:2	 [arrowhead=none,
+		head_lp="2633.4,510.6",
+		headlabel=N,
+		label="courses-studentquizattempts",
+		lp="2523.2,1494.4",
+		pos="2376.2,2126 2447.7,2126 2433.1,1556.9 2443.9,1486.2 2510.3,1052.8 2200,519 2638.5,519",
+		shape=none,
+		tail_lp="2372.7,2134.4",
+		taillabel=1];
+	courses:10 -> studymaterials:2	 [arrowhead=none,
+		head_lp="2639.4,4517.6",
+		headlabel=N,
+		label="courses-studymaterials",
+		lp="2523.2,3883.4",
+		pos="2376.2,2126 2448,2126 2435,2696.8 2443.9,2768 2505.2,3261.3 2551.2,3380.7 2602.5,3875.2 2606.2,3911.2 2608.3,4526 2644.5,4526",
+		shape=none,
+		tail_lp="2379.7,2134.4",
+		taillabel=1];
+	departments	 [height=4.9722,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> departments </B></i></td></tr>
+      <tr><td port="0" align="left" >name: String</td></tr>
+	<tr><td port="1" align="left" >nameArabic: String</td></tr>
+	<tr><td port="2" align="left" >code: String</td></tr>
+	<tr><td port="3" align="left" >description: String</td></tr>
+	<tr><td port="4" align="left" >headOfDepartmentId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >headOfDepartmentName: String</td></tr>
+	<tr><td port="6" align="left" >teachers: Array</td></tr>
+	<tr><td port="7" align="left" >email: String</td></tr>
+	<tr><td port="8" align="left" >phone: String</td></tr>
+	<tr><td port="9" align="left" >statistics.totalTeachers: Number</td></tr>
+	<tr><td port="10" align="left" >statistics.totalStudents: Number</td></tr>
+	<tr><td port="11" align="left" >statistics.totalPrograms: Number</td></tr>
+	<tr><td port="12" align="left" >isActive: Boolean</td></tr>
+	<tr><td port="13" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="14" align="left" >createdAt: Date</td></tr>
+	<tr><td port="15" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="16" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1215.1,6084",
+		shape=none,
+		width=1.7639];
+	departments:13 -> classes:2	 [arrowhead=none,
+		head_lp="480.76,2383.6",
+		headlabel=N,
+		label="departments-classes",
+		lp="808.63,5984.4",
+		pos="1152.1,5975 1129.7,5975 1135.9,6000.9 1115.1,6009 1039.1,6038.6 1000.7,6052.2 931.63,6009 414.59,5685.4 620.18,5296.2 552.71,4690 \
+545.65,4626.5 539.58,2392 475.71,2392",
+		shape=none,
+		tail_lp="1148.6,5966.6",
+		taillabel=1];
+	studyprograms	 [height=5.8056,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> studyprograms </B></i></td></tr>
+      <tr><td port="0" align="left" >name: String</td></tr>
+	<tr><td port="1" align="left" >nameArabic: String</td></tr>
+	<tr><td port="2" align="left" >code: String</td></tr>
+	<tr><td port="3" align="left" >description: String</td></tr>
+	<tr><td port="4" align="left" >departmentId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >programType: String</td></tr>
+	<tr><td port="6" align="left" >duration.years: Number</td></tr>
+	<tr><td port="7" align="left" >duration.semesters: Number</td></tr>
+	<tr><td port="8" align="left" >level: String</td></tr>
+	<tr><td port="9" align="left" >domain: String</td></tr>
+	<tr><td port="10" align="left" >mention: String</td></tr>
+	<tr><td port="11" align="left" >speciality: String</td></tr>
+	<tr><td port="12" align="left" >teachingUnits: Array</td></tr>
+	<tr><td port="13" align="left" >coordinatorId: ObjectId</td></tr>
+	<tr><td port="14" align="left" >coordinatorName: String</td></tr>
+	<tr><td port="15" align="left" >isActive: Boolean</td></tr>
+	<tr><td port="16" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="17" align="left" >createdAt: Date</td></tr>
+	<tr><td port="18" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="19" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1585.1,5800",
+		shape=none,
+		width=1.5417];
+	departments:13 -> studyprograms:4	 [arrowhead=none,
+		head_lp="1525.1,5892.6",
+		headlabel=N,
+		label="departments-studyprograms",
+		lp="1393.2,5980.4",
+		pos="1279.1,5975 1395.4,5975 1413.8,5901 1530.1,5901",
+		shape=none,
+		tail_lp="1282.6,5966.6",
+		taillabel=1];
+	teachingunits	 [height=4.4167,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> teachingunits </B></i></td></tr>
+      <tr><td port="0" align="left" >name: String</td></tr>
+	<tr><td port="1" align="left" >nameArabic: String</td></tr>
+	<tr><td port="2" align="left" >code: String</td></tr>
+	<tr><td port="3" align="left" >description: String</td></tr>
+	<tr><td port="4" align="left" >departmentId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >programIds: Array</td></tr>
+	<tr><td port="6" align="left" >unitType: String</td></tr>
+	<tr><td port="7" align="left" >subjects: Array</td></tr>
+	<tr><td port="8" align="left" >totalCredits: Number</td></tr>
+	<tr><td port="9" align="left" >totalCoefficient: Number</td></tr>
+	<tr><td port="10" align="left" >isActive: Boolean</td></tr>
+	<tr><td port="11" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="12" align="left" >createdAt: Date</td></tr>
+	<tr><td port="13" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="14" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1585.1,4980",
+		shape=none,
+		width=1.3889];
+	departments:13 -> teachingunits:4	 [arrowhead=none,
+		head_lp="1530.1,5022.6",
+		headlabel=N,
+		label="departments-teachingunits",
+		lp="1393.2,5978.4",
+		pos="1279.1,5975 1713.8,5975 1100.4,5031 1535.1,5031",
+		shape=none,
+		tail_lp="1282.6,5983.4",
+		taillabel=1];
+	departments:13 -> users:26	 [arrowhead=none,
+		head_lp="892.68,4270.6",
+		headlabel=N,
+		label="departments-users",
+		lp="1023.3,5982.4",
+		pos="1152.1,5975 1041.8,5975 990.28,5954.4 931.63,5861 884.87,5786.5 975.55,4279 887.63,4279",
+		shape=none,
+		tail_lp="1148.6,5983.4",
+		taillabel=1];
+	departments:13 -> users:36	 [arrowhead=none,
+		head_lp="892.68,4070.6",
+		headlabel=N,
+		label="departments-users",
+		lp="1023.3,5562.4",
+		pos="1152.1,5975 1105.1,5975 1142.8,5592.1 1115.1,5554.2 1062.9,5483 981.79,5550.6 931.63,5478 887.45,5414 965.39,4079 887.63,4079",
+		shape=none,
+		tail_lp="1148.6,5983.4",
+		taillabel=1];
+	submissions	 [height=4.9722,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> submissions </B></i></td></tr>
+      <tr><td port="0" align="left" >quizId: ObjectId</td></tr>
+	<tr><td port="1" align="left" >examId: ObjectId</td></tr>
+	<tr><td port="2" align="left" >studentId: ObjectId</td></tr>
+	<tr><td port="3" align="left" >answers: Array</td></tr>
+	<tr><td port="4" align="left" >score: Number</td></tr>
+	<tr><td port="5" align="left" >totalPoints: Number</td></tr>
+	<tr><td port="6" align="left" >percentage: Number</td></tr>
+	<tr><td port="7" align="left" >attemptNumber: Number</td></tr>
+	<tr><td port="8" align="left" >startedAt: Date</td></tr>
+	<tr><td port="9" align="left" >submittedAt: Date</td></tr>
+	<tr><td port="10" align="left" >timeSpent: Number</td></tr>
+	<tr><td port="11" align="left" >status: String</td></tr>
+	<tr><td port="12" align="left" >mistakeExplanation: String</td></tr>
+	<tr><td port="13" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="14" align="left" >createdAt: Date</td></tr>
+	<tr><td port="15" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="16" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="3138.4,3325",
+		shape=none,
+		width=1.5];
+	exams:18 -> submissions:1	 [arrowhead=none,
+		head_lp="3079.4,3447.6",
+		headlabel=N,
+		label="exams-submissions",
+		lp="2957.5,3354.4",
+		pos="2810.5,2575 2836.1,2575 3058.8,3456 3084.4,3456",
+		shape=none,
+		tail_lp="2814,2566.6",
+		taillabel=1];
+	quizzes:11 -> submissions:0	 [arrowhead=none,
+		head_lp="3079.4,3467.6",
+		headlabel=N,
+		label="quizzes-submissions",
+		lp="2957.5,3483.4",
+		pos="2783.5,2185 2916.7,2185 2791.3,3271 2866.5,3381 2926.1,3468.2 2978.8,3476 3084.4,3476",
+		shape=none,
+		tail_lp="2787,2176.6",
+		taillabel=1];
+	schedules	 [height=3.3056,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> schedules </B></i></td></tr>
+      <tr><td port="0" align="left" >title: String</td></tr>
+	<tr><td port="1" align="left" >academicYearId: String</td></tr>
+	<tr><td port="2" align="left" >semester: Number</td></tr>
+	<tr><td port="3" align="left" >targetType: String</td></tr>
+	<tr><td port="4" align="left" >targetId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >entries: Array</td></tr>
+	<tr><td port="6" align="left" >isPublished: Boolean</td></tr>
+	<tr><td port="7" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="8" align="left" >createdAt: Date</td></tr>
+	<tr><td port="9" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="10" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1959.9,6743",
+		shape=none,
+		width=1.3194];
+	schedules:7 -> attendances:1	 [arrowhead=none,
+		head_lp="2663.4,6127.6",
+		headlabel=N,
+		label="schedules-attendances",
+		lp="2333.2,6671.4",
+		pos="2007.9,6694 2103.4,6694 2136.6,6725.6 2222.6,6684 2335.5,6629.3 2328.2,6567.9 2407.9,6471 2467.8,6398.2 2574.2,6136 2668.5,6136",
+		shape=none,
+		tail_lp="2011.4,6685.6",
+		taillabel=1];
+	schedules:7 -> videosessions:5	 [arrowhead=none,
+		head_lp="2255.2,6298.6",
+		headlabel=N,
+		label="schedules-videosessions",
+		lp="2149.1,6662.4",
+		pos="2007.9,6694 2009.7,6694 2221.6,6571.4 2222.6,6570 2255.7,6521.1 2201.2,6307 2260.2,6307",
+		shape=none,
+		tail_lp="2011.4,6702.4",
+		taillabel=1];
+	studentquizattempts:19 -> arenaquests:6	 [arrowhead=none,
+		head_lp="3084.4,1275.6",
+		headlabel=N,
+		label="studentquizattempts-arenaquests",
+		lp="2957.5,633.4",
+		pos="2830.5,179 3050.8,179 2992.1,411.22 3048.4,624.2 3057.8,659.7 3052.7,1284 3089.4,1284",
+		shape=none,
+		tail_lp="2834,170.6",
+		taillabel=1];
+	studyprograms:16 -> classes:3	 [arrowhead=none,
+		head_lp="480.76,2363.6",
+		headlabel=N,
+		label="studyprograms-classes",
+		lp="1023.3,6360.4",
+		pos="1530.1,5661 1453.9,5661 1342,6256.1 1279.1,6299 1048.6,6456 880.25,6240.4 721.63,6011 534.41,5740.3 594.81,5616.4 552.71,5290 542.34,\
+5209.6 556.79,2372 475.71,2372",
+		shape=none,
+		tail_lp="1526.6,5652.6",
+		taillabel=1];
+	studyprograms:16 -> users:27	 [arrowhead=none,
+		head_lp="892.68,4250.6",
+		headlabel=N,
+		label="studyprograms-users",
+		lp="1215.1,5390.4",
+		pos="1530.1,5661 1363.4,5661 1397.8,5499.3 1279.1,5382.2 1225.2,5329.1 1206.8,5321.2 1151.1,5270 1051.4,5178.5 988.03,5182 931.63,5059 \
+894.52,4978.1 976.65,4259 887.63,4259",
+		shape=none,
+		tail_lp="1526.6,5669.4",
+		taillabel=1];
+	subjects	 [height=5.5278,
+		label=<<table BGCOLOR="#4477c9"  border="0" cellborder="1" cellspacing="0" cellpadding="4">
+  <tr><td  bgcolor="lightblue"  align="center" cellpadding="3"><i><B> subjects </B></i></td></tr>
+      <tr><td port="0" align="left" >name: String</td></tr>
+	<tr><td port="1" align="left" >nameArabic: String</td></tr>
+	<tr><td port="2" align="left" >code: String</td></tr>
+	<tr><td port="3" align="left" >description: String</td></tr>
+	<tr><td port="4" align="left" >teachingUnitId: ObjectId</td></tr>
+	<tr><td port="5" align="left" >semester: Number</td></tr>
+	<tr><td port="6" align="left" >credits: Number</td></tr>
+	<tr><td port="7" align="left" >coefficient: Number</td></tr>
+	<tr><td port="8" align="left" >hoursDistribution.lecture: Number</td></tr>
+	<tr><td port="9" align="left" >hoursDistribution.tutorial: Number</td></tr>
+	<tr><td port="10" align="left" >hoursDistribution.practical: Number</td></tr>
+	<tr><td port="11" align="left" >hoursDistribution.total: Number</td></tr>
+	<tr><td port="12" align="left" >evaluation.examWeight: Number</td></tr>
+	<tr><td port="13" align="left" >evaluation.continuousWeight: Number</td></tr>
+	<tr><td port="14" align="left" >isActive: Boolean</td></tr>
+	<tr><td port="15" align="left" >_id: ObjectId</td></tr>
+	<tr><td port="16" align="left" >createdAt: Date</td></tr>
+	<tr><td port="17" align="left" >updatedAt: Date</td></tr>
+	<tr><td port="18" align="left" >__v: Number</td></tr>
+
+  </table>>,
+		margin=0,
+		pos="1959.9,3820",
+		shape=none,
+		width=2.0694];
+	subjects:15 -> arenaquests:3	 [arrowhead=none,
+		head_lp="3084.4,1335.6",
+		headlabel=N,
+		label="subjects-arenaquests",
+		lp="2523.2,3824.4",
+		pos="2034.9,3691 2090,3691 2033.2,3772.9 2075.6,3808 2189.8,3902.5 2274.9,3900.2 2407.9,3835 2683.4,3699.9 2712.3,3572.2 2830.5,3289 \
+2830.5,3289 3089.4,1344 3089.4,1344",
+		shape=none,
+		tail_lp="2038.4,3682.6",
+		taillabel=1];
+	subjects:15 -> attendances:3	 [arrowhead=none,
+		head_lp="2663.4,6087.6",
+		headlabel=N,
+		label="subjects-attendances",
+		lp="2333.2,4787.4",
+		pos="2034.9,3691 2077.2,3691 2064.8,4028.2 2075.6,4069 2225.7,4634.7 2460,4708.3 2602.5,5276 2624.8,5364.7 2577.1,6096 2668.5,6096",
+		shape=none,
+		tail_lp="2038.4,3699.4",
+		taillabel=1];
+	subjects:15 -> courses:7	 [arrowhead=none,
+		head_lp="2285.2,2177.6",
+		headlabel=N,
+		label="subjects-courses",
+		lp="2149.1,3227.4",
+		pos="2034.9,3691 2087.6,3691 2068,3271.3 2075.6,3219.2 2084.1,3161.2 2231.6,2186 2290.2,2186",
+		shape=none,
+		tail_lp="2031.4,3699.4",
+		taillabel=1];
+	subjects:15 -> grades:2	 [arrowhead=none,
+		head_lp="2265.2,3635.6",
+		headlabel=N,
+		label="subjects-grades",
+		lp="2149.1,3695.4",
+		pos="2034.9,3691 2141.6,3691 2163.6,3644 2270.2,3644",
+		shape=none,
+		tail_lp="2038.4,3699.4",
+		taillabel=1];
+	subjects:15 -> studentprogresses:3	 [arrowhead=none,
+		head_lp="2679.4,1783.6",
+		headlabel=N,
+		label="subjects-studentprogresses",
+		lp="2333.2,3808.4",
+		pos="2034.9,3691 2057.7,3691 2054.6,3713.2 2075.6,3722 2212.3,3779.2 2301.2,3850.8 2407.9,3748 2486.1,3672.6 2385.7,2862.7 2443.9,2771 \
+2486.4,2704 2559.7,2755.8 2602.5,2689 2649.9,2614.9 2618.7,1983.7 2638.5,1898 2650.1,1848 2633.1,1792 2684.5,1792",
+		shape=none,
+		tail_lp="2031.4,3682.6",
+		taillabel=1];
+	subjects:15 -> videosessions:3	 [arrowhead=none,
+		head_lp="2255.2,6338.6",
+		headlabel=N,
+		label="subjects-videosessions",
+		lp="2149.1,5365.4",
+		pos="2034.9,3691 2070,3691 2069,4916.6 2075.6,4951 2111.8,5139.5 2185.8,5168.8 2222.6,5357.2 2233.1,5411.2 2205.2,6347 2260.2,6347",
+		shape=none,
+		tail_lp="2038.4,3682.6",
+		taillabel=1];
+	subjects:15 -> worksubmissions:3	 [arrowhead=none,
+		head_lp="2287.2,3085.6",
+		headlabel=N,
+		label="subjects-worksubmissions",
+		lp="2149.1,3612.4",
+		pos="2034.9,3691 2053,3691 2274.2,3094 2292.2,3094",
+		shape=none,
+		tail_lp="2031.4,3699.4",
+		taillabel=1];
+	teachingunits:11 -> subjects:4	 [arrowhead=none,
+		head_lp="1880.9,3902.6",
+		headlabel=N,
+		label="teachingunits-subjects",
+		lp="1771.6,4432.4",
+		pos="1635.1,4891 1739.8,4891 1647,4515.1 1698.9,4424.2 1739.7,4352.6 1804.6,4381.3 1844.3,4309 1887.1,4231.1 1797,3911 1885.9,3911",
+		shape=none,
+		tail_lp="1638.6,4882.6",
+		taillabel=1];
+	users:44 -> aisummaries:2	 [arrowhead=none,
+		head_lp="2667.4,1477.4",
+		headlabel=N,
+		label="users-aisummaries",
+		lp="1771.6,2142.4",
+		pos="887.63,3919 954.95,3919 895.02,2764.5 931.63,2708 1025.2,2563.6 1136.2,2633 1279.1,2537 1926.7,2101.8 1892.2,1469 2672.5,1469",
+		shape=none,
+		tail_lp="891.13,3910.6",
+		taillabel=1];
+	users:44 -> announcements:2	 [arrowhead=none,
+		head_lp="1167,2134.6",
+		headlabel=N,
+		label="users-announcements",
+		lp="1023.3,2444.4",
+		pos="887.63,3919 970.04,3919 902.73,2513.4 931.63,2436.2 990.72,2278.4 1003.5,2143 1172.1,2143",
+		shape=none,
+		tail_lp="891.13,3927.4",
+		taillabel=1];
+	users:44 -> arenaprogresses:1	 [arrowhead=none,
+		head_lp="1146,1120.6",
+		headlabel=N,
+		label="users-arenaprogresses",
+		lp="1023.3,1693.4",
+		pos="887.63,3919 949.69,3919 919.43,1746.1 931.63,1685.2 938.15,1652.6 1117.8,1129 1151.1,1129",
+		shape=none,
+		tail_lp="884.13,3927.4",
+		taillabel=1];
+	users:44 -> arenaquests:1	 [arrowhead=none,
+		head_lp="3084.4,1375.6",
+		headlabel=N,
+		label="users-arenaquests",
+		lp="1959.9,2932.4",
+		pos="887.63,3919 943.07,3919 900.42,3467.8 931.63,3422 1249.4,2955.4 1536.8,3038.6 2075.6,2870 2217.7,2825.6 2286.6,2741.7 2407.9,2828 \
+2447.7,2856.4 2424.1,2887.3 2443.9,2932 2516.9,3097.3 2489.9,3186.1 2638.5,3289 2788.8,3393 2917.9,3448.8 3048.4,3321 3086.9,3283.4 \
+3035.6,1384 3089.4,1384",
+		shape=none,
+		tail_lp="884.13,3910.6",
+		taillabel=1];
+	users:44 -> attendances:7	 [arrowhead=none,
+		head_lp="2663.4,6007.6",
+		headlabel=N,
+		label="users-attendances",
+		lp="1771.6,5391.4",
+		pos="887.63,3919 981.98,3919 886.44,4684.2 931.63,4767 979.73,4855.2 1037,4835.8 1115.1,4899 1191.6,4961 1217.2,4971.4 1279.1,5048 1299.1,\
+5072.8 1292.1,5088 1315.1,5110 1371.7,5164.3 1402.8,5153.9 1471.4,5192 1893.2,5426.1 2030.1,5440.9 2407.9,5741 2539.7,5845.7 2500.1,\
+6016 2668.5,6016",
+		shape=none,
+		tail_lp="891.13,3927.4",
+		taillabel=1];
+	users:44 -> attendances:24	 [arrowhead=none,
+		head_lp="2663.4,5667.6",
+		headlabel=N,
+		label="users-attendances",
+		lp="1771.6,4846.4",
+		pos="887.63,3919 965.78,3919 880.9,4561.5 931.63,4621 1147.8,4874.4 1346.4,4681.1 1662.9,4785 1921,4869.8 2013,4858 2222.6,5031 2491.4,\
+5252.8 2320,5676 2668.5,5676",
+		shape=none,
+		tail_lp="891.13,3910.6",
+		taillabel=1];
+	users:44 -> bookmarks:0	 [arrowhead=none,
+		head_lp="1168,2464.6",
+		headlabel=N,
+		label="users-bookmarks",
+		lp="1023.3,2551.4",
+		pos="887.63,3919 964.1,3919 884.75,2603.6 931.63,2543.2 1000.1,2454.9 1061.3,2473 1173.1,2473",
+		shape=none,
+		tail_lp="884.13,3927.4",
+		taillabel=1];
+	users:44 -> classes:11	 [arrowhead=none,
+		head_lp="480.76,2203.6",
+		headlabel=N,
+		label="users-classes",
+		lp="619.17,3924.4",
+		pos="730.63,3919 273.08,3919 617.54,3357.9 552.71,2905 541.73,2828.3 553.18,2212 475.71,2212",
+		shape=none,
+		tail_lp="727.13,3927.4",
+		taillabel=1];
+	users:44 -> courses:6	 [arrowhead=none,
+		head_lp="2285.2,2197.6",
+		headlabel=N,
+		label="users-courses",
+		lp="1585.1,2764.4",
+		pos="887.63,3919 990.63,3919 871.74,3076.8 931.63,2993 1081.6,2783 1244.2,2901.4 1471.4,2779 1862.4,2568.4 1846,2206 2290.2,2206",
+		shape=none,
+		tail_lp="891.13,3927.4",
+		taillabel=1];
+	users:44 -> departments:4	 [arrowhead=none,
+		head_lp="1147,6146.6",
+		headlabel=N,
+		label="users-departments",
+		lp="1023.3,5838.4",
+		pos="887.63,3919 934.03,3919 916.23,5545.2 931.63,5589 976.32,5716 1064.9,5705.2 1115.1,5830.2 1142.1,5897.6 1079.4,6155 1152.1,6155",
+		shape=none,
+		tail_lp="884.13,3910.6",
+		taillabel=1];
+	users:44 -> exams:4	 [arrowhead=none,
+		head_lp="2654.4,2863.4",
+		headlabel=N,
+		label="users-exams",
+		lp="1771.6,4136.4",
+		pos="887.63,3919 930.56,3919 900.32,3975.6 931.63,4005 1031.8,4099 1077.7,4128 1215.1,4128 1215.1,4128 1215.1,4128 2149.1,4128 2322.8,\
+4128 2326.5,3988.5 2407.9,3835 2434.2,3785.3 2603.3,2855 2659.5,2855",
+		shape=none,
+		tail_lp="891.13,3910.6",
+		taillabel=1];
+	users:44 -> grades:0	 [arrowhead=none,
+		head_lp="2265.2,3675.6",
+		headlabel=N,
+		label="users-grades",
+		lp="1585.1,3794.4",
+		pos="887.63,3919 909.49,3919 910.35,3936 931.63,3941 1082.5,3976.6 1133.1,3961.2 1279.1,3909 1564.9,3806.8 1586,3659.3 1880.3,3585 2029.1,\
+3547.5 2091.3,3550.5 2222.6,3630 2250,3646.6 2238.2,3684 2270.2,3684",
+		shape=none,
+		tail_lp="884.13,3927.4",
+		taillabel=1];
+	users:44 -> grades:15	 [arrowhead=none,
+		head_lp="2265.2,3375.6",
+		headlabel=N,
+		label="users-grades",
+		lp="1585.1,3423.4",
+		pos="887.63,3919 952.43,3919 898.08,3835.4 931.63,3780 1003.3,3661.6 1027.8,3621.9 1151.1,3559 1599.5,3330.1 1766.8,3384 2270.2,3384",
+		shape=none,
+		tail_lp="891.13,3927.4",
+		taillabel=1];
+	users:44 -> messages:0	 [arrowhead=none,
+		head_lp="1168,3836.6",
+		headlabel=N,
+		label="users-messages",
+		lp="1023.3,3917.4",
+		pos="887.63,3919 920.39,3919 1140.3,3845 1173.1,3845",
+		shape=none,
+		tail_lp="884.13,3910.6",
+		taillabel=1];
+	users:44 -> messages:1	 [arrowhead=none,
+		head_lp="1168,3816.6",
+		headlabel=N,
+		label="users-messages",
+		lp="1023.3,3832.4",
+		pos="887.63,3919 934.08,3919 892.47,3849.2 931.63,3824.2 1022.1,3766.5 1065.8,3825 1173.1,3825",
+		shape=none,
+		tail_lp="891.13,3910.6",
+		taillabel=1];
+	users:44 -> notifications:0	 [arrowhead=none,
+		head_lp="1171,5796.6",
+		headlabel=N,
+		label="users-notifications",
+		lp="1023.3,5461.4",
+		pos="887.63,3919 969.05,3919 884.31,5317.7 931.63,5384 982.26,5454.9 1059.5,5386 1115.1,5453.2 1165.6,5514.3 1096.7,5805 1176.1,5805",
+		shape=none,
+		tail_lp="884.13,3927.4",
+		taillabel=1];
+	users:44 -> quizzes:4	 [arrowhead=none,
+		head_lp="2681.4,2333.4",
+		headlabel=N,
+		label="users-quizzes",
+		lp="1771.6,2781.4",
+		pos="887.63,3919 974.43,3919 882.76,3210.7 931.63,3139 960.39,3096.8 2556.8,2392.8 2602.5,2370 2640.4,2351.1 2644.1,2325 2686.5,2325",
+		shape=none,
+		tail_lp="891.13,3927.4",
+		taillabel=1];
+	users:44 -> selfquizzes:1	 [arrowhead=none,
+		head_lp="2688.4,3196.6",
+		headlabel=N,
+		label="users-selfquizzes",
+		lp="1771.6,4282.4",
+		pos="887.63,3919 947.1,3919 892.74,4138 931.63,4183 1018.1,4283.1 1082.8,4274 1215.1,4274 1215.1,4274 1215.1,4274 2149.1,4274 2271,4274 \
+2331.1,4277.7 2407.9,4183 2485.3,4087.6 2373.3,4009.5 2443.9,3909 2489.5,3844 2556.4,3891.6 2602.5,3827 2683.6,3713.3 2553.8,3205 \
+2693.5,3205",
+		shape=none,
+		tail_lp="884.13,3910.6",
+		taillabel=1];
+	users:44 -> studentprogresses:0	 [arrowhead=none,
+		head_lp="2679.4,1843.6",
+		headlabel=N,
+		label="users-studentprogresses",
+		lp="1771.6,2373.4",
+		pos="887.63,3919 947.34,3919 899.56,2895.4 931.63,2845 1025,2698.3 1130.3,2755.1 1279.1,2665 1725,2395 1784.2,2236 2258.6,2020 2405.1,\
+1953.3 2457.6,1976.2 2602.5,1906 2641.8,1887 2640.9,1852 2684.5,1852",
+		shape=none,
+		tail_lp="891.13,3910.6",
+		taillabel=1];
+	users:44 -> studentquizattempts:0	 [arrowhead=none,
+		head_lp="2633.4,550.6",
+		headlabel=N,
+		label="users-studentquizattempts",
+		lp="1771.6,1405.4",
+		pos="887.63,3919 937.28,3919 916.85,2179.4 931.63,2132 1217,1216.8 2079.1,1571.1 2602.5,768 2628.2,728.52 2591.4,559 2638.5,559",
+		shape=none,
+		tail_lp="884.13,3927.4",
+		taillabel=1];
+	users:44 -> studymaterials:0	 [arrowhead=none,
+		head_lp="2639.4,4557.6",
+		headlabel=N,
+		label="users-studymaterials",
+		lp="1771.6,4492.4",
+		pos="887.63,3919 979.26,3919 868.67,4262.4 931.63,4329 1009.9,4411.8 2580.4,4566 2644.5,4566",
+		shape=none,
+		tail_lp="891.13,3927.4",
+		taillabel=1];
+	users:44 -> studyprograms:13	 [arrowhead=none,
+		head_lp="1525.1,5712.6",
+		headlabel=N,
+		label="users-studyprograms",
+		lp="1215.1,5247.4",
+		pos="887.63,3919 951.01,3919 897.67,5005.5 931.63,5059 1024.8,5205.9 1156.2,5116.1 1279.1,5239.2 1303.7,5263.9 1299,5278 1315.1,5309 \
+1410.2,5492.3 1323.6,5721 1530.1,5721",
+		shape=none,
+		tail_lp="884.13,3910.6",
+		taillabel=1];
+	users:44 -> submissions:2	 [arrowhead=none,
+		head_lp="3079.4,3427.6",
+		headlabel=N,
+		label="users-submissions",
+		lp="1959.9,4655.4",
+		pos="887.63,3919 942.4,3919 895.05,4369.2 931.63,4410 1073.4,4568.1 2665.4,4763.7 2830.5,4630 2883.2,4587.3 3016.6,3436 3084.4,3436",
+		shape=none,
+		tail_lp="891.13,3910.6",
+		taillabel=1];
+	users:44 -> videosessions:4	 [arrowhead=none,
+		head_lp="2255.2,6318.6",
+		headlabel=N,
+		label="users-videosessions",
+		lp="1585.1,5546.4",
+		pos="887.63,3919 942.9,3919 904.82,4864.7 931.63,4913 954.35,4954 1246.2,5118.6 1279.1,5152 1299.3,5172.5 1296.5,5183.9 1315.1,5206 1452.5,\
+5369.7 1520.6,5378.7 1662.9,5538.2 1955.6,5866.4 1820.5,6327 2260.2,6327",
+		shape=none,
+		tail_lp="884.13,3927.4",
+		taillabel=1];
+	users:44 -> worksubmissions:4	 [arrowhead=none,
+		head_lp="2287.2,3065.6",
+		headlabel=N,
+		label="users-worksubmissions",
+		lp="1585.1,3252.4",
+		pos="887.63,3919 968,3919 885.7,3626 931.63,3560 996.83,3466.3 1743.4,3142.4 1844.3,3089 1931.6,3042.8 1970.1,3053.2 2039.6,2983 2063.7,\
+2958.7 2046.3,2932.6 2075.6,2915 2131.6,2881.3 2167.9,2879.3 2222.6,2915 2287.2,2957.2 2215.1,3074 2292.2,3074",
+		shape=none,
+		tail_lp="891.13,3927.4",
+		taillabel=1];
+	videosessions:28 -> attendances:0	 [arrowhead=none,
+		head_lp="2663.4,6147.6",
+		headlabel=N,
+		label="videosessions-attendances",
+		lp="2523.2,6142.4",
+		pos="2407.2,5847 2587.1,5847 2488.7,6156 2668.5,6156",
+		shape=none,
+		tail_lp="2410.7,5838.6",
+		taillabel=1];
+}

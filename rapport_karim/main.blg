@@ -12,51 +12,51 @@ Warning--entry type for "google_gemini" isn't style-file defined
 Warning--entry type for "daily_co" isn't style-file defined
 --line 22 of file biblio.bib
 Warning--entry type for "socket_io" isn't style-file defined
---line 35 of file biblio.bib
+--line 64 of file biblio.bib
 Warning--entry type for "ai_education" isn't style-file defined
---line 42 of file biblio.bib
+--line 71 of file biblio.bib
 Warning--entry type for "mongodb_manual" isn't style-file defined
---line 49 of file biblio.bib
+--line 78 of file biblio.bib
 Warning--empty publisher in scrum_guide
-You've used 8 entries,
+You've used 14 entries,
             2118 wiz_defined-function locations,
-            524 strings with 4422 characters,
-and the built_in function-call counts, 1657 in all, are:
-= -- 140
-> -- 62
+            553 strings with 5452 characters,
+and the built_in function-call counts, 3343 in all, are:
+= -- 288
+> -- 173
 < -- 0
-+ -- 29
-- -- 18
-* -- 58
-:= -- 276
-add.period$ -- 17
-call.type$ -- 8
-change.case$ -- 32
++ -- 73
+- -- 56
+* -- 162
+:= -- 588
+add.period$ -- 35
+call.type$ -- 14
+change.case$ -- 66
 chr.to.int$ -- 0
-cite$ -- 9
-duplicate$ -- 61
-empty$ -- 177
-format.name$ -- 18
-if$ -- 354
+cite$ -- 15
+duplicate$ -- 127
+empty$ -- 294
+format.name$ -- 56
+if$ -- 689
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 2
-newline$ -- 36
-num.names$ -- 16
-pop$ -- 73
+int.to.str$ -- 14
+missing$ -- 11
+newline$ -- 66
+num.names$ -- 28
+pop$ -- 120
 preamble$ -- 1
-purify$ -- 25
+purify$ -- 56
 quote$ -- 0
-skip$ -- 63
+skip$ -- 103
 stack$ -- 0
-substring$ -- 43
-swap$ -- 8
+substring$ -- 73
+swap$ -- 14
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 30
+type$ -- 48
 warning$ -- 1
-while$ -- 16
-width$ -- 9
-write$ -- 67
+while$ -- 28
+width$ -- 16
+write$ -- 128
 (There were 8 warnings)

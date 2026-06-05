@@ -1,0 +1,118 @@
+@startuml
+left to right direction
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam class {
+    BackgroundColor White
+    ArrowColor #263238
+    BorderColor #263238
+}
+
+entity "users" as User {
+  * **_id** : ObjectId <<PK>>
+  --
+  firstName : String
+  lastName : String
+  role : String
+}
+
+entity "classes" as Class {
+  * **_id** : ObjectId <<PK>>
+  --
+  name : String
+  code : String
+}
+
+entity "courses" as Course {
+  * **_id** : ObjectId <<PK>>
+  --
+  title : String
+  summary : String {IA}
+  **classId** : ObjectId <<FK>>
+  **teacherId** : ObjectId <<FK>>
+  isPublished : Boolean
+  -- embedded chapters --
+  chapters : Array<{title, order, materials: Array}>
+}
+
+entity "study_materials" as StudyMaterial {
+  * **_id** : ObjectId <<PK>>
+  --
+  **studentId** : ObjectId <<FK>>
+  **courseId** : ObjectId <<FK>>
+  type : Enum(summary, flashcard, notes)
+  title : String
+  content : String
+  isAIGenerated : Boolean
+  -- embedded flashcards --
+  flashcards : Array<{front, back, difficulty}>
+}
+
+entity "quizzes / exams" as Evaluation {
+  * **_id** : ObjectId <<PK>>
+  --
+  title : String
+  **courseId / classId** : ObjectId <<FK>>
+  **teacherId** : ObjectId <<FK>>
+  type : Enum(quiz, exam)
+  settings : {duration, attempts, dates}
+  -- embedded questions --
+  questions : Array<{question, type, options, answer}>
+}
+
+entity "submissions" as Submission {
+  * **_id** : ObjectId <<PK>>
+  --
+  **evaluationId** : ObjectId <<FK>>
+  **studentId** : ObjectId <<FK>>
+  score : Number
+  percentage : Number
+  mistakeExplanation : String {IA}
+  -- embedded answers --
+  answers : Array<{questionId, answer, isCorrect}>
+}
+
+entity "arenachallenges" as ArenaChallenge {
+  * **_id** : ObjectId <<PK>>
+  --
+  **classId** : ObjectId <<FK>>
+  title : String
+  weekStart : Date
+  status : Enum
+  -- embedded milestones --
+  milestones : Array<{xp, label, reward}>
+}
+
+entity "arenaprogresses" as ArenaProgress {
+  * **_id** : ObjectId <<PK>>
+  --
+  **challengeId** : ObjectId <<FK>>
+  **studentId** : ObjectId <<FK>>
+  totalXP : Number
+  currentStreak : Number
+}
+
+entity "messages / announcements" as Communication {
+  * **_id** : ObjectId <<PK>>
+  --
+  title/content : String
+  **senderId / teacherId** : ObjectId <<FK>>
+  **receiverId / classId** : ObjectId <<FK>>
+  type : Enum(private, class, announcement)
+  priority : String
+}
+
+' --- Relations ---
+
+User "1" -- "0..*" Course
+Class "1" -- "0..*" Course
+Course "1" -- "0..*" StudyMaterial
+Course "1" -- "0..*" Evaluation
+Evaluation "1" -- "0..*" Submission
+Class "1" -- "0..*" ArenaChallenge
+ArenaChallenge "1" -- "0..*" ArenaProgress
+User "1" -- "0..*" Communication
+Class "1" -- "0..*" Communication
+
+@enduml

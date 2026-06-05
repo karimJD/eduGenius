@@ -1,0 +1,64 @@
+@startuml
+skinparam maxMessageSize 160
+skinparam sequenceMessageAlign center
+skinparam shadowing false
+skinparam sequence {
+    ArrowColor #263238
+    LifeLineBorderColor #263238
+    ParticipantBorderColor #263238
+    ParticipantBackgroundColor White
+}
+skinparam databaseBackgroundColor #E3F2FD
+skinparam noteBackgroundColor #FFF9C4
+
+actor "Utilisateur\n(Émetteur)" as User
+participant "Client\n(Socket.io)" as Client
+participant "Socket Server\n(chatHandlers.js)" as Server
+database "MongoDB\n(Message)" as DB
+participant "Utilisateur\n(Destinataire)" as Receiver
+
+== Connexion au salon ==
+User -> Client : Ouvre le chat
+Client -> Server : emit('join-chat', { roomId })
+activate Server
+note right : socket.join(`chat:${roomId}`)
+deactivate Server
+
+== Envoi d'un message ==
+User -> Client : Envoie un message
+Client -> Server : emit('send-message', {\n  roomId, content, messageType,\n  classId?, receiverId?, senderId\n})
+activate Server
+
+Server -> DB : Message.create({\n  senderId, receiverId,\n  classId, content,\n  messageType\n})
+activate DB
+DB --> Server : document message
+deactivate DB
+
+Server -> Server : io.to(`chat:${roomId}`)\n  .emit('new-message', payload)
+Server --> Client : new-message (payload)
+Client -> User : Affiche le message
+
+== Diffusion Administrative (Optionnelle) ==
+alt Si sender == 'admin' ET type == 'class'
+    Server -> DB : Class.findById(classId)\n  .populate('students')
+    activate DB
+    DB --> Server : classDoc (liste étudiants)
+    deactivate DB
+    
+    loop pour chaque étudiant
+        Server -> DB : Message.create({... 'private' })
+        activate DB
+        DB --> Server : msg_prive
+        deactivate DB
+        Server -> Server : io.to(`chat:${privateRoomId}`)\n  .emit('new-message', payload)
+    end
+end
+
+Server -> Receiver : emit('new-message', payload)
+activate Receiver
+Receiver -> Receiver : Affiche notification
+deactivate Receiver
+
+deactivate Server
+
+@enduml

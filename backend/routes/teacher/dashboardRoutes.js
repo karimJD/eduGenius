@@ -57,9 +57,12 @@ router.get('/stats', async (req, res, next) => {
   try {
     const teacherId = req.user._id;
 
-    // Classes where this teacher is listed in the teachers array
+    // Classes where this teacher is academicAdvisor OR listed in the teachers array
     const classes = await Class.find({ 
-      'teachers.teacherId': teacherId 
+      $or: [
+        { academicAdvisorId: teacherId },
+        { 'teachers.teacherId': teacherId }
+      ]
     }).lean();
     
     const totalStudents = classes.reduce(
@@ -102,7 +105,7 @@ router.get('/stats', async (req, res, next) => {
     
     const todaySessions = await VideoSession.countDocuments({
       teacherId,
-      scheduledAt: { $gte: startOfToday, $lte: endOfToday },
+      scheduledStart: { $gte: startOfToday, $lte: endOfToday },
     });
 
     res.json({

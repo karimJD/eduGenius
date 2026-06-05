@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Étudiant"       as Student
+actor "Enseignant"     as Teacher
+actor "Administrateur" as Admin
+actor "Système"        as System
+
+rectangle "" {
+
+  usecase "S'authentifier"                                       as UC_Auth
+
+  usecase "Gérer les\nevaluations"                               as UC_ManageExam
+  usecase "Gérer les cours\n(CRUD)"                              as UC_CourseMgmt
+  usecase "Consulter les\ncours"                                 as UC_ViewCourse
+  usecase "Communiquer\n(chat, annonces)"                        as UC_Communicate
+  usecase "Gérer les\nchallenges"                                as UC_ManageChallenges
+}
+
+UC_CourseMgmt  ..> UC_Auth : <<include>>
+UC_CourseMgmt  ..> UC_ViewCourse : <<include>>
+  UC_ManageExam  ..> UC_Auth : <<include>>
+  UC_Communicate ..> UC_Auth : <<include>>
+
+Teacher --> UC_CourseMgmt
+Teacher --> UC_ManageExam
+Teacher --> UC_Communicate
+
+Student --> UC_ViewCourse
+Student --> UC_Communicate
+Admin --> UC_Communicate
+System --> UC_ManageChallenges
+@enduml

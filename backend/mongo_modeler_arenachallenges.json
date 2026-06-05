@@ -1,0 +1,51 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb4b"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "title": "Défi Arène — Semaine 1",
+  "weekStart": {
+    "$date": "2025-01-06T00:00:00Z"
+  },
+  "weekEnd": {
+    "$date": "2025-01-12T00:00:00Z"
+  },
+  "status": "active",
+  "questsConfig": {
+    "questsPerDay": 3,
+    "questionsPerQuest": 5,
+    "xpPerCorrectAnswer": 10,
+    "xpBonusCompletion": 20,
+    "xpBonus100Percent": 30,
+    "streakBonusMultiplier": 1.5,
+    "secondsPerQuestion": 20
+  },
+  "milestones": [
+    {
+      "xp": 100,
+      "label": "Apprenti",
+      "icon": "shield",
+      "reward": "+10 XP bonus"
+    },
+    {
+      "xp": 300,
+      "label": "Érudit",
+      "icon": "book",
+      "reward": "+25 XP bonus"
+    },
+    {
+      "xp": 600,
+      "label": "Maître",
+      "icon": "crown",
+      "reward": "+50 XP bonus"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.883Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.883Z"
+  }
+}

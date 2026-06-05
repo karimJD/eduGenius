@@ -112,7 +112,7 @@ export default function GradingPage() {
           <div className="space-y-3">
             {submissions.map((sub, i) => {
               const href = sub.type === 'exercise' 
-                ? `/teacher/courses/${typeof sub.classId === 'object' ? sub.classId?._id : sub.classId}/${typeof sub.subjectId === 'object' ? sub.subjectId?._id : sub.subjectId}`
+                ? `/teacher/grading/work/${sub._id}`
                 : `/teacher/grading/${sub._id}`;
 
               return (

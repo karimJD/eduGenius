@@ -94,6 +94,7 @@ interface CalendarEvent {
     room: string;
     subjectName: string;
     subjectCode: string;
+    subjectId?: string;
     sessionType: string;
     existingSession?: any;
     color: string;
@@ -224,6 +225,7 @@ export default function ClassDetailPage() {
               s.classId === id && s.status !== 'ended'
             );
 
+            const entrySubjectId = entry.subjectId?._id || entry.subjectId;
             return {
               id: entry._id,
               title: entry.subjectId?.name || 'Cours',
@@ -235,6 +237,7 @@ export default function ClassDetailPage() {
                 room: entry.room || 'Lab 2',
                 subjectName: entry.subjectId?.name || 'Matière',
                 subjectCode: entry.subjectId?.code || '',
+                subjectId: typeof entrySubjectId === 'object' ? (entrySubjectId as any)?._id : entrySubjectId,
                 sessionType: entry.sessionType || 'lecture',
                 existingSession,
                 color: EVENT_COLORS[index % EVENT_COLORS.length]
@@ -269,6 +272,7 @@ export default function ClassDetailPage() {
         const session = await createVideoSession({
           title: `${selectedEvent.resource.subjectName} - ${selectedEvent.resource.className}`,
           classId: selectedEvent.resource.classId,
+          subjectId: selectedEvent.resource.subjectId,
           description: `Cours de ${selectedEvent.resource.subjectName} pour la classe ${selectedEvent.resource.className}`,
           scheduledStart: new Date()
         });

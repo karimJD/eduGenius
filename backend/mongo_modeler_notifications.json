@@ -1,0 +1,24 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb38"
+  },
+  "userId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "type": "video_session_starting",
+  "title": "Session live dans 10 min",
+  "message": "La session \"Introduction à Next.js\" commence dans 10 minutes.",
+  "isRead": false,
+  "readAt": null,
+  "link": null,
+  "priority": "high",
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.830Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.830Z"
+  }
+}

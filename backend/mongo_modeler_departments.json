@@ -1,0 +1,21 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb12"
+  },
+  "name": "Génie Logiciel",
+  "code": "GL",
+  "description": "Département de Génie Logiciel",
+  "teachers": [],
+  "statistics": {
+    "totalTeachers": 0,
+    "totalStudents": 0,
+    "totalPrograms": 0
+  },
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.336Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.336Z"
+  }
+}

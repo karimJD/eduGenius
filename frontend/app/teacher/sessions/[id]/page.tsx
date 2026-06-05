@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import api from '@/lib/axios';
 import { DailyVideoRoom } from '@/components/video/DailyVideoRoom';
 import {
-  Users, Radio, Clock, ArrowLeft, StopCircle, Loader2
+  Users, Radio, Clock, ArrowLeft, StopCircle, Loader2, Maximize2, Minimize2
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -37,6 +37,25 @@ export default function TeacherLiveSessionPage() {
   const [ending, setEnding] = useState(false);
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -116,6 +135,13 @@ export default function TeacherLiveSessionPage() {
             <Users className="w-4 h-4" />
             <span>{participants.length} participants</span>
           </div>
+          <button
+            onClick={toggleFullscreen}
+            className="flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 text-foreground dark:text-white rounded-xl text-sm font-medium border border-border dark:border-white/10 transition-colors"
+          >
+            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            {isFullscreen ? 'Quitter Plein Écran' : 'Plein Écran'}
+          </button>
           <button
             onClick={handleEndSession}
             disabled={ending}

@@ -1,0 +1,28 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb65"
+  },
+  "institutionName": "Université Tunisienne",
+  "academicSettings": {
+    "currentAcademicYearId": {
+      "$oid": "6a185ad6754c94b99c29eb0e"
+    },
+    "currentSemester": 1,
+    "gradingScale": 20,
+    "passingGrade": 10
+  },
+  "authSettings": {
+    "passwordMinLength": 8,
+    "sessionTimeout": 120
+  },
+  "aiSettings": {
+    "quizGenerationEnabled": true,
+    "summaryGenerationEnabled": true
+  },
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.973Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.984Z"
+  }
+}

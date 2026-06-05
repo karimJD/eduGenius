@@ -1,0 +1,31 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb18"
+  },
+  "name": "Développement Full-Stack",
+  "code": "DFS",
+  "description": "Développement d'applications web modernes",
+  "teachingUnitId": {
+    "$oid": "6a185ad6754c94b99c29eb16"
+  },
+  "semester": 1,
+  "credits": 5,
+  "coefficient": 3,
+  "hoursDistribution": {
+    "lecture": 1.5,
+    "tutorial": 1.5,
+    "practical": 0,
+    "total": 3
+  },
+  "evaluation": {
+    "examWeight": 70,
+    "continuousWeight": 30
+  },
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.357Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.357Z"
+  }
+}

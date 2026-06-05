@@ -1,0 +1,29 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb5e"
+  },
+  "courseId": {
+    "$oid": "6a185ad6754c94b99c29eb25"
+  },
+  "chapterId": {
+    "$oid": "6a185ad6754c94b99c29eb26"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "content": "Résumé généré par IA du chapitre sur Next.js.",
+  "summaryType": "chapter",
+  "generatedAt": {
+    "$date": "2026-05-28T15:10:14.949Z"
+  },
+  "customizations": {
+    "style": "default",
+    "language": "fr"
+  },
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.950Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.950Z"
+  }
+}

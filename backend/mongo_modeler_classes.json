@@ -1,0 +1,57 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "name": "MPGL2",
+  "code": "MPGL2",
+  "departmentId": {
+    "$oid": "6a185ad6754c94b99c29eb12"
+  },
+  "programId": {
+    "$oid": "6a185ad6754c94b99c29eb14"
+  },
+  "academicYearId": {
+    "$oid": "6a185ad6754c94b99c29eb0e"
+  },
+  "level": "M1",
+  "groupNumber": 1,
+  "teachers": [
+    {
+      "subjectId": {
+        "$oid": "6a185ad6754c94b99c29eb18"
+      },
+      "teacherId": {
+        "$oid": "6a185ad6754c94b99c29eb1c"
+      },
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb22"
+      }
+    }
+  ],
+  "students": [
+    {
+      "studentId": {
+        "$oid": "6a185ad6754c94b99c29eb1f"
+      },
+      "enrollmentDate": {
+        "$date": "2026-05-28T15:10:14.796Z"
+      },
+      "status": "enrolled",
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb23"
+      }
+    }
+  ],
+  "capacity": 30,
+  "currentEnrollment": 1,
+  "academicAdvisorId": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.799Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.799Z"
+  }
+}

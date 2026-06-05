@@ -1,31 +1,35 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const User = require('./models/User');
-const bcrypt = require('bcryptjs');
 
-async function resetPassword() {
+async function resetAdmin() {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    
-    const email = 'admin@edugenius.com';
-    const newPassword = 'adminpassword123';
-    
-    const user = await User.findOne({ email });
-    if (!user) {
-      console.log('Admin user not found!');
-      process.exit(1);
+    console.log('Connected to MongoDB');
+
+    const admin = await User.findOne({ email: 'admin@edugenius.com' });
+    if (!admin) {
+      console.log('Admin not found, creating new admin...');
+      await User.create({
+        firstName: 'System',
+        lastName: 'Admin',
+        email: 'admin@edugenius.com',
+        password: 'adminpassword123',
+        role: 'admin',
+        cin: '11111111'
+      });
+      console.log('Admin created.');
+    } else {
+      admin.password = 'adminpassword123';
+      await admin.save();
+      console.log('Admin password reset to: adminpassword123');
     }
-    
-    user.password = newPassword; // The pre-save hook will hash it
-    await user.save();
-    
-    console.log(`Password for ${email} has been reset to: ${newPassword}`);
-    
+
     await mongoose.connection.close();
   } catch (err) {
     console.error('Error:', err);
-    process.exit(1);
   }
 }
 
-resetPassword();
+resetAdmin();

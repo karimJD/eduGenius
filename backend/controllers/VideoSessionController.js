@@ -38,7 +38,7 @@ async function dailyRequest(path, method = 'GET', body = null) {
 // @access  Teacher / Admin
 exports.createSession = async (req, res) => {
   try {
-    const { title, description, classId, scheduledStart } = req.body;
+    const { title, description, classId, subjectId, scheduledStart } = req.body;
 
     if (!classId) {
       console.error('Validation error: classId is missing from request body');
@@ -64,6 +64,7 @@ exports.createSession = async (req, res) => {
       title,
       description,
       classId,
+      subjectId,
       teacherId: req.user._id,
       scheduledStart: scheduledStart || new Date(),
       meetingUrl: dailyRoom.url,
@@ -74,6 +75,34 @@ exports.createSession = async (req, res) => {
     console.log('Creating VideoSession in DB:', sessionData);
 
     const session = await VideoSession.create(sessionData);
+
+    // No need to append one-off video sessions to the static weekly recurring class schedule
+
+    // Create notifications for students in the class
+    try {
+      const Class = require('../models/Class');
+      const Notification = require('../models/Notification');
+      
+      const classDoc = await Class.findById(session.classId);
+      if (classDoc && classDoc.students && classDoc.students.length > 0) {
+        const notifications = classDoc.students.map(st => ({
+          userId: st.studentId,
+          type: 'video_session_starting',
+          title: 'Nouvelle session Live planifiée',
+          message: `La session "${session.title}" a été programmée pour le ${new Date(session.scheduledStart).toLocaleString('fr-FR')}.`,
+          link: `/student/schedule`,
+          priority: 'high',
+          relatedType: 'video_session',
+          relatedId: session._id,
+          classId: session.classId
+        }));
+        
+        await Notification.insertMany(notifications);
+        console.log(`Created ${notifications.length} notifications for students.`);
+      }
+    } catch (notifErr) {
+      console.error('Failed to create notifications:', notifErr);
+    }
 
     res.status(201).json(session);
   } catch (error) {

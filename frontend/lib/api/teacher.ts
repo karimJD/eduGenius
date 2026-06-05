@@ -87,7 +87,28 @@ export const getAttendanceSessions = async () => {
   return response.data;
 };
 
+export const getAttendanceReport = async (classId?: string, subjectId?: string) => {
+  const params = new URLSearchParams();
+  if (classId && classId !== 'all') params.append('classId', classId);
+  if (subjectId && subjectId !== 'all') params.append('subjectId', subjectId);
+  const response = await api.get(`/teacher/attendance/report?${params.toString()}`);
+  return response.data;
+};
+
 export const getSessionAttendanceDetail = async (id: string) => {
   const response = await api.get(`/attendance/sessions/${id}/details`);
   return response.data;
 };
+
+// Recordings
+export const saveRecording = async (sessionId: string, blob: Blob): Promise<{ success: boolean; videoUrl: string; chapterTitle: string }> => {
+  const formData = new FormData();
+  formData.append('recording', blob, 'recording.webm');
+  formData.append('sessionId', sessionId);
+  const response = await api.post('/teacher/recordings/save', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    timeout: 300000, // 5 min — large file upload
+  });
+  return response.data;
+};
+

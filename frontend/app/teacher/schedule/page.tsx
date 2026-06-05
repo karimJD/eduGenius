@@ -49,6 +49,7 @@ interface CalendarEvent {
     room: string;
     subjectName: string;
     subjectCode: string;
+    subjectId?: string;
     sessionType: string;
     existingSession?: any;
     color: string;
@@ -123,6 +124,7 @@ export default function TeacherSchedulePage() {
                 getClassId(s.classId) === targetClassId && s.status !== 'ended'
               );
 
+              const entrySubjectId = entry.subjectId?._id || entry.subjectId;
               calEvents.push({
                 id: entry._id || `${schedule._id}-${index}`,
                 title: entry.subjectId?.name || 'Session',
@@ -134,6 +136,7 @@ export default function TeacherSchedulePage() {
                   room: entry.room || 'En ligne',
                   subjectName: entry.subjectId?.name || 'Matière',
                   subjectCode: entry.subjectId?.code || '',
+                  subjectId: typeof entrySubjectId === 'object' ? (entrySubjectId as any)?._id : entrySubjectId,
                   sessionType: entry.sessionType || 'lecture',
                   existingSession,
                   color: colors[index % colors.length]
@@ -179,6 +182,7 @@ export default function TeacherSchedulePage() {
         const session = await createVideoSession({
           title: `${selectedEvent.resource.subjectName} - ${selectedEvent.resource.className}`,
           classId: selectedEvent.resource.classId,
+          subjectId: selectedEvent.resource.subjectId,
           description: `Cours de ${selectedEvent.resource.subjectName} pour la classe ${selectedEvent.resource.className}`,
           scheduledStart: new Date()
         });

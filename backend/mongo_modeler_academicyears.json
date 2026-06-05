@@ -1,0 +1,48 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb0e"
+  },
+  "year": "2024-2025",
+  "startDate": {
+    "$date": "2024-09-01T00:00:00Z"
+  },
+  "endDate": {
+    "$date": "2025-06-30T00:00:00Z"
+  },
+  "semesters": [
+    {
+      "number": 1,
+      "name": "Semestre 1",
+      "startDate": {
+        "$date": "2024-09-01T00:00:00Z"
+      },
+      "endDate": {
+        "$date": "2025-01-15T00:00:00Z"
+      },
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb0f"
+      }
+    },
+    {
+      "number": 2,
+      "name": "Semestre 2",
+      "startDate": {
+        "$date": "2025-01-16T00:00:00Z"
+      },
+      "endDate": {
+        "$date": "2025-06-30T00:00:00Z"
+      },
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb10"
+      }
+    }
+  ],
+  "isCurrent": true,
+  "status": "active",
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.324Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.324Z"
+  }
+}

@@ -1,0 +1,132 @@
+@startuml
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 120
+skinparam ranksep 100
+skinparam class {
+    BackgroundColor White
+    ArrowColor #263238
+    BorderColor #263238
+}
+
+' --- Organisation : Schedules à gauche de Classes ---
+
+together {
+  entity "schedules" as Schedule {
+    * **_id** : ObjectId <<PK>>
+    --
+    title : String
+    academicYearId : String
+    semester : Number (1, 2)
+    targetType : String (class, teacher, room)
+    **targetId** : ObjectId <<FK>>
+    isPublished : Boolean
+    -- entries (array) --
+    entries : Array<{dayOfWeek, startTime, endTime, subjectId, teacherId, room, sessionType}>
+  }
+
+  entity "classes" as Class {
+    * **_id** : ObjectId <<PK>>
+    --
+    name : String
+    code : String {unique}
+    level : String
+    groupNumber : Number
+    **departmentId** : ObjectId <<FK>>
+    **programId** : ObjectId <<FK>>
+    **academicYearId** : ObjectId <<FK>>
+    **academicAdvisorId** : ObjectId <<FK>>
+    capacity : Number
+    isActive : Boolean
+    -- arrays --
+    teachers : Array<{subjectId, teacherId}>
+    students : Array<{studentId, enrollmentDate, status}>
+  }
+}
+
+together {
+  entity "users" as User {
+    * **_id** : ObjectId <<PK>>
+    --
+    firstName : String
+    lastName : String
+    cin : String {unique}
+    email : String {unique}
+    role : String (Enum)
+    phoneNumber : String
+    isActive : Boolean
+    -- student (embedded) --
+    **student_departmentId** : ObjectId <<FK>>
+    **student_classId** : ObjectId <<FK>>
+    student_level : String
+    -- teacher (embedded) --
+    **teacher_departmentId** : ObjectId <<FK>>
+    teacher_academicRank : String
+    teacher_specializations : Array<String>
+  }
+
+  entity "departments" as Dept {
+    * **_id** : ObjectId <<PK>>
+    --
+    name : String
+    code : String {unique}
+    description : String
+    **headOfDepartmentId** : ObjectId <<FK>>
+    isActive : Boolean
+  }
+}
+
+together {
+  entity "videosessions" as VideoSession {
+    * **_id** : ObjectId <<PK>>
+    --
+    title : String
+    status : String (Enum)
+    **classId** : ObjectId <<FK>>
+    **teacherId** : ObjectId <<FK>>
+    **subjectId** : ObjectId <<FK>>
+    **scheduleId** : ObjectId <<FK>>
+    meetingId : String
+    meetingUrl : String
+    recordingUrl : String
+    attendanceThreshold : Number
+    gracePeriod : Number
+    scheduledStart : Date
+    scheduledEnd : Date
+    actualStart : Date
+    actualEnd : Date
+  }
+
+  entity "attendances" as Attendance {
+    * **_id** : ObjectId <<PK>>
+    --
+    **videoSessionId** : ObjectId <<FK>> {unique}
+    **scheduleId** : ObjectId <<FK>>
+    **classId** : ObjectId <<FK>>
+    **teacherId** : ObjectId <<FK>>
+    sessionDate : Date
+    totalDuration : Number
+    -- statistics (embedded) --
+    stats_present : Number
+    stats_absent : Number
+    -- records (array) --
+    records : Array<{studentId, status, joinTime, leaveTime, duration}>
+  }
+}
+
+' --- Relations ---
+
+Schedule "0..*" -right- "1" Class : planifie pour
+Class "0..*" -- "1" Dept : appartient à
+User "0..*" -right- "1" Dept : rattaché à
+
+Class "1" -- "0..*" User : contient (étudiants/profs)
+
+VideoSession "0..*" -up- "1" Class : séance de
+VideoSession "0..*" -- "1" User : animée par
+VideoSession "1" -right- "1" Attendance : génère
+
+Attendance "1" -- "0..*" User : évalue (records)
+
+@enduml

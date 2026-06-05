@@ -1,0 +1,809 @@
+// === bookmarks ===
+{
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "resourceType": "material",
+  "resourceId": "6a185ad6754c94b99c29eb26",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "note": "Important à réviser",
+  "tags": [
+    "Next.js",
+    "important"
+  ],
+  "createdAt": "2026-05-28T15:10:14.946Z",
+  "updatedAt": "2026-05-28T15:10:14.946Z"
+}
+
+// === arenaquests ===
+{
+  "challengeId": "6a185ad6754c94b99c29eb4b",
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "subjectId": "6a185ad6754c94b99c29eb18",
+  "courseId": "6a185ad6754c94b99c29eb25",
+  "subjectName": "Développement Full-Stack",
+  "quizAttemptId": null,
+  "date": "2025-01-07T00:00:00.000Z",
+  "questIndex": 1,
+  "status": "completed",
+  "xpEarned": 50,
+  "score": 5,
+  "totalQuestions": 5,
+  "timeTaken": 30,
+  "createdAt": "2026-05-28T15:10:14.891Z",
+  "updatedAt": "2026-05-28T15:10:14.891Z"
+}
+
+// === exams ===
+{
+  "title": "Examen Full-Stack - Session 1",
+  "description": "Examen de fin de semestre",
+  "courseId": "6a185ad6754c94b99c29eb25",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "teacherId": "6a185ad6754c94b99c29eb1c",
+  "questions": [
+    {
+      "question": "Décrivez l'architecture de Next.js",
+      "type": "short-answer",
+      "options": [],
+      "correctAnswer": "Next.js utilise le rendu hybride SSR/SSG",
+      "points": 5,
+      "explanation": "",
+      "_id": "6a185ad6754c94b99c29eb41"
+    },
+    {
+      "question": "Express.js est-il un framework MVC ?",
+      "type": "true-false",
+      "options": [
+        "Vrai",
+        "Faux"
+      ],
+      "correctAnswer": "Faux",
+      "points": 2,
+      "explanation": "",
+      "_id": "6a185ad6754c94b99c29eb42"
+    }
+  ],
+  "settings": {
+    "duration": 90,
+    "attempts": 1,
+    "startDate": "2025-06-01T00:00:00.000Z",
+    "endDate": "2025-06-02T00:00:00.000Z",
+    "shuffleQuestions": false,
+    "showResults": true,
+    "showCorrectAnswers": false
+  },
+  "passingScore": 50,
+  "proctoring": {
+    "enabled": false,
+    "webcam": false,
+    "fullscreen": false
+  },
+  "isPublished": true,
+  "createdAt": "2026-05-28T15:10:14.850Z",
+  "updatedAt": "2026-05-28T15:10:14.850Z"
+}
+
+// === subjects ===
+{
+  "name": "Développement Full-Stack",
+  "code": "DFS",
+  "description": "Développement d'applications web modernes",
+  "teachingUnitId": "6a185ad6754c94b99c29eb16",
+  "semester": 1,
+  "credits": 5,
+  "coefficient": 3,
+  "hoursDistribution": {
+    "lecture": 1.5,
+    "tutorial": 1.5,
+    "practical": 0,
+    "total": 3
+  },
+  "evaluation": {
+    "examWeight": 70,
+    "continuousWeight": 30
+  },
+  "isActive": true,
+  "createdAt": "2026-05-28T15:10:14.357Z",
+  "updatedAt": "2026-05-28T15:10:14.357Z"
+}
+
+// === arenaprogresses ===
+{
+  "challengeId": "6a185ad6754c94b99c29eb4b",
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "totalXP": 50,
+  "completedQuestsCount": 1,
+  "currentStreak": 1,
+  "longestStreak": 1,
+  "lastActiveDate": "2025-01-07T00:00:00.000Z",
+  "milestonesReached": [],
+  "dailyActivity": [
+    {
+      "date": "2025-01-07T00:00:00.000Z",
+      "xpEarned": 50,
+      "questsCompleted": 1
+    }
+  ],
+  "createdAt": "2026-05-28T15:10:14.897Z",
+  "updatedAt": "2026-05-28T15:10:14.897Z"
+}
+
+// === submissions ===
+{
+  "quizId": "6a185ad6754c94b99c29eb3c",
+  "examId": null,
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "answers": [
+    {
+      "questionId": "6a185ad6754c94b99c29eb3d",
+      "answer": "Un framework React",
+      "isCorrect": true,
+      "pointsEarned": 2,
+      "feedback": ""
+    },
+    {
+      "questionId": "6a185ad6754c94b99c29eb3e",
+      "answer": "Vrai",
+      "isCorrect": true,
+      "pointsEarned": 1,
+      "feedback": ""
+    }
+  ],
+  "score": 3,
+  "totalPoints": 3,
+  "percentage": 100,
+  "attemptNumber": 1,
+  "startedAt": "2025-01-15T09:00:00.000Z",
+  "submittedAt": "2025-01-15T09:25:00.000Z",
+  "timeSpent": 25,
+  "status": "graded",
+  "mistakeExplanation": null,
+  "createdAt": "2026-05-28T15:10:14.859Z",
+  "updatedAt": "2026-05-28T15:10:14.859Z"
+}
+
+// === aisummaries ===
+{
+  "courseId": "6a185ad6754c94b99c29eb25",
+  "chapterId": "6a185ad6754c94b99c29eb26",
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "content": "Résumé généré par IA du chapitre sur Next.js.",
+  "summaryType": "chapter",
+  "generatedAt": "2026-05-28T15:10:14.949Z",
+  "customizations": {
+    "style": "default",
+    "language": "fr"
+  },
+  "createdAt": "2026-05-28T15:10:14.950Z",
+  "updatedAt": "2026-05-28T15:10:14.950Z"
+}
+
+// === systemsettings ===
+{
+  "institutionName": "Université Tunisienne",
+  "academicSettings": {
+    "currentAcademicYearId": "6a185ad6754c94b99c29eb0e",
+    "currentSemester": 1,
+    "gradingScale": 20,
+    "passingGrade": 10
+  },
+  "authSettings": {
+    "passwordMinLength": 8,
+    "sessionTimeout": 120
+  },
+  "aiSettings": {
+    "quizGenerationEnabled": true,
+    "summaryGenerationEnabled": true
+  },
+  "createdAt": "2026-05-28T15:10:14.973Z",
+  "updatedAt": "2026-05-28T15:10:14.984Z"
+}
+
+// === teachingunits ===
+{
+  "name": "Génie Logiciel Avancé",
+  "code": "GLA",
+  "description": "Unités avancées du génie logiciel",
+  "departmentId": "6a185ad6754c94b99c29eb12",
+  "programIds": [
+    "6a185ad6754c94b99c29eb14"
+  ],
+  "unitType": "fundamental",
+  "totalCredits": 10,
+  "totalCoefficient": 5,
+  "isActive": true,
+  "subjects": [],
+  "createdAt": "2026-05-28T15:10:14.351Z",
+  "updatedAt": "2026-05-28T15:10:14.351Z"
+}
+
+// === courses ===
+{
+  "title": "Développement Full-Stack - Cours",
+  "description": "Cours sur le développement Full-Stack",
+  "content": "",
+  "summary": "",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "teacherId": "6a185ad6754c94b99c29eb1c",
+  "subjectId": "6a185ad6754c94b99c29eb18",
+  "chapters": [
+    {
+      "title": "Introduction à Next.js",
+      "order": 1,
+      "isPublished": true,
+      "materials": [],
+      "exercises": [],
+      "_id": "6a185ad6754c94b99c29eb26"
+    },
+    {
+      "title": "API avec Express",
+      "order": 2,
+      "isPublished": true,
+      "materials": [],
+      "exercises": [],
+      "_id": "6a185ad6754c94b99c29eb27"
+    }
+  ],
+  "isPublished": true,
+  "quiz": [],
+  "createdAt": "2026-05-28T15:10:14.805Z",
+  "updatedAt": "2026-05-28T15:10:14.805Z"
+}
+
+// === announcements ===
+{
+  "title": "Rendu des exercices",
+  "content": "Les exercices du chapitre 1 sont à rendre avant vendredi.",
+  "teacherId": "6a185ad6754c94b99c29eb1c",
+  "targetType": "specific_classes",
+  "targetClasses": [
+    "6a185ad6754c94b99c29eb21"
+  ],
+  "classId": "6a185ad6754c94b99c29eb21",
+  "priority": "high",
+  "type": "assignment",
+  "isPinned": true,
+  "isPublished": true,
+  "imageUrl": null,
+  "publishAt": null,
+  "expiresAt": null,
+  "readBy": [],
+  "createdAt": "2026-05-28T15:10:14.872Z",
+  "updatedAt": "2026-05-28T15:10:14.872Z"
+}
+
+// === grades ===
+{
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "studentName": "Karim Student",
+  "subjectId": "6a185ad6754c94b99c29eb18",
+  "subjectName": "Développement Full-Stack",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "academicYearId": "6a185ad6754c94b99c29eb0e",
+  "examSession": "main",
+  "examDate": "2025-06-01T00:00:00.000Z",
+  "continuousAssessment": 15,
+  "examGrade": 14,
+  "totalGrade": 14.3,
+  "isAbsent": false,
+  "isPassed": true,
+  "mention": "Bien",
+  "createdAt": "2026-05-28T15:10:14.914Z",
+  "updatedAt": "2026-05-28T15:10:14.914Z"
+}
+
+// === departments ===
+{
+  "name": "Génie Logiciel",
+  "code": "GL",
+  "description": "Département de Génie Logiciel",
+  "teachers": [],
+  "statistics": {
+    "totalTeachers": 0,
+    "totalStudents": 0,
+    "totalPrograms": 0
+  },
+  "isActive": true,
+  "createdAt": "2026-05-28T15:10:14.336Z",
+  "updatedAt": "2026-05-28T15:10:14.336Z"
+}
+
+// === selfquizzes ===
+{
+  "courseId": "6a185ad6754c94b99c29eb25",
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "questions": [
+    {
+      "question": "Qu'est-ce que le SSR ?",
+      "options": [
+        "Server Side Rendering",
+        "Client Side Rendering",
+        "Static Site Generation"
+      ],
+      "correctAnswerIndex": 0,
+      "_id": "6a185ad6754c94b99c29eb61"
+    }
+  ],
+  "score": 1,
+  "completed": true,
+  "quizType": "quick",
+  "createdAt": "2026-05-28T15:10:14.957Z",
+  "updatedAt": "2026-05-28T15:10:14.957Z"
+}
+
+// === quizzes ===
+{
+  "title": "Quiz Introduction à Next.js",
+  "description": "Testez vos connaissances sur Next.js",
+  "courseId": "6a185ad6754c94b99c29eb25",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "teacherId": "6a185ad6754c94b99c29eb1c",
+  "questions": [
+    {
+      "question": "Qu'est-ce que Next.js ?",
+      "type": "mcq",
+      "options": [
+        "Un framework React",
+        "Une base de données",
+        "Un serveur web",
+        "Un langage"
+      ],
+      "correctAnswer": "Un framework React",
+      "points": 2,
+      "explanation": "",
+      "_id": "6a185ad6754c94b99c29eb3d"
+    },
+    {
+      "question": "Next.js utilise-t-il le SSR ?",
+      "type": "true-false",
+      "options": [
+        "Vrai",
+        "Faux"
+      ],
+      "correctAnswer": "Vrai",
+      "points": 1,
+      "explanation": "",
+      "_id": "6a185ad6754c94b99c29eb3e"
+    }
+  ],
+  "settings": {
+    "duration": 30,
+    "attempts": 2,
+    "startDate": null,
+    "endDate": null,
+    "shuffleQuestions": true,
+    "showResults": true,
+    "showCorrectAnswers": true
+  },
+  "isAIGenerated": false,
+  "generatedFrom": null,
+  "isPublished": true,
+  "difficulty": "medium",
+  "createdAt": "2026-05-28T15:10:14.843Z",
+  "updatedAt": "2026-05-28T15:10:14.843Z"
+}
+
+// === attendances ===
+{
+  "videoSessionId": "6a185ad6754c94b99c29eb2d",
+  "scheduleId": "6a185ad6754c94b99c29eb29",
+  "sessionDate": "2025-01-10T00:00:00.000Z",
+  "subjectId": "6a185ad6754c94b99c29eb18",
+  "subjectName": "Développement Full-Stack",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "className": "MPGL2",
+  "teacherId": "6a185ad6754c94b99c29eb1c",
+  "teacherName": "Ahmed Teacher",
+  "scheduledStart": "2025-01-10T07:00:00.000Z",
+  "scheduledEnd": "2025-01-10T09:00:00.000Z",
+  "actualStart": "2025-01-10T07:05:00.000Z",
+  "actualEnd": "2025-01-10T08:55:00.000Z",
+  "totalDuration": 110,
+  "records": [
+    {
+      "studentId": "6a185ad6754c94b99c29eb1f",
+      "studentName": "Karim Student",
+      "status": "present",
+      "joinTime": "2025-01-10T07:05:00.000Z",
+      "leaveTime": "2025-01-10T08:55:00.000Z",
+      "duration": 110,
+      "attendancePercentage": 91.7,
+      "_id": "6a185ad6754c94b99c29eb52"
+    }
+  ],
+  "statistics": {
+    "totalStudents": 1,
+    "present": 1,
+    "late": 0,
+    "absent": 0,
+    "excused": 0,
+    "attendanceRate": 100
+  },
+  "generatedAt": "2026-05-28T15:10:14.901Z",
+  "generatedBy": "6a185ad6754c94b99c29eb1c",
+  "adjustments": [],
+  "createdAt": "2026-05-28T15:10:14.905Z",
+  "updatedAt": "2026-05-28T15:10:14.905Z"
+}
+
+// === arenachallenges ===
+{
+  "classId": "6a185ad6754c94b99c29eb21",
+  "title": "Défi Arène — Semaine 1",
+  "weekStart": "2025-01-06T00:00:00.000Z",
+  "weekEnd": "2025-01-12T00:00:00.000Z",
+  "status": "active",
+  "questsConfig": {
+    "questsPerDay": 3,
+    "questionsPerQuest": 5,
+    "xpPerCorrectAnswer": 10,
+    "xpBonusCompletion": 20,
+    "xpBonus100Percent": 30,
+    "streakBonusMultiplier": 1.5,
+    "secondsPerQuestion": 20
+  },
+  "milestones": [
+    {
+      "xp": 100,
+      "label": "Apprenti",
+      "icon": "shield",
+      "reward": "+10 XP bonus"
+    },
+    {
+      "xp": 300,
+      "label": "Érudit",
+      "icon": "book",
+      "reward": "+25 XP bonus"
+    },
+    {
+      "xp": 600,
+      "label": "Maître",
+      "icon": "crown",
+      "reward": "+50 XP bonus"
+    }
+  ],
+  "createdAt": "2026-05-28T15:10:14.883Z",
+  "updatedAt": "2026-05-28T15:10:14.883Z"
+}
+
+// === messages ===
+{
+  "senderId": "6a185ad6754c94b99c29eb1f",
+  "receiverId": "6a185ad6754c94b99c29eb1c",
+  "classId": null,
+  "content": "Bonjour professeur, j'ai une question sur le cours.",
+  "isRead": false,
+  "readAt": null,
+  "messageType": "private",
+  "isDeleted": false,
+  "attachments": [],
+  "createdAt": "2026-05-28T15:10:14.822Z",
+  "updatedAt": "2026-05-28T15:10:14.822Z"
+}
+
+// === studentprogresses ===
+{
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "courseId": "6a185ad6754c94b99c29eb25",
+  "subjectId": "6a185ad6754c94b99c29eb18",
+  "chaptersProgress": [
+    {
+      "chapterId": "6a185ad6754c94b99c29eb26",
+      "status": "completed",
+      "startedAt": "2025-01-05T00:00:00.000Z",
+      "completedAt": "2025-01-08T00:00:00.000Z",
+      "timeSpent": 180,
+      "_id": "6a185ad6754c94b99c29eb59",
+      "materials": []
+    },
+    {
+      "chapterId": "6a185ad6754c94b99c29eb27",
+      "status": "in-progress",
+      "startedAt": "2025-01-09T00:00:00.000Z",
+      "timeSpent": 60,
+      "_id": "6a185ad6754c94b99c29eb5a",
+      "materials": []
+    }
+  ],
+  "overallProgress": 50,
+  "totalTimeSpent": 240,
+  "lastAccessedAt": "2026-05-28T15:10:14.931Z",
+  "createdAt": "2026-05-28T15:10:14.935Z",
+  "updatedAt": "2026-05-28T15:10:14.935Z"
+}
+
+// === studentquizattempts ===
+{
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "courseId": "6a185ad6754c94b99c29eb25",
+  "quizTitle": "Quiz entraînement IA",
+  "isPracticeQuiz": true,
+  "questions": [
+    {
+      "question": "Quel hook React pour l'état ?",
+      "type": "mcq",
+      "options": [
+        "useState",
+        "useEffect",
+        "useRef",
+        "useMemo"
+      ],
+      "correctAnswer": "useState",
+      "points": 1,
+      "pointsEarned": 0,
+      "_id": "6a185ad6754c94b99c29eb47"
+    }
+  ],
+  "score": 1,
+  "totalPoints": 1,
+  "percentage": 100,
+  "timeSpent": 0,
+  "aiGenerationParams": {
+    "numberOfQuestions": 5,
+    "difficulty": "medium",
+    "topics": [
+      "React"
+    ]
+  },
+  "reviewed": false,
+  "createdAt": "2026-05-28T15:10:14.866Z",
+  "updatedAt": "2026-05-28T15:10:14.866Z"
+}
+
+// === videosessions ===
+{
+  "title": "Introduction à Next.js - Live",
+  "description": "Session live sur Next.js",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "subjectId": "6a185ad6754c94b99c29eb18",
+  "teacherId": "6a185ad6754c94b99c29eb1c",
+  "scheduleId": "6a185ad6754c94b99c29eb29",
+  "scheduledStart": "2025-01-10T07:00:00.000Z",
+  "scheduledEnd": "2025-01-10T09:00:00.000Z",
+  "actualStart": "2025-01-10T07:05:00.000Z",
+  "actualEnd": "2025-01-10T08:55:00.000Z",
+  "meetingUrl": "https://edugenius.daily.co/demo-session",
+  "meetingId": "demo-session",
+  "attendanceThreshold": 70,
+  "gracePeriod": 15,
+  "participants": [
+    {
+      "userId": "6a185ad6754c94b99c29eb1c",
+      "userName": "Ahmed Teacher",
+      "role": "teacher",
+      "joinedAt": "2025-01-10T07:00:00.000Z",
+      "leftAt": "2025-01-10T09:00:00.000Z",
+      "duration": 120,
+      "connectionLogs": [
+        {
+          "action": "join",
+          "timestamp": "2025-01-10T07:00:00.000Z",
+          "_id": "6a185ad6754c94b99c29eb2f"
+        }
+      ],
+      "_id": "6a185ad6754c94b99c29eb2e"
+    }
+  ],
+  "attendance": [
+    {
+      "studentId": "6a185ad6754c94b99c29eb1f",
+      "status": "present",
+      "joinTime": "2025-01-10T07:05:00.000Z",
+      "leaveTime": "2025-01-10T08:55:00.000Z",
+      "duration": 110,
+      "attendancePercentage": 91.7,
+      "_id": "6a185ad6754c94b99c29eb30"
+    }
+  ],
+  "statistics": {
+    "totalParticipants": 1,
+    "maxConcurrent": 1,
+    "averageDuration": 110,
+    "attendanceRate": 100,
+    "lateCount": 0,
+    "absentCount": 0
+  },
+  "recording": {
+    "isRecorded": true,
+    "recordingFile": "https://s3.amazonaws.com/recordings/demo.webm",
+    "recordingSize": 50000000,
+    "recordingDuration": 3600
+  },
+  "status": "ended",
+  "createdAt": "2026-05-28T15:10:14.818Z",
+  "updatedAt": "2026-05-28T15:10:14.818Z"
+}
+
+// === studymaterials ===
+{
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "courseId": "6a185ad6754c94b99c29eb25",
+  "type": "summary",
+  "title": "Résumé - Introduction à Next.js",
+  "content": "Next.js est un framework React qui permet le rendu hybride (SSR/SSG).",
+  "isAIGenerated": true,
+  "aiGenerationParams": {
+    "summaryLength": "medium",
+    "difficulty": "medium",
+    "topics": [
+      "Next.js"
+    ],
+    "generatedAt": "2026-05-28T15:10:14.924Z"
+  },
+  "isBookmarked": false,
+  "isFavorite": true,
+  "flashcards": [],
+  "createdAt": "2026-05-28T15:10:14.926Z",
+  "updatedAt": "2026-05-28T15:10:14.926Z"
+}
+
+// === academicyears ===
+{
+  "year": "2024-2025",
+  "startDate": "2024-09-01T00:00:00.000Z",
+  "endDate": "2025-06-30T00:00:00.000Z",
+  "semesters": [
+    {
+      "number": 1,
+      "name": "Semestre 1",
+      "startDate": "2024-09-01T00:00:00.000Z",
+      "endDate": "2025-01-15T00:00:00.000Z",
+      "_id": "6a185ad6754c94b99c29eb0f"
+    },
+    {
+      "number": 2,
+      "name": "Semestre 2",
+      "startDate": "2025-01-16T00:00:00.000Z",
+      "endDate": "2025-06-30T00:00:00.000Z",
+      "_id": "6a185ad6754c94b99c29eb10"
+    }
+  ],
+  "isCurrent": true,
+  "status": "active",
+  "createdAt": "2026-05-28T15:10:14.324Z",
+  "updatedAt": "2026-05-28T15:10:14.324Z"
+}
+
+// === schedules ===
+{
+  "title": "Emploi du temps MPGL2",
+  "academicYearId": "2024-2025",
+  "semester": 1,
+  "targetType": "class",
+  "targetId": "6a185ad6754c94b99c29eb21",
+  "entries": [
+    {
+      "dayOfWeek": 1,
+      "startTime": "08:00",
+      "endTime": "10:00",
+      "subjectId": "6a185ad6754c94b99c29eb18",
+      "teacherId": "6a185ad6754c94b99c29eb1c",
+      "sessionType": "lecture",
+      "meetingProvider": "jitsi",
+      "_id": "6a185ad6754c94b99c29eb2a"
+    },
+    {
+      "dayOfWeek": 3,
+      "startTime": "10:00",
+      "endTime": "12:00",
+      "subjectId": "6a185ad6754c94b99c29eb18",
+      "teacherId": "6a185ad6754c94b99c29eb1c",
+      "sessionType": "tutorial",
+      "meetingProvider": "jitsi",
+      "_id": "6a185ad6754c94b99c29eb2b"
+    }
+  ],
+  "isPublished": true,
+  "createdAt": "2026-05-28T15:10:14.811Z",
+  "updatedAt": "2026-05-28T15:10:14.811Z"
+}
+
+// === notifications ===
+{
+  "userId": "6a185ad6754c94b99c29eb1f",
+  "type": "video_session_starting",
+  "title": "Session live dans 10 min",
+  "message": "La session \"Introduction à Next.js\" commence dans 10 minutes.",
+  "isRead": false,
+  "readAt": null,
+  "link": null,
+  "priority": "high",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "createdAt": "2026-05-28T15:10:14.830Z",
+  "updatedAt": "2026-05-28T15:10:14.830Z"
+}
+
+// === studyprograms ===
+{
+  "name": "Master Professionnel en Génie Logiciel",
+  "code": "MPGL",
+  "description": "Formation en génie logiciel",
+  "departmentId": "6a185ad6754c94b99c29eb12",
+  "programType": "master",
+  "duration": {
+    "years": 2,
+    "semesters": 4
+  },
+  "level": "Master",
+  "isActive": true,
+  "teachingUnits": [],
+  "createdAt": "2026-05-28T15:10:14.345Z",
+  "updatedAt": "2026-05-28T15:10:14.345Z"
+}
+
+// === worksubmissions ===
+{
+  "chapterId": "6a185ad6754c94b99c29eb26",
+  "exerciseId": "6a185ad6754c94b99c29eb26",
+  "classId": "6a185ad6754c94b99c29eb21",
+  "subjectId": "6a185ad6754c94b99c29eb18",
+  "studentId": "6a185ad6754c94b99c29eb1f",
+  "fileUrl": "https://s3.amazonaws.com/submissions/exercice1.pdf",
+  "fileName": "exercice1.pdf",
+  "fileSize": 204800,
+  "submittedAt": "2026-05-28T15:10:14.965Z",
+  "feedback": "Bon travail !",
+  "grade": 16,
+  "createdAt": "2026-05-28T15:10:14.967Z",
+  "updatedAt": "2026-05-28T15:10:14.967Z"
+}
+
+// === users ===
+{
+  "firstName": "System",
+  "lastName": "Admin",
+  "cin": "11111111",
+  "email": "admin@edugenius.com",
+  "password": "$2b$10$Dnw/wrSieM/LEZfePxeCheJsZsKeGTW5XzkfViUpOXE0ElkMnp2BO",
+  "role": "admin",
+  "profileImage": null,
+  "isActive": true,
+  "isEmailVerified": false,
+  "nationality": "Tunisian",
+  "teacher": {
+    "specializations": [],
+    "diplomas": []
+  },
+  "refreshToken": null,
+  "resetPasswordToken": null,
+  "resetPasswordExpires": null,
+  "createdAt": "2026-05-28T15:10:14.363Z",
+  "updatedAt": "2026-05-28T15:10:14.363Z"
+}
+
+// === classes ===
+{
+  "name": "MPGL2",
+  "code": "MPGL2",
+  "departmentId": "6a185ad6754c94b99c29eb12",
+  "programId": "6a185ad6754c94b99c29eb14",
+  "academicYearId": "6a185ad6754c94b99c29eb0e",
+  "level": "M1",
+  "groupNumber": 1,
+  "teachers": [
+    {
+      "subjectId": "6a185ad6754c94b99c29eb18",
+      "teacherId": "6a185ad6754c94b99c29eb1c",
+      "_id": "6a185ad6754c94b99c29eb22"
+    }
+  ],
+  "students": [
+    {
+      "studentId": "6a185ad6754c94b99c29eb1f",
+      "enrollmentDate": "2026-05-28T15:10:14.796Z",
+      "status": "enrolled",
+      "_id": "6a185ad6754c94b99c29eb23"
+    }
+  ],
+  "capacity": 30,
+  "currentEnrollment": 1,
+  "academicAdvisorId": "6a185ad6754c94b99c29eb1c",
+  "isActive": true,
+  "createdAt": "2026-05-28T15:10:14.799Z",
+  "updatedAt": "2026-05-28T15:10:14.799Z"
+}
+

@@ -1,0 +1,33 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb49"
+  },
+  "title": "Rendu des exercices",
+  "content": "Les exercices du chapitre 1 sont à rendre avant vendredi.",
+  "teacherId": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "targetType": "specific_classes",
+  "targetClasses": [
+    {
+      "$oid": "6a185ad6754c94b99c29eb21"
+    }
+  ],
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "priority": "high",
+  "type": "assignment",
+  "isPinned": true,
+  "isPublished": true,
+  "imageUrl": null,
+  "publishAt": null,
+  "expiresAt": null,
+  "readBy": [],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.872Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.872Z"
+  }
+}

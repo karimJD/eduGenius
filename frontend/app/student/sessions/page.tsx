@@ -10,7 +10,7 @@ import {
   AlertCircle,
   CheckCircle2,
   Lock,
-  Users as UsersIcon
+  Users
 } from 'lucide-react';
 import api from '@/lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -153,8 +153,4 @@ export default function StudentSessionsPage() {
   );
 }
 
-// Add Users import since I used it but missed in block
-import { Users as UsersIcon } from 'lucide-react';
-function Users({ className }: { className?: string }) {
-    return <UsersIcon className={className} />;
-}
+

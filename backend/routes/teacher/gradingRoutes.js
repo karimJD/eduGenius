@@ -219,4 +219,60 @@ router.put('/submission/:id', async (req, res, next) => {
   }
 });
 
+// Also fix the enrichedWork to use standard find instead of Mongoose id()
+// (already done in dashboardRoutes — keep consistent)
+
+// GET /api/teacher/grading/work/:id — fetch a WorkSubmission for grading
+router.get('/work/:id', async (req, res, next) => {
+  try {
+    const submission = await WorkSubmission.findById(req.params.id)
+      .populate('studentId', 'firstName lastName email profileImage')
+      .populate('classId', 'name')
+      .populate('subjectId', 'name');
+
+    if (!submission) return res.status(404).json({ error: 'Not found' });
+
+    // Verify teacher owns this submission's course
+    const teacherId = req.user._id;
+    const course = await Course.findOne({
+      classId: submission.classId,
+      teacherId,
+    });
+    if (!course) return res.status(403).json({ error: 'Access denied' });
+
+    // Enrich with exercise name
+    const chapter = course.chapters.find(ch => ch._id.toString() === submission.chapterId.toString());
+    const exercise = chapter?.exercises?.find(ex => ex._id.toString() === submission.exerciseId.toString());
+
+    res.json({
+      ...submission.toObject(),
+      exerciseName: exercise?.name || 'Exercice',
+      chapterName: chapter?.title || 'Dossier',
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// PATCH /api/teacher/grading/work/:id — save grade & feedback for a WorkSubmission
+router.patch('/work/:id', async (req, res, next) => {
+  try {
+    const { grade, feedback } = req.body;
+    const submission = await WorkSubmission.findById(req.params.id);
+    if (!submission) return res.status(404).json({ error: 'Not found' });
+
+    const teacherId = req.user._id;
+    const course = await Course.findOne({ classId: submission.classId, teacherId });
+    if (!course) return res.status(403).json({ error: 'Access denied' });
+
+    if (grade !== undefined) submission.grade = grade;
+    if (feedback !== undefined) submission.feedback = feedback;
+
+    await submission.save();
+    res.json(submission);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

@@ -1,0 +1,37 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb4f"
+  },
+  "challengeId": {
+    "$oid": "6a185ad6754c94b99c29eb4b"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "totalXP": 50,
+  "completedQuestsCount": 1,
+  "currentStreak": 1,
+  "longestStreak": 1,
+  "lastActiveDate": {
+    "$date": "2025-01-07T00:00:00Z"
+  },
+  "milestonesReached": [],
+  "dailyActivity": [
+    {
+      "date": {
+        "$date": "2025-01-07T00:00:00Z"
+      },
+      "xpEarned": 50,
+      "questsCompleted": 1
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.897Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.897Z"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb4d"
+  },
+  "challengeId": {
+    "$oid": "6a185ad6754c94b99c29eb4b"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "subjectId": {
+    "$oid": "6a185ad6754c94b99c29eb18"
+  },
+  "courseId": {
+    "$oid": "6a185ad6754c94b99c29eb25"
+  },
+  "subjectName": "Développement Full-Stack",
+  "quizAttemptId": null,
+  "date": {
+    "$date": "2025-01-07T00:00:00Z"
+  },
+  "questIndex": 1,
+  "status": "completed",
+  "xpEarned": 50,
+  "score": 5,
+  "totalQuestions": 5,
+  "timeTaken": 30,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.891Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.891Z"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb56"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "courseId": {
+    "$oid": "6a185ad6754c94b99c29eb25"
+  },
+  "type": "summary",
+  "title": "Résumé - Introduction à Next.js",
+  "content": "Next.js est un framework React qui permet le rendu hybride (SSR/SSG).",
+  "isAIGenerated": true,
+  "aiGenerationParams": {
+    "summaryLength": "medium",
+    "difficulty": "medium",
+    "topics": [
+      "Next.js"
+    ],
+    "generatedAt": {
+      "$date": "2026-05-28T15:10:14.924Z"
+    }
+  },
+  "isBookmarked": false,
+  "isFavorite": true,
+  "flashcards": [],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.926Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.926Z"
+  }
+}

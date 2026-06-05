@@ -1,0 +1,48 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb25"
+  },
+  "title": "Développement Full-Stack - Cours",
+  "description": "Cours sur le développement Full-Stack",
+  "content": "",
+  "summary": "",
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "teacherId": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "subjectId": {
+    "$oid": "6a185ad6754c94b99c29eb18"
+  },
+  "chapters": [
+    {
+      "title": "Introduction à Next.js",
+      "order": 1,
+      "isPublished": true,
+      "materials": [],
+      "exercises": [],
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb26"
+      }
+    },
+    {
+      "title": "API avec Express",
+      "order": 2,
+      "isPublished": true,
+      "materials": [],
+      "exercises": [],
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb27"
+      }
+    }
+  ],
+  "isPublished": true,
+  "quiz": [],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.805Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.805Z"
+  }
+}

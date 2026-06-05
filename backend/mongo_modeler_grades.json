@@ -1,0 +1,35 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb54"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "studentName": "Karim Student",
+  "subjectId": {
+    "$oid": "6a185ad6754c94b99c29eb18"
+  },
+  "subjectName": "Développement Full-Stack",
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "academicYearId": {
+    "$oid": "6a185ad6754c94b99c29eb0e"
+  },
+  "examSession": "main",
+  "examDate": {
+    "$date": "2025-06-01T00:00:00Z"
+  },
+  "continuousAssessment": 15,
+  "examGrade": 14,
+  "totalGrade": 14.3,
+  "isAbsent": false,
+  "isPassed": true,
+  "mention": "Bien",
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.914Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.914Z"
+  }
+}

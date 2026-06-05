@@ -1,0 +1,25 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb14"
+  },
+  "name": "Master Professionnel en Génie Logiciel",
+  "code": "MPGL",
+  "description": "Formation en génie logiciel",
+  "departmentId": {
+    "$oid": "6a185ad6754c94b99c29eb12"
+  },
+  "programType": "master",
+  "duration": {
+    "years": 2,
+    "semesters": 4
+  },
+  "level": "Master",
+  "isActive": true,
+  "teachingUnits": [],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.345Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.345Z"
+  }
+}

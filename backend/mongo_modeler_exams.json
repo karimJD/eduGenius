@@ -1,0 +1,69 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb40"
+  },
+  "title": "Examen Full-Stack - Session 1",
+  "description": "Examen de fin de semestre",
+  "courseId": {
+    "$oid": "6a185ad6754c94b99c29eb25"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "teacherId": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "questions": [
+    {
+      "question": "Décrivez l'architecture de Next.js",
+      "type": "short-answer",
+      "options": [],
+      "correctAnswer": "Next.js utilise le rendu hybride SSR/SSG",
+      "points": 5,
+      "explanation": "",
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb41"
+      }
+    },
+    {
+      "question": "Express.js est-il un framework MVC ?",
+      "type": "true-false",
+      "options": [
+        "Vrai",
+        "Faux"
+      ],
+      "correctAnswer": "Faux",
+      "points": 2,
+      "explanation": "",
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb42"
+      }
+    }
+  ],
+  "settings": {
+    "duration": 90,
+    "attempts": 1,
+    "startDate": {
+      "$date": "2025-06-01T00:00:00Z"
+    },
+    "endDate": {
+      "$date": "2025-06-02T00:00:00Z"
+    },
+    "shuffleQuestions": false,
+    "showResults": true,
+    "showCorrectAnswers": false
+  },
+  "passingScore": 50,
+  "proctoring": {
+    "enabled": false,
+    "webcam": false,
+    "fullscreen": false
+  },
+  "isPublished": true,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.850Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.850Z"
+  }
+}

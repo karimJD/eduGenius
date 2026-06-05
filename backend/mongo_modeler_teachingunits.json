@@ -1,0 +1,27 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb16"
+  },
+  "name": "Génie Logiciel Avancé",
+  "code": "GLA",
+  "description": "Unités avancées du génie logiciel",
+  "departmentId": {
+    "$oid": "6a185ad6754c94b99c29eb12"
+  },
+  "programIds": [
+    {
+      "$oid": "6a185ad6754c94b99c29eb14"
+    }
+  ],
+  "unitType": "fundamental",
+  "totalCredits": 10,
+  "totalCoefficient": 5,
+  "isActive": true,
+  "subjects": [],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.351Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.351Z"
+  }
+}

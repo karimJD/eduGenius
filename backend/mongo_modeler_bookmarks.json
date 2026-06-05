@@ -1,0 +1,26 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb5c"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "resourceType": "material",
+  "resourceId": {
+    "$oid": "6a185ad6754c94b99c29eb26"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "note": "Important à réviser",
+  "tags": [
+    "Next.js",
+    "important"
+  ],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.946Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.946Z"
+  }
+}

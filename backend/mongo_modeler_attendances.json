@@ -1,0 +1,80 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb51"
+  },
+  "videoSessionId": {
+    "$oid": "6a185ad6754c94b99c29eb2d"
+  },
+  "scheduleId": {
+    "$oid": "6a185ad6754c94b99c29eb29"
+  },
+  "sessionDate": {
+    "$date": "2025-01-10T00:00:00Z"
+  },
+  "subjectId": {
+    "$oid": "6a185ad6754c94b99c29eb18"
+  },
+  "subjectName": "Développement Full-Stack",
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "className": "MPGL2",
+  "teacherId": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "teacherName": "Ahmed Teacher",
+  "scheduledStart": {
+    "$date": "2025-01-10T07:00:00Z"
+  },
+  "scheduledEnd": {
+    "$date": "2025-01-10T09:00:00Z"
+  },
+  "actualStart": {
+    "$date": "2025-01-10T07:05:00Z"
+  },
+  "actualEnd": {
+    "$date": "2025-01-10T08:55:00Z"
+  },
+  "totalDuration": 110,
+  "records": [
+    {
+      "studentId": {
+        "$oid": "6a185ad6754c94b99c29eb1f"
+      },
+      "studentName": "Karim Student",
+      "status": "present",
+      "joinTime": {
+        "$date": "2025-01-10T07:05:00Z"
+      },
+      "leaveTime": {
+        "$date": "2025-01-10T08:55:00Z"
+      },
+      "duration": 110,
+      "attendancePercentage": 91.7,
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb52"
+      }
+    }
+  ],
+  "statistics": {
+    "totalStudents": 1,
+    "present": 1,
+    "late": 0,
+    "absent": 0,
+    "excused": 0,
+    "attendanceRate": 100
+  },
+  "generatedAt": {
+    "$date": "2026-05-28T15:10:14.901Z"
+  },
+  "generatedBy": {
+    "$oid": "6a185ad6754c94b99c29eb1c"
+  },
+  "adjustments": [],
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.905Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.905Z"
+  }
+}

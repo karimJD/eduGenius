@@ -1,0 +1,34 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb63"
+  },
+  "chapterId": {
+    "$oid": "6a185ad6754c94b99c29eb26"
+  },
+  "exerciseId": {
+    "$oid": "6a185ad6754c94b99c29eb26"
+  },
+  "classId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "subjectId": {
+    "$oid": "6a185ad6754c94b99c29eb18"
+  },
+  "studentId": {
+    "$oid": "6a185ad6754c94b99c29eb1f"
+  },
+  "fileUrl": "https://s3.amazonaws.com/submissions/exercice1.pdf",
+  "fileName": "exercice1.pdf",
+  "fileSize": 204800,
+  "submittedAt": {
+    "$date": "2026-05-28T15:10:14.965Z"
+  },
+  "feedback": "Bon travail !",
+  "grade": 16,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.967Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.967Z"
+  }
+}

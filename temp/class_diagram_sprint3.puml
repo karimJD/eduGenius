@@ -1,0 +1,146 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam class {
+    BackgroundColor White
+    ArrowColor #263238
+    BorderColor #263238
+}
+
+' --- Énumérations ---
+enum MaterialType <<enumeration>> {
+    pdf
+    video
+    doc
+    link
+}
+
+' --- Classes Principales ---
+
+class User <<model>> {
+    + _id: ObjectId
+    + firstName: String
+    + lastName: String
+    + role: Enum
+    + getDashboardStats(): Object
+    + getProfile(): User
+}
+
+class Class <<model>> {
+    + _id: ObjectId
+    + name: String
+    + code: String
+    + level: String
+    + capacity: Number
+    + currentEnrollment: Number
+}
+
+class Course <<model>> {
+    + title: String
+    + description: String
+    + summary: String {IA}
+    + isPublished: Boolean
+    + createCourse(formData): Course
+    + updateCourseSummary(): void
+    + generateCourseQuiz(): void
+}
+
+class Chapter <<subDocument>> {
+    + title: String
+    + order: Number
+    + isPublished: Boolean
+}
+
+class Material <<subDocument>> {
+    + name: String
+    + url: String
+    + type: MaterialType
+    + size: Number
+}
+
+class StudyMaterial <<model>> {
+    + type: Enum(summary, flashcard)
+    + title: String
+    + content: String
+    + isAIGenerated: Boolean
+    + generateSummary(style): void
+    + generateFlashcards(): void
+}
+
+class Quiz <<model>> {
+    + title: String
+    + description: String
+    + isAIGenerated: Boolean
+    + isPublished: Boolean
+    + generatePracticeQuiz(): void
+}
+
+class Submission <<model>> {
+    + score: Number
+    + totalPoints: Number
+    + percentage: Number
+    + status: Enum
+    + mistakeExplanation: String {IA}
+    + calculateScore(): void
+    + submitPracticeQuiz(): void
+}
+
+class StudentProgress <<model>> {
+    + overallProgress: Number
+    + totalTimeSpent: Number
+    + lastAccessedAt: Date
+    + trackMaterialView(): void
+    + markChapterComplete(): void
+}
+
+class ArenaChallenge <<model>> {
+    + title: String
+    + weekStart: Date
+    + status: Enum(active, ended)
+    + getOrCreateChallenge(): ArenaChallenge
+}
+
+class ArenaProgress <<model>> {
+    + totalXP: Number
+    + currentStreak: Number
+    + milestonesReached: String[]
+    + submitQuest(answers): void
+}
+
+class Announcement <<model>> {
+    + title: String
+    + content: String
+    + priority: Enum
+    + isPinned: Boolean
+    + publishAnnouncement(): void
+}
+
+' --- Relations ---
+
+' Hiérarchie des cours
+Course "1" *-- "0..*" Chapter : organisé en
+Chapter "1" *-- "0..*" Material : contient
+Material "0..*" o-- "1" MaterialType : type de fichier
+Course "0..*" o-- "1" Class : dispensé à
+
+' IA & Suivi
+StudyMaterial "0..*" o-- "1" Course : extrait de
+StudentProgress "0..1" o-- "1" User : pour l'étudiant
+StudentProgress "0..*" o-- "1" Course : suit le
+
+' Évaluations
+Quiz "0..*" o-- "1" Course : évalue
+Submission "0..*" o-- "1" Quiz : résultat de
+Submission "0..*" o-- "1" User : soumis par
+
+' Gamification
+ArenaChallenge "0..*" o-- "1" Class : défi de
+ArenaProgress "0..1" o-- "1" User : progression de
+ArenaProgress "0..*" o-- "1" ArenaChallenge : participe à
+
+' Communication
+Announcement "0..*" o-- "1" Class : notifie
+Announcement "0..*" o-- "1" User : rédigée par
+
+@enduml

@@ -6,11 +6,8 @@ Ce chapitre constitue la phase de conception détaillée du projet \textbf{EduGe
 
 
 % --- Section 1 : Besoins ---
-\section{Analyse Dimensionnelle des Besoins}
+\section{Identification des Acteurs}
 
-L’ingénierie des besoins constitue le socle de la conception logicielle. Cette phase permet de définir précisément le périmètre d’intervention du système \textbf{EduGenius} en segmentant les attentes des utilisateurs et les contraintes de qualité indispensables à la réussite d'une plateforme d'apprentissage intelligente.
-
-\subsection{Écosystème des Acteurs et Matrice d'Accès}
 Le système repose sur une interaction entre trois acteurs principaux, dont les privilèges sont strictement définis pour garantir l'intégrité des données et la fluidité des processus pédagogiques :
 
 \begin{itemize}
@@ -19,7 +16,8 @@ Le système repose sur une interaction entre trois acteurs principaux, dont les 
     \item \textbf{L’Étudiant (Apprenant) :} Acteur final de la plateforme, il accède aux ressources de manière structurée. Il peut consulter les cours, participer aux sessions vidéo, passer des quiz générés par l'IA, suivre sa progression, interagir via le chat et bénéficier des outils de révision adaptatifs (flashcards, résumés).
 \end{itemize}
 
-\subsection{Ingénierie des Exigences Fonctionnelles (User Stories)}
+\section{Identification des besoins fonctionnels}
+
 Le système EduGenius doit fournir un ensemble de services cohérents pour assurer une gestion complète de l'apprentissage numérique :
 
 \begin{enumerate}
@@ -30,7 +28,8 @@ Le système EduGenius doit fournir un ensemble de services cohérents pour assur
     \item \textbf{Collaboration et Sessions Vidéo :} Communication synchrone et asynchrone via chat (privé/groupe), notifications et annonces. Les sessions vidéo en temps réel (\textbf{Daily.co}) incluent le partage d'écran, la gestion des participants et la détection automatique des présences (absents/retardataires).
 \end{enumerate}
 
-\subsection{Attributs Qualitatifs et Contraintes de Design}
+\section{Identification des besoins non fonctionnels}
+
 Les besoins non fonctionnels définissent la robustesse et l'efficacité opérationnelle du système :
 
 \begin{itemize}
@@ -47,7 +46,7 @@ Les besoins non fonctionnels définissent la robustesse et l'efficacité opérat
 % --- Section 2 : Agilité ---
 \section{Pilotage du Projet via la Méthodologie Scrum}
 
-Le développement de la plateforme \textbf{EduGenius} s'inscrit dans une démarche \textbf{Agile}, utilisant le cadre méthodologique \textbf{Scrum}. Ce choix se justifie par la nature itérative du projet, notamment pour l'intégration de technologies émergentes comme l'intelligence artificielle locale et les flux vidéo en temps réel, nécessitant une validation continue des briques technologiques.
+Le développement de la plateforme \textbf{EduGenius} s'inscrit dans une démarche \textbf{Agile}, utilisant le cadre méthodologique \textbf{Scrum} \cite{scrum_guide}. Ce choix se justifie par la nature itérative du projet, notamment pour l'intégration de technologies émergentes comme l'intelligence artificielle locale et les flux vidéo en temps réel, nécessitant une validation continue des briques technologiques.
 
 \subsection{Organisation et Rôles Scrum}
 Bien que ce projet ait été réalisé en autonomie, j'ai adopté une structure de gestion rigoureuse en assumant la transversalité des rôles Scrum. Cette approche a permis de maintenir une discipline d'ingénierie logicielle tout au long du cycle de vie du produit :
@@ -78,82 +77,176 @@ Le tableau ci-dessous détaille l'intégralité du Backlog produit avec les iden
 \textbf{Epic} & \textbf{ID} & \textbf{Titre} & \textbf{User Story} & \textbf{Priorité} \\
 \hline
 \endfirsthead
-
+ 
 \multicolumn{5}{c}{{\bfseries Suite du backlog}} \\
 \hline
 \textbf{Epic} & \textbf{ID} & \textbf{Titre} & \textbf{User Story} & \textbf{Priorité} \\
 \hline
 \endhead
-
+ 
 \hline
 \multicolumn{5}{|r|}{\textit{Suite sur page suivante}} \\
 \endfoot
-
+ 
 \hline
 \endlastfoot
-
-% EPIC 1
-EPIC 1 – Authentification \& rôles & US-01 & Connexion sécurisée & En tant qu'utilisateur, je veux pouvoir me connecter avec mes identifiants fournis par l'administrateur, afin d'accéder à mon espace personnel. & Haute \\ \cline{2-5}
- & US-02 & Gestion des utilisateurs & En tant qu'Admin, je veux créer et modifier des utilisateurs et leur assigner des rôles (enseignant/étudiant), afin de gérer les accès à la plateforme. & Haute \\ \cline{2-5}
- & US-03 & Profil utilisateur & En tant qu'utilisateur, je veux consulter et modifier mon profil (nom, photo, mot de passe), afin de personnaliser mon expérience. & Moyenne \\ \hline
-
-% EPIC 2
-EPIC 2 – Administration & US-04 & Création et gestion des classes & En tant qu'Admin, je veux créer/modifier/supprimer des classes et y assigner des étudiants et un enseignant, afin d'organiser les cursus. & Haute \\ \cline{2-5}
- & US-05 & Planification des cours (planning) & En tant qu'Admin, je veux définir les horaires des classes (date, heure, durée), afin que chacun ait un emploi du temps clair. & Haute \\ \cline{2-5}
- & US-06 & Supervision générale & En tant qu'Admin, je veux une vue d'ensemble des utilisateurs, classes et activités, afin de superviser la plateforme. & Moyenne \\ \hline
-
-% EPIC 3
-EPIC 3 – Gestion des cours & US-07 & Dépôt et organisation des cours & En tant qu'Enseignant, je veux uploader des fichiers (PDF, vidéo, etc.) et les organiser par chapitre, afin que les étudiants accèdent facilement aux ressources. & Haute \\ \cline{2-5}
- & US-08 & Génération automatique de résumé (IA) & En tant qu'Enseignant, je veux générer un résumé IA d'un cours (chapitre ou complet), pour aider les étudiants à réviser. & Moyenne \\ \cline{2-5}
- & US-09 & Génération de quiz par IA & En tant qu'Enseignant, je veux générer un quiz automatiquement à partir d'un cours (nombre de questions, difficulté, type), afin de gagner du temps. & Haute \\ \hline
-
-% EPIC 4
-EPIC 4 – Évaluations & US-10 & Création manuelle de quiz/examens & En tant qu'Enseignant, je veux créer des questions (QCM, ouvertes, vrai/faux) et les organiser en quiz/examens, afin de tester les connaissances. & Haute \\ \cline{2-5}
- & US-11 & Planification des évaluations & En tant qu'Enseignant, je veux fixer une tel date, heure, durée et nombre de tentatives pour chaque quiz/examen, afin de contrôler le déroulement. & Haute \\ \cline{2-5}
- & US-12 & Correction automatique (QCM, vrai/faux) & En tant qu'Enseignant, je veux que les questions fermées soient corrigées automatiquement, afin de gagner du temps. & Haute \\ \cline{2-5}
- & US-13 & Correction manuelle des questions ouvertes & En tant qu'Enseignant, je veux noter manuellement les réponses ouvertes, afin d'évaluer précisément. & Moyenne \\ \hline
-
-% EPIC 5
-EPIC 5 – Parcours étudiant & US-14 & Consultation des cours & En tant qu'Étudiant, je veux voir la liste des chapitres, télécharger les fichiers et lire le contenu, afin d'apprendre à mon rythme. & Haute \\ \cline{2-5}
- & US-15 & Génération de résumé personnel (IA) & En tant qu'Étudiant, je veux générer un résumé IA ajustable (longueur, focus), pour mieux comprendre un chapitre. & Moyenne \\ \cline{2-5}
- & US-16 & Auto-évaluation avec quiz IA & En tant qu'Étudiant, je veux générer un quiz d'entraînement (nombre de questions, difficulté, type) depuis un cours, afin de tester mes connaissances sans note. & Haute \\ \cline{2-5}
- & US-17 & Participation aux quiz/examens assignés & En tant qu'Étudiant, je veux répondre aux évaluations pendant la fenêtre prévue, avec conservation des réponses et timer, afin d'être évalué juste. & Haute \\ \cline{2-5}
- & US-18 & Consultation des résultats et feedback & En tant qu'Étudiant, je veux voir mon score, les bonnes réponses et des indications IA après un quiz, afin d'apprendre de mes erreurs. & Haute \\ \hline
-
-% EPIC 6
-EPIC 6 – Communication & US-19 & Chat privé étudiant $\leftrightarrow$ enseignant & En tant qu'Étudiant/Enseignant, je veux échanger des messages privés, envoyer des fichiers, et voir le statut lu/non-lu, afin de poser des questions personnelles. & Haute \\ \cline{2-5}
- & US-20 & Chat de classe (groupe) & En tant qu'étudiant d'une classe, je veux poster des messages, partager des fichiers, et répondre dans des fils de discussion, afin de collaborer. & Haute \\ \cline{2-5}
- & US-21 & Annonces par l'enseignant & En tant qu'Enseignant, je veux envoyer des annonces dans le chat de classe avec notification, afin de communiquer des infos importantes. & Moyenne \\ \cline{2-5}
- & US-22 & Notifications push/email & En tant qu'utilisateur, je veux recevoir des notifications (deadlines, nouveau message, début de cours), afin de ne rien manquer. & Haute \\ \hline
-
-% EPIC 7
-EPIC 7 – Sessions vidéo (Daily.co) & US-23 & Création et gestion d'un appel vidéo & En tant qu'Enseignant, je veux démarrer une session vidéo à partir du planning, avec un lien Daily.co unique, afin d'organiser un cours en direct. & Haute \\ \cline{2-5}
- & US-24 & Rejoindre un appel vidéo & En tant qu'Étudiant, je veux rejoindre la session vidéo prévue avec un simple clic, afin de suivre le cours en direct. & Haute \\ \cline{2-5}
- & US-25 & Partage d'écran par l'enseignant & En tant qu'Enseignant, je veux partager mon écran pendant l'appel, afin de montrer des présentations ou du code. & Haute \\ \cline{2-5}
- & US-26 & Gestion audio/vidéo des participants & En tant qu'Enseignant, je veux couper le micro ou la caméra d'un étudiant, afin d'éviter les perturbations. & Moyenne \\ \cline{2-5}
- & US-27 & Chat intégré à la session vidéo & En tant qu'étudiant, je veux utiliser un chat pendant l'appel pour poser des questions textuelles, sans couper la parole. & Moyenne \\ \cline{2-5}
- & US-28 & Détection de présence (rejoint, absent, retard) & En tant qu'Enseignant, je veux voir qui a rejoint l'appel, à quelle heure, et qui est absent, afin de suivre l'assiduité. & Haute \\ \cline{2-5}
- & US-29 & Historique de participation & En tant qu'Enseignant/Admin, je veux consulter l'historique des présences pour chaque étudiant (cours vidéo), afin de faire un suivi. & Haute \\ \cline{2-5}
- & US-30 & Enregistrement et replay (optionnel) & En tant qu'étudiant, je veux regarder l'enregistrement d'un cours vidéo manqué, afin de rattraper la séance. & Basse \\ \hline
-
-% EPIC 8
-EPIC 8 – Analytics & US-31 & Tableau de bord enseignant (scores, présence) & En tant qu'Enseignant, je veux voir pour chaque étudiant ses scores aux quiz, sa progression, ses forces/faiblesses, et son assiduité, afin d'adapter mon enseignement. & Haute \\ \cline{2-5}
- & US-32 & Tableau de bord étudiant (progression) & En tant qu'Étudiant, je veux voir mes résultats, mon taux de présence, et des recommandations IA de révision, afin de m'améliorer. & Haute \\ \cline{2-5}
- & US-33 & Visualisation des performances par classe & En tant qu'Admin, je veux des graphiques agrégés par classe, taux de réussite, participation, afin d'avoir une vue d'ensemble. & Moyenne \\ \cline{2-5}
- & US-34 & Export des résultats (CSV/PDF) & En tant qu'Enseignant/Admin, je veux exporter les performances ou présences en fichier, afin de les traiter hors ligne. & Moyenne \\ \hline
-
-% EPIC 9
-EPIC 9 – IA (Ollama) & US-35 & Génération de quiz adapté au niveau & En tant qu'étudiant, je veux que l'IA génère un quiz de difficulté progressive basé sur mes scores passés, afin de combler mes lacunes. & Haute \\ \cline{2-5}
- & US-36 & Recommandations personnalisées de révision & En tant qu'étudiant, je veux que l'IA me suggère quels chapitres réviser en priorité, afin d'optimiser mon apprentissage. & Haute \\ \cline{2-5}
- & US-37 & Hints IA pendant les quiz & En tant qu'étudiant, je veux pouvoir demander un indice contextuel (IA) pendant un quiz, afin de m'aider sans donner la réponse. & Basse \\ \cline{2-5}
- & US-38 & Génération automatique de flashcards & En tant qu'étudiant, je veux que l'IA génère des flashcards à partir d'un cours, afin de mémoriser facilement. & Basse \\ \hline
-
-% EPIC 10
-EPIC 10 – Transverse & US-39 & Dashboard unifié (calendrier, prochaines évaluations, cours) & En tant qu'utilisateur, je veux un tableau de bord personnalisé avec mon planning, les deadlines, et les sessions à venir, afin d'être organisé. & Haute \\ \cline{2-5}
- & US-40 & Gamification – XP, badges, leaderboard & En tant qu'étudiant, je veux gagner des points et des badges en complétant des quiz ou en étant assidu, afin d'être motivé. & Basse \\ \cline{2-5}
- & US-41 & Interface responsive (mobile/desktop) & En tant qu'utilisateur, je veux que la plateforme soit utilisable sur mobile et tablette, afin de m'y connecter partout. & Haute \\ \cline{2-5}
- & US-42 & Tests de charge et scalabilité & En tant que développeur, je veux que le système supporte 100+ utilisateurs simultanés (vidéo + chat + quiz), afin d'assurer la fiabilité. & Haute \\ \hline
-
+ 
+% EPIC 1 – Authentification & rôles  (US-01 → US-03)  — Sprint 1
+EPIC 1 – Authentification \& rôles
+ & US-01 & Connexion sécurisée
+ & En tant qu'utilisateur, je veux pouvoir me connecter avec mes identifiants fournis par l'administrateur, afin d'accéder à mon espace personnel.
+ & Haute \\ \cline{2-5}
+ & US-02 & Gestion des utilisateurs
+ & En tant qu'Admin, je veux créer et modifier des utilisateurs et leur assigner des rôles (enseignant/étudiant), afin de gérer les accès à la plateforme.
+ & Haute \\ \cline{2-5}
+ & US-03 & Profil utilisateur
+ & En tant qu'utilisateur, je veux consulter et modifier mon profil (nom, photo, mot de passe), afin de personnaliser mon expérience.
+ & Moyenne \\ \hline
+ 
+% EPIC 2 – Interface & accès  (US-04 → US-05)  — Sprint 1
+EPIC 2 – Interface \& accès
+ & US-04 & Dashboard unifié (calendrier, prochaines évaluations, cours)
+ & En tant qu'utilisateur, je veux un tableau de bord personnalisé avec mon planning, les deadlines, et les sessions à venir, afin d'être organisé.
+ & Haute \\ \cline{2-5}
+ & US-05 & Interface responsive (mobile/desktop)
+ & En tant qu'utilisateur, je veux que la plateforme soit utilisable sur mobile et tablette, afin de me connecter partout.
+ & Haute \\ \hline
+ 
+% EPIC 3 – Administration  (US-06 → US-08)  — Sprint 2
+EPIC 3 – Administration
+ & US-06 & Création et gestion des classes
+ & En tant qu'Admin, je veux créer/modifier/supprimer des classes et y assigner des étudiants et un enseignant, afin d'organiser les cursus.
+ & Haute \\ \cline{2-5}
+ & US-07 & Planification des cours (planning)
+ & En tant qu'Admin, je veux définir les horaires des classes (date, heure, durée), afin que chacun ait un emploi du temps clair.
+ & Haute \\ \cline{2-5}
+ & US-08 & Supervision générale
+ & En tant qu'Admin, je veux une vue d'ensemble des utilisateurs, classes et activités, afin de superviser la plateforme.
+ & Moyenne \\ \hline
+ 
+% EPIC 4 – Sessions vidéo (Daily.co)  (US-09 → US-16)  — Sprint 2
+EPIC 4 – Sessions vidéo (Daily.co)
+ & US-09 & Création et gestion d'un appel vidéo
+ & En tant qu'Enseignant, je veux démarrer une session vidéo à partir du planning, avec un lien Daily.co unique, afin d'organiser un cours en direct.
+ & Haute \\ \cline{2-5}
+ & US-10 & Rejoindre un appel vidéo
+ & En tant qu'Étudiant, je veux rejoindre la session vidéo prévue avec un simple clic, afin de suivre le cours en direct.
+ & Haute \\ \cline{2-5}
+ & US-11 & Partage d'écran par l'enseignant
+ & En tant qu'Enseignant, je veux partager mon écran pendant l'appel, afin de montrer des présentations ou du code.
+ & Haute \\ \cline{2-5}
+ & US-12 & Gestion audio/vidéo des participants
+ & En tant qu'Enseignant, je veux couper le micro ou la caméra d'un étudiant, afin d'éviter les perturbations.
+ & Moyenne \\ \cline{2-5}
+ & US-13 & Chat intégré à la session vidéo
+ & En tant qu'étudiant, je veux utiliser un chat pendant l'appel pour poser des questions textuelles, sans couper la parole.
+ & Moyenne \\ \cline{2-5}
+ & US-14 & Détection de présence (rejoint, absent, retard)
+ & En tant qu'Enseignant, je veux voir qui a rejoint l'appel, à quelle heure, et qui est absent, afin de suivre l'assiduité.
+ & Haute \\ \cline{2-5}
+ & US-15 & Historique de participation
+ & En tant qu'Enseignant/Admin, je veux consulter l'historique des présences pour chaque étudiant (cours vidéo), afin de faire un suivi.
+ & Haute \\ \cline{2-5}
+ & US-16 & Enregistrement et replay
+ & En tant qu'étudiant, je veux regarder l'enregistrement d'un cours vidéo manqué, afin de rattraper la séance.
+ & Basse \\ \hline
+ 
+% EPIC 5 – Gestion des cours  (US-17 → US-19)  — Sprint 3
+EPIC 5 – Gestion des cours
+ & US-17 & Dépôt et organisation des cours
+ & En tant qu'Enseignant, je veux uploader des fichiers (PDF, vidéo, etc.) et les organiser par chapitre, afin que les étudiants accèdent facilement aux ressources.
+ & Haute \\ \cline{2-5}
+ & US-18 & Génération automatique de résumé (IA)
+ & En tant qu'Enseignant, je veux générer un résumé IA d'un cours (chapitre ou complet), pour aider les étudiants à réviser.
+ & Moyenne \\ \cline{2-5}
+ & US-19 & Génération de quiz par IA
+ & En tant qu'Enseignant, je veux générer un quiz automatiquement à partir d'un cours (nombre de questions, difficulté, type), afin de gagner du temps.
+ & Haute \\ \hline
+ 
+% EPIC 6 – Évaluations  (US-20 → US-23)  — Sprint 3
+EPIC 6 – Évaluations
+ & US-20 & Création manuelle de quiz/examens
+ & En tant qu'Enseignant, je veux créer des questions (QCM, ouvertes, vrai/faux) et les organiser en quiz/examens, afin de tester les connaissances.
+ & Haute \\ \cline{2-5}
+ & US-21 & Planification des évaluations
+ & En tant qu'Enseignant, je veux fixer une date, heure, durée et nombre de tentatives pour chaque quiz/examen, afin de contrôler le déroulement.
+ & Haute \\ \cline{2-5}
+ & US-22 & Correction automatique (QCM, vrai/faux)
+ & En tant qu'Enseignant, je veux que les questions fermées soient corrigées automatiquement, afin de gagner du temps.
+ & Haute \\ \cline{2-5}
+ & US-23 & Correction manuelle des questions ouvertes
+ & En tant qu'Enseignant, je veux noter manuellement les réponses ouvertes, afin d'évaluer précisément.
+ & Moyenne \\ \hline
+ 
+% EPIC 7 – Parcours étudiant  (US-24 → US-28)  — Sprint 3
+EPIC 7 – Parcours étudiant
+ & US-24 & Consultation des cours
+ & En tant qu'Étudiant, je veux voir la liste des chapitres, télécharger les fichiers et lire le contenu, afin d'apprendre à mon rythme.
+ & Haute \\ \cline{2-5}
+ & US-25 & Génération de résumé personnel (IA)
+ & En tant qu'Étudiant, je veux générer un résumé IA ajustable (longueur, focus), pour mieux comprendre un chapitre.
+ & Moyenne \\ \cline{2-5}
+ & US-26 & Auto-évaluation avec quiz IA
+ & En tant qu'Étudiant, je veux générer un quiz d'entraînement (nombre de questions, difficulté, type) depuis un cours, afin de tester mes connaissances sans note.
+ & Haute \\ \cline{2-5}
+ & US-27 & Participation aux quiz/examens assignés
+ & En tant qu'Étudiant, je veux répondre aux évaluations pendant la fenêtre prévue, avec conservation des réponses et timer, afin d'être évalué juste.
+ & Haute \\ \cline{2-5}
+ & US-28 & Consultation des résultats et feedback
+ & En tant qu'Étudiant, je veux voir mon score, les bonnes réponses et des indications IA après un quiz, afin d'apprendre de mes erreurs.
+ & Haute \\ \hline
+ 
+% EPIC 8 – Communication  (US-29 → US-32)  — Sprint 3
+EPIC 8 – Communication
+ & US-29 & Notifications push/email
+ & En tant qu'utilisateur, je veux recevoir des notifications (deadlines, nouveau message, début de cours), afin de ne rien manquer.
+ & Haute \\ \cline{2-5}
+ & US-30 & Chat privé étudiant $\leftrightarrow$ enseignant
+ & En tant qu'Étudiant/Enseignant, je veux échanger des messages privés, envoyer des fichiers, et voir le statut lu/non-lu, afin de poser des questions personnelles.
+ & Haute \\ \cline{2-5}
+ & US-31 & Chat de classe (groupe)
+ & En tant qu'étudiant d'une classe, je veux poster des messages, partager des fichiers, et répondre dans des fils de discussion, afin de collaborer.
+ & Haute \\ \cline{2-5}
+ & US-32 & Annonces par l'enseignant
+ & En tant qu'Enseignant, je veux envoyer des annonces dans le chat de classe avec notification, afin de communiquer des infos importantes.
+ & Moyenne \\ \hline
+ 
+% EPIC 9 – Analytics  (US-33 → US-36)  — Sprint 3
+EPIC 9 – Analytics
+ & US-33 & Tableau de bord enseignant (scores, présence)
+ & En tant qu'Enseignant, je veux voir pour chaque étudiant ses scores aux quiz, sa progression, ses forces/faiblesses, et son assiduité, afin d'adapter mon enseignement.
+ & Haute \\ \cline{2-5}
+ & US-34 & Tableau de bord étudiant (progression)
+ & En tant qu'Étudiant, je veux voir mes résultats, mon taux de présence, et des recommandations IA de révision, afin de m'améliorer.
+ & Haute \\ \cline{2-5}
+ & US-35 & Visualisation des performances par classe
+ & En tant qu'Admin, je veux des graphiques agrégés par classe, taux de réussite, participation, afin d'avoir une vue d'ensemble.
+ & Moyenne \\ \cline{2-5}
+ & US-36 & Export des résultats (CSV/PDF)
+ & En tant qu'Enseignant/Admin, je veux exporter les performances ou présences en fichier, afin de les traiter hors ligne.
+ & Moyenne \\ \hline
+ 
+% EPIC 10 – IA & gamification  (US-37 → US-42)  — Sprint 3
+EPIC 10 – IA \& gamification
+ & US-37 & Génération de quiz adapté au niveau
+ & En tant qu'étudiant, je veux que l'IA génère un quiz de difficulté progressive basé sur mes scores passés, afin de combler mes lacunes.
+ & Haute \\ \cline{2-5}
+ & US-38 & Recommandations personnalisées de révision
+ & En tant qu'étudiant, je veux que l'IA me suggère quels chapitres réviser en priorité, afin d'optimiser mon apprentissage.
+ & Haute \\ \cline{2-5}
+ & US-39 & Hints IA pendant les quiz
+ & En tant qu'étudiant, je veux pouvoir demander un indice contextuel (IA) pendant un quiz, afin de m'aider sans donner la réponse.
+ & Basse \\ \cline{2-5}
+ & US-40 & Génération automatique de flashcards
+ & En tant qu'étudiant, je veux que l'IA génère des flashcards à partir d'un cours, afin de mémoriser facilement.
+ & Basse \\ \cline{2-5}
+ & US-41 & Gamification – XP, badges, leaderboard
+ & En tant qu'étudiant, je veux gagner des points et des badges en complétant des quiz ou en étant assidu, afin d'être motivé.
+ & Basse \\ \cline{2-5}
+ & US-42 & Tests de charge et scalabilité
+ & En tant que développeur, je veux que le système supporte 100+ utilisateurs simultanés (vidéo + chat + quiz), afin d'assurer la fiabilité.
+ & Haute \\ \hline
+ 
 \end{longtable}
 
 \bigskip
@@ -169,22 +262,23 @@ Le cycle de développement a été segmenté en quatre itérations (\textit{Spri
 \renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\textwidth}{|l|X|c|X|}
 \hline
-\rowcolor[HTML]{EFEFEF} 
+\rowcolor[HTML]{EFEFEF}
 \textbf{Sprint} & \textbf{Fonctionnalité} & \textbf{Durée} & \textbf{User Stories (IDs)} \\ \hline
-\textbf{Sprint 1} & Authentification \& Gestion des utilisateurs & 3 sem & US-1, US-2, US-3, US-39, US-41 \\ \hline
-\textbf{Sprint 2} & Gestion des classes \& Appels vidéo (avec chat, contrôles audio/vidéo, replay) & 4 sem & US-4, US-5, US-6, US-22, US-23, US-24, US-25, US-26, US-27, US-28, US-29, US-30 \\ \hline
-\textbf{Sprint 3} & Gestion des contenus, évaluations, chat textuel, analytics \& IA (complet) & 5 sem & US-7, US-8, US-9, US-10, US-11, US-12, US-13, US-14, US-15, US-16, US-17, US-18, US-19, US-20, US-21, US-31, US-32, US-33, US-34, US-35, US-36, US-37, US-38, US-40, US-42 \\ \hline
+\textbf{Sprint 1} & Authentification et gestion des utilisateurs & 3 sem & US-01 à US-05 \\ \hline
+\textbf{Sprint 2} & Gestion des classes et visioconférence        & 4 sem & US-06 à US-16 \\ \hline
+\textbf{Sprint 3} & Gestion des contenus et IA                    & 5 sem & US-17 à US-42 \\ \hline
 \end{tabularx}
-\caption{Planification opérationnelle corrigée des Sprints}
-\label{tab:sprint_mapping_corrected}
+\caption{Planification opérationnelle des Sprints}
+\label{tab:sprint_mapping_simplified}
 \end{table}
+ 
 
 \subsection{Chronogramme de Réalisation (Diagramme de Gantt)}
 La planification temporelle des différentes phases (Analyse, Développement des Sprints, Tests, Déploiement) est illustrée par le diagramme de Gantt suivant :
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/gantt_diagram_global.png}
+    \includegraphics[width=\textwidth]{images/GANTT.png}
     \caption{Chronogramme de réalisation (Diagramme de Gantt)}
     \label{fig:gantt}
 \end{figure}
@@ -196,51 +290,23 @@ La planification temporelle des différentes phases (Analyse, Développement des
 
 La modélisation des besoins a pour objectif de transformer les exigences fonctionnelles en une représentation graphique claire des interactions entre les utilisateurs et le système. À cet effet, nous utilisons le \textbf{Diagramme de Cas d'Utilisation (Use Case Diagram)} issu du langage UML. 
 
-Compte tenu de la richesse fonctionnelle d'EduGenius, nous avons segmenté cette modélisation en trois diagrammes distincts, permettant une lecture granulaire des droits et interactions par profil d'acteur :
+Le diagramme présenté ci-dessous (voir Figure \ref{fig:use_case_global}) synthétise l'ensemble des interactions entre les trois acteurs du système et les fonctionnalités de la plateforme. Les trois acteurs héritent d'un acteur générique \textbf{Utilisateur} qui peut s'authentifier, gérer son profil et communiquer. Chaque acteur dispose de privilèges spécifiques :
 
 \begin{itemize}
-    \item \textbf{Le périmètre administratif :} Il illustre l'orchestration de la structure globale. Ce diagramme (voir Figure \ref{fig:use_case_admin}) détaille les actions de l'administrateur concernant la gouvernance des comptes, la configuration des départements et l'établissement des plannings.
-    \item \textbf{Le périmètre enseignant :} Centré sur la gestion pédagogique, ce diagramme (voir Figure \ref{fig:use_case_teacher}) met en lumière la création de contenus, l'animation des sessions live via \textbf{Daily.co} et la génération d'évaluations assistée par l'IA locale \textbf{Ollama}.
-    \item \textbf{Le périmètre étudiant :} Ce diagramme (voir Figure \ref{fig:use_case_student}) se focalise sur l'expérience d'apprentissage, incluant la consommation des ressources, la participation aux classes virtuelles et le suivi de progression gamifié.
+    \item \textbf{Administrateur :} Gère les utilisateurs (création, modification, suppression), les classes, les départements et les plannings.
+    \item \textbf{Enseignant :} Gère les cours, les évaluations (manuelles ou par IA), les sessions vidéo via \textbf{Daily.co} et le suivi des présences.
+    \item \textbf{Étudiant :} Consulte les cours, passe les évaluations et consulte sa progression.
 \end{itemize}
 
 \subsection{Diagramme de Cas d'Utilisation Global}
 
-\begin{figure}[H]
+\newpage
+\begin{figure}[ht!]
     \centering
-    \textbf{Cas d'utilisation : Périmètre Administrateur} \\[0.5cm]
-    \includegraphics[width=1\textwidth]{images/use_case_global_admin.png}
-    \caption{Diagramme de cas d'utilisation : Acteur Administrateur}
-    \label{fig:use_case_admin}
+    \includegraphics[width=0.85\textwidth, height=0.85\textheight, keepaspectratio]{images/use_case_global_diagram.png}
+    \caption{Diagramme de cas d'utilisation global d'EduGenius}
+    \label{fig:use_case_global}
 \end{figure}
-
-\begin{figure}[H]
-    \centering
-    \textbf{Cas d'utilisation : Périmètre Enseignant} \\[0.5cm]
-    \includegraphics[width=1\textwidth]{images/use_case_global_teacher.png}
-    \caption{Diagramme de cas d'utilisation : Acteur Enseignant}
-    \label{fig:use_case_teacher}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \textbf{Cas d'utilisation : Périmètre Étudiant} \\[0.5cm]
-    \includegraphics[width=1\textwidth]{images/use_case_global_student.png}
-    \caption{Diagramme de cas d'utilisation : Acteur Étudiant}
-    \label{fig:use_case_student}
-\end{figure}
-
-\subsection{Logique de Flux : Diagramme de Séquence (Focus IA)}
-Ce diagramme détaille l'interaction entre l'utilisateur, le serveur backend et l'instance Ollama lors de la génération d'un résumé ou d'un quiz.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/sequence_diagram_ai.png}
-    \caption{Diagramme de séquence : Interaction avec l'IA Ollama}
-    \label{fig:sequence_ia}
-\end{figure}
-
-
 
 % --- Section 4 : Stack Technique ---
 \section{Écosystème de Développement et Stack Technologique}
@@ -258,73 +324,57 @@ Le succès du développement d'EduGenius repose sur une orchestration rigoureuse
 L'architecture d'EduGenius repose sur une stack moderne, choisie pour sa capacité à gérer l'asynchronisme, la scalabilité et l'intégration de services temps réel :
 
 \begin{itemize}
-    \item \textbf{Next.js :} Framework full-stack basé sur React, utilisé pour le rendu hybride (SSR/SSG) et ses capacités de \textit{Server Actions}, optimisant ainsi la vitesse et le référencement. \\ \begin{center} \includegraphics[width=3.5cm, height=2.5cm, keepaspectratio]{images/next_logo.png} \captionof{figure}{Logo Next.js} \end{center}
-    \item \textbf{Node.js \& Express :} Environnement d'exécution JavaScript côté serveur associé à un framework minimaliste pour la création d'API REST robustes et rapides. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/node_logo.png} \hspace{0.5cm} \includegraphics[width=3.5cm, height=1.2cm]{images/express_logo.png} \captionof{figure}{Logos Node.js et Express} \end{center}
-    \item \textbf{MongoDB :} Base de données NoSQL orientée documents, offrant une grande flexibilité pour modéliser des structures de données éducatives évolutives. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/mongodb_logo.png} \captionof{figure}{Logo MongoDB} \end{center}
-    \item \textbf{AWS S3 :} Service de stockage d'objects cloud hautement disponible, utilisé pour l'hébergement sécurisé des supports de cours et fichiers multimédias. % \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/logo_aws_s3.png} \captionof{figure}{Logo AWS S3} \end{center}
-    \item \textbf{Ollama :} Moteur d'inférence permettant l'exécution de modèles de langage (LLM) en local, garantissant la souveraineté et la confidentialité totale des données traitées. \\ \begin{center} \includegraphics[width=3.5cm, height=3cm, keepaspectratio]{images/ollama_logo.png} \captionof{figure}{Logo Ollama} \end{center}
-    \item \textbf{Daily.co :} API WebRTC spécialisée dans la vidéo haute définition, permettant l'intégration fluide des classes virtuelles directement dans l'interface. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/daily_logo.png} \captionof{figure}{Logo Daily.co} \end{center}
-    \item \textbf{Tailwind CSS :} Framework CSS utilitaire permettant une conception d'interface utilisateur rapide, moderne et entièrement responsive. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/tailwind_logo.png} \captionof{figure}{Logo Tailwind CSS} \end{center}
+    \item \textbf{Next.js :} Framework full-stack basé sur React, utilisé pour le rendu hybride (SSR/SSG) et ses capacités de \textit{Server Actions}, optimisant ainsi la vitesse et le référencement \cite{nextjs_docs}. \\ \begin{center} \includegraphics[width=3.5cm, height=2.5cm, keepaspectratio]{images/next_logo.png} \captionof{figure}{Logo Next.js} \end{center}
+    \item \textbf{Node.js \& Express :} Environnement d'exécution JavaScript côté serveur associé à un framework minimaliste pour la création d'API REST robustes et rapides \cite{learning_node}. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/node_logo.png} \hspace{0.5cm} \includegraphics[width=3.5cm, height=1.2cm]{images/express_logo.png} \captionof{figure}{Logos Node.js et Express} \end{center}
+    \item \textbf{MongoDB :} Base de données NoSQL orientée documents, offrant une grande flexibilité pour modéliser des structures de données éducatives évolutives \cite{mern_stack}. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/mongodb_logo.png} \captionof{figure}{Logo MongoDB} \end{center}
+    \item \textbf{AWS S3 :} Service de stockage d'objects cloud hautement disponible, utilisé pour l'hébergement sécurisé des supports de cours et fichiers multimédias. \\ \begin{center} \includegraphics[width=4cm, height=2cm]{images/s3_logo.png} \captionof{figure}{Logo AWS S3} \end{center}
+    \item \textbf{Ollama :} Moteur d'inférence permettant l'exécution de modèles de langage (LLM) en local, garantissant la souveraineté et la confidentialité totale des données traitées \cite{generative_ai_survey}. \\ \begin{center} \includegraphics[width=3.5cm, height=3cm, keepaspectratio]{images/ollama_logo.png} \captionof{figure}{Logo Ollama} \end{center}
+    \item \textbf{Daily.co :} API WebRTC spécialisée dans la vidéo haute définition, permettant l'intégration fluide des classes virtuelles directement dans l'interface \cite{webrtc_standard}. \\ \begin{center} \includegraphics[width=3.5cm, height=1.2cm]{images/daily_logo.png} \captionof{figure}{Logo Daily.co} \end{center}
+    \item \textbf{Tailwind CSS :} Framework CSS utilitaire permettant une conception d'interface utilisateur rapide, moderne et entièrement responsive. \\ \begin{center} \includegraphics[width=3.5cm, height=2cm]{images/tailwind_logo.png} \captionof{figure}{Logo Tailwind CSS} \end{center}
+    \item \textbf{Jest :} Framework de tests unitaires JavaScript, utilisé pour garantir la qualité du code et la non-régression des fonctionnalités métier par l'automatisation des tests. \\ \begin{center} \includegraphics[width=3.5cm, height=2cm, keepaspectratio]{images/jest.png} \captionof{figure}{Logo Jest} \end{center}
+    \item \textbf{Postman :} Plateforme de collaboration pour le développement d'API, utilisée pour tester, simuler et documenter les endpoints REST du système de manière visuelle. \\ \begin{center} \includegraphics[width=3.5cm, height=2cm, keepaspectratio]{images/postman.png} \captionof{figure}{Logo Postman} \end{center}
+    \item \textbf{Artillery :} Outil de test de charge et de performance moderne, utilisé pour simuler des flux d'utilisateurs intensifs et valider la scalabilité du système sous haute tension. \\ \begin{center} \includegraphics[width=4cm, height=2cm, keepaspectratio]{images/artillery_logo.png} \captionof{figure}{Logo Artillery} \end{center}
 \end{itemize}
 
 % --- Section 5 : Architecture ---
 \section{Architecture Logicielle et Topologie Système}
 
-L'architecture d'\textbf{EduGenius} a été conçue pour répondre à des impératifs de performance, de sécurité des données et de fluidité utilisateur. Elle repose sur une infrastructure hybride alliant services cloud et traitement local souverain.
+L'architecture d'\textbf{EduGenius} a été conçue pour répondre à des impératifs de performance, de sécurité des données et de fluidité utilisateur. Elle repose sur une infrastructure hybride alliant services cloud et traitement local souverain, tout en respectant les principes de découplage de la \textit{Clean Architecture} \cite{clean_architecture}. Cette section détaille successivement l’organisation logique en couches puis la topologie matérielle et réseau.
 
-\subsection{Architecture Physique (Déploiement)}
-
-La topologie de déploiement s'articule autour d'un écosystème distribué garantissant la haute disponibilité des ressources et une latence minimale :
-
-\begin{itemize}
-    \item \textbf{Serveur d'Application :} Hébergement de la logique \textbf{Next.js} et de l'API \textbf{Express} sur une instance VPS (ou plateforme managée), gérant le routage et le rendu hybride.
-    \item \textbf{Services de Stockage (AWS S3) :} Externalisation des fichiers volumineux (PDF, vidéos) pour optimiser la charge serveur et garantir une distribution sécurisée.
-    \item \textbf{Base de Données :} Utilisation d'un cluster \textbf{MongoDB Atlas} assurant la persistance, la réplication et la scalabilité des données.
-    \item \textbf{Instance IA (Ollama) :} Moteur d'inférence dédié au traitement des modèles LLM en local, assurant que les données pédagogiques sensibles ne quittent pas l'infrastructure contrôlée.
-\end{itemize}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=\textwidth]{images/physical_architecture_diagram.png}
-    \caption{Architecture de déploiement et flux d'infrastructure}
-    \label{fig:deployment_arch}
-\end{figure}
-
-\subsection{Architecture Applicative : Modèle Multi-tiers}
+\subsection{Architecture applicative (logique) : Modèle multi-tiers}
 
 Le système adopte une architecture en couches (\textit{n-tier}), garantissant une séparation stricte des préoccupations (\textit{Separation of Concerns}) :
 
 \begin{enumerate}
     \item \textbf{Couche de Présentation :} Développée avec \textbf{Next.js}, elle gère l'interface utilisateur, l'état applicatif et les interactions temps réel.
-    \item \textbf{Couche Métier (Logic) :} Le serveur \textbf{Node.js} centralise la logique décisionnelle : orchestration de l'IA, gestion des sessions \textbf{Daily.co} et sécurité (JWT).
+    \item \textbf{Couche Métier (Logic) :} Le serveur \textbf{Node.js} (Express) centralise la logique décisionnelle : orchestration de l'IA, gestion des sessions \textbf{Daily.co} et sécurité (JWT).
     \item \textbf{Couche d'Accès aux Données :} Interface avec \textbf{MongoDB} via l'ODM \textbf{Mongoose}, assurant la validation des schémas et l'intégrité des transactions.
 \end{enumerate}
 
-\subsection{Conception de la Couche de Données (Modélisation MongoDB)}
+\subsection{Architecture physique (déploiement)}
 
-Contrairement aux bases relationnelles classiques, nous utilisons une approche orientée documents pour gagner en flexibilité. Les relations sont gérées par références croisées pour maintenir une structure légère et évolutive :
+La topologie de déploiement repose sur les composants suivants, interconnectés via les protocoles et flux représentés sur la figure \ref{fig:deployment_arch} :
 
 \begin{itemize}
-    \item \textbf{Users :} Profils, rôles (\textit{RBAC}) et authentification.
-    \item \textbf{Classes \& Courses :} Organisation hiérarchique des cursus et métadonnées des supports de cours (liens S3).
-    \item \textbf{Evaluations :} Structure des quiz (générés par IA ou manuels) et banques de questions.
-    \item \textbf{Analytics :} Suivi des scores, de l'assiduité et des logs de participation vidéo.
+    \item \textbf{Clients :} Navigateurs web (desktop/mobile) communiquant en HTTPS/TLS 1.3 avec le serveur d’application.
+    \item \textbf{Serveur d’application :} Instance VPS hébergeant les runtimes \textbf{Next.js} (rendu frontend) et \textbf{Express.js} (API REST). Il assure l’authentification JWT et orchestre les appels aux services externes.
+    \item \textbf{Base de données :} Cluster \textbf{MongoDB Atlas} pour la persistance des utilisateurs, classes, cours, quiz et présences. La connexion s’effectue via l’ODM Mongoose.
+    \item \textbf{Stockage objet :} Bucket \textbf{AWS S3} pour les fichiers volumineux (PDF, vidéos). L’accès se fait par URLs signées, soit directement par le client, soit via le backend.
+    \item \textbf{Moteur IA local :} Serveur \textbf{Ollama} (modèle Gemma 3B) exécuté sur une machine dédiée, accessible via TCP/11434 en réseau interne. Toutes les données pédagogiques restent souveraines.
+    \item \textbf{Service visioconférence :} \textbf{Daily.co} (cloud externe) est piloté en REST par l’application et fournit aux clients des flux WebRTC pour les classes virtuelles.
 \end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=30cm, keepaspectratio]{images/global_rs_enhanced.png}
-    \caption{Modélisation conceptuelle des données (NoSQL)}
-    \label{fig:mongodb_schema}
+    \includegraphics[width=\textwidth]{images/physical_architecture_diagram.png}
+    \caption{Architecture de déploiement et flux d'infrastructure (physique)}
+    \label{fig:deployment_arch}
 \end{figure}
 
+Cette infrastructure hybride garantit la scalabilité, la sécurité des données sensibles (traitement IA en local) et une expérience utilisateur fluide grâce à l’intégration native des services cloud.
 
 % --- Conclusion du chapitre ---
 \section*{Conclusion}
 \addcontentsline{toc}{section}{Conclusion}
 
-La phase de conception et de modélisation du projet EduGenius a permis d'aligner les attentes fonctionnelles des différents utilisateurs avec les contraintes techniques inhérentes à une plateforme éducative moderne. Grâce à une modélisation rigoureuse du schéma de données NoSQL et à l'identification précise des interactions entre les modules académiques et ludiques, le projet dispose désormais d'un cadre robuste. Le choix d'une architecture orientée vers la performance et la scalabilité garantit que l'application pourra évoluer de manière fluide tout en maintenant une sécurité optimale des données et une maintenabilité simplifiée du code source.
-
-Cette étape de préparation approfondie constitue une étape clé qui a permis d'amorcer le développement sur des bases saines, tout en anticipant les défis liés à la gestion multi-rôles et à la synchronisation en temps réel. En structurant ainsi la logique métier et l'infrastructure technique, nous avons transformé la vision conceptuelle du projet en une feuille de route opérationnelle prête pour l'implémentation. Cette approche assure un pilotage réactif, favorisant la qualité logicielle et l'amélioration continue tout au long du cycle de développement.
-
-Le chapitre suivant sera consacré à la mise en œuvre technique et à la présentation des résultats obtenus lors du Sprint 1. Nous y détaillerons la concrétisation des premiers modules fonctionnels, en commençant par la mise en place de l'environnement de développement et l'intégration du système d'authentification. Ce passage à la réalisation marquera le début d'une phase itérative où les premières interfaces d'EduGenius prendront vie, validant ainsi les choix architecturaux établis précédemment.
+Ce chapitre a posé les bases conceptuelles et techniques du projet. L'analyse des besoins, la modélisation UML et les choix architecturaux retenus (Next.js, Express, MongoDB, Ollama, Daily.co) constituent un cadre solide pour les sprints de réalisation. Le chapitre suivant détaillera la mise en œuvre du Sprint 1, dédié à l'authentification et à la gestion des utilisateurs.

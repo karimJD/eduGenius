@@ -1,0 +1,53 @@
+{
+  "_id": {
+    "$oid": "6a185ad6754c94b99c29eb29"
+  },
+  "title": "Emploi du temps MPGL2",
+  "academicYearId": "2024-2025",
+  "semester": 1,
+  "targetType": "class",
+  "targetId": {
+    "$oid": "6a185ad6754c94b99c29eb21"
+  },
+  "entries": [
+    {
+      "dayOfWeek": 1,
+      "startTime": "08:00",
+      "endTime": "10:00",
+      "subjectId": {
+        "$oid": "6a185ad6754c94b99c29eb18"
+      },
+      "teacherId": {
+        "$oid": "6a185ad6754c94b99c29eb1c"
+      },
+      "sessionType": "lecture",
+      "meetingProvider": "jitsi",
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb2a"
+      }
+    },
+    {
+      "dayOfWeek": 3,
+      "startTime": "10:00",
+      "endTime": "12:00",
+      "subjectId": {
+        "$oid": "6a185ad6754c94b99c29eb18"
+      },
+      "teacherId": {
+        "$oid": "6a185ad6754c94b99c29eb1c"
+      },
+      "sessionType": "tutorial",
+      "meetingProvider": "jitsi",
+      "_id": {
+        "$oid": "6a185ad6754c94b99c29eb2b"
+      }
+    }
+  ],
+  "isPublished": true,
+  "createdAt": {
+    "$date": "2026-05-28T15:10:14.811Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-28T15:10:14.811Z"
+  }
+}

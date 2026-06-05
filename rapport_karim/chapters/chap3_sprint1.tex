@@ -3,20 +3,16 @@
 \section*{Introduction}
 \addcontentsline{toc}{section}{Introduction}
 
-Le premier sprint du projet EduGenius a été consacré à la mise en place du système d'authentification et des mécanismes de sécurité fondamentaux. Ces fonctionnalités constituent la pierre angulaire de la plateforme, visant à garantir la protection des données sensibles et à assurer un contrôle d'accès strict selon les rôles d'administrateur, d'enseignant et d'étudiant. Ce cycle de développement s'est structuré autour de plusieurs User Stories clés, couvrant notamment la connexion sécurisée via des protocoles modernes et la gestion de la récupération des comptes. 
-
-Ce chapitre détaille l'ensemble des étapes ayant conduit à la concrétisation de ce premier incrément logiciel. Nous présenterons d'abord le backlog spécifique à ce sprint et l'analyse fonctionnelle des besoins identifiés. Ensuite, nous aborderons la conception technique et la réalisation des interfaces utilisateurs développées sous Next.js. Enfin, ce chapitre se conclura par une présentation des tests unitaires et d'intégration permettant de valider la robustesse et la fiabilité des fonctionnalités implémentées avant leur déploiement.
+Ce chapitre détaille la réalisation du premier sprint d'EduGenius, consacré à l'authentification sécurisée (JWT), à la gestion des utilisateurs par rôles et aux interfaces associées. Nous y présentons le backlog, l'analyse, la conception technique et les tests.
 
 \section{Backlog du Sprint 1}
 
-Le backlog du Sprint 1 présente les cinq User Stories (US) prioritaires liées à l'authentification, à la gestion des utilisateurs et aux fondations techniques (tableau de bord unifié et responsive). Ces US ont été sélectionnées pour leur impact métier et leur caractère transverse, structurant ainsi les développements clés de ce premier incrément.
-
-Le tableau \ref{tab:sprint1_backlog} détaille chaque US avec ses critères d'acceptation et sa priorité. Les US-01 (Connexion sécurisée), US-02 (Gestion des rôles), US-39 (Dashboard unifié) et US-41 (Interface responsive) sont classées comme « Haute » priorité en raison de leur rôle central dans la plateforme. L'US-03 (Profil utilisateur) est priorisée « Moyenne », car dépendante des précédentes mais non bloquante pour le reste du sprint. Les tâches techniques sous‑jacentes (chiffrement des mots de passe, génération de token JWT, adaptation CSS responsive) répondent aux exigences de sécurité et d'expérience utilisateur.
+Le backlog de ce premier sprint se concentre sur la mise en place du socle de sécurité et de gestion des utilisateurs. Il regroupe les fonctionnalités essentielles telles que l'authentification sécurisée par JWT, la gestion des rôles (Admin, Enseignant, Étudiant), la personnalisation du profil et le déploiement d'un tableau de bord responsive. Le tableau \ref{tab:sprint1_backlog} synthétise ces éléments prioritaires qui constituent les fondations techniques de la plateforme EduGenius.
 
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{|c|l|X|c|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4cm}|X|c|}
 \hline
 \textbf{ID} & \textbf{Titre} & \textbf{Critères d’acceptation} & \textbf{Priorité} \\
 \hline
@@ -26,9 +22,9 @@ US-02 & Gestion des rôles & L'administrateur peut attribuer les rôles (Admin, 
 \hline
 US-03 & Profil utilisateur & L'utilisateur peut consulter et modifier ses informations (nom, photo, mot de passe). & Moyenne \\
 \hline
-US-39 & Dashboard unifié & L'utilisateur dispose d'un tableau de bord personnalisé affichant son planning, les deadlines et les sessions à venir. & Haute \\
+US-04 & Dashboard unifié & L'utilisateur dispose d'un tableau de bord personnalisé affichant son planning, les deadlines et les sessions à venir. & Haute \\
 \hline
-US-41 & Interface responsive & La plateforme est utilisable sur mobile, tablette et desktop sans perte de fonctionnalité. & Haute \\
+US-05 & Interface responsive & La plateforme est utilisable sur mobile, tablette et desktop sans perte de fonctionnalité. & Haute \\
 \hline
 \end{tabularx}
 \caption{User Stories du Sprint 1 (Authentification et Sécurité)}
@@ -42,217 +38,169 @@ Le diagramme de cas d’utilisation présenté en figure \ref{fig:usecase_sprint
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/sprint_1_usecase_diagram.png}
+    \includegraphics[width=1\textwidth]{images/use_case_sprint_1.png}
     \caption{Diagramme de cas d’utilisation – Authentification et sécurité}
     \label{fig:usecase_sprint1}
 \end{figure}
 
 \subsection{Description textuelle des cas d’utilisation}
+Cette section détaille de manière structurée les scénarios nominaux et alternatifs pour chaque cas d’utilisation clé du sprint. Les descriptions suivent un format standardisé (acteur, pré/post-conditions, scénarios) pour garantir une compréhension claire des interactions système et des règles métier associées.
 
-Cette section décrit de manière structurée les scénarios nominaux et alternatifs pour chaque cas d'utilisation du sprint. Chaque cas (par exemple « S’authentifier ») est décomposé en éléments clés : acteur, préconditions, postconditions et étapes du scénario nominal. Le scénario nominal de connexion inclut la génération d’un token JWT, tandis qu’un échec (scénario alternatif) déclenche un message d’erreur générique. Les postconditions garantissent des états système cohérents, comme l’accès au tableau de bord après authentification.
+\subsection{Cas d'utilisation : S'authentifier}
+Ce cas d'utilisation décrit la procédure permettant à un utilisateur d'accéder à son espace personnel de manière sécurisée en validant ses identifiants contre le référentiel de la base de données.
 
-\subsubsection{Le cas d’utilisation « S’authentifier »}
-\begin{itemize}
-    \item \textbf{Acteur} : Utilisateur non authentifié (futur élève, enseignant ou administrateur).
-    \item \textbf{Préconditions} : Les comptes enseignants et étudiants ont été créés au préalable par l’administrateur ; le compte administrateur existe en base de données. L’utilisateur a reçu ses identifiants.
-    \item \textbf{Postconditions} : Un token JWT valide est généré et l’utilisateur accède à son tableau de bord personnalisé.
-    \item \textbf{Scénario nominal} :
-    \begin{enumerate}
-        \item L’utilisateur saisit son email et son mot de passe sur la page de connexion.
-        \item Le système recherche l’utilisateur par email dans la collection MongoDB.
-        \item Le système compare le mot de passe fourni avec le hachage bcrypt stocké.
-        \item Le système génère un token JWT contenant l’identifiant, le rôle et la date d’expiration.
-        \item Le token est retourné au client (cookie sécurisé / localStorage).
-        \item L’utilisateur est redirigé vers son tableau de bord (adapté à son rôle).
-    \end{enumerate}
-    \item \textbf{Alternatives / Erreurs} :
-    \begin{itemize}
-        \item \textbf{Email inconnu ou mot de passe incorrect} : message générique « Identifiants invalides ».
-        \item \textbf{Compte désactivé} : message invitant à contacter l’administrateur.
-        \item \textbf{Token expiré} : l’utilisateur est invité à se reconnecter.
-    \end{itemize}
-\end{itemize}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Utilisateur (Administrateur, Enseignant, Étudiant) \\ \hline
+\textbf{Pré-conditions} & L'utilisateur doit posséder un compte actif et des identifiants valides. \\ \hline
+\textbf{Post-conditions} & L'utilisateur est authentifié, un token JWT est stocké et le dashboard est affiché. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'utilisateur saisit son email et son mot de passe. \newline
+2. Le système vérifie la correspondance en base de données (bcrypt). \newline
+3. Le système génère un jeton JWT. \newline
+4. L'utilisateur est redirigé vers son espace personnel. \\ \hline
+\textbf{Scénario alternatif} & 
+1.a. Identifiants incorrects : le système affiche un message d'erreur et invite à réessayer. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - S'authentifier}
+\end{table}
 
-\subsubsection{Le cas d’utilisation « Gérer son profil »}
-\begin{itemize}
-    \item \textbf{Acteur} : Utilisateur authentifié (élève, enseignant ou administrateur).
-    \item \textbf{Préconditions} : L’utilisateur est connecté.
-    \item \textbf{Postconditions} : Les informations modifiables (nom, photo, mot de passe) sont mises à jour en base.
-    \item \textbf{Scénario nominal} :
-    \begin{enumerate}
-        \item L’utilisateur accède à la page « Mon profil ».
-        \item Le système affiche les données actuelles.
-        \item L’utilisateur modifie les champs autorisés et valide.
-        \item Le système vérifie la validité des nouvelles données (unicité de l’email, complexité du mot de passe).
-        \item Le système enregistre les modifications et affiche un message de confirmation.
-    \end{enumerate}
-    \item \textbf{Alternatives / Erreurs} :
-    \begin{itemize}
-        \item \textbf{Nouvel email déjà utilisé} : erreur et refus de la modification.
-        \item \textbf{Mot de passe trop faible} : réaffichage des règles de sécurité.
-    \end{itemize}
-\end{itemize}
+\subsection{Cas d'utilisation : Se déconnecter}
+Cette fonctionnalité permet de mettre fin à la session de travail de l'utilisateur en cours en invalidant son jeton d'accès local.
 
-\subsubsection{Le cas d’utilisation « Consulter le tableau de bord »}
-\begin{itemize}
-    \item \textbf{Acteur} : Utilisateur authentifié.
-    \item \textbf{Préconditions} : L’utilisateur est connecté.
-    \item \textbf{Postconditions} : Le tableau de bord personnalisé est affiché (planning, notifications, évaluations à venir).
-    \item \textbf{Scénario nominal} :
-    \begin{enumerate}
-        \item Après connexion ou en cliquant sur « Tableau de bord », le système agrège les données pertinentes.
-        \item Pour un étudiant : affichage des cours à venir, devoirs, présences.
-        \item Pour un enseignant : listes de ses classes, appels vidéo planifiés, quiz à corriger.
-        \item Pour l’administrateur : statistiques générales, gestion des comptes.
-    \end{enumerate}
-    \item \textbf{Alternatives / Erreurs} :
-    \begin{itemize}
-        \item \textbf{Données non disponibles} : affichage de messages informatifs (ex. « Aucun cours planifié »).
-    \end{itemize}
-\end{itemize}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Utilisateur authentifié \\ \hline
+\textbf{Pré-conditions} & Une session active doit exister (token présent). \\ \hline
+\textbf{Post-conditions} & Le token est supprimé, l'utilisateur est redirigé vers la page de login. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'utilisateur clique sur le bouton de déconnexion. \newline
+2. Le système nettoie le stockage local (token et profil). \newline
+3. L'utilisateur est redirigé vers l'interface de connexion. \\ \hline
+\textbf{Scénario alternatif} & Aucun. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Se déconnecter}
+\end{table}
 
-\subsubsection{Le cas d’utilisation « Utiliser l’interface responsive »}
-\begin{itemize}
-    \item \textbf{Acteur} : Tout utilisateur (non ou authentifié).
-    \item \textbf{Préconditions} : L’utilisateur accède à la plateforme depuis un mobile, une tablette ou un ordinateur.
-    \item \textbf{Postconditions} : La mise en page s’adapte automatiquement à la taille de l’écran sans perte de fonctionnalité.
-    \item \textbf{Scénario nominal} :
-    \begin{enumerate}
-        \item L’utilisateur ouvre l’application sur un smartphone.
-        \item Les styles CSS réorganisent les éléments (menu en accordéon, polices lisibles).
-        \item Toutes les actions (connexion, consultation de cours, quiz) restent accessibles.
-    \end{enumerate}
-    \item \textbf{Alternatives / Erreurs} :
-    \begin{itemize}
-        \item \textbf{Navigation dégradée} : si une fonctionnalité n’est pas adaptée, un message invite à passer sur un écran plus large.
-    \end{itemize}
-\end{itemize}
+\subsection{Cas d'utilisation : Réinitialiser le mot de passe}
+Ce processus sécurise le compte d'un utilisateur ayant égaré ses accès via une procédure de vérification par courrier électronique.
 
-\subsubsection{Le cas d’utilisation « Gérer les utilisateurs » (administrateur)}
-\begin{itemize}
-    \item \textbf{Acteur} : Administrateur.
-    \item \textbf{Préconditions} : L’administrateur est connecté.
-    \item \textbf{Postconditions} : Un compte enseignant ou étudiant est créé (ou modifié/supprimé) dans la collection \texttt{User}.
-    \item \textbf{Scénario nominal (création)} :
-    \begin{enumerate}
-        \item L’administrateur accède à l’interface « Gestion des utilisateurs ».
-        \item Il clique sur « Ajouter un utilisateur » et remplit le formulaire (nom, prénom, email, rôle enseignant/étudiant).
-        \item Le système vérifie l’unicité de l’email et la validité des champs.
-        \item Le système génère un mot de passe temporaire sécurisé, le hache et enregistre l’utilisateur.
-        \item Un email contenant les identifiants (email + mot de passe temporaire) est envoyé à l’utilisateur.
-        \item L’utilisateur devra changer son mot de passe lors de la première connexion.
-    \end{enumerate}
-    \item \textbf{Alternatives / Erreurs} :
-    \begin{itemize}
-        \item \textbf{Email déjà existant} : refus de création, message d’erreur.
-        \item \textbf{Rôle invalide} : l’administrateur ne peut pas créer un autre administrateur via cette interface (réservé à une procédure manuelle).
-    \end{itemize}
-\end{itemize}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Utilisateur \\ \hline
+\textbf{Pré-conditions} & L'utilisateur a oublié son mot de passe et a accès à son email. \\ \hline
+\textbf{Post-conditions} & Le mot de passe est mis à jour de manière sécurisée en base de données. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'utilisateur demande une réinitialisation via son email. \newline
+2. Il reçoit un lien contenant un token temporaire. \newline
+3. Il saisit et confirme son nouveau mot de passe. \newline
+4. Le système valide et enregistre le changement. \\ \hline
+\textbf{Scénario alternatif} & 
+2.a. Token expiré : le système refuse la modification et demande de recommencer. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Réinitialiser le mot de passe}
+\end{table}
 
-\subsubsection{Le cas d’utilisation « Réinitialiser son mot de passe »}
-\begin{itemize}
-    \item \textbf{Acteur} : Utilisateur non authentifié.
-    \item \textbf{Préconditions} : L’utilisateur a oublié ses identifiants.
-    \item \textbf{Postconditions} : Un nouveau mot de passe est défini après validation du lien envoyé par email.
-    \item \textbf{Scénario nominal} :
-    \begin{enumerate}
-        \item L’utilisateur clique sur « Mot de passe oublié » sur la page de connexion.
-        \item Il saisit son adresse email.
-        \item Le système vérifie l’existence de l’email dans la base.
-        \item Un email contenant un lien de réinitialisation temporaire (contenant un token JWT à courte durée) est envoyé.
-        \item L’utilisateur clique sur le lien et accède à un formulaire de nouveau mot de passe.
-        \item Le système valide le token, hache le nouveau mot de passe et met à jour la base.
-        \item L’utilisateur est redirigé vers la page de connexion.
-    \end{enumerate}
-    \item \textbf{Alternatives / Erreurs} :
-    \begin{itemize}
-        \item \textbf{Email inconnu} : message générique « Si l’email existe, un lien a été envoyé » (sécurité).
-        \item \textbf{Token expiré ou invalide} : message d’erreur et invitation à refaire la demande.
-    \end{itemize}
-\end{itemize}
+\subsection{Cas d'utilisation : Consulter le dashboard}
+Cette vue synthétique permet à l'apprenant ou au formateur de visualiser l'ensemble de ses activités et échéances pédagogiques à venir.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Utilisateur authentifié \\ \hline
+\textbf{Pré-conditions} & L'utilisateur doit être connecté avec un token JWT valide. \\ \hline
+\textbf{Post-conditions} & L'affichage dynamique des données selon le rôle est effectif. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'utilisateur accède à sa page d'accueil. \newline
+2. Le système récupère les données via l'API. \newline
+3. Les statistiques, le planning et les échéances sont affichés. \\ \hline
+\textbf{Scénario alternatif} & 
+2.a. Échec de récupération : le système affiche un message d'erreur réseau. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Consulter le dashboard}
+\end{table}
+
+\subsection{Cas d'utilisation : Gérer son profil}
+Ce cas d'utilisation permet à l'utilisateur de maintenir ses informations personnelles à jour pour assurer la précision du suivi académique.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Utilisateur authentifié \\ \hline
+\textbf{Pré-conditions} & Accès à la page profil. \\ \hline
+\textbf{Post-conditions} & Les informations sont modifiées et persistées. \\ \hline
+\textbf{Scénario nominal} & 
+1. L'utilisateur modifie ses champs (nom, téléphone, photo). \newline
+2. Il soumet les modifications. \newline
+3. Le système valide les formats et met à jour le profil. \\ \hline
+\textbf{Scénario alternatif} & 
+3.a. Format invalide : le système indique les erreurs de validation. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Gérer son profil}
+\end{table}
+
+\subsection{Cas d'utilisation : Gérer les utilisateurs}
+Cette fonction administrative permet de piloter le cycle de vie des comptes et d'organiser la structure hiérarchique de la plateforme.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\textbf{Acteur(s)} & Administrateur \\ \hline
+\textbf{Pré-conditions} & L'utilisateur doit posséder le rôle « admin ». \\ \hline
+\textbf{Post-conditions} & La liste des membres est mise à jour (CRUD). \\ \hline
+\textbf{Scénario nominal} & 
+1. L'admin sélectionne un membre ou crée un nouveau compte. \newline
+2. Il renseigne les données (CIN, Rôle, Département). \newline
+3. Le système enregistre l'utilisateur en base. \\ \hline
+\textbf{Scénario alternatif} & 
+3.a. Email ou CIN existant : le système signale le doublon. \\ \hline
+\end{tabularx}
+\caption{Description textuelle - Gérer les utilisateurs}
+\end{table}
 
 \section{Conception}
-\subsection{Diagramme de séquence du cas « S’authentifier »}
-Le diagramme de séquence de la figure \ref{fig:sequence_auth} illustre le flux d’interaction entre l’utilisateur, l’interface frontend (Next.js), le contexte d’authentification, le contrôleur backend (Express) et la base de données MongoDB. L’utilisateur saisit ses identifiants ; ceux‑ci sont validés côté API, puis une recherche est effectuée dans la collection \texttt{User}. Si l’email et le mot de passe (comparé via bcrypt) sont corrects, l’API génère un token JWT signé. En cas de succès, le token et les informations utilisateur sont stockés dans le \texttt{localStorage} (ou un cookie sécurisé), et l’interface redirige l’utilisateur vers le tableau de bord correspondant à son rôle (admin, enseignant ou étudiant). Les cas d’erreur (email inconnu, mot de passe invalide, données mal formées) retournent des codes HTTP 400 ou 401 avec des messages génériques.
+
+\subsection{Diagramme de séquence du cas : Authentification}
+Le diagramme de séquence présenté en figure \ref{fig:auth_sequence} détaille les interactions chronologiques lors de la connexion d'un utilisateur. Il met en évidence la séparation des responsabilités entre la gestion d'état côté frontend (Context API), la logique métier du contrôleur et la couche de sécurité (hachage Bcrypt et signature JWT).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/auth_sequence_diagram.png}
-    \caption{Diagramme de séquence de l’authentification JWT}
-    \label{fig:sequence_auth}
+    \includegraphics[width=\textwidth]{images/auth_sequence_diagram.png}
+    \caption{Diagramme de séquence – Processus d'authentification sécurisée}
+    \label{fig:auth_sequence}
 \end{figure}
 
-\subsection{Diagramme de séquence du cas « Gérer son profil »}
-Le diagramme de séquence de la figure \ref{fig:sequence_profil} détaille le processus de mise à jour des informations personnelles. L'utilisateur envoie une requête de modification depuis l'interface. Le backend valide les données (ex. unicité de l'email, robustesse du mot de passe) et met à jour le document correspondant dans la collection \texttt{User}. Une réponse de succès est renvoyée pour confirmer l'opération.
+\subsection{Diagramme de séquence du cas : Créer un utilisateur}
+Le diagramme de séquence de la figure \ref{fig:create_user_sequence} illustre le processus de création d'un étudiant par l'administrateur, utilisé ici comme exemple représentatif de la gestion des utilisateurs. Ce flux met en évidence l'interaction entre le formulaire multi-étapes du frontend et la logique métier du backend.
+
+Le processus débute par la saisie des données réparties en trois phases (personnelles, académiques et inscription). Lors de la soumission, le système effectue une double validation : d'abord au niveau de l'autorisation via les middlewares \texttt{authenticate} et \texttt{adminAuth}, puis au niveau de l'intégrité des données. Le backend orchestre ensuite la génération automatique d'un identifiant unique (via la fonction \texttt{generateStudentId}) avant de persister l'utilisateur. Le diagramme expose également les scénarios alternatifs, tels que le refus d'accès pour un utilisateur non autorisé ou l'échec de création en cas de doublon (Email ou CIN) détecté par MongoDB.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/gerer_profile_sequence_diagram.png}
-    \caption{Diagramme de séquence de la gestion du profil}
-    \label{fig:sequence_profil}
-\end{figure}
-
-\subsection{Diagramme de séquence du cas « Consulter le tableau de bord »}
-Le diagramme de la figure \ref{fig:sequence_dashboard} montre comment le système agrège les données du tableau de bord. Selon le rôle de l'utilisateur (administrateur, enseignant ou étudiant), le frontend effectue des requêtes spécifiques en parallèle. Le backend interroge MongoDB pour récupérer les statistiques, les annonces, les sessions en direct ou les exercices en attente, puis renvoie ces données pour affichage.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth, height=21cm, keepaspectratio]{images/dashboard_sequence_diagram.png}
-    \caption{Diagramme de séquence de la consultation du tableau de bord}
-    \label{fig:sequence_dashboard}
-\end{figure}
-
-\subsection{Diagrammes de séquence du cas « Gérer les utilisateurs »}
-La gestion des utilisateurs par l'administrateur regroupe plusieurs opérations fondamentales. Afin d'en faciliter la lecture, nous avons décomposé ce cas d'utilisation en quatre processus distincts : la consultation, la création, la modification et la suppression.
-
-\subsubsection{Consultation des utilisateurs}
-Le diagramme de la figure \ref{fig:sequence_users_read} illustre le chargement de la liste des utilisateurs. Lors de l'accès à la page de gestion, le frontend interroge l'API qui récupère l'ensemble des utilisateurs (sans leurs mots de passe) depuis la base de données.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/consulter_users_sequence_diagram.png}
-    \caption{Diagramme de séquence : Consultation des utilisateurs}
-    \label{fig:sequence_users_read}
-\end{figure}
-
-\subsubsection{Création d'un utilisateur}
-La figure \ref{fig:sequence_users_create} détaille la création d'un nouveau compte. L'administrateur soumet le formulaire, le backend vérifie l'unicité de l'email, génère et hache un mot de passe temporaire, puis sauvegarde le document. En cas de succès, l'interface rafraîchit la liste affichée.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/create_users_sequence_diagram.png}
-    \caption{Diagramme de séquence : Création d'un utilisateur}
-    \label{fig:sequence_users_create}
-\end{figure}
-
-\subsubsection{Modification d'un utilisateur}
-Comme montré à la figure \ref{fig:sequence_users_update}, la modification permet à l'administrateur d'éditer les propriétés d'un utilisateur (rôle, statut d'activation, etc.). L'API applique ces modifications sur le document ciblé par son identifiant et renvoie le statut de l'opération.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/edit_users_sequence_diagram.png}
-    \caption{Diagramme de séquence : Modification d'un utilisateur}
-    \label{fig:sequence_users_update}
-\end{figure}
-
-\subsubsection{Suppression d'un utilisateur}
-La figure \ref{fig:sequence_users_delete} décrit la procédure de suppression. Après validation d'une alerte de confirmation côté client, l'identifiant de l'utilisateur est transmis à l'API pour suppression définitive de la base de données, suivie d'une actualisation de la vue.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/delete_users_sequence_diagram.png}
-    \caption{Diagramme de séquence : Suppression d'un utilisateur}
-    \label{fig:sequence_users_delete}
-\end{figure}
-
-\subsection{Diagramme de séquence du cas « Réinitialiser le mot de passe »}
-La figure \ref{fig:sequence_reset_password} présente le flux de réinitialisation. L'utilisateur demande un lien ; l’API génère un token JWT de courte durée, l’envoie par email, puis valide le token lors de la soumission du nouveau mot de passe avant de mettre à jour la base.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{images/reset_password_sequence_diagram.png}
-    \caption{Diagramme de séquence de la réinitialisation du mot de passe}
-    \label{fig:sequence_reset_password}
+    \includegraphics[width=\textwidth]{images/create_users_sequence_diagram.png}
+    \caption{Diagramme de séquence – Création d'un compte étudiant (Admin)}
+    \label{fig:create_user_sequence}
 \end{figure}
 
 \subsection{Diagramme de classes du Sprint 1}
@@ -260,17 +208,26 @@ La figure \ref{fig:class_sprint1} présente le diagramme de classes correspondan
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=15cm, keepaspectratio]{images/sprint1_class_diagram.png}
+    \includegraphics[width=\textwidth, height=20cm, keepaspectratio]{images/class_diagram_sprint_1.png}
     \caption{Diagramme de classes – Modèle utilisateur et authentification}
     \label{fig:class_sprint1}
 \end{figure}
 
 \subsection{Représentation graphique de la base de données}
-La figure \ref{fig:mongodb_sprint1} illustre le schéma de la collection MongoDB mise en place pour ce premier sprint. Une seule collection \texttt{users} contient tous les comptes, avec un champ \texttt{role} pour distinguer les droits et des sous-documents optionnels \texttt{studentProfile} ou \texttt{teacherProfile} qui seront enrichis dans les sprints suivants. Cette approche documentaire permet une évolution flexible.
+La figure \ref{fig:mongodb_sprint1} présente le schéma de la base de données MongoDB mis en place pour ce premier sprint. L'architecture repose sur deux collections principales : \texttt{users} et \texttt{departments}.
+
+La collection \texttt{users} est le cœur du système. Elle centralise tous les comptes et utilise le champ \texttt{role} pour le contrôle d'accès (RBAC). Fidèle à la philosophie NoSQL, elle intègre des documents imbriqués (\textit{embedded documents}) pour les profils :
+\begin{itemize}
+    \item \textbf{Socle commun} : Regroupe les informations d'authentification (email, mot de passe haché via \texttt{bcryptjs}), d'identité (CIN, nom, prénom) et les tokens de session (\texttt{refreshToken}).
+    \item \textbf{Objets de profil} : Les détails spécifiques aux rôles sont stockés dans les sous-documents \texttt{student} (numéro de dossier, niveau) ou \texttt{teacher} (rang académique, spécialisations). Cette structure permet une récupération atomique des données.
+    \item \textbf{Gestion des accès} : Des champs techniques (\texttt{resetPasswordToken}, \texttt{isActive}) assurent la sécurité et la gestion du cycle de vie des comptes.
+\end{itemize}
+
+La collection \texttt{departments} permet de structurer l'organisation de l'établissement. Elle est liée à la collection \texttt{users} par référence : chaque profil utilisateur contient un \texttt{departmentId} pointant vers cette collection. Inversement, un département identifie son responsable via l'attribut \texttt{headOfDepartmentId}, créant ainsi une relation bidirectionnelle cohérente.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=15cm, keepaspectratio]{images/db_sprint1.png}
+    \includegraphics[width=\textwidth, height=15cm, keepaspectratio]{images/ERD_sprint_1.png}
     \caption{Schéma de la collection MongoDB pour le sprint 1}
     \label{fig:mongodb_sprint1}
 \end{figure}
@@ -279,7 +236,7 @@ La figure \ref{fig:mongodb_sprint1} illustre le schéma de la collection MongoDB
 Dans cette section, nous présentons les principales interfaces utilisateur (UI) développées pour ce premier sprint. L'accent a été mis sur la création d'une expérience ergonomique et moderne, en accord avec l'identité visuelle de la plateforme EduGenius.
 
 \subsection{Interface de connexion}
-L'interface de connexion (figure \ref{fig:login_ui}) est le point d'entrée de l'application. Elle authentifie les utilisateurs et les redirige vers le tableau de bord approprié selon leur rôle (administrateur, enseignant ou étudiant).
+L'interface de connexion (figure \ref{fig:login_ui}) adopte un design moderne à double volet. Le volet gauche présente l'identité visuelle d'EduGenius avec une illustration abstraite animée et une mise en avant des piliers de la plateforme (IA personnalisée, cours de qualité). Le volet droit contient le formulaire d'authentification sécurisé. Techniquement, elle intègre une gestion d'état pour les erreurs de saisie et communique avec le contexte \texttt{AuthContext} pour initialiser la session JWT. L'interface est entièrement responsive, adaptant sa disposition pour les terminaux mobiles.
 
 \begin{figure}[H]
     \centering
@@ -289,7 +246,7 @@ L'interface de connexion (figure \ref{fig:login_ui}) est le point d'entrée de l
 \end{figure}
 
 \subsection{Interface de réinitialisation de mot de passe}
-Cette interface (figure \ref{fig:reset_ui}) offre une procédure sécurisée permettant à un utilisateur ayant oublié ses identifiants de configurer un nouveau mot de passe via un lien envoyé par email.
+Cette interface (figure \ref{fig:reset_ui}) guide l'utilisateur dans la sécurisation de son compte suite à un oubli. Le formulaire propose deux champs avec validation en temps réel de la correspondance des saisies et une option de masquage/affichage du texte. Une fois le processus validé via le token reçu par email, une animation de succès confirme la mise à jour en base de données avant de rediriger automatiquement l'utilisateur vers la page de connexion après un délai de trois secondes.
 
 \begin{figure}[H]
     \centering
@@ -299,48 +256,119 @@ Cette interface (figure \ref{fig:reset_ui}) offre une procédure sécurisée per
 \end{figure}
 
 \subsection{Interface profil utilisateur}
-La page de profil (figure \ref{fig:profile_ui}) centralise les données de l'utilisateur. Elle lui offre la possibilité de consulter et de mettre à jour ses informations personnelles de manière intuitive.
+La page de profil (figure \ref{fig:profile_ui}) centralise l'ensemble des informations de l'utilisateur connecté. Elle a été conçue pour offrir une gestion autonome des données personnelles. L'utilisateur peut y uploader une photo de profil, modifier ses coordonnées (téléphone, adresse) et mettre à jour sa biographie. Cette interface assure la persistance des données via une communication asynchrone avec l'API, garantissant une mise à jour fluide. Un système de badges indique le rôle et le niveau académique actuel pour renforcer le sentiment d'appartenance.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/profile_ui.png}
-    \caption{Page de profil}
+    \caption{Page de profil - Gestion des informations personnelles}
     \label{fig:profile_ui}
 \end{figure}
 
 \subsection{Interface du tableau de bord}
-Le tableau de bord (figure \ref{fig:dashboard_ui}) constitue l'espace de travail principal. Il regroupe les indicateurs clés et offre une vue d'ensemble personnalisée selon le rôle de l'utilisateur connecté.
+Le tableau de bord (figure \ref{fig:dashboard_ui}) est le centre de pilotage de l'application, variant dynamiquement selon le rôle détecté dans le token JWT :
+\begin{itemize}
+    \item \textbf{Administrateur} : Affiche des indicateurs globaux (effectifs, sessions live) via des cartes statistiques et un suivi des nouveaux membres. Il intègre également un widget de distribution des classes et un centre d'alertes pour les tâches administratives en attente.
+    \item \textbf{Étudiant} : Priorise les exercices à rendre et l'agenda du jour. Il met en avant l'assistant IA pour la génération de résumés et propose un carrousel d'annonces interactif.
+    \item \textbf{Enseignant} : Propose une vue sur les sessions vidéo programmées, les travaux à corriger et des actions rapides pour la gestion pédagogique.
+\end{itemize}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/dashboard_ui.png}
-    \caption{Tableau de bord de l'utilisateur}
+    \caption{Tableau de bord unifié - Vue personnalisée par rôle}
     \label{fig:dashboard_ui}
 \end{figure}
 
 \subsection{Interface de gestion des utilisateurs}
-Réservée à l'administrateur, cette interface (figure \ref{fig:users_ui}) présente sous forme de tableau interactif la liste complète des membres de la plateforme. Elle permet d'effectuer rapidement les opérations CRUD et de gérer les attributions de rôles.
+Cette console administrative centralise le contrôle des comptes et l'organisation des membres de la plateforme.
+
+\paragraph{Gestion des étudiants}
+L'interface dédiée aux étudiants (figure \ref{fig:users_students_ui}) présente un annuaire complet filtrable par niveau (L1, M2, etc.) et par département. Elle permet à l'administrateur d'avoir une vision globale de l'effectif. Pour l'ajout de nouveaux élèves, un processus guidé en trois étapes (\textit{stepper}) a été mis en œuvre : la saisie des informations d'identité, la définition du niveau académique, puis la configuration des options d'inscription (bourse, logement).
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/users_students_ui.png}
-    \caption{Interface de gestion des utilisateurs (Étudiants)}
+    \caption{Interface de gestion des utilisateurs (Vue Étudiants)}
     \label{fig:users_students_ui}
 \end{figure}
+
+\paragraph{Gestion des enseignants}
+La vue consacrée aux enseignants (figure \ref{fig:users_teachers_ui}) est optimisée pour la gestion du corps professoral. Elle affiche des informations spécifiques telles que le numéro d'employé, le grade académique (Assistant, Maître de Conférences, etc.) et le département de rattachement. L'administrateur peut y effectuer des modifications rapides via une fenêtre modale intégrée, facilitant la mise à jour des spécialisations ou la gestion du statut d'activation du compte.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/users_teachers_ui.png}
-    \caption{Interface de gestion des utilisateurs (Enseignants)}
+    \caption{Interface de gestion des utilisateurs (Vue Enseignants)}
     \label{fig:users_teachers_ui}
+\end{figure}
+
+\section{Tests}
+Cette phase de tests permet de garantir que les fonctionnalités d'authentification et de gestion des utilisateurs sont robustes, sécurisées et conformes aux exigences du backlog.
+
+\subsection{Tests unitaires}
+Pour garantir la fiabilité du socle de sécurité, nous avons mis en place une suite de tests unitaires automatisés utilisant le framework \textbf{Jest}. Cette approche permet de valider les méthodes métier de manière isolée avant leur intégration dans les flux complexes de l'application.
+
+L'accent a été mis sur la validation du modèle \texttt{User}, pilier de ce premier sprint :
+\begin{itemize}
+    \item \textbf{Vérification du hachage} : Test de la méthode \texttt{matchPassword} pour s'assurer qu'elle compare correctement une chaîne brute avec le hash stocké en base via \texttt{bcryptjs}.
+    \item \textbf{Sécurité des accès} : Validation des scénarios de succès (mot de passe valide) et d'échec (mot de passe erroné) pour prévenir toute faille d'authentification.
+\end{itemize}
+
+La figure \ref{fig:unit_test_code} présente l'implémentation de ces tests. On y observe l'utilisation de blocs \texttt{describe} et \texttt{test} pour structurer les cas de test de manière lisible et maintenable.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/unit_test_sprint_1.png}
+    \caption{Extrait du code source du test unitaire (Jest)}
+    \label{fig:unit_test_code}
+\end{figure}
+
+L'exécution de ces tests via la commande \texttt{npx jest backend/tests/user.test.js} produit un rapport de succès détaillé (figure \ref{fig:unit_test_output}). Ces résultats confirment que la brique fondamentale de sécurité est robuste et prête à être sollicitée par les contrôleurs de l'API.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/sprint_1_unit_test_output.png}
+    \caption{Sortie du terminal après exécution des tests unitaires}
+    \label{fig:unit_test_output}
+\end{figure}
+
+
+\subsection{Tests d’intégration}
+Cette phase de tests vise à valider la communication entre le serveur Express, les modèles Mongoose et la base de données MongoDB. L'objectif est de s'assurer que les points d'entrée de l'API (Endpoints) traitent correctement les requêtes et retournent les codes de statut ainsi que les données attendues.
+
+Le test d'intégration majeur a porté sur le service d'authentification via l'endpoint \texttt{/api/auth/login}. À l'aide de l'outil \textbf{Postman}, nous avons soumis une requête \texttt{POST} contenant les identifiants d'un compte administrateur. Le système a validé avec succès la chaîne complète : réception des identifiants $\rightarrow$ comparaison du mot de passe haché $\rightarrow$ génération du jeton JWT.
+
+Comme illustré dans la figure \ref{fig:integration_tests}, le serveur retourne un statut \texttt{200 OK} accompagné d'un objet JSON détaillé. Cet objet contient non seulement les informations d'identité et le rôle de l'utilisateur (confirmant l'accès au rôle « admin »), mais aussi le jeton d'authentification (\texttt{token}) qui sera utilisé par le frontend pour sécuriser les appels ultérieurs à l'API.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/sprint_1_integration_test.png}
+    \caption{Validation du point d'entrée Login via Postman}
+    \label{fig:integration_tests}
+\end{figure}
+
+\subsection{Tests fonctionnels}
+Ces tests, réalisés de bout en bout (End-to-End), valident l'expérience utilisateur et le respect des objectifs métier. Nous avons privilégié le scénario critique de l'authentification et de l'accès au tableau de bord.
+
+Le scénario nominal se déroule comme suit : l'utilisateur accède à la page de connexion et saisit les identifiants administrateur (figure \ref{fig:functional_login_step}). Lors du clic sur le bouton de connexion, le frontend (Next.js) transmet les données à l'API, intercepte le token JWT en retour et le stocke de manière sécurisée dans le navigateur pour maintenir la session active.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/admin_login_flow.png}
+    \caption{Étape 1 : Saisie des accès sur l'interface de connexion}
+    \label{fig:functional_login_step}
+\end{figure}
+
+Le succès de l'opération est validé par la redirection automatique vers le tableau de bord administratif (figure \ref{fig:functional_dashboard_step}). L'interface s'adapte dynamiquement au rôle de l'utilisateur, ce dernier étant transmis par l'API lors de la connexion et vérifié systématiquement par le backend via l'identifiant unique contenu dans le token JWT. Cette étape confirme la parfaite synchronisation entre le stockage local du frontend, la logique de routage et les mécanismes de protection du serveur.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/admin_login_flow_redirect.png}
+    \caption{Étape 2 : Accès au tableau de bord après authentification réussie}
+    \label{fig:functional_dashboard_step}
 \end{figure}
 
 \section{Conclusion}
 
-Ce premier sprint a permis de poser les fondations solides de la sécurité et de la gestion des utilisateurs de la plateforme EduGenius. L’ensemble des fonctionnalités d’authentification (connexion sécurisée par JWT, réinitialisation de mot de passe, consultation et modification du profil) ainsi que les briques techniques transverses (tableau de bord unifié, interface responsive) ont été conçues, développées et testées avec succès. Le système de rôles (administrateur, enseignant, étudiant) a été implémenté conformément aux user stories US‑01, US‑02, US‑03, US‑39 et US‑41, assurant un contrôle d’accès granulaire et une expérience personnalisée.
-
-Le socle technique retenu – Next.js pour le frontend, Express.js pour l’API, MongoDB pour la persistance et bcrypt/JWT pour la sécurité – s’est révélé adapté et a démontré sa fiabilité. L’interface de gestion des utilisateurs, réservée à l’administrateur, offre une ergonomie fonctionnelle et prépare le terrain pour les fonctionnalités pédagogiques à venir (dépôt de cours, quiz, sessions vidéo).
-
-Les tests unitaires, d’intégration et fonctionnels réalisés ont validé la robustesse du module d’authentification ainsi que l’intégrité des données manipulées. Aucune régression bloquante n’a été constatée, et les critères d’acceptation des *user stories* sont tous satisfaits.
-
-Ce premier incrément constitue ainsi une base sécurisée, extensible et maintenable, sur laquelle les sprints suivants pourront s’appuyer pour enrichir la plateforme avec les fonctionnalités d’intelligence artificielle, de collaboration temps réel et d’analyse de performances.
+Ce premier sprint a permis de poser les fondations de la sécurité d'EduGenius. L’ensemble des fonctionnalités d’authentification et de gestion des rôles a été conçu, développé et testé avec succès, garantissant un cadre fiable pour les futurs développements. Ce socle technique assure désormais la confidentialité des données et offre une base solide pour intégrer les fonctionnalités pédagogiques des prochains sprints.
